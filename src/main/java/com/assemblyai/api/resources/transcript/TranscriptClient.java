@@ -31,6 +31,10 @@ public class TranscriptClient {
         this.clientOptions = clientOptions;
     }
 
+    public TranscriptListResponse list() {
+        return list(TranscriptListRequest.builder().build(), null);
+    }
+
     public TranscriptListResponse list(TranscriptListRequest request) {
         return list(request, null);
     }
@@ -219,6 +223,10 @@ public class TranscriptClient {
         }
     }
 
+    public String exportAsVtt(String transcriptId) {
+        return exportAsVtt(transcriptId, TranscriptExportAsVttRequest.builder().build(), null);
+    }
+
     public String exportAsVtt(String transcriptId, TranscriptExportAsVttRequest request) {
         return exportAsVtt(transcriptId, request, null);
     }
@@ -245,7 +253,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
+                return _response.body().string();
             }
             throw new ApiError(
                     _response.code(),
@@ -253,6 +261,10 @@ public class TranscriptClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String exportAsSrt(String transcriptId) {
+        return exportAsSrt(transcriptId, TranscriptExportAsSrtRequest.builder().build(), null);
     }
 
     public String exportAsSrt(String transcriptId, TranscriptExportAsSrtRequest request) {

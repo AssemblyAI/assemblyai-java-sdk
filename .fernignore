@@ -2,6 +2,7 @@
 
 src/main/java/com/assemblyai/api/Transcriber.java
 src/main/java/com/assemblyai/api/resources/files/FilesClient.java
+src/main/java/com/assemblyai/api/resources/transcript/TranscriptClient.java
 src/main/java/com/assemblyai/api/AssemblyAIClient.java
 src/main/java/com/assemblyai/api/AssemblyAIClientBuilder.java
 
