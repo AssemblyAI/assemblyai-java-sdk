@@ -9,10 +9,17 @@ import java.io.File;
 
 public final class Transcriber {
 
-    private final AssemblyaiApiClient client;
+    private final AssemblyAIClient client;
 
-    private Transcriber(AssemblyaiApiClient client) {
+    private Transcriber(AssemblyAIClient client) {
         this.client = client;
+    }
+
+    /**
+     * Transcribes an audio file whose location can be specified via a URL.
+     */
+    public TranscriptResponse transcribe(String url, boolean poll) {
+        return transcribe(url, TranscriptRequest.builder().build(), poll);
     }
 
     /**
@@ -29,6 +36,13 @@ public final class Transcriber {
             return awaitCompletion(transcriptResponse.getId());
         }
         return transcriptResponse;
+    }
+
+    /**
+     * Transcribes an audio file whose location can be specified via a filepath.
+     */
+    public TranscriptResponse transcribe(File data, boolean poll) {
+        return transcribe(data, TranscriptRequest.builder().build(), poll);
     }
 
     /**
@@ -59,7 +73,7 @@ public final class Transcriber {
     }
 
     public static final class Builder {
-        private final AssemblyaiApiClientBuilder clientBuilder = new AssemblyaiApiClientBuilder();
+        private final AssemblyAIClientBuilder clientBuilder = new AssemblyAIClientBuilder();
 
         public Builder apiKey(String apiKey) {
             this.clientBuilder.apiKey(apiKey);

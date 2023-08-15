@@ -6,14 +6,14 @@ import com.assemblyai.api.resources.files.FilesClient;
 import com.assemblyai.api.resources.transcript.TranscriptClient;
 import java.util.function.Supplier;
 
-public class AssemblyaiApiClient {
+public class AssemblyAIClient {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<TranscriptClient> transcriptClient;
 
     protected final Supplier<FilesClient> filesClient;
 
-    public AssemblyaiApiClient(ClientOptions clientOptions) {
+    public AssemblyAIClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.transcriptClient = Suppliers.memoize(() -> new TranscriptClient(clientOptions));
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
@@ -27,7 +27,7 @@ public class AssemblyaiApiClient {
         return this.filesClient.get();
     }
 
-    public static AssemblyaiApiClientBuilder builder() {
-        return new AssemblyaiApiClientBuilder();
+    public static AssemblyAIClientBuilder builder() {
+        return new AssemblyAIClientBuilder();
     }
 }
