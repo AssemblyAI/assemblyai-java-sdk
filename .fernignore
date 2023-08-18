@@ -7,5 +7,6 @@ src/main/java/com/assemblyai/api/AssemblyAIClient.java
 src/main/java/com/assemblyai/api/AssemblyAIClientBuilder.java
 
 sample-app/src/main/java/sample/App.java
+sample-app/src/main/resources/
 
 README.md
