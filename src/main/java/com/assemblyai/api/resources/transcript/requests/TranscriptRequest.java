@@ -1,5 +1,6 @@
 package com.assemblyai.api.resources.transcript.requests;
 
+import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.TranscriptBoostParam;
 import com.assemblyai.api.types.TranscriptCustomSpelling;
 import com.assemblyai.api.types.TranscriptLanguageCode;
@@ -200,13 +201,7 @@ public final class TranscriptRequest {
 
     @Override
     public String toString() {
-        return "TranscriptRequest{" + "audioUrl: " + audioUrl + ", languageCode: " + languageCode + ", speakerLabels: "
-                + speakerLabels + ", wordBoost: " + wordBoost + ", boostParam: " + boostParam + ", customSpelling: "
-                + customSpelling + ", dualChannel: " + dualChannel + ", disfluencies: " + disfluencies
-                + ", languageDetection: " + languageDetection + ", punctuate: " + punctuate + ", formatText: "
-                + formatText + ", filterProfanity: " + filterProfanity + ", webhookUrl: " + webhookUrl
-                + ", webhookAuthHeaderName: " + webhookAuthHeaderName + ", webhookAuthHeaderValue: "
-                + webhookAuthHeaderValue + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {

@@ -1,5 +1,6 @@
 package com.assemblyai.api.types;
 
+import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -208,12 +209,7 @@ public final class TranscriptResponse {
 
     @Override
     public String toString() {
-        return "TranscriptResponse{" + "id: " + id + ", status: " + status + ", acousticModel: " + acousticModel
-                + ", audioDuration: " + audioDuration + ", audioUrl: " + audioUrl + ", confidence: " + confidence
-                + ", dualChannel: " + dualChannel + ", formatText: " + formatText + ", languageModel: " + languageModel
-                + ", languageDetection: " + languageDetection + ", punctuate: " + punctuate + ", text: " + text
-                + ", utterances: " + utterances + ", webhookStatusCode: " + webhookStatusCode + ", webhookUrl: "
-                + webhookUrl + ", words: " + words + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static IdStage builder() {

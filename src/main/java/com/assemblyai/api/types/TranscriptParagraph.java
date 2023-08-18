@@ -1,5 +1,6 @@
 package com.assemblyai.api.types;
 
+import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -82,8 +83,7 @@ public final class TranscriptParagraph {
 
     @Override
     public String toString() {
-        return "TranscriptParagraph{" + "text: " + text + ", start: " + start + ", end: " + end + ", confidence: "
-                + confidence + ", words: " + words + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {

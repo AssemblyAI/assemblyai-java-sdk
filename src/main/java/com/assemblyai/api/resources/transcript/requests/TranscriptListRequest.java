@@ -1,5 +1,6 @@
 package com.assemblyai.api.resources.transcript.requests;
 
+import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.TranscriptStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -110,8 +111,7 @@ public final class TranscriptListRequest {
 
     @Override
     public String toString() {
-        return "TranscriptListRequest{" + "limit: " + limit + ", status: " + status + ", createdOn: " + createdOn
-                + ", beforeId: " + beforeId + ", afterId: " + afterId + ", throttledOnly: " + throttledOnly + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {

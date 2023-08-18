@@ -1,5 +1,6 @@
 package com.assemblyai.api.types;
 
+import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -81,8 +82,7 @@ public final class TranscriptWord {
 
     @Override
     public String toString() {
-        return "TranscriptWord{" + "confidence: " + confidence + ", start: " + start + ", end: " + end + ", text: "
-                + text + ", speaker: " + speaker + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {

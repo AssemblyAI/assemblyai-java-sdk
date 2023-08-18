@@ -1,5 +1,6 @@
 package com.assemblyai.api.types;
 
+import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -91,8 +92,7 @@ public final class TranscriptListItem {
 
     @Override
     public String toString() {
-        return "TranscriptListItem{" + "id: " + id + ", resourceUrl: " + resourceUrl + ", status: " + status
-                + ", created: " + created + ", completed: " + completed + ", audioUrl: " + audioUrl + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {
