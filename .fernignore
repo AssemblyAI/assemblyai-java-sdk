@@ -6,4 +6,6 @@ src/main/java/com/assemblyai/api/resources/transcript/TranscriptClient.java
 src/main/java/com/assemblyai/api/AssemblyAIClient.java
 src/main/java/com/assemblyai/api/AssemblyAIClientBuilder.java
 
+sample-app/src/main/java/sample/App.java
+
 README.md
