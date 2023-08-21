@@ -26,7 +26,7 @@ public final class ClientOptions {
                 "X-Fern-SDK-Name",
                 "com.assemblyai.fern:api-sdk",
                 "X-Fern-SDK-Version",
-                "0.0.20",
+                "0.0.21",
                 "X-Fern-Language",
                 "JAVA"));
         this.headerSuppliers = headerSuppliers;
