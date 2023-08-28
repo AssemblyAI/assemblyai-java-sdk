@@ -40,7 +40,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.github.fern-api'
             artifactId = 'assemblyai'
-            version = '0.0.23'
+            version = '0.0.24'
             from components.java
         }
     }
