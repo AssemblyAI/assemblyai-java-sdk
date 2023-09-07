@@ -3,21 +3,45 @@ package com.assemblyai.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum TranscriptLanguageCode {
-    ES("es"),
-
     EN("en"),
 
-    NL("nl"),
+    EN_AU("en_au"),
 
-    JA("ja"),
+    EN_UK("en_uk"),
 
-    HI("hi"),
+    EN_US("en_us"),
+
+    ES("es"),
+
+    FR("fr"),
 
     DE("de"),
 
+    IT("it"),
+
     PT("pt"),
 
-    FR("fr");
+    NL("nl"),
+
+    HI("hi"),
+
+    JA("ja"),
+
+    ZH("zh"),
+
+    FI("fi"),
+
+    KO("ko"),
+
+    PL("pl"),
+
+    RU("ru"),
+
+    TR("tr"),
+
+    UK("uk"),
+
+    VI("vi");
 
     private final String value;
 

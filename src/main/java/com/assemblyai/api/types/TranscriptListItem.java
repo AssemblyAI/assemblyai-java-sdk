@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -19,9 +20,9 @@ public final class TranscriptListItem {
 
     private final Optional<TranscriptStatus> status;
 
-    private final Optional<String> created;
+    private final Optional<OffsetDateTime> created;
 
-    private final Optional<String> completed;
+    private final Optional<OffsetDateTime> completed;
 
     private final Optional<String> audioUrl;
 
@@ -29,8 +30,8 @@ public final class TranscriptListItem {
             Optional<String> id,
             Optional<String> resourceUrl,
             Optional<TranscriptStatus> status,
-            Optional<String> created,
-            Optional<String> completed,
+            Optional<OffsetDateTime> created,
+            Optional<OffsetDateTime> completed,
             Optional<String> audioUrl) {
         this.id = id;
         this.resourceUrl = resourceUrl;
@@ -56,12 +57,12 @@ public final class TranscriptListItem {
     }
 
     @JsonProperty("created")
-    public Optional<String> getCreated() {
+    public Optional<OffsetDateTime> getCreated() {
         return created;
     }
 
     @JsonProperty("completed")
-    public Optional<String> getCompleted() {
+    public Optional<OffsetDateTime> getCompleted() {
         return completed;
     }
 
@@ -107,9 +108,9 @@ public final class TranscriptListItem {
 
         private Optional<TranscriptStatus> status = Optional.empty();
 
-        private Optional<String> created = Optional.empty();
+        private Optional<OffsetDateTime> created = Optional.empty();
 
-        private Optional<String> completed = Optional.empty();
+        private Optional<OffsetDateTime> completed = Optional.empty();
 
         private Optional<String> audioUrl = Optional.empty();
 
@@ -159,23 +160,23 @@ public final class TranscriptListItem {
         }
 
         @JsonSetter(value = "created", nulls = Nulls.SKIP)
-        public Builder created(Optional<String> created) {
+        public Builder created(Optional<OffsetDateTime> created) {
             this.created = created;
             return this;
         }
 
-        public Builder created(String created) {
+        public Builder created(OffsetDateTime created) {
             this.created = Optional.of(created);
             return this;
         }
 
         @JsonSetter(value = "completed", nulls = Nulls.SKIP)
-        public Builder completed(Optional<String> completed) {
+        public Builder completed(Optional<OffsetDateTime> completed) {
             this.completed = completed;
             return this;
         }
 
-        public Builder completed(String completed) {
+        public Builder completed(OffsetDateTime completed) {
             this.completed = Optional.of(completed);
             return this;
         }

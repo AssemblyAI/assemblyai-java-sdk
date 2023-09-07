@@ -2,18 +2,16 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum TranscriptStatus {
-    QUEUED("queued"),
+public enum SummaryModel {
+    INFORMATIVE("informative"),
 
-    PROCESSING("processing"),
+    CONVERSATIONAL("conversational"),
 
-    COMPLETED("completed"),
-
-    ERROR("error");
+    CATCHY("catchy");
 
     private final String value;
 
-    TranscriptStatus(String value) {
+    SummaryModel(String value) {
         this.value = value;
     }
 

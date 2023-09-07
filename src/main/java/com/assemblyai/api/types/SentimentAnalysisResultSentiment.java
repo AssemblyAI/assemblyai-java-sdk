@@ -2,18 +2,16 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum TranscriptStatus {
-    QUEUED("queued"),
+public enum SentimentAnalysisResultSentiment {
+    POSITIVE("POSITIVE"),
 
-    PROCESSING("processing"),
+    NEUTRAL("NEUTRAL"),
 
-    COMPLETED("completed"),
-
-    ERROR("error");
+    NEGATIVE("NEGATIVE");
 
     private final String value;
 
-    TranscriptStatus(String value) {
+    SentimentAnalysisResultSentiment(String value) {
         this.value = value;
     }
 

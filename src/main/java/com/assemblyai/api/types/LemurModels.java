@@ -2,18 +2,14 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum TranscriptStatus {
-    QUEUED("queued"),
+public enum LemurModels {
+    DEFAULT("default"),
 
-    PROCESSING("processing"),
-
-    COMPLETED("completed"),
-
-    ERROR("error");
+    BASIC("basic");
 
     private final String value;
 
-    TranscriptStatus(String value) {
+    LemurModels(String value) {
         this.value = value;
     }
 

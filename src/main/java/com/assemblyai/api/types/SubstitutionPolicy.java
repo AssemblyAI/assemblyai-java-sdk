@@ -2,18 +2,14 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum TranscriptStatus {
-    QUEUED("queued"),
+public enum SubstitutionPolicy {
+    ENTITY_TYPE("entity_type"),
 
-    PROCESSING("processing"),
-
-    COMPLETED("completed"),
-
-    ERROR("error");
+    HASH("hash");
 
     private final String value;
 
-    TranscriptStatus(String value) {
+    SubstitutionPolicy(String value) {
         this.value = value;
     }
 

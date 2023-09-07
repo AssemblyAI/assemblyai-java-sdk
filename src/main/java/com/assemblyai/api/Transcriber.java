@@ -1,34 +1,36 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.Environment;
-import com.assemblyai.api.resources.transcript.requests.TranscriptRequest;
-import com.assemblyai.api.types.TranscriptResponse;
+import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
+import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.TranscriptStatus;
-import com.assemblyai.api.types.UploadResponse;
+import com.assemblyai.api.types.UploadResponseBody;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public final class Transcriber {
 
-    private final AssemblyAIClient client;
+    private final AssemblyAI client;
 
-    private Transcriber(AssemblyAIClient client) {
+    private Transcriber(AssemblyAI client) {
         this.client = client;
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a URL.
      */
-    public TranscriptResponse transcribe(String url, boolean poll) {
-        return transcribe(url, TranscriptRequest.builder().build(), poll);
+    public Transcript transcribe(String url, boolean poll) {
+        return transcribe(url, CreateTranscriptParameters.builder().build(), poll);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a URL.
      */
-    public TranscriptResponse transcribe(String url, TranscriptRequest transcriptRequest, boolean poll) {
-        TranscriptResponse transcriptResponse = this.client
+    public Transcript transcribe(String url, CreateTranscriptParameters transcriptRequest, boolean poll) {
+        Transcript transcriptResponse = this.client
                 .transcript()
-                .create(TranscriptRequest.builder()
+                .create(CreateTranscriptParameters.builder()
                         .from(transcriptRequest)
                         .audioUrl(url)
                         .build());
@@ -41,22 +43,23 @@ public final class Transcriber {
     /**
      * Transcribes an audio file whose location can be specified via a filepath.
      */
-    public TranscriptResponse transcribe(File data, boolean poll) {
-        return transcribe(data, TranscriptRequest.builder().build(), poll);
+    public Transcript transcribe(File data, boolean poll) throws IOException {
+        return transcribe(data, CreateTranscriptParameters.builder().build(), poll);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a filepath.
      */
-    public TranscriptResponse transcribe(File data, TranscriptRequest transcriptRequest, boolean poll) {
-        UploadResponse uploadResponse = this.client.files().upload(data);
+    public Transcript transcribe(File data, CreateTranscriptParameters transcriptRequest, boolean poll)
+            throws IOException {
+        UploadResponseBody uploadResponse = this.client.files().upload(Files.readAllBytes(data.toPath()));
         return transcribe(uploadResponse.getUploadUrl(), transcriptRequest, poll);
     }
 
-    private TranscriptResponse awaitCompletion(String transcriptId) {
+    private Transcript awaitCompletion(String transcriptId) {
         try {
             while (true) {
-                TranscriptResponse transcript = this.client.transcript().get(transcriptId);
+                Transcript transcript = this.client.transcript().get(transcriptId);
                 if (transcript.getStatus().isPresent()
                         && transcript.getStatus().get().equals(TranscriptStatus.COMPLETED)) {
                     return transcript;
@@ -73,7 +76,7 @@ public final class Transcriber {
     }
 
     public static final class Builder {
-        private final AssemblyAIClientBuilder clientBuilder = new AssemblyAIClientBuilder();
+        private final AssemblyAIBuilder clientBuilder = new AssemblyAIBuilder();
 
         public Builder apiKey(String apiKey) {
             this.clientBuilder.apiKey(apiKey);

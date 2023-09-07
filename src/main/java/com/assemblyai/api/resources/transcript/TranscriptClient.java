@@ -4,16 +4,16 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
+import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
 import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsSrtRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsVttRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptListRequest;
-import com.assemblyai.api.resources.transcript.requests.TranscriptRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptSearchRequest;
-import com.assemblyai.api.types.TranscriptListResponse;
-import com.assemblyai.api.types.TranscriptParagraphResponse;
-import com.assemblyai.api.types.TranscriptResponse;
-import com.assemblyai.api.types.TranscriptSearchResponse;
-import com.assemblyai.api.types.TranscriptSentenceResponse;
+import com.assemblyai.api.types.Transcript;
+import com.assemblyai.api.types.TranscriptList;
+import com.assemblyai.api.types.TranscriptParagraphResource;
+import com.assemblyai.api.types.TranscriptSearchResults;
+import com.assemblyai.api.types.TranscriptSentenceResource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,19 +31,15 @@ public class TranscriptClient {
         this.clientOptions = clientOptions;
     }
 
-    public TranscriptListResponse list() {
-        return list(TranscriptListRequest.builder().build(), null);
-    }
-
-    public TranscriptListResponse list(TranscriptListRequest request) {
+    public TranscriptList list(TranscriptListRequest request) {
         return list(request, null);
     }
 
-    public TranscriptListResponse list(TranscriptListRequest request, RequestOptions requestOptions) {
+    public TranscriptList list(TranscriptListRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder _httpUrl = HttpUrl.parse(
                         this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript");
+                .addPathSegments("v2/transcript");
         if (request.getLimit().isPresent()) {
             _httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
         }
@@ -73,7 +69,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptListResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptList.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -83,14 +79,18 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptResponse create(TranscriptRequest request) {
+    public TranscriptList list() {
+        return list(TranscriptListRequest.builder().build());
+    }
+
+    public Transcript create(CreateTranscriptParameters request) {
         return create(request, null);
     }
 
-    public TranscriptResponse create(TranscriptRequest request, RequestOptions requestOptions) {
+    public Transcript create(CreateTranscriptParameters request, RequestOptions requestOptions) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
         if (request.getAudioUrl().isPresent()) {
@@ -99,35 +99,14 @@ public class TranscriptClient {
         if (request.getLanguageCode().isPresent()) {
             _requestBodyProperties.put("language_code", request.getLanguageCode());
         }
-        if (request.getSpeakerLabels().isPresent()) {
-            _requestBodyProperties.put("speaker_labels", request.getSpeakerLabels());
-        }
-        if (request.getWordBoost().isPresent()) {
-            _requestBodyProperties.put("word_boost", request.getWordBoost());
-        }
-        if (request.getBoostParam().isPresent()) {
-            _requestBodyProperties.put("boost_param", request.getBoostParam());
-        }
-        if (request.getCustomSpelling().isPresent()) {
-            _requestBodyProperties.put("custom_spelling", request.getCustomSpelling());
-        }
-        if (request.getDualChannel().isPresent()) {
-            _requestBodyProperties.put("dual_channel", request.getDualChannel());
-        }
-        if (request.getDisfluencies().isPresent()) {
-            _requestBodyProperties.put("disfluencies", request.getDisfluencies());
-        }
-        if (request.getLanguageDetection().isPresent()) {
-            _requestBodyProperties.put("language_detection", request.getLanguageDetection());
-        }
         if (request.getPunctuate().isPresent()) {
             _requestBodyProperties.put("punctuate", request.getPunctuate());
         }
         if (request.getFormatText().isPresent()) {
             _requestBodyProperties.put("format_text", request.getFormatText());
         }
-        if (request.getFilterProfanity().isPresent()) {
-            _requestBodyProperties.put("filter_profanity", request.getFilterProfanity());
+        if (request.getDualChannel().isPresent()) {
+            _requestBodyProperties.put("dual_channel", request.getDualChannel());
         }
         if (request.getWebhookUrl().isPresent()) {
             _requestBodyProperties.put("webhook_url", request.getWebhookUrl());
@@ -137,6 +116,78 @@ public class TranscriptClient {
         }
         if (request.getWebhookAuthHeaderValue().isPresent()) {
             _requestBodyProperties.put("webhook_auth_header_value", request.getWebhookAuthHeaderValue());
+        }
+        if (request.getAudioStartFrom().isPresent()) {
+            _requestBodyProperties.put("audio_start_from", request.getAudioStartFrom());
+        }
+        if (request.getAudioEndAt().isPresent()) {
+            _requestBodyProperties.put("audio_end_at", request.getAudioEndAt());
+        }
+        if (request.getWordBoost().isPresent()) {
+            _requestBodyProperties.put("word_boost", request.getWordBoost());
+        }
+        if (request.getBoostParam().isPresent()) {
+            _requestBodyProperties.put("boost_param", request.getBoostParam());
+        }
+        if (request.getFilterProfanity().isPresent()) {
+            _requestBodyProperties.put("filter_profanity", request.getFilterProfanity());
+        }
+        if (request.getRedactPii().isPresent()) {
+            _requestBodyProperties.put("redact_pii", request.getRedactPii());
+        }
+        if (request.getRedactPiiAudio().isPresent()) {
+            _requestBodyProperties.put("redact_pii_audio", request.getRedactPiiAudio());
+        }
+        if (request.getRedactPiiAudioQuality().isPresent()) {
+            _requestBodyProperties.put("redact_pii_audio_quality", request.getRedactPiiAudioQuality());
+        }
+        if (request.getRedactPiiPolicies().isPresent()) {
+            _requestBodyProperties.put("redact_pii_policies", request.getRedactPiiPolicies());
+        }
+        if (request.getRedactPiiSub().isPresent()) {
+            _requestBodyProperties.put("redact_pii_sub", request.getRedactPiiSub());
+        }
+        if (request.getSpeakerLabels().isPresent()) {
+            _requestBodyProperties.put("speaker_labels", request.getSpeakerLabels());
+        }
+        if (request.getSpeakersExpected().isPresent()) {
+            _requestBodyProperties.put("speakers_expected", request.getSpeakersExpected());
+        }
+        if (request.getContentSafety().isPresent()) {
+            _requestBodyProperties.put("content_safety", request.getContentSafety());
+        }
+        if (request.getIabCategories().isPresent()) {
+            _requestBodyProperties.put("iab_categories", request.getIabCategories());
+        }
+        if (request.getLanguageDetection().isPresent()) {
+            _requestBodyProperties.put("language_detection", request.getLanguageDetection());
+        }
+        if (request.getCustomSpelling().isPresent()) {
+            _requestBodyProperties.put("custom_spelling", request.getCustomSpelling());
+        }
+        if (request.getDisfluencies().isPresent()) {
+            _requestBodyProperties.put("disfluencies", request.getDisfluencies());
+        }
+        if (request.getSentimentAnalysis().isPresent()) {
+            _requestBodyProperties.put("sentiment_analysis", request.getSentimentAnalysis());
+        }
+        if (request.getAutoChapters().isPresent()) {
+            _requestBodyProperties.put("auto_chapters", request.getAutoChapters());
+        }
+        if (request.getEntityDetection().isPresent()) {
+            _requestBodyProperties.put("entity_detection", request.getEntityDetection());
+        }
+        if (request.getSpeechThreshold().isPresent()) {
+            _requestBodyProperties.put("speech_threshold", request.getSpeechThreshold());
+        }
+        if (request.getSummarization().isPresent()) {
+            _requestBodyProperties.put("summarization", request.getSummarization());
+        }
+        if (request.getSummaryModel().isPresent()) {
+            _requestBodyProperties.put("summary_model", request.getSummaryModel());
+        }
+        if (request.getSummaryType().isPresent()) {
+            _requestBodyProperties.put("summary_type", request.getSummaryType());
         }
         RequestBody _requestBody;
         try {
@@ -155,7 +206,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Transcript.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -165,14 +216,18 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptResponse get(String transcriptId) {
+    public Transcript create() {
+        return create(CreateTranscriptParameters.builder().build());
+    }
+
+    public Transcript get(String transcriptId) {
         return get(transcriptId, null);
     }
 
-    public TranscriptResponse get(String transcriptId, RequestOptions requestOptions) {
+    public Transcript get(String transcriptId, RequestOptions requestOptions) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .build();
         Request _request = new Request.Builder()
@@ -184,7 +239,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Transcript.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -194,14 +249,14 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptResponse delete(String transcriptId) {
+    public Transcript delete(String transcriptId) {
         return delete(transcriptId, null);
     }
 
-    public TranscriptResponse delete(String transcriptId, RequestOptions requestOptions) {
+    public Transcript delete(String transcriptId, RequestOptions requestOptions) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .build();
         Request _request = new Request.Builder()
@@ -213,7 +268,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Transcript.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -221,10 +276,6 @@ public class TranscriptClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String exportAsVtt(String transcriptId) {
-        return exportAsVtt(transcriptId, TranscriptExportAsVttRequest.builder().build(), null);
     }
 
     public String exportAsVtt(String transcriptId, TranscriptExportAsVttRequest request) {
@@ -236,7 +287,7 @@ public class TranscriptClient {
         HttpUrl.Builder _httpUrl = HttpUrl.parse(
                         this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .addPathSegments("vtt");
         if (request.getCharsPerCaption().isPresent()) {
@@ -263,8 +314,8 @@ public class TranscriptClient {
         }
     }
 
-    public String exportAsSrt(String transcriptId) {
-        return exportAsSrt(transcriptId, TranscriptExportAsSrtRequest.builder().build(), null);
+    public String exportAsVtt(String transcriptId) {
+        return exportAsVtt(transcriptId, TranscriptExportAsVttRequest.builder().build());
     }
 
     public String exportAsSrt(String transcriptId, TranscriptExportAsSrtRequest request) {
@@ -276,7 +327,7 @@ public class TranscriptClient {
         HttpUrl.Builder _httpUrl = HttpUrl.parse(
                         this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .addPathSegments("srt");
         if (request.getCharsPerCaption().isPresent()) {
@@ -293,7 +344,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
+                return _response.body().string();
             }
             throw new ApiError(
                     _response.code(),
@@ -303,14 +354,18 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptSentenceResponse exportSentences(String transcriptId) {
-        return exportSentences(transcriptId, null);
+    public String exportAsSrt(String transcriptId) {
+        return exportAsSrt(transcriptId, TranscriptExportAsSrtRequest.builder().build());
     }
 
-    public TranscriptSentenceResponse exportSentences(String transcriptId, RequestOptions requestOptions) {
+    public TranscriptSentenceResource getSentences(String transcriptId) {
+        return getSentences(transcriptId, null);
+    }
+
+    public TranscriptSentenceResource getSentences(String transcriptId, RequestOptions requestOptions) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .addPathSegments("sentences")
                 .build();
@@ -323,7 +378,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptSentenceResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptSentenceResource.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -333,14 +388,14 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptParagraphResponse exportParagraphs(String transcriptId) {
-        return exportParagraphs(transcriptId, null);
+    public TranscriptParagraphResource getParagraphs(String transcriptId) {
+        return getParagraphs(transcriptId, null);
     }
 
-    public TranscriptParagraphResponse exportParagraphs(String transcriptId, RequestOptions requestOptions) {
+    public TranscriptParagraphResource getParagraphs(String transcriptId, RequestOptions requestOptions) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .addPathSegments("paragraphs")
                 .build();
@@ -354,7 +409,7 @@ public class TranscriptClient {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), TranscriptParagraphResponse.class);
+                        _response.body().string(), TranscriptParagraphResource.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -364,16 +419,16 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptSearchResponse search(String transcriptId, TranscriptSearchRequest request) {
+    public TranscriptSearchResults search(String transcriptId, TranscriptSearchRequest request) {
         return search(transcriptId, request, null);
     }
 
-    public TranscriptSearchResponse search(
+    public TranscriptSearchResults search(
             String transcriptId, TranscriptSearchRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder _httpUrl = HttpUrl.parse(
                         this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("transcript")
+                .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
                 .addPathSegments("word-search");
         if (request.getWords().isPresent()) {
@@ -389,7 +444,7 @@ public class TranscriptClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptSearchResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), TranscriptSearchResults.class);
             }
             throw new ApiError(
                     _response.code(),
@@ -397,5 +452,9 @@ public class TranscriptClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public TranscriptSearchResults search(String transcriptId) {
+        return search(transcriptId, TranscriptSearchRequest.builder().build());
     }
 }

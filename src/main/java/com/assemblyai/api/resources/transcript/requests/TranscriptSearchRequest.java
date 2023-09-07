@@ -20,7 +20,7 @@ public final class TranscriptSearchRequest {
     }
 
     /**
-     * @return To control the maximum number of characters per caption
+     * @return Keywords to search for
      */
     @JsonProperty("words")
     public Optional<String> getWords() {

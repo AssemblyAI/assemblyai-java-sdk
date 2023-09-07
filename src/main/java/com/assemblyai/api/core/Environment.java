@@ -1,7 +1,7 @@
 package com.assemblyai.api.core;
 
 public final class Environment {
-    public static final Environment DEFAULT = new Environment("https://api.assemblyai.com/v2");
+    public static final Environment DEFAULT = new Environment("https://api.assemblyai.com/");
 
     private final String url;
 

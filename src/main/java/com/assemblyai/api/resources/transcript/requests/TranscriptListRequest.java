@@ -42,7 +42,7 @@ public final class TranscriptListRequest {
     }
 
     /**
-     * @return Max results to return in a single response
+     * @return Maximum amount of transcripts to retrieve
      */
     @JsonProperty("limit")
     public Optional<Integer> getLimit() {
@@ -58,7 +58,7 @@ public final class TranscriptListRequest {
     }
 
     /**
-     * @return Only return transcripts created on this date
+     * @return Only get transcripts created on this date
      */
     @JsonProperty("created_on")
     public Optional<String> getCreatedOn() {
@@ -66,7 +66,7 @@ public final class TranscriptListRequest {
     }
 
     /**
-     * @return Return transcripts that were created before this id
+     * @return Get transcripts that were created before this transcript ID
      */
     @JsonProperty("before_id")
     public Optional<String> getBeforeId() {
@@ -74,7 +74,7 @@ public final class TranscriptListRequest {
     }
 
     /**
-     * @return Return transcripts that were created after this id
+     * @return Get transcripts that were created after this transcript ID
      */
     @JsonProperty("after_id")
     public Optional<String> getAfterId() {
@@ -82,7 +82,7 @@ public final class TranscriptListRequest {
     }
 
     /**
-     * @return Only return throttled transcripts, overrides status filter
+     * @return Only get throttled transcripts, overrides the status filter
      */
     @JsonProperty("throttled_only")
     public Optional<Boolean> getThrottledOnly() {

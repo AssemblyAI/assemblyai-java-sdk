@@ -20,7 +20,7 @@ public final class TranscriptExportAsVttRequest {
     }
 
     /**
-     * @return To control the maximum number of characters per caption
+     * @return The maximum number of characters per caption
      */
     @JsonProperty("chars_per_caption")
     public Optional<Integer> getCharsPerCaption() {

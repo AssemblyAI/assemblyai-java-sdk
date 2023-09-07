@@ -12,8 +12,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptParagraphResponse.Builder.class)
-public final class TranscriptParagraphResponse {
+@JsonDeserialize(builder = TranscriptParagraphResource.Builder.class)
+public final class TranscriptParagraphResource {
     private final Optional<String> id;
 
     private final Optional<Double> confidence;
@@ -22,7 +22,7 @@ public final class TranscriptParagraphResponse {
 
     private final Optional<List<TranscriptParagraph>> paragraphs;
 
-    private TranscriptParagraphResponse(
+    private TranscriptParagraphResource(
             Optional<String> id,
             Optional<Double> confidence,
             Optional<Double> audioDuration,
@@ -56,10 +56,10 @@ public final class TranscriptParagraphResponse {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptParagraphResponse && equalTo((TranscriptParagraphResponse) other);
+        return other instanceof TranscriptParagraphResource && equalTo((TranscriptParagraphResource) other);
     }
 
-    private boolean equalTo(TranscriptParagraphResponse other) {
+    private boolean equalTo(TranscriptParagraphResource other) {
         return id.equals(other.id)
                 && confidence.equals(other.confidence)
                 && audioDuration.equals(other.audioDuration)
@@ -92,7 +92,7 @@ public final class TranscriptParagraphResponse {
 
         private Builder() {}
 
-        public Builder from(TranscriptParagraphResponse other) {
+        public Builder from(TranscriptParagraphResource other) {
             id(other.getId());
             confidence(other.getConfidence());
             audioDuration(other.getAudioDuration());
@@ -144,8 +144,8 @@ public final class TranscriptParagraphResponse {
             return this;
         }
 
-        public TranscriptParagraphResponse build() {
-            return new TranscriptParagraphResponse(id, confidence, audioDuration, paragraphs);
+        public TranscriptParagraphResource build() {
+            return new TranscriptParagraphResource(id, confidence, audioDuration, paragraphs);
         }
     }
 }

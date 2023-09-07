@@ -1,54 +1,55 @@
 package sample;
 
+import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.Transcriber;
-import com.assemblyai.api.resources.transcript.requests.TranscriptRequest;
+import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
 import com.assemblyai.api.resources.transcript.requests.TranscriptSearchRequest;
-import com.assemblyai.api.types.TranscriptResponse;
-import com.assemblyai.api.types.UploadResponse;
+import com.assemblyai.api.types.Transcript;
+import com.assemblyai.api.types.UploadResponseBody;
 import java.io.File;
-import java.lang.String;
-import com.assemblyai.api.AssemblyAIClient;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public final class App {
 
-    public static void main(String[] args) {
-        AssemblyAIClient aai = AssemblyAIClient.builder()
-                .apiKey("API_KEY")
+    public static void main(String... args)  throws IOException {
+        AssemblyAI aai = AssemblyAI.builder()
+                .apiKey("YOUR_API_KEY")
                 .build();
 
         Transcriber transcriber = Transcriber.builder()
-                .apiKey("API_KEY")
+                .apiKey("YOUR_API_KEY")
                 .build();
 
-        TranscriptResponse transcriptResponse =
+        Transcript transcript =
                 transcriber.transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3", true);
-        System.out.println(transcriptResponse);
+        System.out.println(transcript);
 
-        var sentences = aai.transcript().exportSentences(transcriptResponse.getId());
+        var sentences = aai.transcript().getSentences(transcript.getId());
         System.out.println("Get transcript sentences. " + sentences);
 
-        var paragraphs = aai.transcript().exportParagraphs(transcriptResponse.getId());
+        var paragraphs = aai.transcript().getParagraphs(transcript.getId());
         System.out.println("Get transcript paragraphs. " + paragraphs);
 
-        var srt = aai.transcript().exportAsSrt(transcriptResponse.getId());
+        var srt = aai.transcript().exportAsSrt(transcript.getId());
         System.out.println("Get transcript srt. " + srt);
 
-        var vtt = aai.transcript().exportAsVtt(transcriptResponse.getId());
+        var vtt = aai.transcript().exportAsVtt(transcript.getId());
         System.out.println("Get transcript vtt. " + vtt);
 
-        var search = aai.transcript().search(transcriptResponse.getId(), TranscriptSearchRequest.builder()
+        var search = aai.transcript().search(transcript.getId(), TranscriptSearchRequest.builder()
                 .words("NBC")
                 .build());
         System.out.println("Search transcript. " + search);
 
-        var transcript = aai.transcript().delete(transcriptResponse.getId());
+        transcript = aai.transcript().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);
 
         File file = new File("sample-app/src/main/resources/nZP7pb_t4oA.mp3");
-        UploadResponse uploadResponse = aai.files().upload(file);
+        UploadResponseBody uploadResponse = aai.files().upload(Files.readAllBytes(file.toPath()));
         System.out.println("Uploaded file" + uploadResponse);
 
-        transcript = aai.transcript().create(TranscriptRequest.builder()
+        transcript = aai.transcript().create(CreateTranscriptParameters.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
                 .build());
         System.out.println("Created transcript " + transcript);

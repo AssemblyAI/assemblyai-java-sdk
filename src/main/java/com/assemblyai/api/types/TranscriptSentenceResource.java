@@ -12,8 +12,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptSentenceResponse.Builder.class)
-public final class TranscriptSentenceResponse {
+@JsonDeserialize(builder = TranscriptSentenceResource.Builder.class)
+public final class TranscriptSentenceResource {
     private final Optional<String> id;
 
     private final Optional<Double> confidence;
@@ -22,7 +22,7 @@ public final class TranscriptSentenceResponse {
 
     private final Optional<List<TranscriptSentence>> sentences;
 
-    private TranscriptSentenceResponse(
+    private TranscriptSentenceResource(
             Optional<String> id,
             Optional<Double> confidence,
             Optional<Double> audioDuration,
@@ -56,10 +56,10 @@ public final class TranscriptSentenceResponse {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptSentenceResponse && equalTo((TranscriptSentenceResponse) other);
+        return other instanceof TranscriptSentenceResource && equalTo((TranscriptSentenceResource) other);
     }
 
-    private boolean equalTo(TranscriptSentenceResponse other) {
+    private boolean equalTo(TranscriptSentenceResource other) {
         return id.equals(other.id)
                 && confidence.equals(other.confidence)
                 && audioDuration.equals(other.audioDuration)
@@ -92,7 +92,7 @@ public final class TranscriptSentenceResponse {
 
         private Builder() {}
 
-        public Builder from(TranscriptSentenceResponse other) {
+        public Builder from(TranscriptSentenceResource other) {
             id(other.getId());
             confidence(other.getConfidence());
             audioDuration(other.getAudioDuration());
@@ -144,8 +144,8 @@ public final class TranscriptSentenceResponse {
             return this;
         }
 
-        public TranscriptSentenceResponse build() {
-            return new TranscriptSentenceResponse(id, confidence, audioDuration, sentences);
+        public TranscriptSentenceResource build() {
+            return new TranscriptSentenceResource(id, confidence, audioDuration, sentences);
         }
     }
 }
