@@ -15,8 +15,6 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = FinalTranscript.Builder.class)
 public final class FinalTranscript {
-    private final Optional<String> messageType;
-
     private final Optional<Boolean> punctuated;
 
     private final Optional<Boolean> textFormatted;
@@ -34,7 +32,6 @@ public final class FinalTranscript {
     private final Optional<OffsetDateTime> created;
 
     private FinalTranscript(
-            Optional<String> messageType,
             Optional<Boolean> punctuated,
             Optional<Boolean> textFormatted,
             Optional<Integer> audioStart,
@@ -43,7 +40,6 @@ public final class FinalTranscript {
             Optional<String> text,
             Optional<List<Word>> words,
             Optional<OffsetDateTime> created) {
-        this.messageType = messageType;
         this.punctuated = punctuated;
         this.textFormatted = textFormatted;
         this.audioStart = audioStart;
@@ -52,14 +48,6 @@ public final class FinalTranscript {
         this.text = text;
         this.words = words;
         this.created = created;
-    }
-
-    /**
-     * @return Describes the type of message.
-     */
-    @JsonProperty("message_type")
-    public Optional<String> getMessageType() {
-        return messageType;
     }
 
     /**
@@ -133,8 +121,7 @@ public final class FinalTranscript {
     }
 
     private boolean equalTo(FinalTranscript other) {
-        return messageType.equals(other.messageType)
-                && punctuated.equals(other.punctuated)
+        return punctuated.equals(other.punctuated)
                 && textFormatted.equals(other.textFormatted)
                 && audioStart.equals(other.audioStart)
                 && audioEnd.equals(other.audioEnd)
@@ -147,7 +134,6 @@ public final class FinalTranscript {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.messageType,
                 this.punctuated,
                 this.textFormatted,
                 this.audioStart,
@@ -169,8 +155,6 @@ public final class FinalTranscript {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> messageType = Optional.empty();
-
         private Optional<Boolean> punctuated = Optional.empty();
 
         private Optional<Boolean> textFormatted = Optional.empty();
@@ -190,7 +174,6 @@ public final class FinalTranscript {
         private Builder() {}
 
         public Builder from(FinalTranscript other) {
-            messageType(other.getMessageType());
             punctuated(other.getPunctuated());
             textFormatted(other.getTextFormatted());
             audioStart(other.getAudioStart());
@@ -199,17 +182,6 @@ public final class FinalTranscript {
             text(other.getText());
             words(other.getWords());
             created(other.getCreated());
-            return this;
-        }
-
-        @JsonSetter(value = "message_type", nulls = Nulls.SKIP)
-        public Builder messageType(Optional<String> messageType) {
-            this.messageType = messageType;
-            return this;
-        }
-
-        public Builder messageType(String messageType) {
-            this.messageType = Optional.of(messageType);
             return this;
         }
 
@@ -303,7 +275,7 @@ public final class FinalTranscript {
 
         public FinalTranscript build() {
             return new FinalTranscript(
-                    messageType, punctuated, textFormatted, audioStart, audioEnd, confidence, text, words, created);
+                    punctuated, textFormatted, audioStart, audioEnd, confidence, text, words, created);
         }
     }
 }

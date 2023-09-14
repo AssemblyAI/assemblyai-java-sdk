@@ -11,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class ReceiveMessagePayload {
+public final class MessagePayload {
     private final Value value;
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    private ReceiveMessagePayload(Value value) {
+    private MessagePayload(Value value) {
         this.value = value;
     }
 
@@ -23,20 +23,12 @@ public final class ReceiveMessagePayload {
         return value.visit(visitor);
     }
 
-    public static ReceiveMessagePayload sessionBegins(SessionStart value) {
-        return new ReceiveMessagePayload(new SessionBeginsValue(value));
+    public static MessagePayload partialTranscript(PartialTranscript value) {
+        return new MessagePayload(new PartialTranscriptValue(value));
     }
 
-    public static ReceiveMessagePayload partialTranscript(PartialTranscript value) {
-        return new ReceiveMessagePayload(new PartialTranscriptValue(value));
-    }
-
-    public static ReceiveMessagePayload finalTranscript(FinalTranscript value) {
-        return new ReceiveMessagePayload(new FinalTranscriptValue(value));
-    }
-
-    public boolean isSessionBegins() {
-        return value instanceof SessionBeginsValue;
+    public static MessagePayload finalTranscript(FinalTranscript value) {
+        return new MessagePayload(new FinalTranscriptValue(value));
     }
 
     public boolean isPartialTranscript() {
@@ -49,13 +41,6 @@ public final class ReceiveMessagePayload {
 
     public boolean _isUnknown() {
         return value instanceof _UnknownValue;
-    }
-
-    public Optional<SessionStart> getSessionBegins() {
-        if (isSessionBegins()) {
-            return Optional.of(((SessionBeginsValue) value).value);
-        }
-        return Optional.empty();
     }
 
     public Optional<PartialTranscript> getPartialTranscript() {
@@ -85,8 +70,6 @@ public final class ReceiveMessagePayload {
     }
 
     public interface Visitor<T> {
-        T visitSessionBegins(SessionStart sessionBegins);
-
         T visitPartialTranscript(PartialTranscript partialTranscript);
 
         T visitFinalTranscript(FinalTranscript finalTranscript);
@@ -99,52 +82,10 @@ public final class ReceiveMessagePayload {
             property = "message_type",
             visible = true,
             defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({
-        @JsonSubTypes.Type(SessionBeginsValue.class),
-        @JsonSubTypes.Type(PartialTranscriptValue.class),
-        @JsonSubTypes.Type(FinalTranscriptValue.class)
-    })
+    @JsonSubTypes({@JsonSubTypes.Type(PartialTranscriptValue.class), @JsonSubTypes.Type(FinalTranscriptValue.class)})
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
-    }
-
-    @JsonTypeName("SessionBegins")
-    private static final class SessionBeginsValue implements Value {
-        @JsonUnwrapped
-        private SessionStart value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private SessionBeginsValue() {}
-
-        private SessionBeginsValue(SessionStart value) {
-            this.value = value;
-        }
-
-        @Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitSessionBegins(value);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof SessionBeginsValue && equalTo((SessionBeginsValue) other);
-        }
-
-        private boolean equalTo(SessionBeginsValue other) {
-            return value.equals(other.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @Override
-        public String toString() {
-            return "ReceiveMessagePayload{" + "value: " + value + "}";
-        }
     }
 
     @JsonTypeName("PartialTranscript")
@@ -181,7 +122,7 @@ public final class ReceiveMessagePayload {
 
         @Override
         public String toString() {
-            return "ReceiveMessagePayload{" + "value: " + value + "}";
+            return "MessagePayload{" + "value: " + value + "}";
         }
     }
 
@@ -219,7 +160,7 @@ public final class ReceiveMessagePayload {
 
         @Override
         public String toString() {
-            return "ReceiveMessagePayload{" + "value: " + value + "}";
+            return "MessagePayload{" + "value: " + value + "}";
         }
     }
 
@@ -254,7 +195,7 @@ public final class ReceiveMessagePayload {
 
         @Override
         public String toString() {
-            return "ReceiveMessagePayload{" + "type: " + type + ", value: " + value + "}";
+            return "MessagePayload{" + "type: " + type + ", value: " + value + "}";
         }
     }
 }

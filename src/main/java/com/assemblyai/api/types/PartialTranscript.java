@@ -15,8 +15,6 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PartialTranscript.Builder.class)
 public final class PartialTranscript {
-    private final Optional<String> messageType;
-
     private final Optional<Integer> audioStart;
 
     private final Optional<Integer> audioEnd;
@@ -30,28 +28,18 @@ public final class PartialTranscript {
     private final Optional<OffsetDateTime> created;
 
     private PartialTranscript(
-            Optional<String> messageType,
             Optional<Integer> audioStart,
             Optional<Integer> audioEnd,
             Optional<Double> confidence,
             Optional<String> text,
             Optional<List<Word>> words,
             Optional<OffsetDateTime> created) {
-        this.messageType = messageType;
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
         this.text = text;
         this.words = words;
         this.created = created;
-    }
-
-    /**
-     * @return Describes the type of message.
-     */
-    @JsonProperty("message_type")
-    public Optional<String> getMessageType() {
-        return messageType;
     }
 
     /**
@@ -109,8 +97,7 @@ public final class PartialTranscript {
     }
 
     private boolean equalTo(PartialTranscript other) {
-        return messageType.equals(other.messageType)
-                && audioStart.equals(other.audioStart)
+        return audioStart.equals(other.audioStart)
                 && audioEnd.equals(other.audioEnd)
                 && confidence.equals(other.confidence)
                 && text.equals(other.text)
@@ -120,8 +107,7 @@ public final class PartialTranscript {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.messageType, this.audioStart, this.audioEnd, this.confidence, this.text, this.words, this.created);
+        return Objects.hash(this.audioStart, this.audioEnd, this.confidence, this.text, this.words, this.created);
     }
 
     @Override
@@ -135,8 +121,6 @@ public final class PartialTranscript {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> messageType = Optional.empty();
-
         private Optional<Integer> audioStart = Optional.empty();
 
         private Optional<Integer> audioEnd = Optional.empty();
@@ -152,24 +136,12 @@ public final class PartialTranscript {
         private Builder() {}
 
         public Builder from(PartialTranscript other) {
-            messageType(other.getMessageType());
             audioStart(other.getAudioStart());
             audioEnd(other.getAudioEnd());
             confidence(other.getConfidence());
             text(other.getText());
             words(other.getWords());
             created(other.getCreated());
-            return this;
-        }
-
-        @JsonSetter(value = "message_type", nulls = Nulls.SKIP)
-        public Builder messageType(Optional<String> messageType) {
-            this.messageType = messageType;
-            return this;
-        }
-
-        public Builder messageType(String messageType) {
-            this.messageType = Optional.of(messageType);
             return this;
         }
 
@@ -240,7 +212,7 @@ public final class PartialTranscript {
         }
 
         public PartialTranscript build() {
-            return new PartialTranscript(messageType, audioStart, audioEnd, confidence, text, words, created);
+            return new PartialTranscript(audioStart, audioEnd, confidence, text, words, created);
         }
     }
 }

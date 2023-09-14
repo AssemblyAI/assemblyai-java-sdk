@@ -9,6 +9,7 @@ import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsSrtReq
 import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsVttRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptListRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptSearchRequest;
+import com.assemblyai.api.types.RedactedAudioResult;
 import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.TranscriptList;
 import com.assemblyai.api.types.TranscriptParagraphResource;
@@ -456,5 +457,35 @@ public class TranscriptClient {
 
     public TranscriptSearchResults search(String transcriptId) {
         return search(transcriptId, TranscriptSearchRequest.builder().build());
+    }
+
+    public RedactedAudioResult getRedactedAudio(String transcriptId) {
+        return getRedactedAudio(transcriptId, null);
+    }
+
+    public RedactedAudioResult getRedactedAudio(String transcriptId, RequestOptions requestOptions) {
+        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/transcript")
+                .addPathSegment(transcriptId)
+                .addPathSegments("redacted-audio")
+                .build();
+        Request _request = new Request.Builder()
+                .url(_httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response _response = clientOptions.httpClient().newCall(_request).execute();
+            if (_response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), RedactedAudioResult.class);
+            }
+            throw new ApiError(
+                    _response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

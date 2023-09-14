@@ -14,24 +14,13 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SessionStart.Builder.class)
 public final class SessionStart {
-    private final Optional<String> messageType;
-
     private final Optional<String> sessionId;
 
     private final Optional<OffsetDateTime> expiresAt;
 
-    private SessionStart(Optional<String> messageType, Optional<String> sessionId, Optional<OffsetDateTime> expiresAt) {
-        this.messageType = messageType;
+    private SessionStart(Optional<String> sessionId, Optional<OffsetDateTime> expiresAt) {
         this.sessionId = sessionId;
         this.expiresAt = expiresAt;
-    }
-
-    /**
-     * @return Describes the type of the message.
-     */
-    @JsonProperty("message_type")
-    public Optional<String> getMessageType() {
-        return messageType;
     }
 
     /**
@@ -57,14 +46,12 @@ public final class SessionStart {
     }
 
     private boolean equalTo(SessionStart other) {
-        return messageType.equals(other.messageType)
-                && sessionId.equals(other.sessionId)
-                && expiresAt.equals(other.expiresAt);
+        return sessionId.equals(other.sessionId) && expiresAt.equals(other.expiresAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.messageType, this.sessionId, this.expiresAt);
+        return Objects.hash(this.sessionId, this.expiresAt);
     }
 
     @Override
@@ -78,8 +65,6 @@ public final class SessionStart {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> messageType = Optional.empty();
-
         private Optional<String> sessionId = Optional.empty();
 
         private Optional<OffsetDateTime> expiresAt = Optional.empty();
@@ -87,20 +72,8 @@ public final class SessionStart {
         private Builder() {}
 
         public Builder from(SessionStart other) {
-            messageType(other.getMessageType());
             sessionId(other.getSessionId());
             expiresAt(other.getExpiresAt());
-            return this;
-        }
-
-        @JsonSetter(value = "message_type", nulls = Nulls.SKIP)
-        public Builder messageType(Optional<String> messageType) {
-            this.messageType = messageType;
-            return this;
-        }
-
-        public Builder messageType(String messageType) {
-            this.messageType = Optional.of(messageType);
             return this;
         }
 
@@ -127,7 +100,7 @@ public final class SessionStart {
         }
 
         public SessionStart build() {
-            return new SessionStart(messageType, sessionId, expiresAt);
+            return new SessionStart(sessionId, expiresAt);
         }
     }
 }
