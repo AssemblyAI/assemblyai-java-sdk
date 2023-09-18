@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,9 +15,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurTaskParameters.Builder.class)
 public final class LemurTaskParameters {
-    private final List<String> transcriptIds;
+    private final Optional<List<String>> transcriptIds;
 
-    private final String prompt;
+    private final Optional<String> prompt;
 
     private final Optional<Object> context;
 
@@ -27,8 +26,8 @@ public final class LemurTaskParameters {
     private final Optional<Integer> maxOutputSize;
 
     private LemurTaskParameters(
-            List<String> transcriptIds,
-            String prompt,
+            Optional<List<String>> transcriptIds,
+            Optional<String> prompt,
             Optional<Object> context,
             Optional<LemurModels> finalModel,
             Optional<Integer> maxOutputSize) {
@@ -43,7 +42,7 @@ public final class LemurTaskParameters {
      * @return A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.
      */
     @JsonProperty("transcript_ids")
-    public List<String> getTranscriptIds() {
+    public Optional<List<String>> getTranscriptIds() {
         return transcriptIds;
     }
 
@@ -51,7 +50,7 @@ public final class LemurTaskParameters {
      * @return Your text to prompt the model to produce a desired output, including any context you want to pass into the model.
      */
     @JsonProperty("prompt")
-    public String getPrompt() {
+    public Optional<String> getPrompt() {
         return prompt;
     }
 
@@ -97,53 +96,24 @@ public final class LemurTaskParameters {
         return ObjectMappers.stringify(this);
     }
 
-    public static PromptStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface PromptStage {
-        _FinalStage prompt(String prompt);
-
-        Builder from(LemurTaskParameters other);
-    }
-
-    public interface _FinalStage {
-        LemurTaskParameters build();
-
-        _FinalStage transcriptIds(List<String> transcriptIds);
-
-        _FinalStage addTranscriptIds(String transcriptIds);
-
-        _FinalStage addAllTranscriptIds(List<String> transcriptIds);
-
-        _FinalStage context(Optional<Object> context);
-
-        _FinalStage context(Object context);
-
-        _FinalStage finalModel(Optional<LemurModels> finalModel);
-
-        _FinalStage finalModel(LemurModels finalModel);
-
-        _FinalStage maxOutputSize(Optional<Integer> maxOutputSize);
-
-        _FinalStage maxOutputSize(Integer maxOutputSize);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PromptStage, _FinalStage {
-        private String prompt;
+    public static final class Builder {
+        private Optional<List<String>> transcriptIds = Optional.empty();
 
-        private Optional<Integer> maxOutputSize = Optional.empty();
-
-        private Optional<LemurModels> finalModel = Optional.empty();
+        private Optional<String> prompt = Optional.empty();
 
         private Optional<Object> context = Optional.empty();
 
-        private List<String> transcriptIds = new ArrayList<>();
+        private Optional<LemurModels> finalModel = Optional.empty();
+
+        private Optional<Integer> maxOutputSize = Optional.empty();
 
         private Builder() {}
 
-        @Override
         public Builder from(LemurTaskParameters other) {
             transcriptIds(other.getTranscriptIds());
             prompt(other.getPrompt());
@@ -153,89 +123,61 @@ public final class LemurTaskParameters {
             return this;
         }
 
-        /**
-         * <p>Your text to prompt the model to produce a desired output, including any context you want to pass into the model.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("prompt")
-        public _FinalStage prompt(String prompt) {
+        @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
+        public Builder transcriptIds(Optional<List<String>> transcriptIds) {
+            this.transcriptIds = transcriptIds;
+            return this;
+        }
+
+        public Builder transcriptIds(List<String> transcriptIds) {
+            this.transcriptIds = Optional.of(transcriptIds);
+            return this;
+        }
+
+        @JsonSetter(value = "prompt", nulls = Nulls.SKIP)
+        public Builder prompt(Optional<String> prompt) {
             this.prompt = prompt;
             return this;
         }
 
-        /**
-         * <p>Max output size in tokens. Up to 4000 allowed.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage maxOutputSize(Integer maxOutputSize) {
-            this.maxOutputSize = Optional.of(maxOutputSize);
+        public Builder prompt(String prompt) {
+            this.prompt = Optional.of(prompt);
             return this;
         }
 
-        @Override
-        @JsonSetter(value = "max_output_size", nulls = Nulls.SKIP)
-        public _FinalStage maxOutputSize(Optional<Integer> maxOutputSize) {
-            this.maxOutputSize = maxOutputSize;
-            return this;
-        }
-
-        @Override
-        public _FinalStage finalModel(LemurModels finalModel) {
-            this.finalModel = Optional.of(finalModel);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
-        public _FinalStage finalModel(Optional<LemurModels> finalModel) {
-            this.finalModel = finalModel;
-            return this;
-        }
-
-        @Override
-        public _FinalStage context(Object context) {
-            this.context = Optional.of(context);
-            return this;
-        }
-
-        @Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public _FinalStage context(Optional<Object> context) {
+        public Builder context(Optional<Object> context) {
             this.context = context;
             return this;
         }
 
-        /**
-         * <p>A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage addAllTranscriptIds(List<String> transcriptIds) {
-            this.transcriptIds.addAll(transcriptIds);
+        public Builder context(Object context) {
+            this.context = Optional.of(context);
             return this;
         }
 
-        /**
-         * <p>A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage addTranscriptIds(String transcriptIds) {
-            this.transcriptIds.add(transcriptIds);
+        @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
+        public Builder finalModel(Optional<LemurModels> finalModel) {
+            this.finalModel = finalModel;
             return this;
         }
 
-        @Override
-        @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
-        public _FinalStage transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds.clear();
-            this.transcriptIds.addAll(transcriptIds);
+        public Builder finalModel(LemurModels finalModel) {
+            this.finalModel = Optional.of(finalModel);
             return this;
         }
 
-        @Override
+        @JsonSetter(value = "max_output_size", nulls = Nulls.SKIP)
+        public Builder maxOutputSize(Optional<Integer> maxOutputSize) {
+            this.maxOutputSize = maxOutputSize;
+            return this;
+        }
+
+        public Builder maxOutputSize(Integer maxOutputSize) {
+            this.maxOutputSize = Optional.of(maxOutputSize);
+            return this;
+        }
+
         public LemurTaskParameters build() {
             return new LemurTaskParameters(transcriptIds, prompt, context, finalModel, maxOutputSize);
         }

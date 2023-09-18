@@ -13,11 +13,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RedactedAudioResult.Builder.class)
 public final class RedactedAudioResult {
-    private final Optional<RedactedAudioStatus> status;
+    private final Optional<String> status;
 
     private final Optional<String> redactedAudioUrl;
 
-    private RedactedAudioResult(Optional<RedactedAudioStatus> status, Optional<String> redactedAudioUrl) {
+    private RedactedAudioResult(Optional<String> status, Optional<String> redactedAudioUrl) {
         this.status = status;
         this.redactedAudioUrl = redactedAudioUrl;
     }
@@ -26,7 +26,7 @@ public final class RedactedAudioResult {
      * @return The status of the redacted audio
      */
     @JsonProperty("status")
-    public Optional<RedactedAudioStatus> getStatus() {
+    public Optional<String> getStatus() {
         return status;
     }
 
@@ -64,7 +64,7 @@ public final class RedactedAudioResult {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<RedactedAudioStatus> status = Optional.empty();
+        private Optional<String> status = Optional.empty();
 
         private Optional<String> redactedAudioUrl = Optional.empty();
 
@@ -77,12 +77,12 @@ public final class RedactedAudioResult {
         }
 
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
-        public Builder status(Optional<RedactedAudioStatus> status) {
+        public Builder status(Optional<String> status) {
             this.status = status;
             return this;
         }
 
-        public Builder status(RedactedAudioStatus status) {
+        public Builder status(String status) {
             this.status = Optional.of(status);
             return this;
         }

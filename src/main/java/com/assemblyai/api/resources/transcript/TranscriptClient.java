@@ -94,9 +94,7 @@ public class TranscriptClient {
                 .addPathSegments("v2/transcript")
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
-        if (request.getAudioUrl().isPresent()) {
-            _requestBodyProperties.put("audio_url", request.getAudioUrl());
-        }
+        _requestBodyProperties.put("audio_url", request.getAudioUrl());
         if (request.getLanguageCode().isPresent()) {
             _requestBodyProperties.put("language_code", request.getLanguageCode());
         }
@@ -117,6 +115,9 @@ public class TranscriptClient {
         }
         if (request.getWebhookAuthHeaderValue().isPresent()) {
             _requestBodyProperties.put("webhook_auth_header_value", request.getWebhookAuthHeaderValue());
+        }
+        if (request.getAutoHighlights().isPresent()) {
+            _requestBodyProperties.put("auto_highlights", request.getAutoHighlights());
         }
         if (request.getAudioStartFrom().isPresent()) {
             _requestBodyProperties.put("audio_start_from", request.getAudioStartFrom());
@@ -190,6 +191,12 @@ public class TranscriptClient {
         if (request.getSummaryType().isPresent()) {
             _requestBodyProperties.put("summary_type", request.getSummaryType());
         }
+        if (request.getCustomTopics().isPresent()) {
+            _requestBodyProperties.put("custom_topics", request.getCustomTopics());
+        }
+        if (request.getTopics().isPresent()) {
+            _requestBodyProperties.put("topics", request.getTopics());
+        }
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
@@ -215,10 +222,6 @@ public class TranscriptClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Transcript create() {
-        return create(CreateTranscriptParameters.builder().build());
     }
 
     public Transcript get(String transcriptId) {

@@ -14,12 +14,12 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptContentSafetyLabels.Builder.class)
 public final class TranscriptContentSafetyLabels {
-    private final Optional<AudioIntellegenceModelStatus> status;
+    private final Optional<AudioIntelligenceModelStatus> status;
 
     private final Optional<List<ContentSafetyLabelResult>> results;
 
     private TranscriptContentSafetyLabels(
-            Optional<AudioIntellegenceModelStatus> status, Optional<List<ContentSafetyLabelResult>> results) {
+            Optional<AudioIntelligenceModelStatus> status, Optional<List<ContentSafetyLabelResult>> results) {
         this.status = status;
         this.results = results;
     }
@@ -28,7 +28,7 @@ public final class TranscriptContentSafetyLabels {
      * @return Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.
      */
     @JsonProperty("status")
-    public Optional<AudioIntellegenceModelStatus> getStatus() {
+    public Optional<AudioIntelligenceModelStatus> getStatus() {
         return status;
     }
 
@@ -63,7 +63,7 @@ public final class TranscriptContentSafetyLabels {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<AudioIntellegenceModelStatus> status = Optional.empty();
+        private Optional<AudioIntelligenceModelStatus> status = Optional.empty();
 
         private Optional<List<ContentSafetyLabelResult>> results = Optional.empty();
 
@@ -76,12 +76,12 @@ public final class TranscriptContentSafetyLabels {
         }
 
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
-        public Builder status(Optional<AudioIntellegenceModelStatus> status) {
+        public Builder status(Optional<AudioIntelligenceModelStatus> status) {
             this.status = status;
             return this;
         }
 
-        public Builder status(AudioIntellegenceModelStatus status) {
+        public Builder status(AudioIntelligenceModelStatus status) {
             this.status = Optional.of(status);
             return this;
         }

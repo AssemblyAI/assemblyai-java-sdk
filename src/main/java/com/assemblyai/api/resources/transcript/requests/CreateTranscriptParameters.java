@@ -21,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateTranscriptParameters.Builder.class)
 public final class CreateTranscriptParameters {
-    private final Optional<String> audioUrl;
+    private final String audioUrl;
 
     private final Optional<TranscriptLanguageCode> languageCode;
 
@@ -36,6 +36,8 @@ public final class CreateTranscriptParameters {
     private final Optional<String> webhookAuthHeaderName;
 
     private final Optional<String> webhookAuthHeaderValue;
+
+    private final Optional<Boolean> autoHighlights;
 
     private final Optional<Integer> audioStartFrom;
 
@@ -85,8 +87,12 @@ public final class CreateTranscriptParameters {
 
     private final Optional<SummaryType> summaryType;
 
+    private final Optional<Boolean> customTopics;
+
+    private final Optional<List<String>> topics;
+
     private CreateTranscriptParameters(
-            Optional<String> audioUrl,
+            String audioUrl,
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
@@ -94,6 +100,7 @@ public final class CreateTranscriptParameters {
             Optional<String> webhookUrl,
             Optional<String> webhookAuthHeaderName,
             Optional<String> webhookAuthHeaderValue,
+            Optional<Boolean> autoHighlights,
             Optional<Integer> audioStartFrom,
             Optional<Integer> audioEndAt,
             Optional<List<String>> wordBoost,
@@ -117,7 +124,9 @@ public final class CreateTranscriptParameters {
             Optional<Double> speechThreshold,
             Optional<Boolean> summarization,
             Optional<SummaryModel> summaryModel,
-            Optional<SummaryType> summaryType) {
+            Optional<SummaryType> summaryType,
+            Optional<Boolean> customTopics,
+            Optional<List<String>> topics) {
         this.audioUrl = audioUrl;
         this.languageCode = languageCode;
         this.punctuate = punctuate;
@@ -126,6 +135,7 @@ public final class CreateTranscriptParameters {
         this.webhookUrl = webhookUrl;
         this.webhookAuthHeaderName = webhookAuthHeaderName;
         this.webhookAuthHeaderValue = webhookAuthHeaderValue;
+        this.autoHighlights = autoHighlights;
         this.audioStartFrom = audioStartFrom;
         this.audioEndAt = audioEndAt;
         this.wordBoost = wordBoost;
@@ -150,18 +160,21 @@ public final class CreateTranscriptParameters {
         this.summarization = summarization;
         this.summaryModel = summaryModel;
         this.summaryType = summaryType;
+        this.customTopics = customTopics;
+        this.topics = topics;
     }
 
     /**
      * @return The URL of the audio or video file to transcribe.
      */
     @JsonProperty("audio_url")
-    public Optional<String> getAudioUrl() {
+    public String getAudioUrl() {
         return audioUrl;
     }
 
     /**
-     * @return The language of your audio file. Possible values are found in <a href="https://www.assemblyai.com/docs/Concepts/supported_languages">Supported Languages</a>. The default value is 'en_us'.
+     * @return The language of your audio file. Possible values are found in <a href="https://www.assemblyai.com/docs/Concepts/supported_languages">Supported Languages</a>.
+     * The default value is 'en_us'.
      */
     @JsonProperty("language_code")
     public Optional<TranscriptLanguageCode> getLanguageCode() {
@@ -214,6 +227,14 @@ public final class CreateTranscriptParameters {
     @JsonProperty("webhook_auth_header_value")
     public Optional<String> getWebhookAuthHeaderValue() {
         return webhookAuthHeaderValue;
+    }
+
+    /**
+     * @return Whether Key Phrases was enabled in the transcription request, either true or false
+     */
+    @JsonProperty("auto_highlights")
+    public Optional<Boolean> getAutoHighlights() {
+        return autoHighlights;
     }
 
     /**
@@ -377,7 +398,8 @@ public final class CreateTranscriptParameters {
     }
 
     /**
-     * @return Reject audio files that contain less than this fraction of speech. Valid values are in the range [0, 1] inclusive.
+     * @return Reject audio files that contain less than this fraction of speech.
+     * Valid values are in the range [0, 1] inclusive.
      */
     @JsonProperty("speech_threshold")
     public Optional<Double> getSpeechThreshold() {
@@ -408,6 +430,22 @@ public final class CreateTranscriptParameters {
         return summaryType;
     }
 
+    /**
+     * @return Whether custom topics was enabled in the transcription request, either true or false
+     */
+    @JsonProperty("custom_topics")
+    public Optional<Boolean> getCustomTopics() {
+        return customTopics;
+    }
+
+    /**
+     * @return The list of custom topics provided if custom topics was enabled in the transcription request
+     */
+    @JsonProperty("topics")
+    public Optional<List<String>> getTopics() {
+        return topics;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -423,6 +461,7 @@ public final class CreateTranscriptParameters {
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookAuthHeaderName.equals(other.webhookAuthHeaderName)
                 && webhookAuthHeaderValue.equals(other.webhookAuthHeaderValue)
+                && autoHighlights.equals(other.autoHighlights)
                 && audioStartFrom.equals(other.audioStartFrom)
                 && audioEndAt.equals(other.audioEndAt)
                 && wordBoost.equals(other.wordBoost)
@@ -446,7 +485,9 @@ public final class CreateTranscriptParameters {
                 && speechThreshold.equals(other.speechThreshold)
                 && summarization.equals(other.summarization)
                 && summaryModel.equals(other.summaryModel)
-                && summaryType.equals(other.summaryType);
+                && summaryType.equals(other.summaryType)
+                && customTopics.equals(other.customTopics)
+                && topics.equals(other.topics);
     }
 
     @Override
@@ -460,6 +501,7 @@ public final class CreateTranscriptParameters {
                 this.webhookUrl,
                 this.webhookAuthHeaderName,
                 this.webhookAuthHeaderValue,
+                this.autoHighlights,
                 this.audioStartFrom,
                 this.audioEndAt,
                 this.wordBoost,
@@ -483,7 +525,9 @@ public final class CreateTranscriptParameters {
                 this.speechThreshold,
                 this.summarization,
                 this.summaryModel,
-                this.summaryType);
+                this.summaryType,
+                this.customTopics,
+                this.topics);
     }
 
     @Override
@@ -491,78 +535,231 @@ public final class CreateTranscriptParameters {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static AudioUrlStage builder() {
         return new Builder();
     }
 
+    public interface AudioUrlStage {
+        _FinalStage audioUrl(String audioUrl);
+
+        Builder from(CreateTranscriptParameters other);
+    }
+
+    public interface _FinalStage {
+        CreateTranscriptParameters build();
+
+        _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
+
+        _FinalStage languageCode(TranscriptLanguageCode languageCode);
+
+        _FinalStage punctuate(Optional<Boolean> punctuate);
+
+        _FinalStage punctuate(Boolean punctuate);
+
+        _FinalStage formatText(Optional<Boolean> formatText);
+
+        _FinalStage formatText(Boolean formatText);
+
+        _FinalStage dualChannel(Optional<Boolean> dualChannel);
+
+        _FinalStage dualChannel(Boolean dualChannel);
+
+        _FinalStage webhookUrl(Optional<String> webhookUrl);
+
+        _FinalStage webhookUrl(String webhookUrl);
+
+        _FinalStage webhookAuthHeaderName(Optional<String> webhookAuthHeaderName);
+
+        _FinalStage webhookAuthHeaderName(String webhookAuthHeaderName);
+
+        _FinalStage webhookAuthHeaderValue(Optional<String> webhookAuthHeaderValue);
+
+        _FinalStage webhookAuthHeaderValue(String webhookAuthHeaderValue);
+
+        _FinalStage autoHighlights(Optional<Boolean> autoHighlights);
+
+        _FinalStage autoHighlights(Boolean autoHighlights);
+
+        _FinalStage audioStartFrom(Optional<Integer> audioStartFrom);
+
+        _FinalStage audioStartFrom(Integer audioStartFrom);
+
+        _FinalStage audioEndAt(Optional<Integer> audioEndAt);
+
+        _FinalStage audioEndAt(Integer audioEndAt);
+
+        _FinalStage wordBoost(Optional<List<String>> wordBoost);
+
+        _FinalStage wordBoost(List<String> wordBoost);
+
+        _FinalStage boostParam(Optional<TranscriptBoostParam> boostParam);
+
+        _FinalStage boostParam(TranscriptBoostParam boostParam);
+
+        _FinalStage filterProfanity(Optional<Boolean> filterProfanity);
+
+        _FinalStage filterProfanity(Boolean filterProfanity);
+
+        _FinalStage redactPii(Optional<Boolean> redactPii);
+
+        _FinalStage redactPii(Boolean redactPii);
+
+        _FinalStage redactPiiAudio(Optional<Boolean> redactPiiAudio);
+
+        _FinalStage redactPiiAudio(Boolean redactPiiAudio);
+
+        _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality);
+
+        _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
+
+        _FinalStage redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies);
+
+        _FinalStage redactPiiPolicies(List<PiiPolicies> redactPiiPolicies);
+
+        _FinalStage redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub);
+
+        _FinalStage redactPiiSub(SubstitutionPolicy redactPiiSub);
+
+        _FinalStage speakerLabels(Optional<Boolean> speakerLabels);
+
+        _FinalStage speakerLabels(Boolean speakerLabels);
+
+        _FinalStage speakersExpected(Optional<Integer> speakersExpected);
+
+        _FinalStage speakersExpected(Integer speakersExpected);
+
+        _FinalStage contentSafety(Optional<Boolean> contentSafety);
+
+        _FinalStage contentSafety(Boolean contentSafety);
+
+        _FinalStage iabCategories(Optional<Boolean> iabCategories);
+
+        _FinalStage iabCategories(Boolean iabCategories);
+
+        _FinalStage languageDetection(Optional<Boolean> languageDetection);
+
+        _FinalStage languageDetection(Boolean languageDetection);
+
+        _FinalStage customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling);
+
+        _FinalStage customSpelling(List<TranscriptCustomSpelling> customSpelling);
+
+        _FinalStage disfluencies(Optional<Boolean> disfluencies);
+
+        _FinalStage disfluencies(Boolean disfluencies);
+
+        _FinalStage sentimentAnalysis(Optional<Boolean> sentimentAnalysis);
+
+        _FinalStage sentimentAnalysis(Boolean sentimentAnalysis);
+
+        _FinalStage autoChapters(Optional<Boolean> autoChapters);
+
+        _FinalStage autoChapters(Boolean autoChapters);
+
+        _FinalStage entityDetection(Optional<Boolean> entityDetection);
+
+        _FinalStage entityDetection(Boolean entityDetection);
+
+        _FinalStage speechThreshold(Optional<Double> speechThreshold);
+
+        _FinalStage speechThreshold(Double speechThreshold);
+
+        _FinalStage summarization(Optional<Boolean> summarization);
+
+        _FinalStage summarization(Boolean summarization);
+
+        _FinalStage summaryModel(Optional<SummaryModel> summaryModel);
+
+        _FinalStage summaryModel(SummaryModel summaryModel);
+
+        _FinalStage summaryType(Optional<SummaryType> summaryType);
+
+        _FinalStage summaryType(SummaryType summaryType);
+
+        _FinalStage customTopics(Optional<Boolean> customTopics);
+
+        _FinalStage customTopics(Boolean customTopics);
+
+        _FinalStage topics(Optional<List<String>> topics);
+
+        _FinalStage topics(List<String> topics);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<String> audioUrl = Optional.empty();
+    public static final class Builder implements AudioUrlStage, _FinalStage {
+        private String audioUrl;
 
-        private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
+        private Optional<List<String>> topics = Optional.empty();
 
-        private Optional<Boolean> punctuate = Optional.empty();
-
-        private Optional<Boolean> formatText = Optional.empty();
-
-        private Optional<Boolean> dualChannel = Optional.empty();
-
-        private Optional<String> webhookUrl = Optional.empty();
-
-        private Optional<String> webhookAuthHeaderName = Optional.empty();
-
-        private Optional<String> webhookAuthHeaderValue = Optional.empty();
-
-        private Optional<Integer> audioStartFrom = Optional.empty();
-
-        private Optional<Integer> audioEndAt = Optional.empty();
-
-        private Optional<List<String>> wordBoost = Optional.empty();
-
-        private Optional<TranscriptBoostParam> boostParam = Optional.empty();
-
-        private Optional<Boolean> filterProfanity = Optional.empty();
-
-        private Optional<Boolean> redactPii = Optional.empty();
-
-        private Optional<Boolean> redactPiiAudio = Optional.empty();
-
-        private Optional<String> redactPiiAudioQuality = Optional.empty();
-
-        private Optional<List<PiiPolicies>> redactPiiPolicies = Optional.empty();
-
-        private Optional<SubstitutionPolicy> redactPiiSub = Optional.empty();
-
-        private Optional<Boolean> speakerLabels = Optional.empty();
-
-        private Optional<Integer> speakersExpected = Optional.empty();
-
-        private Optional<Boolean> contentSafety = Optional.empty();
-
-        private Optional<Boolean> iabCategories = Optional.empty();
-
-        private Optional<Boolean> languageDetection = Optional.empty();
-
-        private Optional<List<TranscriptCustomSpelling>> customSpelling = Optional.empty();
-
-        private Optional<Boolean> disfluencies = Optional.empty();
-
-        private Optional<Boolean> sentimentAnalysis = Optional.empty();
-
-        private Optional<Boolean> autoChapters = Optional.empty();
-
-        private Optional<Boolean> entityDetection = Optional.empty();
-
-        private Optional<Double> speechThreshold = Optional.empty();
-
-        private Optional<Boolean> summarization = Optional.empty();
-
-        private Optional<SummaryModel> summaryModel = Optional.empty();
+        private Optional<Boolean> customTopics = Optional.empty();
 
         private Optional<SummaryType> summaryType = Optional.empty();
 
+        private Optional<SummaryModel> summaryModel = Optional.empty();
+
+        private Optional<Boolean> summarization = Optional.empty();
+
+        private Optional<Double> speechThreshold = Optional.empty();
+
+        private Optional<Boolean> entityDetection = Optional.empty();
+
+        private Optional<Boolean> autoChapters = Optional.empty();
+
+        private Optional<Boolean> sentimentAnalysis = Optional.empty();
+
+        private Optional<Boolean> disfluencies = Optional.empty();
+
+        private Optional<List<TranscriptCustomSpelling>> customSpelling = Optional.empty();
+
+        private Optional<Boolean> languageDetection = Optional.empty();
+
+        private Optional<Boolean> iabCategories = Optional.empty();
+
+        private Optional<Boolean> contentSafety = Optional.empty();
+
+        private Optional<Integer> speakersExpected = Optional.empty();
+
+        private Optional<Boolean> speakerLabels = Optional.empty();
+
+        private Optional<SubstitutionPolicy> redactPiiSub = Optional.empty();
+
+        private Optional<List<PiiPolicies>> redactPiiPolicies = Optional.empty();
+
+        private Optional<String> redactPiiAudioQuality = Optional.empty();
+
+        private Optional<Boolean> redactPiiAudio = Optional.empty();
+
+        private Optional<Boolean> redactPii = Optional.empty();
+
+        private Optional<Boolean> filterProfanity = Optional.empty();
+
+        private Optional<TranscriptBoostParam> boostParam = Optional.empty();
+
+        private Optional<List<String>> wordBoost = Optional.empty();
+
+        private Optional<Integer> audioEndAt = Optional.empty();
+
+        private Optional<Integer> audioStartFrom = Optional.empty();
+
+        private Optional<Boolean> autoHighlights = Optional.empty();
+
+        private Optional<String> webhookAuthHeaderValue = Optional.empty();
+
+        private Optional<String> webhookAuthHeaderName = Optional.empty();
+
+        private Optional<String> webhookUrl = Optional.empty();
+
+        private Optional<Boolean> dualChannel = Optional.empty();
+
+        private Optional<Boolean> formatText = Optional.empty();
+
+        private Optional<Boolean> punctuate = Optional.empty();
+
+        private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
+
         private Builder() {}
 
+        @Override
         public Builder from(CreateTranscriptParameters other) {
             audioUrl(other.getAudioUrl());
             languageCode(other.getLanguageCode());
@@ -572,6 +769,7 @@ public final class CreateTranscriptParameters {
             webhookUrl(other.getWebhookUrl());
             webhookAuthHeaderName(other.getWebhookAuthHeaderName());
             webhookAuthHeaderValue(other.getWebhookAuthHeaderValue());
+            autoHighlights(other.getAutoHighlights());
             audioStartFrom(other.getAudioStartFrom());
             audioEndAt(other.getAudioEndAt());
             wordBoost(other.getWordBoost());
@@ -596,361 +794,603 @@ public final class CreateTranscriptParameters {
             summarization(other.getSummarization());
             summaryModel(other.getSummaryModel());
             summaryType(other.getSummaryType());
+            customTopics(other.getCustomTopics());
+            topics(other.getTopics());
             return this;
         }
 
-        @JsonSetter(value = "audio_url", nulls = Nulls.SKIP)
-        public Builder audioUrl(Optional<String> audioUrl) {
+        /**
+         * <p>The URL of the audio or video file to transcribe.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        @JsonSetter("audio_url")
+        public _FinalStage audioUrl(String audioUrl) {
             this.audioUrl = audioUrl;
             return this;
         }
 
-        public Builder audioUrl(String audioUrl) {
-            this.audioUrl = Optional.of(audioUrl);
+        /**
+         * <p>The list of custom topics provided if custom topics was enabled in the transcription request</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage topics(List<String> topics) {
+            this.topics = Optional.of(topics);
             return this;
         }
 
-        @JsonSetter(value = "language_code", nulls = Nulls.SKIP)
-        public Builder languageCode(Optional<TranscriptLanguageCode> languageCode) {
-            this.languageCode = languageCode;
+        @Override
+        @JsonSetter(value = "topics", nulls = Nulls.SKIP)
+        public _FinalStage topics(Optional<List<String>> topics) {
+            this.topics = topics;
             return this;
         }
 
-        public Builder languageCode(TranscriptLanguageCode languageCode) {
-            this.languageCode = Optional.of(languageCode);
+        /**
+         * <p>Whether custom topics was enabled in the transcription request, either true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage customTopics(Boolean customTopics) {
+            this.customTopics = Optional.of(customTopics);
             return this;
         }
 
-        @JsonSetter(value = "punctuate", nulls = Nulls.SKIP)
-        public Builder punctuate(Optional<Boolean> punctuate) {
-            this.punctuate = punctuate;
+        @Override
+        @JsonSetter(value = "custom_topics", nulls = Nulls.SKIP)
+        public _FinalStage customTopics(Optional<Boolean> customTopics) {
+            this.customTopics = customTopics;
             return this;
         }
 
-        public Builder punctuate(Boolean punctuate) {
-            this.punctuate = Optional.of(punctuate);
-            return this;
-        }
-
-        @JsonSetter(value = "format_text", nulls = Nulls.SKIP)
-        public Builder formatText(Optional<Boolean> formatText) {
-            this.formatText = formatText;
-            return this;
-        }
-
-        public Builder formatText(Boolean formatText) {
-            this.formatText = Optional.of(formatText);
-            return this;
-        }
-
-        @JsonSetter(value = "dual_channel", nulls = Nulls.SKIP)
-        public Builder dualChannel(Optional<Boolean> dualChannel) {
-            this.dualChannel = dualChannel;
-            return this;
-        }
-
-        public Builder dualChannel(Boolean dualChannel) {
-            this.dualChannel = Optional.of(dualChannel);
-            return this;
-        }
-
-        @JsonSetter(value = "webhook_url", nulls = Nulls.SKIP)
-        public Builder webhookUrl(Optional<String> webhookUrl) {
-            this.webhookUrl = webhookUrl;
-            return this;
-        }
-
-        public Builder webhookUrl(String webhookUrl) {
-            this.webhookUrl = Optional.of(webhookUrl);
-            return this;
-        }
-
-        @JsonSetter(value = "webhook_auth_header_name", nulls = Nulls.SKIP)
-        public Builder webhookAuthHeaderName(Optional<String> webhookAuthHeaderName) {
-            this.webhookAuthHeaderName = webhookAuthHeaderName;
-            return this;
-        }
-
-        public Builder webhookAuthHeaderName(String webhookAuthHeaderName) {
-            this.webhookAuthHeaderName = Optional.of(webhookAuthHeaderName);
-            return this;
-        }
-
-        @JsonSetter(value = "webhook_auth_header_value", nulls = Nulls.SKIP)
-        public Builder webhookAuthHeaderValue(Optional<String> webhookAuthHeaderValue) {
-            this.webhookAuthHeaderValue = webhookAuthHeaderValue;
-            return this;
-        }
-
-        public Builder webhookAuthHeaderValue(String webhookAuthHeaderValue) {
-            this.webhookAuthHeaderValue = Optional.of(webhookAuthHeaderValue);
-            return this;
-        }
-
-        @JsonSetter(value = "audio_start_from", nulls = Nulls.SKIP)
-        public Builder audioStartFrom(Optional<Integer> audioStartFrom) {
-            this.audioStartFrom = audioStartFrom;
-            return this;
-        }
-
-        public Builder audioStartFrom(Integer audioStartFrom) {
-            this.audioStartFrom = Optional.of(audioStartFrom);
-            return this;
-        }
-
-        @JsonSetter(value = "audio_end_at", nulls = Nulls.SKIP)
-        public Builder audioEndAt(Optional<Integer> audioEndAt) {
-            this.audioEndAt = audioEndAt;
-            return this;
-        }
-
-        public Builder audioEndAt(Integer audioEndAt) {
-            this.audioEndAt = Optional.of(audioEndAt);
-            return this;
-        }
-
-        @JsonSetter(value = "word_boost", nulls = Nulls.SKIP)
-        public Builder wordBoost(Optional<List<String>> wordBoost) {
-            this.wordBoost = wordBoost;
-            return this;
-        }
-
-        public Builder wordBoost(List<String> wordBoost) {
-            this.wordBoost = Optional.of(wordBoost);
-            return this;
-        }
-
-        @JsonSetter(value = "boost_param", nulls = Nulls.SKIP)
-        public Builder boostParam(Optional<TranscriptBoostParam> boostParam) {
-            this.boostParam = boostParam;
-            return this;
-        }
-
-        public Builder boostParam(TranscriptBoostParam boostParam) {
-            this.boostParam = Optional.of(boostParam);
-            return this;
-        }
-
-        @JsonSetter(value = "filter_profanity", nulls = Nulls.SKIP)
-        public Builder filterProfanity(Optional<Boolean> filterProfanity) {
-            this.filterProfanity = filterProfanity;
-            return this;
-        }
-
-        public Builder filterProfanity(Boolean filterProfanity) {
-            this.filterProfanity = Optional.of(filterProfanity);
-            return this;
-        }
-
-        @JsonSetter(value = "redact_pii", nulls = Nulls.SKIP)
-        public Builder redactPii(Optional<Boolean> redactPii) {
-            this.redactPii = redactPii;
-            return this;
-        }
-
-        public Builder redactPii(Boolean redactPii) {
-            this.redactPii = Optional.of(redactPii);
-            return this;
-        }
-
-        @JsonSetter(value = "redact_pii_audio", nulls = Nulls.SKIP)
-        public Builder redactPiiAudio(Optional<Boolean> redactPiiAudio) {
-            this.redactPiiAudio = redactPiiAudio;
-            return this;
-        }
-
-        public Builder redactPiiAudio(Boolean redactPiiAudio) {
-            this.redactPiiAudio = Optional.of(redactPiiAudio);
-            return this;
-        }
-
-        @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
-        public Builder redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
-            this.redactPiiAudioQuality = redactPiiAudioQuality;
-            return this;
-        }
-
-        public Builder redactPiiAudioQuality(String redactPiiAudioQuality) {
-            this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
-            return this;
-        }
-
-        @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
-        public Builder redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies) {
-            this.redactPiiPolicies = redactPiiPolicies;
-            return this;
-        }
-
-        public Builder redactPiiPolicies(List<PiiPolicies> redactPiiPolicies) {
-            this.redactPiiPolicies = Optional.of(redactPiiPolicies);
-            return this;
-        }
-
-        @JsonSetter(value = "redact_pii_sub", nulls = Nulls.SKIP)
-        public Builder redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub) {
-            this.redactPiiSub = redactPiiSub;
-            return this;
-        }
-
-        public Builder redactPiiSub(SubstitutionPolicy redactPiiSub) {
-            this.redactPiiSub = Optional.of(redactPiiSub);
-            return this;
-        }
-
-        @JsonSetter(value = "speaker_labels", nulls = Nulls.SKIP)
-        public Builder speakerLabels(Optional<Boolean> speakerLabels) {
-            this.speakerLabels = speakerLabels;
-            return this;
-        }
-
-        public Builder speakerLabels(Boolean speakerLabels) {
-            this.speakerLabels = Optional.of(speakerLabels);
-            return this;
-        }
-
-        @JsonSetter(value = "speakers_expected", nulls = Nulls.SKIP)
-        public Builder speakersExpected(Optional<Integer> speakersExpected) {
-            this.speakersExpected = speakersExpected;
-            return this;
-        }
-
-        public Builder speakersExpected(Integer speakersExpected) {
-            this.speakersExpected = Optional.of(speakersExpected);
-            return this;
-        }
-
-        @JsonSetter(value = "content_safety", nulls = Nulls.SKIP)
-        public Builder contentSafety(Optional<Boolean> contentSafety) {
-            this.contentSafety = contentSafety;
-            return this;
-        }
-
-        public Builder contentSafety(Boolean contentSafety) {
-            this.contentSafety = Optional.of(contentSafety);
-            return this;
-        }
-
-        @JsonSetter(value = "iab_categories", nulls = Nulls.SKIP)
-        public Builder iabCategories(Optional<Boolean> iabCategories) {
-            this.iabCategories = iabCategories;
-            return this;
-        }
-
-        public Builder iabCategories(Boolean iabCategories) {
-            this.iabCategories = Optional.of(iabCategories);
-            return this;
-        }
-
-        @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
-        public Builder languageDetection(Optional<Boolean> languageDetection) {
-            this.languageDetection = languageDetection;
-            return this;
-        }
-
-        public Builder languageDetection(Boolean languageDetection) {
-            this.languageDetection = Optional.of(languageDetection);
-            return this;
-        }
-
-        @JsonSetter(value = "custom_spelling", nulls = Nulls.SKIP)
-        public Builder customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling) {
-            this.customSpelling = customSpelling;
-            return this;
-        }
-
-        public Builder customSpelling(List<TranscriptCustomSpelling> customSpelling) {
-            this.customSpelling = Optional.of(customSpelling);
-            return this;
-        }
-
-        @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
-        public Builder disfluencies(Optional<Boolean> disfluencies) {
-            this.disfluencies = disfluencies;
-            return this;
-        }
-
-        public Builder disfluencies(Boolean disfluencies) {
-            this.disfluencies = Optional.of(disfluencies);
-            return this;
-        }
-
-        @JsonSetter(value = "sentiment_analysis", nulls = Nulls.SKIP)
-        public Builder sentimentAnalysis(Optional<Boolean> sentimentAnalysis) {
-            this.sentimentAnalysis = sentimentAnalysis;
-            return this;
-        }
-
-        public Builder sentimentAnalysis(Boolean sentimentAnalysis) {
-            this.sentimentAnalysis = Optional.of(sentimentAnalysis);
-            return this;
-        }
-
-        @JsonSetter(value = "auto_chapters", nulls = Nulls.SKIP)
-        public Builder autoChapters(Optional<Boolean> autoChapters) {
-            this.autoChapters = autoChapters;
-            return this;
-        }
-
-        public Builder autoChapters(Boolean autoChapters) {
-            this.autoChapters = Optional.of(autoChapters);
-            return this;
-        }
-
-        @JsonSetter(value = "entity_detection", nulls = Nulls.SKIP)
-        public Builder entityDetection(Optional<Boolean> entityDetection) {
-            this.entityDetection = entityDetection;
-            return this;
-        }
-
-        public Builder entityDetection(Boolean entityDetection) {
-            this.entityDetection = Optional.of(entityDetection);
-            return this;
-        }
-
-        @JsonSetter(value = "speech_threshold", nulls = Nulls.SKIP)
-        public Builder speechThreshold(Optional<Double> speechThreshold) {
-            this.speechThreshold = speechThreshold;
-            return this;
-        }
-
-        public Builder speechThreshold(Double speechThreshold) {
-            this.speechThreshold = Optional.of(speechThreshold);
-            return this;
-        }
-
-        @JsonSetter(value = "summarization", nulls = Nulls.SKIP)
-        public Builder summarization(Optional<Boolean> summarization) {
-            this.summarization = summarization;
-            return this;
-        }
-
-        public Builder summarization(Boolean summarization) {
-            this.summarization = Optional.of(summarization);
-            return this;
-        }
-
-        @JsonSetter(value = "summary_model", nulls = Nulls.SKIP)
-        public Builder summaryModel(Optional<SummaryModel> summaryModel) {
-            this.summaryModel = summaryModel;
-            return this;
-        }
-
-        public Builder summaryModel(SummaryModel summaryModel) {
-            this.summaryModel = Optional.of(summaryModel);
-            return this;
-        }
-
-        @JsonSetter(value = "summary_type", nulls = Nulls.SKIP)
-        public Builder summaryType(Optional<SummaryType> summaryType) {
-            this.summaryType = summaryType;
-            return this;
-        }
-
-        public Builder summaryType(SummaryType summaryType) {
+        /**
+         * <p>The type of summary</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage summaryType(SummaryType summaryType) {
             this.summaryType = Optional.of(summaryType);
             return this;
         }
 
+        @Override
+        @JsonSetter(value = "summary_type", nulls = Nulls.SKIP)
+        public _FinalStage summaryType(Optional<SummaryType> summaryType) {
+            this.summaryType = summaryType;
+            return this;
+        }
+
+        /**
+         * <p>The model to summarize the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage summaryModel(SummaryModel summaryModel) {
+            this.summaryModel = Optional.of(summaryModel);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "summary_model", nulls = Nulls.SKIP)
+        public _FinalStage summaryModel(Optional<SummaryModel> summaryModel) {
+            this.summaryModel = summaryModel;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage summarization(Boolean summarization) {
+            this.summarization = Optional.of(summarization);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "summarization", nulls = Nulls.SKIP)
+        public _FinalStage summarization(Optional<Boolean> summarization) {
+            this.summarization = summarization;
+            return this;
+        }
+
+        /**
+         * <p>Reject audio files that contain less than this fraction of speech.
+         * Valid values are in the range [0, 1] inclusive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage speechThreshold(Double speechThreshold) {
+            this.speechThreshold = Optional.of(speechThreshold);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speech_threshold", nulls = Nulls.SKIP)
+        public _FinalStage speechThreshold(Optional<Double> speechThreshold) {
+            this.speechThreshold = speechThreshold;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity Detection</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage entityDetection(Boolean entityDetection) {
+            this.entityDetection = Optional.of(entityDetection);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "entity_detection", nulls = Nulls.SKIP)
+        public _FinalStage entityDetection(Optional<Boolean> entityDetection) {
+            this.entityDetection = entityDetection;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/auto_chapters">Auto Chapters</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage autoChapters(Boolean autoChapters) {
+            this.autoChapters = Optional.of(autoChapters);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "auto_chapters", nulls = Nulls.SKIP)
+        public _FinalStage autoChapters(Optional<Boolean> autoChapters) {
+            this.autoChapters = autoChapters;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment Analysis</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage sentimentAnalysis(Boolean sentimentAnalysis) {
+            this.sentimentAnalysis = Optional.of(sentimentAnalysis);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "sentiment_analysis", nulls = Nulls.SKIP)
+        public _FinalStage sentimentAnalysis(Optional<Boolean> sentimentAnalysis) {
+            this.sentimentAnalysis = sentimentAnalysis;
+            return this;
+        }
+
+        /**
+         * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage disfluencies(Boolean disfluencies) {
+            this.disfluencies = Optional.of(disfluencies);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
+        public _FinalStage disfluencies(Optional<Boolean> disfluencies) {
+            this.disfluencies = disfluencies;
+            return this;
+        }
+
+        /**
+         * <p>Customize how words are spelled and formatted using to and from values</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage customSpelling(List<TranscriptCustomSpelling> customSpelling) {
+            this.customSpelling = Optional.of(customSpelling);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "custom_spelling", nulls = Nulls.SKIP)
+        public _FinalStage customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling) {
+            this.customSpelling = customSpelling;
+            return this;
+        }
+
+        /**
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage languageDetection(Boolean languageDetection) {
+            this.languageDetection = Optional.of(languageDetection);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
+        public _FinalStage languageDetection(Optional<Boolean> languageDetection) {
+            this.languageDetection = languageDetection;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage iabCategories(Boolean iabCategories) {
+            this.iabCategories = Optional.of(iabCategories);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "iab_categories", nulls = Nulls.SKIP)
+        public _FinalStage iabCategories(Optional<Boolean> iabCategories) {
+            this.iabCategories = iabCategories;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content Moderation</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage contentSafety(Boolean contentSafety) {
+            this.contentSafety = Optional.of(contentSafety);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "content_safety", nulls = Nulls.SKIP)
+        public _FinalStage contentSafety(Optional<Boolean> contentSafety) {
+            this.contentSafety = contentSafety;
+            return this;
+        }
+
+        /**
+         * <p>Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage speakersExpected(Integer speakersExpected) {
+            this.speakersExpected = Optional.of(speakersExpected);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speakers_expected", nulls = Nulls.SKIP)
+        public _FinalStage speakersExpected(Optional<Integer> speakersExpected) {
+            this.speakersExpected = speakersExpected;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a>, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage speakerLabels(Boolean speakerLabels) {
+            this.speakerLabels = Optional.of(speakerLabels);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speaker_labels", nulls = Nulls.SKIP)
+        public _FinalStage speakerLabels(Optional<Boolean> speakerLabels) {
+            this.speakerLabels = speakerLabels;
+            return this;
+        }
+
+        /**
+         * <p>The replacement logic for detected PII, can be &quot;entity_type&quot; or &quot;hash&quot;. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage redactPiiSub(SubstitutionPolicy redactPiiSub) {
+            this.redactPiiSub = Optional.of(redactPiiSub);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redact_pii_sub", nulls = Nulls.SKIP)
+        public _FinalStage redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub) {
+            this.redactPiiSub = redactPiiSub;
+            return this;
+        }
+
+        /**
+         * <p>The list of PII Redaction policies to enable. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage redactPiiPolicies(List<PiiPolicies> redactPiiPolicies) {
+            this.redactPiiPolicies = Optional.of(redactPiiPolicies);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
+        public _FinalStage redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies) {
+            this.redactPiiPolicies = redactPiiPolicies;
+            return this;
+        }
+
+        /**
+         * <p>Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality) {
+            this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
+        public _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
+            this.redactPiiAudioQuality = redactPiiAudioQuality;
+            return this;
+        }
+
+        /**
+         * <p>Generate a copy of the original media file with spoken PII &quot;beeped&quot; out, can be true or false. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage redactPiiAudio(Boolean redactPiiAudio) {
+            this.redactPiiAudio = Optional.of(redactPiiAudio);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redact_pii_audio", nulls = Nulls.SKIP)
+        public _FinalStage redactPiiAudio(Optional<Boolean> redactPiiAudio) {
+            this.redactPiiAudio = redactPiiAudio;
+            return this;
+        }
+
+        /**
+         * <p>Redact PII from the transcribed text using the Redact PII model, can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage redactPii(Boolean redactPii) {
+            this.redactPii = Optional.of(redactPii);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redact_pii", nulls = Nulls.SKIP)
+        public _FinalStage redactPii(Optional<Boolean> redactPii) {
+            this.redactPii = redactPii;
+            return this;
+        }
+
+        /**
+         * <p>Filter profanity from the transcribed text, can be true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage filterProfanity(Boolean filterProfanity) {
+            this.filterProfanity = Optional.of(filterProfanity);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "filter_profanity", nulls = Nulls.SKIP)
+        public _FinalStage filterProfanity(Optional<Boolean> filterProfanity) {
+            this.filterProfanity = filterProfanity;
+            return this;
+        }
+
+        /**
+         * <p>The word boost parameter value, if provided in the transcription request.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage boostParam(TranscriptBoostParam boostParam) {
+            this.boostParam = Optional.of(boostParam);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "boost_param", nulls = Nulls.SKIP)
+        public _FinalStage boostParam(Optional<TranscriptBoostParam> boostParam) {
+            this.boostParam = boostParam;
+            return this;
+        }
+
+        /**
+         * <p>The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage wordBoost(List<String> wordBoost) {
+            this.wordBoost = Optional.of(wordBoost);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "word_boost", nulls = Nulls.SKIP)
+        public _FinalStage wordBoost(Optional<List<String>> wordBoost) {
+            this.wordBoost = wordBoost;
+            return this;
+        }
+
+        /**
+         * <p>The point in time, in milliseconds, to stop transcribing in your media file</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage audioEndAt(Integer audioEndAt) {
+            this.audioEndAt = Optional.of(audioEndAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "audio_end_at", nulls = Nulls.SKIP)
+        public _FinalStage audioEndAt(Optional<Integer> audioEndAt) {
+            this.audioEndAt = audioEndAt;
+            return this;
+        }
+
+        /**
+         * <p>The point in time, in milliseconds, to begin transcription from in your media file</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage audioStartFrom(Integer audioStartFrom) {
+            this.audioStartFrom = Optional.of(audioStartFrom);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "audio_start_from", nulls = Nulls.SKIP)
+        public _FinalStage audioStartFrom(Optional<Integer> audioStartFrom) {
+            this.audioStartFrom = audioStartFrom;
+            return this;
+        }
+
+        /**
+         * <p>Whether Key Phrases was enabled in the transcription request, either true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage autoHighlights(Boolean autoHighlights) {
+            this.autoHighlights = Optional.of(autoHighlights);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "auto_highlights", nulls = Nulls.SKIP)
+        public _FinalStage autoHighlights(Optional<Boolean> autoHighlights) {
+            this.autoHighlights = autoHighlights;
+            return this;
+        }
+
+        /**
+         * <p>Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage webhookAuthHeaderValue(String webhookAuthHeaderValue) {
+            this.webhookAuthHeaderValue = Optional.of(webhookAuthHeaderValue);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "webhook_auth_header_value", nulls = Nulls.SKIP)
+        public _FinalStage webhookAuthHeaderValue(Optional<String> webhookAuthHeaderValue) {
+            this.webhookAuthHeaderValue = webhookAuthHeaderValue;
+            return this;
+        }
+
+        /**
+         * <p>The header name which should be sent back with webhook calls, if provided in the transcription request.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage webhookAuthHeaderName(String webhookAuthHeaderName) {
+            this.webhookAuthHeaderName = Optional.of(webhookAuthHeaderName);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "webhook_auth_header_name", nulls = Nulls.SKIP)
+        public _FinalStage webhookAuthHeaderName(Optional<String> webhookAuthHeaderName) {
+            this.webhookAuthHeaderName = webhookAuthHeaderName;
+            return this;
+        }
+
+        /**
+         * <p>The URL to which we send webhooks upon trancription completion, if provided in the transcription request.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage webhookUrl(String webhookUrl) {
+            this.webhookUrl = Optional.of(webhookUrl);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "webhook_url", nulls = Nulls.SKIP)
+        public _FinalStage webhookUrl(Optional<String> webhookUrl) {
+            this.webhookUrl = webhookUrl;
+            return this;
+        }
+
+        /**
+         * <p>Enable <a href="https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage dualChannel(Boolean dualChannel) {
+            this.dualChannel = Optional.of(dualChannel);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "dual_channel", nulls = Nulls.SKIP)
+        public _FinalStage dualChannel(Optional<Boolean> dualChannel) {
+            this.dualChannel = dualChannel;
+            return this;
+        }
+
+        /**
+         * <p>Enable Text Formatting, can be true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage formatText(Boolean formatText) {
+            this.formatText = Optional.of(formatText);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "format_text", nulls = Nulls.SKIP)
+        public _FinalStage formatText(Optional<Boolean> formatText) {
+            this.formatText = formatText;
+            return this;
+        }
+
+        /**
+         * <p>Enable Automatic Punctuation, can be true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage punctuate(Boolean punctuate) {
+            this.punctuate = Optional.of(punctuate);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "punctuate", nulls = Nulls.SKIP)
+        public _FinalStage punctuate(Optional<Boolean> punctuate) {
+            this.punctuate = punctuate;
+            return this;
+        }
+
+        /**
+         * <p>The language of your audio file. Possible values are found in <a href="https://www.assemblyai.com/docs/Concepts/supported_languages">Supported Languages</a>.
+         * The default value is 'en_us'.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage languageCode(TranscriptLanguageCode languageCode) {
+            this.languageCode = Optional.of(languageCode);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "language_code", nulls = Nulls.SKIP)
+        public _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode) {
+            this.languageCode = languageCode;
+            return this;
+        }
+
+        @Override
         public CreateTranscriptParameters build() {
             return new CreateTranscriptParameters(
                     audioUrl,
@@ -961,6 +1401,7 @@ public final class CreateTranscriptParameters {
                     webhookUrl,
                     webhookAuthHeaderName,
                     webhookAuthHeaderValue,
+                    autoHighlights,
                     audioStartFrom,
                     audioEndAt,
                     wordBoost,
@@ -984,7 +1425,9 @@ public final class CreateTranscriptParameters {
                     speechThreshold,
                     summarization,
                     summaryModel,
-                    summaryType);
+                    summaryType,
+                    customTopics,
+                    topics);
         }
     }
 }

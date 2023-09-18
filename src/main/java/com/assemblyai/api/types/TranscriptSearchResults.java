@@ -7,20 +7,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptSearchResults.Builder.class)
 public final class TranscriptSearchResults {
-    private final String id;
+    private final Optional<String> id;
 
-    private final int totalCount;
+    private final Optional<Integer> totalCount;
 
-    private final List<TranscriptSearchMatch> matches;
+    private final Optional<List<TranscriptSearchMatch>> matches;
 
-    private TranscriptSearchResults(String id, int totalCount, List<TranscriptSearchMatch> matches) {
+    private TranscriptSearchResults(
+            Optional<String> id, Optional<Integer> totalCount, Optional<List<TranscriptSearchMatch>> matches) {
         this.id = id;
         this.totalCount = totalCount;
         this.matches = matches;
@@ -30,7 +31,7 @@ public final class TranscriptSearchResults {
      * @return The ID of the transcript
      */
     @JsonProperty("id")
-    public String getId() {
+    public Optional<String> getId() {
         return id;
     }
 
@@ -38,7 +39,7 @@ public final class TranscriptSearchResults {
      * @return The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, <code>total_count</code> will equal 5.
      */
     @JsonProperty("total_count")
-    public int getTotalCount() {
+    public Optional<Integer> getTotalCount() {
         return totalCount;
     }
 
@@ -46,7 +47,7 @@ public final class TranscriptSearchResults {
      * @return The matches of the search
      */
     @JsonProperty("matches")
-    public List<TranscriptSearchMatch> getMatches() {
+    public Optional<List<TranscriptSearchMatch>> getMatches() {
         return matches;
     }
 
@@ -57,7 +58,7 @@ public final class TranscriptSearchResults {
     }
 
     private boolean equalTo(TranscriptSearchResults other) {
-        return id.equals(other.id) && totalCount == other.totalCount && matches.equals(other.matches);
+        return id.equals(other.id) && totalCount.equals(other.totalCount) && matches.equals(other.matches);
     }
 
     @Override
@@ -70,41 +71,20 @@ public final class TranscriptSearchResults {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface IdStage {
-        TotalCountStage id(String id);
-
-        Builder from(TranscriptSearchResults other);
-    }
-
-    public interface TotalCountStage {
-        _FinalStage totalCount(int totalCount);
-    }
-
-    public interface _FinalStage {
-        TranscriptSearchResults build();
-
-        _FinalStage matches(List<TranscriptSearchMatch> matches);
-
-        _FinalStage addMatches(TranscriptSearchMatch matches);
-
-        _FinalStage addAllMatches(List<TranscriptSearchMatch> matches);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, TotalCountStage, _FinalStage {
-        private String id;
+    public static final class Builder {
+        private Optional<String> id = Optional.empty();
 
-        private int totalCount;
+        private Optional<Integer> totalCount = Optional.empty();
 
-        private List<TranscriptSearchMatch> matches = new ArrayList<>();
+        private Optional<List<TranscriptSearchMatch>> matches = Optional.empty();
 
         private Builder() {}
 
-        @Override
         public Builder from(TranscriptSearchResults other) {
             id(other.getId());
             totalCount(other.getTotalCount());
@@ -112,57 +92,39 @@ public final class TranscriptSearchResults {
             return this;
         }
 
-        /**
-         * <p>The ID of the transcript</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("id")
-        public TotalCountStage id(String id) {
+        @JsonSetter(value = "id", nulls = Nulls.SKIP)
+        public Builder id(Optional<String> id) {
             this.id = id;
             return this;
         }
 
-        /**
-         * <p>The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, <code>total_count</code> will equal 5.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("total_count")
-        public _FinalStage totalCount(int totalCount) {
+        public Builder id(String id) {
+            this.id = Optional.of(id);
+            return this;
+        }
+
+        @JsonSetter(value = "total_count", nulls = Nulls.SKIP)
+        public Builder totalCount(Optional<Integer> totalCount) {
             this.totalCount = totalCount;
             return this;
         }
 
-        /**
-         * <p>The matches of the search</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage addAllMatches(List<TranscriptSearchMatch> matches) {
-            this.matches.addAll(matches);
+        public Builder totalCount(Integer totalCount) {
+            this.totalCount = Optional.of(totalCount);
             return this;
         }
 
-        /**
-         * <p>The matches of the search</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage addMatches(TranscriptSearchMatch matches) {
-            this.matches.add(matches);
-            return this;
-        }
-
-        @Override
         @JsonSetter(value = "matches", nulls = Nulls.SKIP)
-        public _FinalStage matches(List<TranscriptSearchMatch> matches) {
-            this.matches.clear();
-            this.matches.addAll(matches);
+        public Builder matches(Optional<List<TranscriptSearchMatch>> matches) {
+            this.matches = matches;
             return this;
         }
 
-        @Override
+        public Builder matches(List<TranscriptSearchMatch> matches) {
+            this.matches = Optional.of(matches);
+            return this;
+        }
+
         public TranscriptSearchResults build() {
             return new TranscriptSearchResults(id, totalCount, matches);
         }

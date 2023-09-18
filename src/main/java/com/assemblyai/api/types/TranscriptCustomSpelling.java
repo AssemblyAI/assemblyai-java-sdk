@@ -7,18 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptCustomSpelling.Builder.class)
 public final class TranscriptCustomSpelling {
-    private final List<String> from;
+    private final Optional<List<String>> from;
 
-    private final String to;
+    private final Optional<String> to;
 
-    private TranscriptCustomSpelling(List<String> from, String to) {
+    private TranscriptCustomSpelling(Optional<List<String>> from, Optional<String> to) {
         this.from = from;
         this.to = to;
     }
@@ -27,7 +27,7 @@ public final class TranscriptCustomSpelling {
      * @return Words or phrases to replace
      */
     @JsonProperty("from")
-    public List<String> getFrom() {
+    public Optional<List<String>> getFrom() {
         return from;
     }
 
@@ -35,7 +35,7 @@ public final class TranscriptCustomSpelling {
      * @return Word or phrase to replace with
      */
     @JsonProperty("to")
-    public String getTo() {
+    public Optional<String> getTo() {
         return to;
     }
 
@@ -59,81 +59,46 @@ public final class TranscriptCustomSpelling {
         return ObjectMappers.stringify(this);
     }
 
-    public static ToStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface ToStage {
-        _FinalStage to(String to);
-
-        Builder from(TranscriptCustomSpelling other);
-    }
-
-    public interface _FinalStage {
-        TranscriptCustomSpelling build();
-
-        _FinalStage from(List<String> from);
-
-        _FinalStage addFrom(String from);
-
-        _FinalStage addAllFrom(List<String> from);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ToStage, _FinalStage {
-        private String to;
+    public static final class Builder {
+        private Optional<List<String>> from = Optional.empty();
 
-        private List<String> from = new ArrayList<>();
+        private Optional<String> to = Optional.empty();
 
         private Builder() {}
 
-        @Override
         public Builder from(TranscriptCustomSpelling other) {
             from(other.getFrom());
             to(other.getTo());
             return this;
         }
 
-        /**
-         * <p>Word or phrase to replace with</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("to")
-        public _FinalStage to(String to) {
+        @JsonSetter(value = "from", nulls = Nulls.SKIP)
+        public Builder from(Optional<List<String>> from) {
+            this.from = from;
+            return this;
+        }
+
+        public Builder from(List<String> from) {
+            this.from = Optional.of(from);
+            return this;
+        }
+
+        @JsonSetter(value = "to", nulls = Nulls.SKIP)
+        public Builder to(Optional<String> to) {
             this.to = to;
             return this;
         }
 
-        /**
-         * <p>Words or phrases to replace</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage addAllFrom(List<String> from) {
-            this.from.addAll(from);
+        public Builder to(String to) {
+            this.to = Optional.of(to);
             return this;
         }
 
-        /**
-         * <p>Words or phrases to replace</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage addFrom(String from) {
-            this.from.add(from);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "from", nulls = Nulls.SKIP)
-        public _FinalStage from(List<String> from) {
-            this.from.clear();
-            this.from.addAll(from);
-            return this;
-        }
-
-        @Override
         public TranscriptCustomSpelling build() {
             return new TranscriptCustomSpelling(from, to);
         }

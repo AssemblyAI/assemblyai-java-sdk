@@ -39,7 +39,9 @@ public class LemurClient {
                 .addPathSegments("lemur/v3/generate/summary")
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
+        if (request.getTranscriptIds().isPresent()) {
+            _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
+        }
         if (request.getContext().isPresent()) {
             _requestBodyProperties.put("context", request.getContext());
         }
@@ -79,6 +81,10 @@ public class LemurClient {
         }
     }
 
+    public LemurSummaryResult summary() {
+        return summary(LemurSummaryParameters.builder().build());
+    }
+
     public LemurQuestionAnswerResults questionAnswer(LemurQuestionAnswerParameters request) {
         return questionAnswer(request, null);
     }
@@ -90,8 +96,12 @@ public class LemurClient {
                 .addPathSegments("lemur/v3/generate/question-answer")
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
-        _requestBodyProperties.put("questions", request.getQuestions());
+        if (request.getTranscriptIds().isPresent()) {
+            _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
+        }
+        if (request.getQuestions().isPresent()) {
+            _requestBodyProperties.put("questions", request.getQuestions());
+        }
         if (request.getContext().isPresent()) {
             _requestBodyProperties.put("context", request.getContext());
         }
@@ -131,6 +141,10 @@ public class LemurClient {
         }
     }
 
+    public LemurQuestionAnswerResults questionAnswer() {
+        return questionAnswer(LemurQuestionAnswerParameters.builder().build());
+    }
+
     public LemurActionItemsResult actionItems(LemurActionItemsParameters request) {
         return actionItems(request, null);
     }
@@ -141,7 +155,9 @@ public class LemurClient {
                 .addPathSegments("lemur/v3/generate/action-items")
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
+        if (request.getTranscriptIds().isPresent()) {
+            _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
+        }
         if (request.getContext().isPresent()) {
             _requestBodyProperties.put("context", request.getContext());
         }
@@ -178,6 +194,10 @@ public class LemurClient {
         }
     }
 
+    public LemurActionItemsResult actionItems() {
+        return actionItems(LemurActionItemsParameters.builder().build());
+    }
+
     public LemurTaskResult task(LemurTaskParameters request) {
         return task(request, null);
     }
@@ -188,8 +208,12 @@ public class LemurClient {
                 .addPathSegments("lemur/v3/generate/task")
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
-        _requestBodyProperties.put("prompt", request.getPrompt());
+        if (request.getTranscriptIds().isPresent()) {
+            _requestBodyProperties.put("transcript_ids", request.getTranscriptIds());
+        }
+        if (request.getPrompt().isPresent()) {
+            _requestBodyProperties.put("prompt", request.getPrompt());
+        }
         if (request.getContext().isPresent()) {
             _requestBodyProperties.put("context", request.getContext());
         }
@@ -224,5 +248,9 @@ public class LemurClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public LemurTaskResult task() {
+        return task(LemurTaskParameters.builder().build());
     }
 }

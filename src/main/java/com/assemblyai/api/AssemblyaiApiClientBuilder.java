@@ -3,28 +3,28 @@ package com.assemblyai.api;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.Environment;
 
-public final class AssemblyAIBuilder {
+public final class AssemblyaiApiClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment = Environment.DEFAULT;
 
-    public AssemblyAIBuilder apiKey(String apiKey) {
+    public AssemblyaiApiClientBuilder apiKey(String apiKey) {
         this.clientOptionsBuilder.addHeader("Authorization", apiKey);
         return this;
     }
 
-    public AssemblyAIBuilder environment(Environment environment) {
+    public AssemblyaiApiClientBuilder environment(Environment environment) {
         this.environment = environment;
         return this;
     }
 
-    public AssemblyAIBuilder url(String url) {
+    public AssemblyaiApiClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
     }
 
-    public AssemblyAI build() {
+    public AssemblyaiApiClient build() {
         clientOptionsBuilder.environment(this.environment);
-        return new AssemblyAI(clientOptionsBuilder.build());
+        return new AssemblyaiApiClient(clientOptionsBuilder.build());
     }
 }

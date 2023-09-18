@@ -15,14 +15,14 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptIabCategoriesResult.Builder.class)
 public final class TranscriptIabCategoriesResult {
-    private final Optional<AudioIntellegenceModelStatus> status;
+    private final Optional<AudioIntelligenceModelStatus> status;
 
     private final Optional<List<TopicDetectionResult>> results;
 
     private final Optional<Map<String, Double>> summary;
 
     private TranscriptIabCategoriesResult(
-            Optional<AudioIntellegenceModelStatus> status,
+            Optional<AudioIntelligenceModelStatus> status,
             Optional<List<TopicDetectionResult>> results,
             Optional<Map<String, Double>> summary) {
         this.status = status;
@@ -34,7 +34,7 @@ public final class TranscriptIabCategoriesResult {
      * @return Will be either success, or unavailable in the rare case that the Content Moderation model failed.
      */
     @JsonProperty("status")
-    public Optional<AudioIntellegenceModelStatus> getStatus() {
+    public Optional<AudioIntelligenceModelStatus> getStatus() {
         return status;
     }
 
@@ -80,7 +80,7 @@ public final class TranscriptIabCategoriesResult {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<AudioIntellegenceModelStatus> status = Optional.empty();
+        private Optional<AudioIntelligenceModelStatus> status = Optional.empty();
 
         private Optional<List<TopicDetectionResult>> results = Optional.empty();
 
@@ -96,12 +96,12 @@ public final class TranscriptIabCategoriesResult {
         }
 
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
-        public Builder status(Optional<AudioIntellegenceModelStatus> status) {
+        public Builder status(Optional<AudioIntelligenceModelStatus> status) {
             this.status = status;
             return this;
         }
 
-        public Builder status(AudioIntellegenceModelStatus status) {
+        public Builder status(AudioIntelligenceModelStatus status) {
             this.status = Optional.of(status);
             return this;
         }

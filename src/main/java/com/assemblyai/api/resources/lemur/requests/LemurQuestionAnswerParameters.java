@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,9 +16,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurQuestionAnswerParameters.Builder.class)
 public final class LemurQuestionAnswerParameters {
-    private final List<String> transcriptIds;
+    private final Optional<List<String>> transcriptIds;
 
-    private final List<LemurQuestionAnswerParametersQuestionsItem> questions;
+    private final Optional<List<LemurQuestionAnswerParametersQuestionsItem>> questions;
 
     private final Optional<Object> context;
 
@@ -30,8 +29,8 @@ public final class LemurQuestionAnswerParameters {
     private final Optional<Double> maxOutputSize;
 
     private LemurQuestionAnswerParameters(
-            List<String> transcriptIds,
-            List<LemurQuestionAnswerParametersQuestionsItem> questions,
+            Optional<List<String>> transcriptIds,
+            Optional<List<LemurQuestionAnswerParametersQuestionsItem>> questions,
             Optional<Object> context,
             Optional<String> answerFormat,
             Optional<LemurModels> finalModel,
@@ -48,7 +47,7 @@ public final class LemurQuestionAnswerParameters {
      * @return A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.
      */
     @JsonProperty("transcript_ids")
-    public List<String> getTranscriptIds() {
+    public Optional<List<String>> getTranscriptIds() {
         return transcriptIds;
     }
 
@@ -56,7 +55,7 @@ public final class LemurQuestionAnswerParameters {
      * @return A list of questions to ask.
      */
     @JsonProperty("questions")
-    public List<LemurQuestionAnswerParametersQuestionsItem> getQuestions() {
+    public Optional<List<LemurQuestionAnswerParametersQuestionsItem>> getQuestions() {
         return questions;
     }
 
@@ -123,9 +122,9 @@ public final class LemurQuestionAnswerParameters {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<String> transcriptIds = new ArrayList<>();
+        private Optional<List<String>> transcriptIds = Optional.empty();
 
-        private List<LemurQuestionAnswerParametersQuestionsItem> questions = new ArrayList<>();
+        private Optional<List<LemurQuestionAnswerParametersQuestionsItem>> questions = Optional.empty();
 
         private Optional<Object> context = Optional.empty();
 
@@ -148,36 +147,24 @@ public final class LemurQuestionAnswerParameters {
         }
 
         @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
+        public Builder transcriptIds(Optional<List<String>> transcriptIds) {
+            this.transcriptIds = transcriptIds;
+            return this;
+        }
+
         public Builder transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds.clear();
-            this.transcriptIds.addAll(transcriptIds);
-            return this;
-        }
-
-        public Builder addTranscriptIds(String transcriptIds) {
-            this.transcriptIds.add(transcriptIds);
-            return this;
-        }
-
-        public Builder addAllTranscriptIds(List<String> transcriptIds) {
-            this.transcriptIds.addAll(transcriptIds);
+            this.transcriptIds = Optional.of(transcriptIds);
             return this;
         }
 
         @JsonSetter(value = "questions", nulls = Nulls.SKIP)
+        public Builder questions(Optional<List<LemurQuestionAnswerParametersQuestionsItem>> questions) {
+            this.questions = questions;
+            return this;
+        }
+
         public Builder questions(List<LemurQuestionAnswerParametersQuestionsItem> questions) {
-            this.questions.clear();
-            this.questions.addAll(questions);
-            return this;
-        }
-
-        public Builder addQuestions(LemurQuestionAnswerParametersQuestionsItem questions) {
-            this.questions.add(questions);
-            return this;
-        }
-
-        public Builder addAllQuestions(List<LemurQuestionAnswerParametersQuestionsItem> questions) {
-            this.questions.addAll(questions);
+            this.questions = Optional.of(questions);
             return this;
         }
 

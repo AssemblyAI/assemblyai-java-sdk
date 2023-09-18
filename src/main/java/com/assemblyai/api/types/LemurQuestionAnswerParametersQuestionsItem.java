@@ -14,7 +14,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurQuestionAnswerParametersQuestionsItem.Builder.class)
 public final class LemurQuestionAnswerParametersQuestionsItem {
-    private final String question;
+    private final Optional<String> question;
 
     private final Optional<Object> context;
 
@@ -23,7 +23,7 @@ public final class LemurQuestionAnswerParametersQuestionsItem {
     private final Optional<List<String>> answerOptions;
 
     private LemurQuestionAnswerParametersQuestionsItem(
-            String question,
+            Optional<String> question,
             Optional<Object> context,
             Optional<String> answerFormat,
             Optional<List<String>> answerOptions) {
@@ -37,7 +37,7 @@ public final class LemurQuestionAnswerParametersQuestionsItem {
      * @return The question you wish to ask. For more complex questions use default model.
      */
     @JsonProperty("question")
-    public String getQuestion() {
+    public Optional<String> getQuestion() {
         return question;
     }
 
@@ -86,45 +86,22 @@ public final class LemurQuestionAnswerParametersQuestionsItem {
         return ObjectMappers.stringify(this);
     }
 
-    public static QuestionStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface QuestionStage {
-        _FinalStage question(String question);
-
-        Builder from(LemurQuestionAnswerParametersQuestionsItem other);
-    }
-
-    public interface _FinalStage {
-        LemurQuestionAnswerParametersQuestionsItem build();
-
-        _FinalStage context(Optional<Object> context);
-
-        _FinalStage context(Object context);
-
-        _FinalStage answerFormat(Optional<String> answerFormat);
-
-        _FinalStage answerFormat(String answerFormat);
-
-        _FinalStage answerOptions(Optional<List<String>> answerOptions);
-
-        _FinalStage answerOptions(List<String> answerOptions);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QuestionStage, _FinalStage {
-        private String question;
-
-        private Optional<List<String>> answerOptions = Optional.empty();
-
-        private Optional<String> answerFormat = Optional.empty();
+    public static final class Builder {
+        private Optional<String> question = Optional.empty();
 
         private Optional<Object> context = Optional.empty();
 
+        private Optional<String> answerFormat = Optional.empty();
+
+        private Optional<List<String>> answerOptions = Optional.empty();
+
         private Builder() {}
 
-        @Override
         public Builder from(LemurQuestionAnswerParametersQuestionsItem other) {
             question(other.getQuestion());
             context(other.getContext());
@@ -133,65 +110,50 @@ public final class LemurQuestionAnswerParametersQuestionsItem {
             return this;
         }
 
-        /**
-         * <p>The question you wish to ask. For more complex questions use default model.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("question")
-        public _FinalStage question(String question) {
+        @JsonSetter(value = "question", nulls = Nulls.SKIP)
+        public Builder question(Optional<String> question) {
             this.question = question;
             return this;
         }
 
-        /**
-         * <p>What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: [&quot;Yes&quot;, &quot;No&quot;]</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage answerOptions(List<String> answerOptions) {
-            this.answerOptions = Optional.of(answerOptions);
+        public Builder question(String question) {
+            this.question = Optional.of(question);
             return this;
         }
 
-        @Override
-        @JsonSetter(value = "answer_options", nulls = Nulls.SKIP)
-        public _FinalStage answerOptions(Optional<List<String>> answerOptions) {
-            this.answerOptions = answerOptions;
-            return this;
-        }
-
-        /**
-         * <p>How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: &quot;short sentence&quot;, &quot;bullet points&quot;</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage answerFormat(String answerFormat) {
-            this.answerFormat = Optional.of(answerFormat);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "answer_format", nulls = Nulls.SKIP)
-        public _FinalStage answerFormat(Optional<String> answerFormat) {
-            this.answerFormat = answerFormat;
-            return this;
-        }
-
-        @Override
-        public _FinalStage context(Object context) {
-            this.context = Optional.of(context);
-            return this;
-        }
-
-        @Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public _FinalStage context(Optional<Object> context) {
+        public Builder context(Optional<Object> context) {
             this.context = context;
             return this;
         }
 
-        @Override
+        public Builder context(Object context) {
+            this.context = Optional.of(context);
+            return this;
+        }
+
+        @JsonSetter(value = "answer_format", nulls = Nulls.SKIP)
+        public Builder answerFormat(Optional<String> answerFormat) {
+            this.answerFormat = answerFormat;
+            return this;
+        }
+
+        public Builder answerFormat(String answerFormat) {
+            this.answerFormat = Optional.of(answerFormat);
+            return this;
+        }
+
+        @JsonSetter(value = "answer_options", nulls = Nulls.SKIP)
+        public Builder answerOptions(Optional<List<String>> answerOptions) {
+            this.answerOptions = answerOptions;
+            return this;
+        }
+
+        public Builder answerOptions(List<String> answerOptions) {
+            this.answerOptions = Optional.of(answerOptions);
+            return this;
+        }
+
         public LemurQuestionAnswerParametersQuestionsItem build() {
             return new LemurQuestionAnswerParametersQuestionsItem(question, context, answerFormat, answerOptions);
         }

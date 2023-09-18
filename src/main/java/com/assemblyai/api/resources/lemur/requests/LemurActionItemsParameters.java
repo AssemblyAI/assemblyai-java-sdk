@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurActionItemsParameters.Builder.class)
 public final class LemurActionItemsParameters {
-    private final List<String> transcriptIds;
+    private final Optional<List<String>> transcriptIds;
 
     private final Optional<Object> context;
 
@@ -25,7 +24,7 @@ public final class LemurActionItemsParameters {
     private final Optional<Integer> maxOutputSize;
 
     private LemurActionItemsParameters(
-            List<String> transcriptIds,
+            Optional<List<String>> transcriptIds,
             Optional<Object> context,
             Optional<LemurModels> finalModel,
             Optional<Integer> maxOutputSize) {
@@ -39,7 +38,7 @@ public final class LemurActionItemsParameters {
      * @return A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.
      */
     @JsonProperty("transcript_ids")
-    public List<String> getTranscriptIds() {
+    public Optional<List<String>> getTranscriptIds() {
         return transcriptIds;
     }
 
@@ -90,7 +89,7 @@ public final class LemurActionItemsParameters {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<String> transcriptIds = new ArrayList<>();
+        private Optional<List<String>> transcriptIds = Optional.empty();
 
         private Optional<Object> context = Optional.empty();
 
@@ -109,19 +108,13 @@ public final class LemurActionItemsParameters {
         }
 
         @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
+        public Builder transcriptIds(Optional<List<String>> transcriptIds) {
+            this.transcriptIds = transcriptIds;
+            return this;
+        }
+
         public Builder transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds.clear();
-            this.transcriptIds.addAll(transcriptIds);
-            return this;
-        }
-
-        public Builder addTranscriptIds(String transcriptIds) {
-            this.transcriptIds.add(transcriptIds);
-            return this;
-        }
-
-        public Builder addAllTranscriptIds(List<String> transcriptIds) {
-            this.transcriptIds.addAll(transcriptIds);
+            this.transcriptIds = Optional.of(transcriptIds);
             return this;
         }
 
