@@ -7,16 +7,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
-public final class LemurModels {
-    public static final LemurModels BASIC = new LemurModels(Value.BASIC, "basic");
+public final class AudioIntelligenceModelStatus {
+    public static final AudioIntelligenceModelStatus SUCCESS =
+            new AudioIntelligenceModelStatus(Value.SUCCESS, "success");
 
-    public static final LemurModels DEFAULT = new LemurModels(Value.DEFAULT, "default");
+    public static final AudioIntelligenceModelStatus UNAVAILABLE =
+            new AudioIntelligenceModelStatus(Value.UNAVAILABLE, "unavailable");
 
     private final Value value;
 
     private final String string;
 
-    LemurModels(Value value, String string) {
+    AudioIntelligenceModelStatus(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -33,7 +35,9 @@ public final class LemurModels {
 
     @Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof LemurModels && this.string.equals(((LemurModels) other).string));
+        return (this == other)
+                || (other instanceof AudioIntelligenceModelStatus
+                        && this.string.equals(((AudioIntelligenceModelStatus) other).string));
     }
 
     @Override
@@ -43,10 +47,10 @@ public final class LemurModels {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case BASIC:
-                return visitor.visitBasic();
-            case DEFAULT:
-                return visitor.visitDefault();
+            case SUCCESS:
+                return visitor.visitSuccess();
+            case UNAVAILABLE:
+                return visitor.visitUnavailable();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -54,30 +58,30 @@ public final class LemurModels {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static LemurModels valueOf(String value) {
+    public static AudioIntelligenceModelStatus valueOf(String value) {
         String upperCasedValue = value.toUpperCase(Locale.ROOT);
         switch (upperCasedValue) {
-            case "basic":
-                return BASIC;
-            case "default":
-                return DEFAULT;
+            case "success":
+                return SUCCESS;
+            case "unavailable":
+                return UNAVAILABLE;
             default:
-                return new LemurModels(Value.UNKNOWN, upperCasedValue);
+                return new AudioIntelligenceModelStatus(Value.UNKNOWN, upperCasedValue);
         }
     }
 
     public enum Value {
-        DEFAULT,
+        SUCCESS,
 
-        BASIC,
+        UNAVAILABLE,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
-        T visitDefault();
+        T visitSuccess();
 
-        T visitBasic();
+        T visitUnavailable();
 
         T visitUnknown(String unknownType);
     }
