@@ -70,7 +70,7 @@ try {
 Additionally, the SDK also exports a Transcriber class that has
 utilities on top of the HTTP client, such as automatic polling.
 
-```typescript
+```java
 import com.assemblyai.api.Transcriber;
 
 Transcriber transcriber = Transcriber.builder()
@@ -87,6 +87,18 @@ The generated builders all follow the staged builder pattern.
 Read more [here](https://immutables.github.io/immutable.html#staged-builder).
 Staged builders only allow you to build the object once all required 
 properties have been specified. 
+
+For example, in the snippet below, you will not be able to access the build
+method on `CreateTranscriptParams` until you have specified the mandatory 
+URL variable.
+
+```java
+import com.assemblyai.api.CreateTranscriptParams;
+
+Transcriber transcriber = CreateTranscriptParams.builder()
+  .url("https://...")
+  .build(); // You cannot access build method till you specify URL
+```
 
 ## Beta status
 This SDK is in beta, and there may be breaking changes between versions 
