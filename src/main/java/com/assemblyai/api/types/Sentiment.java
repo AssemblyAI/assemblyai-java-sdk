@@ -7,16 +7,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
-public final class LemurModels {
-    public static final LemurModels BASIC = new LemurModels(Value.BASIC, "basic");
+public final class Sentiment {
+    public static final Sentiment NEUTRAL = new Sentiment(Value.NEUTRAL, "NEUTRAL");
 
-    public static final LemurModels DEFAULT = new LemurModels(Value.DEFAULT, "default");
+    public static final Sentiment NEGATIVE = new Sentiment(Value.NEGATIVE, "NEGATIVE");
+
+    public static final Sentiment POSITIVE = new Sentiment(Value.POSITIVE, "POSITIVE");
 
     private final Value value;
 
     private final String string;
 
-    LemurModels(Value value, String string) {
+    Sentiment(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -33,7 +35,7 @@ public final class LemurModels {
 
     @Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof LemurModels && this.string.equals(((LemurModels) other).string));
+        return (this == other) || (other instanceof Sentiment && this.string.equals(((Sentiment) other).string));
     }
 
     @Override
@@ -43,10 +45,12 @@ public final class LemurModels {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case BASIC:
-                return visitor.visitBasic();
-            case DEFAULT:
-                return visitor.visitDefault();
+            case NEUTRAL:
+                return visitor.visitNeutral();
+            case NEGATIVE:
+                return visitor.visitNegative();
+            case POSITIVE:
+                return visitor.visitPositive();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -54,30 +58,36 @@ public final class LemurModels {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static LemurModels valueOf(String value) {
+    public static Sentiment valueOf(String value) {
         String upperCasedValue = value.toUpperCase(Locale.ROOT);
         switch (upperCasedValue) {
-            case "basic":
-                return BASIC;
-            case "default":
-                return DEFAULT;
+            case "NEUTRAL":
+                return NEUTRAL;
+            case "NEGATIVE":
+                return NEGATIVE;
+            case "POSITIVE":
+                return POSITIVE;
             default:
-                return new LemurModels(Value.UNKNOWN, upperCasedValue);
+                return new Sentiment(Value.UNKNOWN, upperCasedValue);
         }
     }
 
     public enum Value {
-        DEFAULT,
+        POSITIVE,
 
-        BASIC,
+        NEUTRAL,
+
+        NEGATIVE,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
-        T visitDefault();
+        T visitPositive();
 
-        T visitBasic();
+        T visitNeutral();
+
+        T visitNegative();
 
         T visitUnknown(String unknownType);
     }
