@@ -5,9 +5,7 @@ package com.assemblyai.api.types;
 
 import java.util.List;
 
-public interface IPartialTranscript {
-    String getMessageType();
-
+public interface IRealtimeBaseTranscript {
     int getAudioStart();
 
     int getAudioEnd();

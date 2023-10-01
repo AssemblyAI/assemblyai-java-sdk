@@ -7,7 +7,7 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
-import com.assemblyai.api.types.UploadResponseBody;
+import com.assemblyai.api.types.UploadedFile;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -22,14 +22,14 @@ public class FilesClient {
         this.clientOptions = clientOptions;
     }
 
-    public UploadResponseBody upload(byte[] request) {
+    public UploadedFile upload(byte[] request) {
         return upload(request, null);
     }
 
     /**
      * Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.
      */
-    public UploadResponseBody upload(byte[] request, RequestOptions requestOptions) {
+    public UploadedFile upload(byte[] request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/upload")
@@ -45,7 +45,7 @@ public class FilesClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UploadResponseBody.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UploadedFile.class);
             }
             throw new ApiError(
                     response.code(),

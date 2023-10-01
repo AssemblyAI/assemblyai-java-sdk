@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = AutoHighlightsResponse.Builder.class)
-public final class AutoHighlightsResponse {
+@JsonDeserialize(builder = AutoHighlightsResult.Builder.class)
+public final class AutoHighlightsResult {
     private final List<AutoHighlightResult> results;
 
-    private AutoHighlightsResponse(List<AutoHighlightResult> results) {
+    private AutoHighlightsResult(List<AutoHighlightResult> results) {
         this.results = results;
     }
 
@@ -34,10 +34,10 @@ public final class AutoHighlightsResponse {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof AutoHighlightsResponse && equalTo((AutoHighlightsResponse) other);
+        return other instanceof AutoHighlightsResult && equalTo((AutoHighlightsResult) other);
     }
 
-    private boolean equalTo(AutoHighlightsResponse other) {
+    private boolean equalTo(AutoHighlightsResult other) {
         return results.equals(other.results);
     }
 
@@ -61,7 +61,7 @@ public final class AutoHighlightsResponse {
 
         private Builder() {}
 
-        public Builder from(AutoHighlightsResponse other) {
+        public Builder from(AutoHighlightsResult other) {
             results(other.getResults());
             return this;
         }
@@ -83,8 +83,8 @@ public final class AutoHighlightsResponse {
             return this;
         }
 
-        public AutoHighlightsResponse build() {
-            return new AutoHighlightsResponse(results);
+        public AutoHighlightsResult build() {
+            return new AutoHighlightsResult(results);
         }
     }
 }

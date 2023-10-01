@@ -57,7 +57,7 @@ public final class Transcript {
 
     private final boolean autoHighlights;
 
-    private final Optional<AutoHighlightsResponse> autoHighlightsResult;
+    private final Optional<AutoHighlightsResult> autoHighlightsResult;
 
     private final Optional<Integer> audioStartFrom;
 
@@ -148,7 +148,7 @@ public final class Transcript {
             Optional<String> webhookAuthHeaderName,
             Optional<Boolean> speedBoost,
             boolean autoHighlights,
-            Optional<AutoHighlightsResponse> autoHighlightsResult,
+            Optional<AutoHighlightsResult> autoHighlightsResult,
             Optional<Integer> audioStartFrom,
             Optional<Integer> audioEndAt,
             Optional<List<String>> wordBoost,
@@ -409,7 +409,7 @@ public final class Transcript {
      * See <a href="https://www.assemblyai.com/docs/Models/key_phrases">Key phrases</a> for more information.
      */
     @JsonProperty("auto_highlights_result")
-    public Optional<AutoHighlightsResponse> getAutoHighlightsResult() {
+    public Optional<AutoHighlightsResult> getAutoHighlightsResult() {
         return autoHighlightsResult;
     }
 
@@ -920,9 +920,9 @@ public final class Transcript {
 
         _FinalStage speedBoost(Boolean speedBoost);
 
-        _FinalStage autoHighlightsResult(Optional<AutoHighlightsResponse> autoHighlightsResult);
+        _FinalStage autoHighlightsResult(Optional<AutoHighlightsResult> autoHighlightsResult);
 
-        _FinalStage autoHighlightsResult(AutoHighlightsResponse autoHighlightsResult);
+        _FinalStage autoHighlightsResult(AutoHighlightsResult autoHighlightsResult);
 
         _FinalStage audioStartFrom(Optional<Integer> audioStartFrom);
 
@@ -1147,7 +1147,7 @@ public final class Transcript {
 
         private Optional<Integer> audioStartFrom = Optional.empty();
 
-        private Optional<AutoHighlightsResponse> autoHighlightsResult = Optional.empty();
+        private Optional<AutoHighlightsResult> autoHighlightsResult = Optional.empty();
 
         private Optional<Boolean> speedBoost = Optional.empty();
 
@@ -1895,14 +1895,14 @@ public final class Transcript {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage autoHighlightsResult(AutoHighlightsResponse autoHighlightsResult) {
+        public _FinalStage autoHighlightsResult(AutoHighlightsResult autoHighlightsResult) {
             this.autoHighlightsResult = Optional.of(autoHighlightsResult);
             return this;
         }
 
         @Override
         @JsonSetter(value = "auto_highlights_result", nulls = Nulls.SKIP)
-        public _FinalStage autoHighlightsResult(Optional<AutoHighlightsResponse> autoHighlightsResult) {
+        public _FinalStage autoHighlightsResult(Optional<AutoHighlightsResult> autoHighlightsResult) {
             this.autoHighlightsResult = autoHighlightsResult;
             return this;
         }

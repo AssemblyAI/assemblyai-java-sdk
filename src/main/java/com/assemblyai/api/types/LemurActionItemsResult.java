@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurActionItemsResult.Builder.class)
-public final class LemurActionItemsResult {
+public final class LemurActionItemsResult implements ILemurBaseResult {
     private final String requestId;
 
     private final String response;
@@ -27,6 +27,7 @@ public final class LemurActionItemsResult {
      * @return The ID of the LeMUR request
      */
     @JsonProperty("request_id")
+    @Override
     public String getRequestId() {
         return requestId;
     }

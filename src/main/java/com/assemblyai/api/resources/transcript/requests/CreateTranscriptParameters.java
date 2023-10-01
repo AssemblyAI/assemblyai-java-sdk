@@ -4,7 +4,7 @@
 package com.assemblyai.api.resources.transcript.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.types.IBaseTranscriptCreate;
+import com.assemblyai.api.types.ICreateTranscriptOptionalParameters;
 import com.assemblyai.api.types.PiiPolicies;
 import com.assemblyai.api.types.SubstitutionPolicy;
 import com.assemblyai.api.types.SummaryModel;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateTranscriptParameters.Builder.class)
-public final class CreateTranscriptParameters implements IBaseTranscriptCreate {
+public final class CreateTranscriptParameters implements ICreateTranscriptOptionalParameters {
     private final Optional<TranscriptLanguageCode> languageCode;
 
     private final Optional<Boolean> punctuate;

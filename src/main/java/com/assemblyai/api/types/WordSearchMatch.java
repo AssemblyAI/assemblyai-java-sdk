@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptSearchMatch.Builder.class)
-public final class TranscriptSearchMatch {
+@JsonDeserialize(builder = WordSearchMatch.Builder.class)
+public final class WordSearchMatch {
     private final String text;
 
     private final int count;
@@ -25,7 +25,7 @@ public final class TranscriptSearchMatch {
 
     private final List<Integer> indexes;
 
-    private TranscriptSearchMatch(String text, int count, List<List<Integer>> timestamps, List<Integer> indexes) {
+    private WordSearchMatch(String text, int count, List<List<Integer>> timestamps, List<Integer> indexes) {
         this.text = text;
         this.count = count;
         this.timestamps = timestamps;
@@ -67,10 +67,10 @@ public final class TranscriptSearchMatch {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptSearchMatch && equalTo((TranscriptSearchMatch) other);
+        return other instanceof WordSearchMatch && equalTo((WordSearchMatch) other);
     }
 
-    private boolean equalTo(TranscriptSearchMatch other) {
+    private boolean equalTo(WordSearchMatch other) {
         return text.equals(other.text)
                 && count == other.count
                 && timestamps.equals(other.timestamps)
@@ -94,7 +94,7 @@ public final class TranscriptSearchMatch {
     public interface TextStage {
         CountStage text(String text);
 
-        Builder from(TranscriptSearchMatch other);
+        Builder from(WordSearchMatch other);
     }
 
     public interface CountStage {
@@ -102,7 +102,7 @@ public final class TranscriptSearchMatch {
     }
 
     public interface _FinalStage {
-        TranscriptSearchMatch build();
+        WordSearchMatch build();
 
         _FinalStage timestamps(List<List<Integer>> timestamps);
 
@@ -130,7 +130,7 @@ public final class TranscriptSearchMatch {
         private Builder() {}
 
         @Override
-        public Builder from(TranscriptSearchMatch other) {
+        public Builder from(WordSearchMatch other) {
             text(other.getText());
             count(other.getCount());
             timestamps(other.getTimestamps());
@@ -217,8 +217,8 @@ public final class TranscriptSearchMatch {
         }
 
         @Override
-        public TranscriptSearchMatch build() {
-            return new TranscriptSearchMatch(text, count, timestamps, indexes);
+        public WordSearchMatch build() {
+            return new WordSearchMatch(text, count, timestamps, indexes);
         }
     }
 }

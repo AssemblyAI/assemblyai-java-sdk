@@ -7,19 +7,21 @@ import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
-@JsonDeserialize(using = MessagePayload.Deserializer.class)
-public final class MessagePayload {
+@JsonDeserialize(using = LemurBaseParametersContext.Deserializer.class)
+public final class LemurBaseParametersContext {
     private final Object value;
 
     private final int type;
 
-    private MessagePayload(Object value, int type) {
+    private LemurBaseParametersContext(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -31,9 +33,9 @@ public final class MessagePayload {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((PartialTranscript) this.value);
+            return visitor.visit((String) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((FinalTranscript) this.value);
+            return visitor.visit((Map<String, Object>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -41,10 +43,10 @@ public final class MessagePayload {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof MessagePayload && equalTo((MessagePayload) other);
+        return other instanceof LemurBaseParametersContext && equalTo((LemurBaseParametersContext) other);
     }
 
-    private boolean equalTo(MessagePayload other) {
+    private boolean equalTo(LemurBaseParametersContext other) {
         return value.equals(other.value);
     }
 
@@ -58,34 +60,34 @@ public final class MessagePayload {
         return this.value.toString();
     }
 
-    public static MessagePayload of(PartialTranscript value) {
-        return new MessagePayload(value, 0);
+    public static LemurBaseParametersContext of(String value) {
+        return new LemurBaseParametersContext(value, 0);
     }
 
-    public static MessagePayload of(FinalTranscript value) {
-        return new MessagePayload(value, 1);
+    public static LemurBaseParametersContext of(Map<String, Object> value) {
+        return new LemurBaseParametersContext(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(PartialTranscript value);
+        T visit(String value);
 
-        T visit(FinalTranscript value);
+        T visit(Map<String, Object> value);
     }
 
-    static final class Deserializer extends StdDeserializer<MessagePayload> {
+    static final class Deserializer extends StdDeserializer<LemurBaseParametersContext> {
         Deserializer() {
-            super(MessagePayload.class);
+            super(LemurBaseParametersContext.class);
         }
 
         @Override
-        public MessagePayload deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public LemurBaseParametersContext deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, PartialTranscript.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, FinalTranscript.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Map<String, Object>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

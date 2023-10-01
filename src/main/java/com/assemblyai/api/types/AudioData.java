@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SendAudio.Builder.class)
-public final class SendAudio {
+@JsonDeserialize(builder = AudioData.Builder.class)
+public final class AudioData {
     private final String audioData;
 
-    private SendAudio(String audioData) {
+    private AudioData(String audioData) {
         this.audioData = audioData;
     }
 
@@ -31,10 +31,10 @@ public final class SendAudio {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SendAudio && equalTo((SendAudio) other);
+        return other instanceof AudioData && equalTo((AudioData) other);
     }
 
-    private boolean equalTo(SendAudio other) {
+    private boolean equalTo(AudioData other) {
         return audioData.equals(other.audioData);
     }
 
@@ -55,11 +55,11 @@ public final class SendAudio {
     public interface AudioDataStage {
         _FinalStage audioData(String audioData);
 
-        Builder from(SendAudio other);
+        Builder from(AudioData other);
     }
 
     public interface _FinalStage {
-        SendAudio build();
+        AudioData build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,7 +69,7 @@ public final class SendAudio {
         private Builder() {}
 
         @Override
-        public Builder from(SendAudio other) {
+        public Builder from(AudioData other) {
             audioData(other.getAudioData());
             return this;
         }
@@ -86,8 +86,8 @@ public final class SendAudio {
         }
 
         @Override
-        public SendAudio build() {
-            return new SendAudio(audioData);
+        public AudioData build() {
+            return new AudioData(audioData);
         }
     }
 }

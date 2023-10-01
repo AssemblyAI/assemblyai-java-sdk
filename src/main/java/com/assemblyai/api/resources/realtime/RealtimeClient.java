@@ -8,7 +8,7 @@ import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTokenParameters;
-import com.assemblyai.api.types.RealtimeTokenResponseBody;
+import com.assemblyai.api.types.RealtimeTokenResource;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -24,11 +24,11 @@ public class RealtimeClient {
         this.clientOptions = clientOptions;
     }
 
-    public RealtimeTokenResponseBody createToken(CreateRealtimeTokenParameters request) {
+    public RealtimeTokenResource createToken(CreateRealtimeTokenParameters request) {
         return createToken(request, null);
     }
 
-    public RealtimeTokenResponseBody createToken(CreateRealtimeTokenParameters request, RequestOptions requestOptions) {
+    public RealtimeTokenResource createToken(CreateRealtimeTokenParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/realtime/token")
@@ -50,7 +50,7 @@ public class RealtimeClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RealtimeTokenResponseBody.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RealtimeTokenResource.class);
             }
             throw new ApiError(
                     response.code(),

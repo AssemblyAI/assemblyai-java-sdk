@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = RealtimeTokenResponseBody.Builder.class)
-public final class RealtimeTokenResponseBody {
+@JsonDeserialize(builder = RealtimeTokenResource.Builder.class)
+public final class RealtimeTokenResource {
     private final String token;
 
-    private RealtimeTokenResponseBody(String token) {
+    private RealtimeTokenResource(String token) {
         this.token = token;
     }
 
@@ -31,10 +31,10 @@ public final class RealtimeTokenResponseBody {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof RealtimeTokenResponseBody && equalTo((RealtimeTokenResponseBody) other);
+        return other instanceof RealtimeTokenResource && equalTo((RealtimeTokenResource) other);
     }
 
-    private boolean equalTo(RealtimeTokenResponseBody other) {
+    private boolean equalTo(RealtimeTokenResource other) {
         return token.equals(other.token);
     }
 
@@ -55,11 +55,11 @@ public final class RealtimeTokenResponseBody {
     public interface TokenStage {
         _FinalStage token(String token);
 
-        Builder from(RealtimeTokenResponseBody other);
+        Builder from(RealtimeTokenResource other);
     }
 
     public interface _FinalStage {
-        RealtimeTokenResponseBody build();
+        RealtimeTokenResource build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,7 +69,7 @@ public final class RealtimeTokenResponseBody {
         private Builder() {}
 
         @Override
-        public Builder from(RealtimeTokenResponseBody other) {
+        public Builder from(RealtimeTokenResource other) {
             token(other.getToken());
             return this;
         }
@@ -86,8 +86,8 @@ public final class RealtimeTokenResponseBody {
         }
 
         @Override
-        public RealtimeTokenResponseBody build() {
-            return new RealtimeTokenResponseBody(token);
+        public RealtimeTokenResource build() {
+            return new RealtimeTokenResource(token);
         }
     }
 }

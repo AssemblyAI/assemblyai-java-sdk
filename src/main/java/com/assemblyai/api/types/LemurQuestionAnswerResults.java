@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurQuestionAnswerResults.Builder.class)
-public final class LemurQuestionAnswerResults {
+public final class LemurQuestionAnswerResults implements ILemurBaseResult {
     private final String requestId;
 
     private final List<LemurQuestionAnswer> response;
@@ -30,6 +30,7 @@ public final class LemurQuestionAnswerResults {
      * @return The ID of the LeMUR request
      */
     @JsonProperty("request_id")
+    @Override
     public String getRequestId() {
         return requestId;
     }

@@ -16,9 +16,7 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = FinalTranscript.Builder.class)
-public final class FinalTranscript implements IPartialTranscript {
-    private final String messageType;
-
+public final class FinalTranscript implements IRealtimeBaseTranscript {
     private final int audioStart;
 
     private final int audioEnd;
@@ -31,38 +29,31 @@ public final class FinalTranscript implements IPartialTranscript {
 
     private final String created;
 
+    private final String messageType;
+
     private final boolean punctuated;
 
     private final boolean textFormatted;
 
     private FinalTranscript(
-            String messageType,
             int audioStart,
             int audioEnd,
             double confidence,
             String text,
             List<Word> words,
             String created,
+            String messageType,
             boolean punctuated,
             boolean textFormatted) {
-        this.messageType = messageType;
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
         this.text = text;
         this.words = words;
         this.created = created;
+        this.messageType = messageType;
         this.punctuated = punctuated;
         this.textFormatted = textFormatted;
-    }
-
-    /**
-     * @return Describes the type of message.
-     */
-    @JsonProperty("message_type")
-    @Override
-    public String getMessageType() {
-        return messageType;
     }
 
     /**
@@ -120,6 +111,14 @@ public final class FinalTranscript implements IPartialTranscript {
     }
 
     /**
+     * @return Describes the type of message.
+     */
+    @JsonProperty("message_type")
+    public String getMessageType() {
+        return messageType;
+    }
+
+    /**
      * @return Whether the text has been punctuated and cased.
      */
     @JsonProperty("punctuated")
@@ -142,13 +141,13 @@ public final class FinalTranscript implements IPartialTranscript {
     }
 
     private boolean equalTo(FinalTranscript other) {
-        return messageType.equals(other.messageType)
-                && audioStart == other.audioStart
+        return audioStart == other.audioStart
                 && audioEnd == other.audioEnd
                 && confidence == other.confidence
                 && text.equals(other.text)
                 && words.equals(other.words)
                 && created.equals(other.created)
+                && messageType.equals(other.messageType)
                 && punctuated == other.punctuated
                 && textFormatted == other.textFormatted;
     }
@@ -156,13 +155,13 @@ public final class FinalTranscript implements IPartialTranscript {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.messageType,
                 this.audioStart,
                 this.audioEnd,
                 this.confidence,
                 this.text,
                 this.words,
                 this.created,
+                this.messageType,
                 this.punctuated,
                 this.textFormatted);
     }
@@ -172,18 +171,14 @@ public final class FinalTranscript implements IPartialTranscript {
         return ObjectMappers.stringify(this);
     }
 
-    public static MessageTypeStage builder() {
+    public static AudioStartStage builder() {
         return new Builder();
-    }
-
-    public interface MessageTypeStage {
-        AudioStartStage messageType(String messageType);
-
-        Builder from(FinalTranscript other);
     }
 
     public interface AudioStartStage {
         AudioEndStage audioStart(int audioStart);
+
+        Builder from(FinalTranscript other);
     }
 
     public interface AudioEndStage {
@@ -199,7 +194,11 @@ public final class FinalTranscript implements IPartialTranscript {
     }
 
     public interface CreatedStage {
-        PunctuatedStage created(String created);
+        MessageTypeStage created(String created);
+    }
+
+    public interface MessageTypeStage {
+        PunctuatedStage messageType(String messageType);
     }
 
     public interface PunctuatedStage {
@@ -222,17 +221,15 @@ public final class FinalTranscript implements IPartialTranscript {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements MessageTypeStage,
-                    AudioStartStage,
+            implements AudioStartStage,
                     AudioEndStage,
                     ConfidenceStage,
                     TextStage,
                     CreatedStage,
+                    MessageTypeStage,
                     PunctuatedStage,
                     TextFormattedStage,
                     _FinalStage {
-        private String messageType;
-
         private int audioStart;
 
         private int audioEnd;
@@ -242,6 +239,8 @@ public final class FinalTranscript implements IPartialTranscript {
         private String text;
 
         private String created;
+
+        private String messageType;
 
         private boolean punctuated;
 
@@ -253,26 +252,15 @@ public final class FinalTranscript implements IPartialTranscript {
 
         @Override
         public Builder from(FinalTranscript other) {
-            messageType(other.getMessageType());
             audioStart(other.getAudioStart());
             audioEnd(other.getAudioEnd());
             confidence(other.getConfidence());
             text(other.getText());
             words(other.getWords());
             created(other.getCreated());
+            messageType(other.getMessageType());
             punctuated(other.getPunctuated());
             textFormatted(other.getTextFormatted());
-            return this;
-        }
-
-        /**
-         * <p>Describes the type of message.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("message_type")
-        public AudioStartStage messageType(String messageType) {
-            this.messageType = messageType;
             return this;
         }
 
@@ -326,8 +314,19 @@ public final class FinalTranscript implements IPartialTranscript {
          */
         @Override
         @JsonSetter("created")
-        public PunctuatedStage created(String created) {
+        public MessageTypeStage created(String created) {
             this.created = created;
+            return this;
+        }
+
+        /**
+         * <p>Describes the type of message.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        @JsonSetter("message_type")
+        public PunctuatedStage messageType(String messageType) {
+            this.messageType = messageType;
             return this;
         }
 
@@ -384,7 +383,7 @@ public final class FinalTranscript implements IPartialTranscript {
         @Override
         public FinalTranscript build() {
             return new FinalTranscript(
-                    messageType, audioStart, audioEnd, confidence, text, words, created, punctuated, textFormatted);
+                    audioStart, audioEnd, confidence, text, words, created, messageType, punctuated, textFormatted);
         }
     }
 }

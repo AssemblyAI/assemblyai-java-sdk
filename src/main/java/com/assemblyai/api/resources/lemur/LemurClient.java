@@ -7,11 +7,12 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
-import com.assemblyai.api.resources.lemur.requests.LemurActionItemsParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurSummaryParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParameters;
+import com.assemblyai.api.types.DeleteLemurRequestResource;
 import com.assemblyai.api.types.LemurActionItemsResult;
+import com.assemblyai.api.types.LemurBaseParameters;
 import com.assemblyai.api.types.LemurQuestionAnswerResults;
 import com.assemblyai.api.types.LemurSummaryResult;
 import com.assemblyai.api.types.LemurTaskResult;
@@ -109,14 +110,14 @@ public class LemurClient {
         }
     }
 
-    public LemurActionItemsResult actionItems(LemurActionItemsParameters request) {
+    public LemurActionItemsResult actionItems(LemurBaseParameters request) {
         return actionItems(request, null);
     }
 
     /**
      * Use LeMUR to generate a list of Action Items from a transcript
      */
-    public LemurActionItemsResult actionItems(LemurActionItemsParameters request, RequestOptions requestOptions) {
+    public LemurActionItemsResult actionItems(LemurBaseParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/action-items")
@@ -178,6 +179,40 @@ public class LemurClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurTaskResult.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public DeleteLemurRequestResource deleteRequestData(String requestId) {
+        return deleteRequestData(requestId, null);
+    }
+
+    /**
+     * Delete the data for a previously submitted LeMUR request.
+     * The LLM response data, as well as any context provided in the original request will be removed.
+     */
+    public DeleteLemurRequestResource deleteRequestData(String requestId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("lemur/v3")
+                .addPathSegment(requestId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), DeleteLemurRequestResource.class);
             }
             throw new ApiError(
                     response.code(),

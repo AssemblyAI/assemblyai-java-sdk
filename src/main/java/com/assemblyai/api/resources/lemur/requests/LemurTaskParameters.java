@@ -4,6 +4,8 @@
 package com.assemblyai.api.resources.lemur.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.assemblyai.api.types.ILemurBaseParameters;
+import com.assemblyai.api.types.LemurBaseParametersContext;
 import com.assemblyai.api.types.LemurModels;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,36 +20,76 @@ import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurTaskParameters.Builder.class)
-public final class LemurTaskParameters {
+public final class LemurTaskParameters implements ILemurBaseParameters {
     private final List<String> transcriptIds;
 
-    private final String prompt;
-
-    private final Optional<Object> context;
+    private final Optional<LemurBaseParametersContext> context;
 
     private final Optional<LemurModels> finalModel;
 
     private final Optional<Integer> maxOutputSize;
 
+    private final Optional<Double> temperature;
+
+    private final String prompt;
+
     private LemurTaskParameters(
             List<String> transcriptIds,
-            String prompt,
-            Optional<Object> context,
+            Optional<LemurBaseParametersContext> context,
             Optional<LemurModels> finalModel,
-            Optional<Integer> maxOutputSize) {
+            Optional<Integer> maxOutputSize,
+            Optional<Double> temperature,
+            String prompt) {
         this.transcriptIds = transcriptIds;
-        this.prompt = prompt;
         this.context = context;
         this.finalModel = finalModel;
         this.maxOutputSize = maxOutputSize;
+        this.temperature = temperature;
+        this.prompt = prompt;
     }
 
     /**
      * @return A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.
      */
     @JsonProperty("transcript_ids")
+    @Override
     public List<String> getTranscriptIds() {
         return transcriptIds;
+    }
+
+    /**
+     * @return Context to provide the model. This can be a string or a free-form JSON value.
+     */
+    @JsonProperty("context")
+    @Override
+    public Optional<LemurBaseParametersContext> getContext() {
+        return context;
+    }
+
+    @JsonProperty("final_model")
+    @Override
+    public Optional<LemurModels> getFinalModel() {
+        return finalModel;
+    }
+
+    /**
+     * @return Max output size in tokens. Up to 4000 allowed.
+     */
+    @JsonProperty("max_output_size")
+    @Override
+    public Optional<Integer> getMaxOutputSize() {
+        return maxOutputSize;
+    }
+
+    /**
+     * @return The temperature to use for the model.
+     * Higher values result in answers that are more creative, lower values are more conservative.
+     * Can be any value between 0.0 and 1.0 inclusive.
+     */
+    @JsonProperty("temperature")
+    @Override
+    public Optional<Double> getTemperature() {
+        return temperature;
     }
 
     /**
@@ -58,24 +100,6 @@ public final class LemurTaskParameters {
         return prompt;
     }
 
-    @JsonProperty("context")
-    public Optional<Object> getContext() {
-        return context;
-    }
-
-    @JsonProperty("final_model")
-    public Optional<LemurModels> getFinalModel() {
-        return finalModel;
-    }
-
-    /**
-     * @return Max output size in tokens. Up to 4000 allowed.
-     */
-    @JsonProperty("max_output_size")
-    public Optional<Integer> getMaxOutputSize() {
-        return maxOutputSize;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -84,15 +108,17 @@ public final class LemurTaskParameters {
 
     private boolean equalTo(LemurTaskParameters other) {
         return transcriptIds.equals(other.transcriptIds)
-                && prompt.equals(other.prompt)
                 && context.equals(other.context)
                 && finalModel.equals(other.finalModel)
-                && maxOutputSize.equals(other.maxOutputSize);
+                && maxOutputSize.equals(other.maxOutputSize)
+                && temperature.equals(other.temperature)
+                && prompt.equals(other.prompt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.transcriptIds, this.prompt, this.context, this.finalModel, this.maxOutputSize);
+        return Objects.hash(
+                this.transcriptIds, this.context, this.finalModel, this.maxOutputSize, this.temperature, this.prompt);
     }
 
     @Override
@@ -119,9 +145,9 @@ public final class LemurTaskParameters {
 
         _FinalStage addAllTranscriptIds(List<String> transcriptIds);
 
-        _FinalStage context(Optional<Object> context);
+        _FinalStage context(Optional<LemurBaseParametersContext> context);
 
-        _FinalStage context(Object context);
+        _FinalStage context(LemurBaseParametersContext context);
 
         _FinalStage finalModel(Optional<LemurModels> finalModel);
 
@@ -130,17 +156,23 @@ public final class LemurTaskParameters {
         _FinalStage maxOutputSize(Optional<Integer> maxOutputSize);
 
         _FinalStage maxOutputSize(Integer maxOutputSize);
+
+        _FinalStage temperature(Optional<Double> temperature);
+
+        _FinalStage temperature(Double temperature);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements PromptStage, _FinalStage {
         private String prompt;
 
+        private Optional<Double> temperature = Optional.empty();
+
         private Optional<Integer> maxOutputSize = Optional.empty();
 
         private Optional<LemurModels> finalModel = Optional.empty();
 
-        private Optional<Object> context = Optional.empty();
+        private Optional<LemurBaseParametersContext> context = Optional.empty();
 
         private List<String> transcriptIds = new ArrayList<>();
 
@@ -149,10 +181,11 @@ public final class LemurTaskParameters {
         @Override
         public Builder from(LemurTaskParameters other) {
             transcriptIds(other.getTranscriptIds());
-            prompt(other.getPrompt());
             context(other.getContext());
             finalModel(other.getFinalModel());
             maxOutputSize(other.getMaxOutputSize());
+            temperature(other.getTemperature());
+            prompt(other.getPrompt());
             return this;
         }
 
@@ -164,6 +197,25 @@ public final class LemurTaskParameters {
         @JsonSetter("prompt")
         public _FinalStage prompt(String prompt) {
             this.prompt = prompt;
+            return this;
+        }
+
+        /**
+         * <p>The temperature to use for the model.
+         * Higher values result in answers that are more creative, lower values are more conservative.
+         * Can be any value between 0.0 and 1.0 inclusive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage temperature(Double temperature) {
+            this.temperature = Optional.of(temperature);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "temperature", nulls = Nulls.SKIP)
+        public _FinalStage temperature(Optional<Double> temperature) {
+            this.temperature = temperature;
             return this;
         }
 
@@ -197,15 +249,19 @@ public final class LemurTaskParameters {
             return this;
         }
 
+        /**
+         * <p>Context to provide the model. This can be a string or a free-form JSON value.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
-        public _FinalStage context(Object context) {
+        public _FinalStage context(LemurBaseParametersContext context) {
             this.context = Optional.of(context);
             return this;
         }
 
         @Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public _FinalStage context(Optional<Object> context) {
+        public _FinalStage context(Optional<LemurBaseParametersContext> context) {
             this.context = context;
             return this;
         }
@@ -240,7 +296,7 @@ public final class LemurTaskParameters {
 
         @Override
         public LemurTaskParameters build() {
-            return new LemurTaskParameters(transcriptIds, prompt, context, finalModel, maxOutputSize);
+            return new LemurTaskParameters(transcriptIds, context, finalModel, maxOutputSize, temperature, prompt);
         }
     }
 }

@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = UploadResponseBody.Builder.class)
-public final class UploadResponseBody {
+@JsonDeserialize(builder = UploadedFile.Builder.class)
+public final class UploadedFile {
     private final String uploadUrl;
 
-    private UploadResponseBody(String uploadUrl) {
+    private UploadedFile(String uploadUrl) {
         this.uploadUrl = uploadUrl;
     }
 
@@ -31,10 +31,10 @@ public final class UploadResponseBody {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof UploadResponseBody && equalTo((UploadResponseBody) other);
+        return other instanceof UploadedFile && equalTo((UploadedFile) other);
     }
 
-    private boolean equalTo(UploadResponseBody other) {
+    private boolean equalTo(UploadedFile other) {
         return uploadUrl.equals(other.uploadUrl);
     }
 
@@ -55,11 +55,11 @@ public final class UploadResponseBody {
     public interface UploadUrlStage {
         _FinalStage uploadUrl(String uploadUrl);
 
-        Builder from(UploadResponseBody other);
+        Builder from(UploadedFile other);
     }
 
     public interface _FinalStage {
-        UploadResponseBody build();
+        UploadedFile build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,7 +69,7 @@ public final class UploadResponseBody {
         private Builder() {}
 
         @Override
-        public Builder from(UploadResponseBody other) {
+        public Builder from(UploadedFile other) {
             uploadUrl(other.getUploadUrl());
             return this;
         }
@@ -86,8 +86,8 @@ public final class UploadResponseBody {
         }
 
         @Override
-        public UploadResponseBody build() {
-            return new UploadResponseBody(uploadUrl);
+        public UploadedFile build() {
+            return new UploadedFile(uploadUrl);
         }
     }
 }

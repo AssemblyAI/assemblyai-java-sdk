@@ -14,11 +14,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptSearchRequest.Builder.class)
-public final class TranscriptSearchRequest {
+@JsonDeserialize(builder = TranscriptWordSearchRequest.Builder.class)
+public final class TranscriptWordSearchRequest {
     private final Optional<String> words;
 
-    private TranscriptSearchRequest(Optional<String> words) {
+    private TranscriptWordSearchRequest(Optional<String> words) {
         this.words = words;
     }
 
@@ -33,10 +33,10 @@ public final class TranscriptSearchRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptSearchRequest && equalTo((TranscriptSearchRequest) other);
+        return other instanceof TranscriptWordSearchRequest && equalTo((TranscriptWordSearchRequest) other);
     }
 
-    private boolean equalTo(TranscriptSearchRequest other) {
+    private boolean equalTo(TranscriptWordSearchRequest other) {
         return words.equals(other.words);
     }
 
@@ -60,7 +60,7 @@ public final class TranscriptSearchRequest {
 
         private Builder() {}
 
-        public Builder from(TranscriptSearchRequest other) {
+        public Builder from(TranscriptWordSearchRequest other) {
             words(other.getWords());
             return this;
         }
@@ -76,8 +76,8 @@ public final class TranscriptSearchRequest {
             return this;
         }
 
-        public TranscriptSearchRequest build() {
-            return new TranscriptSearchRequest(words);
+        public TranscriptWordSearchRequest build() {
+            return new TranscriptWordSearchRequest(words);
         }
     }
 }
