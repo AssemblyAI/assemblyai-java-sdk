@@ -13,11 +13,23 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TerminateSession.Builder.class)
-public final class TerminateSession {
+public final class TerminateSession implements IRealtimeBaseMessage {
+    private final MessageTypes messageType;
+
     private final boolean terminateSession;
 
-    private TerminateSession(boolean terminateSession) {
+    private TerminateSession(MessageTypes messageType, boolean terminateSession) {
+        this.messageType = messageType;
         this.terminateSession = terminateSession;
+    }
+
+    /**
+     * @return Describes the type of the message.
+     */
+    @JsonProperty("message_type")
+    @Override
+    public MessageTypes getMessageType() {
+        return messageType;
     }
 
     /**
@@ -35,12 +47,12 @@ public final class TerminateSession {
     }
 
     private boolean equalTo(TerminateSession other) {
-        return terminateSession == other.terminateSession;
+        return messageType.equals(other.messageType) && terminateSession == other.terminateSession;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.terminateSession);
+        return Objects.hash(this.messageType, this.terminateSession);
     }
 
     @Override
@@ -48,14 +60,18 @@ public final class TerminateSession {
         return ObjectMappers.stringify(this);
     }
 
-    public static TerminateSessionStage builder() {
+    public static MessageTypeStage builder() {
         return new Builder();
+    }
+
+    public interface MessageTypeStage {
+        TerminateSessionStage messageType(MessageTypes messageType);
+
+        Builder from(TerminateSession other);
     }
 
     public interface TerminateSessionStage {
         _FinalStage terminateSession(boolean terminateSession);
-
-        Builder from(TerminateSession other);
     }
 
     public interface _FinalStage {
@@ -63,14 +79,28 @@ public final class TerminateSession {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TerminateSessionStage, _FinalStage {
+    public static final class Builder implements MessageTypeStage, TerminateSessionStage, _FinalStage {
+        private MessageTypes messageType;
+
         private boolean terminateSession;
 
         private Builder() {}
 
         @Override
         public Builder from(TerminateSession other) {
+            messageType(other.getMessageType());
             terminateSession(other.getTerminateSession());
+            return this;
+        }
+
+        /**
+         * <p>Describes the type of the message.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        @JsonSetter("message_type")
+        public TerminateSessionStage messageType(MessageTypes messageType) {
+            this.messageType = messageType;
             return this;
         }
 
@@ -87,7 +117,7 @@ public final class TerminateSession {
 
         @Override
         public TerminateSession build() {
-            return new TerminateSession(terminateSession);
+            return new TerminateSession(messageType, terminateSession);
         }
     }
 }

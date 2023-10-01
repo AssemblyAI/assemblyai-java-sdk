@@ -19,7 +19,7 @@ import java.util.Optional;
 public final class LemurQuestion {
     private final String question;
 
-    private final Optional<Object> context;
+    private final Optional<LemurQuestionContext> context;
 
     private final Optional<String> answerFormat;
 
@@ -27,7 +27,7 @@ public final class LemurQuestion {
 
     private LemurQuestion(
             String question,
-            Optional<Object> context,
+            Optional<LemurQuestionContext> context,
             Optional<String> answerFormat,
             Optional<List<String>> answerOptions) {
         this.question = question;
@@ -44,8 +44,11 @@ public final class LemurQuestion {
         return question;
     }
 
+    /**
+     * @return Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.
+     */
     @JsonProperty("context")
-    public Optional<Object> getContext() {
+    public Optional<LemurQuestionContext> getContext() {
         return context;
     }
 
@@ -101,9 +104,9 @@ public final class LemurQuestion {
     public interface _FinalStage {
         LemurQuestion build();
 
-        _FinalStage context(Optional<Object> context);
+        _FinalStage context(Optional<LemurQuestionContext> context);
 
-        _FinalStage context(Object context);
+        _FinalStage context(LemurQuestionContext context);
 
         _FinalStage answerFormat(Optional<String> answerFormat);
 
@@ -122,7 +125,7 @@ public final class LemurQuestion {
 
         private Optional<String> answerFormat = Optional.empty();
 
-        private Optional<Object> context = Optional.empty();
+        private Optional<LemurQuestionContext> context = Optional.empty();
 
         private Builder() {}
 
@@ -180,15 +183,19 @@ public final class LemurQuestion {
             return this;
         }
 
+        /**
+         * <p>Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
-        public _FinalStage context(Object context) {
+        public _FinalStage context(LemurQuestionContext context) {
             this.context = Optional.of(context);
             return this;
         }
 
         @Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public _FinalStage context(Optional<Object> context) {
+        public _FinalStage context(Optional<LemurQuestionContext> context) {
             this.context = context;
             return this;
         }

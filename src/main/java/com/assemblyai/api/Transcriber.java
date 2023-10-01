@@ -2,17 +2,13 @@ package com.assemblyai.api;
 
 import com.assemblyai.api.core.Environment;
 import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
-import com.assemblyai.api.types.BaseTranscriptCreate;
-import com.assemblyai.api.types.SummaryModel;
-import com.assemblyai.api.types.SummaryType;
+import com.assemblyai.api.types.CreateTranscriptOptionalParameters;
 import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.TranscriptStatus;
-import com.assemblyai.api.types.UploadResponseBody;
+import com.assemblyai.api.types.UploadedFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.List;
-import java.util.Optional;
 
 public final class Transcriber {
 
@@ -26,13 +22,13 @@ public final class Transcriber {
      * Transcribes an audio file whose location can be specified via a URL.
      */
     public Transcript transcribe(String url, boolean poll) {
-        return transcribe(url, BaseTranscriptCreate.builder().build(), poll);
+        return transcribe(url, CreateTranscriptOptionalParameters.builder().build(), poll);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a URL.
      */
-    public Transcript transcribe(String url, BaseTranscriptCreate transcriptRequest, boolean poll) {
+    public Transcript transcribe(String url, CreateTranscriptOptionalParameters transcriptRequest, boolean poll) {
         CreateTranscriptParameters createTranscript = CreateTranscriptParameters.builder()
                 .audioUrl(url)
                 .topics(transcriptRequest.getTopics())
@@ -64,16 +60,16 @@ public final class Transcriber {
      * Transcribes an audio file whose location can be specified via a filepath.
      */
     public Transcript transcribe(File data, boolean poll) throws IOException {
-        return transcribe(data, BaseTranscriptCreate.builder().build(), poll);
+        return transcribe(data, CreateTranscriptOptionalParameters.builder().build(), poll);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a filepath.
      */
-    public Transcript transcribe(File data, BaseTranscriptCreate transcriptRequest, boolean poll)
+    public Transcript transcribe(File data, CreateTranscriptOptionalParameters transcriptRequest, boolean poll)
             throws IOException {
-        UploadResponseBody uploadResponse = this.client.files().upload(Files.readAllBytes(data.toPath()));
-        return transcribe(uploadResponse.getUploadUrl(), transcriptRequest, poll);
+        UploadedFile uploadedFile = this.client.files().upload(Files.readAllBytes(data.toPath()));
+        return transcribe(uploadedFile.getUploadUrl(), transcriptRequest, poll);
     }
 
     private Transcript awaitCompletion(String transcriptId) {

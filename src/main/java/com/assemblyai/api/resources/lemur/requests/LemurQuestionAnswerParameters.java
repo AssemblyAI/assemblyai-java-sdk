@@ -4,6 +4,8 @@
 package com.assemblyai.api.resources.lemur.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.assemblyai.api.types.ILemurBaseParameters;
+import com.assemblyai.api.types.LemurBaseParametersContext;
 import com.assemblyai.api.types.LemurModels;
 import com.assemblyai.api.types.LemurQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,40 +21,76 @@ import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurQuestionAnswerParameters.Builder.class)
-public final class LemurQuestionAnswerParameters {
+public final class LemurQuestionAnswerParameters implements ILemurBaseParameters {
     private final List<String> transcriptIds;
 
-    private final List<LemurQuestion> questions;
-
-    private final Optional<Object> context;
-
-    private final Optional<String> answerFormat;
+    private final Optional<LemurBaseParametersContext> context;
 
     private final Optional<LemurModels> finalModel;
 
-    private final Optional<Double> maxOutputSize;
+    private final Optional<Integer> maxOutputSize;
+
+    private final Optional<Double> temperature;
+
+    private final List<LemurQuestion> questions;
 
     private LemurQuestionAnswerParameters(
             List<String> transcriptIds,
-            List<LemurQuestion> questions,
-            Optional<Object> context,
-            Optional<String> answerFormat,
+            Optional<LemurBaseParametersContext> context,
             Optional<LemurModels> finalModel,
-            Optional<Double> maxOutputSize) {
+            Optional<Integer> maxOutputSize,
+            Optional<Double> temperature,
+            List<LemurQuestion> questions) {
         this.transcriptIds = transcriptIds;
-        this.questions = questions;
         this.context = context;
-        this.answerFormat = answerFormat;
         this.finalModel = finalModel;
         this.maxOutputSize = maxOutputSize;
+        this.temperature = temperature;
+        this.questions = questions;
     }
 
     /**
      * @return A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.
      */
     @JsonProperty("transcript_ids")
+    @Override
     public List<String> getTranscriptIds() {
         return transcriptIds;
+    }
+
+    /**
+     * @return Context to provide the model. This can be a string or a free-form JSON value.
+     */
+    @JsonProperty("context")
+    @Override
+    public Optional<LemurBaseParametersContext> getContext() {
+        return context;
+    }
+
+    @JsonProperty("final_model")
+    @Override
+    public Optional<LemurModels> getFinalModel() {
+        return finalModel;
+    }
+
+    /**
+     * @return Max output size in tokens. Up to 4000 allowed.
+     */
+    @JsonProperty("max_output_size")
+    @Override
+    public Optional<Integer> getMaxOutputSize() {
+        return maxOutputSize;
+    }
+
+    /**
+     * @return The temperature to use for the model.
+     * Higher values result in answers that are more creative, lower values are more conservative.
+     * Can be any value between 0.0 and 1.0 inclusive.
+     */
+    @JsonProperty("temperature")
+    @Override
+    public Optional<Double> getTemperature() {
+        return temperature;
     }
 
     /**
@@ -63,32 +101,6 @@ public final class LemurQuestionAnswerParameters {
         return questions;
     }
 
-    @JsonProperty("context")
-    public Optional<Object> getContext() {
-        return context;
-    }
-
-    /**
-     * @return How you want the summary to be returned. This can be any text. Examples: &quot;TLDR&quot;, &quot;bullet points&quot;
-     */
-    @JsonProperty("answer_format")
-    public Optional<String> getAnswerFormat() {
-        return answerFormat;
-    }
-
-    @JsonProperty("final_model")
-    public Optional<LemurModels> getFinalModel() {
-        return finalModel;
-    }
-
-    /**
-     * @return Max output size in tokens. Up to 4000 allowed.
-     */
-    @JsonProperty("max_output_size")
-    public Optional<Double> getMaxOutputSize() {
-        return maxOutputSize;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -97,22 +109,22 @@ public final class LemurQuestionAnswerParameters {
 
     private boolean equalTo(LemurQuestionAnswerParameters other) {
         return transcriptIds.equals(other.transcriptIds)
-                && questions.equals(other.questions)
                 && context.equals(other.context)
-                && answerFormat.equals(other.answerFormat)
                 && finalModel.equals(other.finalModel)
-                && maxOutputSize.equals(other.maxOutputSize);
+                && maxOutputSize.equals(other.maxOutputSize)
+                && temperature.equals(other.temperature)
+                && questions.equals(other.questions);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
                 this.transcriptIds,
-                this.questions,
                 this.context,
-                this.answerFormat,
                 this.finalModel,
-                this.maxOutputSize);
+                this.maxOutputSize,
+                this.temperature,
+                this.questions);
     }
 
     @Override
@@ -128,25 +140,25 @@ public final class LemurQuestionAnswerParameters {
     public static final class Builder {
         private List<String> transcriptIds = new ArrayList<>();
 
-        private List<LemurQuestion> questions = new ArrayList<>();
-
-        private Optional<Object> context = Optional.empty();
-
-        private Optional<String> answerFormat = Optional.empty();
+        private Optional<LemurBaseParametersContext> context = Optional.empty();
 
         private Optional<LemurModels> finalModel = Optional.empty();
 
-        private Optional<Double> maxOutputSize = Optional.empty();
+        private Optional<Integer> maxOutputSize = Optional.empty();
+
+        private Optional<Double> temperature = Optional.empty();
+
+        private List<LemurQuestion> questions = new ArrayList<>();
 
         private Builder() {}
 
         public Builder from(LemurQuestionAnswerParameters other) {
             transcriptIds(other.getTranscriptIds());
-            questions(other.getQuestions());
             context(other.getContext());
-            answerFormat(other.getAnswerFormat());
             finalModel(other.getFinalModel());
             maxOutputSize(other.getMaxOutputSize());
+            temperature(other.getTemperature());
+            questions(other.getQuestions());
             return this;
         }
 
@@ -167,6 +179,50 @@ public final class LemurQuestionAnswerParameters {
             return this;
         }
 
+        @JsonSetter(value = "context", nulls = Nulls.SKIP)
+        public Builder context(Optional<LemurBaseParametersContext> context) {
+            this.context = context;
+            return this;
+        }
+
+        public Builder context(LemurBaseParametersContext context) {
+            this.context = Optional.of(context);
+            return this;
+        }
+
+        @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
+        public Builder finalModel(Optional<LemurModels> finalModel) {
+            this.finalModel = finalModel;
+            return this;
+        }
+
+        public Builder finalModel(LemurModels finalModel) {
+            this.finalModel = Optional.of(finalModel);
+            return this;
+        }
+
+        @JsonSetter(value = "max_output_size", nulls = Nulls.SKIP)
+        public Builder maxOutputSize(Optional<Integer> maxOutputSize) {
+            this.maxOutputSize = maxOutputSize;
+            return this;
+        }
+
+        public Builder maxOutputSize(Integer maxOutputSize) {
+            this.maxOutputSize = Optional.of(maxOutputSize);
+            return this;
+        }
+
+        @JsonSetter(value = "temperature", nulls = Nulls.SKIP)
+        public Builder temperature(Optional<Double> temperature) {
+            this.temperature = temperature;
+            return this;
+        }
+
+        public Builder temperature(Double temperature) {
+            this.temperature = Optional.of(temperature);
+            return this;
+        }
+
         @JsonSetter(value = "questions", nulls = Nulls.SKIP)
         public Builder questions(List<LemurQuestion> questions) {
             this.questions.clear();
@@ -184,53 +240,9 @@ public final class LemurQuestionAnswerParameters {
             return this;
         }
 
-        @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public Builder context(Optional<Object> context) {
-            this.context = context;
-            return this;
-        }
-
-        public Builder context(Object context) {
-            this.context = Optional.of(context);
-            return this;
-        }
-
-        @JsonSetter(value = "answer_format", nulls = Nulls.SKIP)
-        public Builder answerFormat(Optional<String> answerFormat) {
-            this.answerFormat = answerFormat;
-            return this;
-        }
-
-        public Builder answerFormat(String answerFormat) {
-            this.answerFormat = Optional.of(answerFormat);
-            return this;
-        }
-
-        @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
-        public Builder finalModel(Optional<LemurModels> finalModel) {
-            this.finalModel = finalModel;
-            return this;
-        }
-
-        public Builder finalModel(LemurModels finalModel) {
-            this.finalModel = Optional.of(finalModel);
-            return this;
-        }
-
-        @JsonSetter(value = "max_output_size", nulls = Nulls.SKIP)
-        public Builder maxOutputSize(Optional<Double> maxOutputSize) {
-            this.maxOutputSize = maxOutputSize;
-            return this;
-        }
-
-        public Builder maxOutputSize(Double maxOutputSize) {
-            this.maxOutputSize = Optional.of(maxOutputSize);
-            return this;
-        }
-
         public LemurQuestionAnswerParameters build() {
             return new LemurQuestionAnswerParameters(
-                    transcriptIds, questions, context, answerFormat, finalModel, maxOutputSize);
+                    transcriptIds, context, finalModel, maxOutputSize, temperature, questions);
         }
     }
 }

@@ -14,7 +14,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Entity.Builder.class)
 public final class Entity {
-    private final String entityType;
+    private final EntityType entityType;
 
     private final String text;
 
@@ -22,7 +22,7 @@ public final class Entity {
 
     private final int end;
 
-    private Entity(String entityType, String text, int start, int end) {
+    private Entity(EntityType entityType, String text, int start, int end) {
         this.entityType = entityType;
         this.text = text;
         this.start = start;
@@ -33,7 +33,7 @@ public final class Entity {
      * @return The type of entity for the detected entity
      */
     @JsonProperty("entity_type")
-    public String getEntityType() {
+    public EntityType getEntityType() {
         return entityType;
     }
 
@@ -89,7 +89,7 @@ public final class Entity {
     }
 
     public interface EntityTypeStage {
-        TextStage entityType(String entityType);
+        TextStage entityType(EntityType entityType);
 
         Builder from(Entity other);
     }
@@ -112,7 +112,7 @@ public final class Entity {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EntityTypeStage, TextStage, StartStage, EndStage, _FinalStage {
-        private String entityType;
+        private EntityType entityType;
 
         private String text;
 
@@ -137,7 +137,7 @@ public final class Entity {
          */
         @Override
         @JsonSetter("entity_type")
-        public TextStage entityType(String entityType) {
+        public TextStage entityType(EntityType entityType) {
             this.entityType = entityType;
             return this;
         }

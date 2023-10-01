@@ -18,13 +18,13 @@ public final class Chapter {
 
     private final String headline;
 
-    private final TranscriptParagraphResource summary;
+    private final String summary;
 
     private final int start;
 
     private final int end;
 
-    private Chapter(String gist, String headline, TranscriptParagraphResource summary, int start, int end) {
+    private Chapter(String gist, String headline, String summary, int start, int end) {
         this.gist = gist;
         this.headline = headline;
         this.summary = summary;
@@ -52,7 +52,7 @@ public final class Chapter {
      * @return A one paragraph summary of the content spoken during the chapter
      */
     @JsonProperty("summary")
-    public TranscriptParagraphResource getSummary() {
+    public String getSummary() {
         return summary;
     }
 
@@ -111,7 +111,7 @@ public final class Chapter {
     }
 
     public interface SummaryStage {
-        StartStage summary(TranscriptParagraphResource summary);
+        StartStage summary(String summary);
     }
 
     public interface StartStage {
@@ -133,7 +133,7 @@ public final class Chapter {
 
         private String headline;
 
-        private TranscriptParagraphResource summary;
+        private String summary;
 
         private int start;
 
@@ -179,7 +179,7 @@ public final class Chapter {
          */
         @Override
         @JsonSetter("summary")
-        public StartStage summary(TranscriptParagraphResource summary) {
+        public StartStage summary(String summary) {
             this.summary = summary;
             return this;
         }

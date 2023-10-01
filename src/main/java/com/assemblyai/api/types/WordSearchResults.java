@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptSearchResults.Builder.class)
-public final class TranscriptSearchResults {
+@JsonDeserialize(builder = WordSearchResults.Builder.class)
+public final class WordSearchResults {
     private final String id;
 
     private final int totalCount;
 
-    private final List<TranscriptSearchMatch> matches;
+    private final List<WordSearchMatch> matches;
 
-    private TranscriptSearchResults(String id, int totalCount, List<TranscriptSearchMatch> matches) {
+    private WordSearchResults(String id, int totalCount, List<WordSearchMatch> matches) {
         this.id = id;
         this.totalCount = totalCount;
         this.matches = matches;
@@ -49,17 +49,17 @@ public final class TranscriptSearchResults {
      * @return The matches of the search
      */
     @JsonProperty("matches")
-    public List<TranscriptSearchMatch> getMatches() {
+    public List<WordSearchMatch> getMatches() {
         return matches;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptSearchResults && equalTo((TranscriptSearchResults) other);
+        return other instanceof WordSearchResults && equalTo((WordSearchResults) other);
     }
 
-    private boolean equalTo(TranscriptSearchResults other) {
+    private boolean equalTo(WordSearchResults other) {
         return id.equals(other.id) && totalCount == other.totalCount && matches.equals(other.matches);
     }
 
@@ -80,7 +80,7 @@ public final class TranscriptSearchResults {
     public interface IdStage {
         TotalCountStage id(String id);
 
-        Builder from(TranscriptSearchResults other);
+        Builder from(WordSearchResults other);
     }
 
     public interface TotalCountStage {
@@ -88,13 +88,13 @@ public final class TranscriptSearchResults {
     }
 
     public interface _FinalStage {
-        TranscriptSearchResults build();
+        WordSearchResults build();
 
-        _FinalStage matches(List<TranscriptSearchMatch> matches);
+        _FinalStage matches(List<WordSearchMatch> matches);
 
-        _FinalStage addMatches(TranscriptSearchMatch matches);
+        _FinalStage addMatches(WordSearchMatch matches);
 
-        _FinalStage addAllMatches(List<TranscriptSearchMatch> matches);
+        _FinalStage addAllMatches(List<WordSearchMatch> matches);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -103,12 +103,12 @@ public final class TranscriptSearchResults {
 
         private int totalCount;
 
-        private List<TranscriptSearchMatch> matches = new ArrayList<>();
+        private List<WordSearchMatch> matches = new ArrayList<>();
 
         private Builder() {}
 
         @Override
-        public Builder from(TranscriptSearchResults other) {
+        public Builder from(WordSearchResults other) {
             id(other.getId());
             totalCount(other.getTotalCount());
             matches(other.getMatches());
@@ -142,7 +142,7 @@ public final class TranscriptSearchResults {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage addAllMatches(List<TranscriptSearchMatch> matches) {
+        public _FinalStage addAllMatches(List<WordSearchMatch> matches) {
             this.matches.addAll(matches);
             return this;
         }
@@ -152,22 +152,22 @@ public final class TranscriptSearchResults {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage addMatches(TranscriptSearchMatch matches) {
+        public _FinalStage addMatches(WordSearchMatch matches) {
             this.matches.add(matches);
             return this;
         }
 
         @Override
         @JsonSetter(value = "matches", nulls = Nulls.SKIP)
-        public _FinalStage matches(List<TranscriptSearchMatch> matches) {
+        public _FinalStage matches(List<WordSearchMatch> matches) {
             this.matches.clear();
             this.matches.addAll(matches);
             return this;
         }
 
         @Override
-        public TranscriptSearchResults build() {
-            return new TranscriptSearchResults(id, totalCount, matches);
+        public WordSearchResults build() {
+            return new WordSearchResults(id, totalCount, matches);
         }
     }
 }

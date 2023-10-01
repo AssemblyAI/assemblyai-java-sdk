@@ -15,22 +15,21 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptParagraphResource.Builder.class)
-public final class TranscriptParagraphResource {
+@JsonDeserialize(builder = SentencesResource.Builder.class)
+public final class SentencesResource {
     private final String id;
 
     private final double confidence;
 
     private final double audioDuration;
 
-    private final List<TranscriptParagraph> paragraphs;
+    private final List<TranscriptSentence> sentences;
 
-    private TranscriptParagraphResource(
-            String id, double confidence, double audioDuration, List<TranscriptParagraph> paragraphs) {
+    private SentencesResource(String id, double confidence, double audioDuration, List<TranscriptSentence> sentences) {
         this.id = id;
         this.confidence = confidence;
         this.audioDuration = audioDuration;
-        this.paragraphs = paragraphs;
+        this.sentences = sentences;
     }
 
     @JsonProperty("id")
@@ -48,27 +47,27 @@ public final class TranscriptParagraphResource {
         return audioDuration;
     }
 
-    @JsonProperty("paragraphs")
-    public List<TranscriptParagraph> getParagraphs() {
-        return paragraphs;
+    @JsonProperty("sentences")
+    public List<TranscriptSentence> getSentences() {
+        return sentences;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptParagraphResource && equalTo((TranscriptParagraphResource) other);
+        return other instanceof SentencesResource && equalTo((SentencesResource) other);
     }
 
-    private boolean equalTo(TranscriptParagraphResource other) {
+    private boolean equalTo(SentencesResource other) {
         return id.equals(other.id)
                 && confidence == other.confidence
                 && audioDuration == other.audioDuration
-                && paragraphs.equals(other.paragraphs);
+                && sentences.equals(other.sentences);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.confidence, this.audioDuration, this.paragraphs);
+        return Objects.hash(this.id, this.confidence, this.audioDuration, this.sentences);
     }
 
     @Override
@@ -83,7 +82,7 @@ public final class TranscriptParagraphResource {
     public interface IdStage {
         ConfidenceStage id(String id);
 
-        Builder from(TranscriptParagraphResource other);
+        Builder from(SentencesResource other);
     }
 
     public interface ConfidenceStage {
@@ -95,13 +94,13 @@ public final class TranscriptParagraphResource {
     }
 
     public interface _FinalStage {
-        TranscriptParagraphResource build();
+        SentencesResource build();
 
-        _FinalStage paragraphs(List<TranscriptParagraph> paragraphs);
+        _FinalStage sentences(List<TranscriptSentence> sentences);
 
-        _FinalStage addParagraphs(TranscriptParagraph paragraphs);
+        _FinalStage addSentences(TranscriptSentence sentences);
 
-        _FinalStage addAllParagraphs(List<TranscriptParagraph> paragraphs);
+        _FinalStage addAllSentences(List<TranscriptSentence> sentences);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -112,16 +111,16 @@ public final class TranscriptParagraphResource {
 
         private double audioDuration;
 
-        private List<TranscriptParagraph> paragraphs = new ArrayList<>();
+        private List<TranscriptSentence> sentences = new ArrayList<>();
 
         private Builder() {}
 
         @Override
-        public Builder from(TranscriptParagraphResource other) {
+        public Builder from(SentencesResource other) {
             id(other.getId());
             confidence(other.getConfidence());
             audioDuration(other.getAudioDuration());
-            paragraphs(other.getParagraphs());
+            sentences(other.getSentences());
             return this;
         }
 
@@ -147,28 +146,28 @@ public final class TranscriptParagraphResource {
         }
 
         @Override
-        public _FinalStage addAllParagraphs(List<TranscriptParagraph> paragraphs) {
-            this.paragraphs.addAll(paragraphs);
+        public _FinalStage addAllSentences(List<TranscriptSentence> sentences) {
+            this.sentences.addAll(sentences);
             return this;
         }
 
         @Override
-        public _FinalStage addParagraphs(TranscriptParagraph paragraphs) {
-            this.paragraphs.add(paragraphs);
+        public _FinalStage addSentences(TranscriptSentence sentences) {
+            this.sentences.add(sentences);
             return this;
         }
 
         @Override
-        @JsonSetter(value = "paragraphs", nulls = Nulls.SKIP)
-        public _FinalStage paragraphs(List<TranscriptParagraph> paragraphs) {
-            this.paragraphs.clear();
-            this.paragraphs.addAll(paragraphs);
+        @JsonSetter(value = "sentences", nulls = Nulls.SKIP)
+        public _FinalStage sentences(List<TranscriptSentence> sentences) {
+            this.sentences.clear();
+            this.sentences.addAll(sentences);
             return this;
         }
 
         @Override
-        public TranscriptParagraphResource build() {
-            return new TranscriptParagraphResource(id, confidence, audioDuration, paragraphs);
+        public SentencesResource build() {
+            return new SentencesResource(id, confidence, audioDuration, sentences);
         }
     }
 }

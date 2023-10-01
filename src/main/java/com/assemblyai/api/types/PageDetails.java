@@ -16,7 +16,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PageDetails.Builder.class)
 public final class PageDetails {
-    private final Optional<Integer> limit;
+    private final int limit;
 
     private final int resultCount;
 
@@ -26,8 +26,7 @@ public final class PageDetails {
 
     private final Optional<String> nextUrl;
 
-    private PageDetails(
-            Optional<Integer> limit, int resultCount, String currentUrl, String prevUrl, Optional<String> nextUrl) {
+    private PageDetails(int limit, int resultCount, String currentUrl, String prevUrl, Optional<String> nextUrl) {
         this.limit = limit;
         this.resultCount = resultCount;
         this.currentUrl = currentUrl;
@@ -36,7 +35,7 @@ public final class PageDetails {
     }
 
     @JsonProperty("limit")
-    public Optional<Integer> getLimit() {
+    public int getLimit() {
         return limit;
     }
 
@@ -67,7 +66,7 @@ public final class PageDetails {
     }
 
     private boolean equalTo(PageDetails other) {
-        return limit.equals(other.limit)
+        return limit == other.limit
                 && resultCount == other.resultCount
                 && currentUrl.equals(other.currentUrl)
                 && prevUrl.equals(other.prevUrl)
@@ -84,14 +83,18 @@ public final class PageDetails {
         return ObjectMappers.stringify(this);
     }
 
-    public static ResultCountStage builder() {
+    public static LimitStage builder() {
         return new Builder();
+    }
+
+    public interface LimitStage {
+        ResultCountStage limit(int limit);
+
+        Builder from(PageDetails other);
     }
 
     public interface ResultCountStage {
         CurrentUrlStage resultCount(int resultCount);
-
-        Builder from(PageDetails other);
     }
 
     public interface CurrentUrlStage {
@@ -105,17 +108,16 @@ public final class PageDetails {
     public interface _FinalStage {
         PageDetails build();
 
-        _FinalStage limit(Optional<Integer> limit);
-
-        _FinalStage limit(Integer limit);
-
         _FinalStage nextUrl(Optional<String> nextUrl);
 
         _FinalStage nextUrl(String nextUrl);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ResultCountStage, CurrentUrlStage, PrevUrlStage, _FinalStage {
+    public static final class Builder
+            implements LimitStage, ResultCountStage, CurrentUrlStage, PrevUrlStage, _FinalStage {
+        private int limit;
+
         private int resultCount;
 
         private String currentUrl;
@@ -123,8 +125,6 @@ public final class PageDetails {
         private String prevUrl;
 
         private Optional<String> nextUrl = Optional.empty();
-
-        private Optional<Integer> limit = Optional.empty();
 
         private Builder() {}
 
@@ -135,6 +135,13 @@ public final class PageDetails {
             currentUrl(other.getCurrentUrl());
             prevUrl(other.getPrevUrl());
             nextUrl(other.getNextUrl());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("limit")
+        public ResultCountStage limit(int limit) {
+            this.limit = limit;
             return this;
         }
 
@@ -169,19 +176,6 @@ public final class PageDetails {
         @JsonSetter(value = "next_url", nulls = Nulls.SKIP)
         public _FinalStage nextUrl(Optional<String> nextUrl) {
             this.nextUrl = nextUrl;
-            return this;
-        }
-
-        @Override
-        public _FinalStage limit(Integer limit) {
-            this.limit = Optional.of(limit);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "limit", nulls = Nulls.SKIP)
-        public _FinalStage limit(Optional<Integer> limit) {
-            this.limit = limit;
             return this;
         }
 

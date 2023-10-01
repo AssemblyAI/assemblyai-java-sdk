@@ -11,13 +11,13 @@ import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParamete
 import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsSrtRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsVttRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptListRequest;
-import com.assemblyai.api.resources.transcript.requests.TranscriptSearchRequest;
+import com.assemblyai.api.resources.transcript.requests.TranscriptWordSearchRequest;
+import com.assemblyai.api.types.ParagraphsResource;
 import com.assemblyai.api.types.RedactedAudioResult;
+import com.assemblyai.api.types.SentencesResource;
 import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.TranscriptList;
-import com.assemblyai.api.types.TranscriptParagraphResource;
-import com.assemblyai.api.types.TranscriptSearchResults;
-import com.assemblyai.api.types.TranscriptSentenceResource;
+import com.assemblyai.api.types.WordSearchResults;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -276,14 +276,14 @@ public class TranscriptClient {
         return exportAsSrt(transcriptId, TranscriptExportAsSrtRequest.builder().build());
     }
 
-    public TranscriptSentenceResource getSentences(String transcriptId) {
+    public SentencesResource getSentences(String transcriptId) {
         return getSentences(transcriptId, null);
     }
 
     /**
      * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public TranscriptSentenceResource getSentences(String transcriptId, RequestOptions requestOptions) {
+    public SentencesResource getSentences(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -300,7 +300,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), TranscriptSentenceResource.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SentencesResource.class);
             }
             throw new ApiError(
                     response.code(),
@@ -310,14 +310,14 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptParagraphResource getParagraphs(String transcriptId) {
+    public ParagraphsResource getParagraphs(String transcriptId) {
         return getParagraphs(transcriptId, null);
     }
 
     /**
      * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
      */
-    public TranscriptParagraphResource getParagraphs(String transcriptId, RequestOptions requestOptions) {
+    public ParagraphsResource getParagraphs(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -334,7 +334,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), TranscriptParagraphResource.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ParagraphsResource.class);
             }
             throw new ApiError(
                     response.code(),
@@ -344,15 +344,15 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptSearchResults search(String transcriptId, TranscriptSearchRequest request) {
-        return search(transcriptId, request, null);
+    public WordSearchResults wordSearch(String transcriptId, TranscriptWordSearchRequest request) {
+        return wordSearch(transcriptId, request, null);
     }
 
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public TranscriptSearchResults search(
-            String transcriptId, TranscriptSearchRequest request, RequestOptions requestOptions) {
+    public WordSearchResults wordSearch(
+            String transcriptId, TranscriptWordSearchRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -371,7 +371,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), TranscriptSearchResults.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), WordSearchResults.class);
             }
             throw new ApiError(
                     response.code(),
@@ -381,8 +381,8 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptSearchResults search(String transcriptId) {
-        return search(transcriptId, TranscriptSearchRequest.builder().build());
+    public WordSearchResults wordSearch(String transcriptId) {
+        return wordSearch(transcriptId, TranscriptWordSearchRequest.builder().build());
     }
 
     public RedactedAudioResult getRedactedAudio(String transcriptId) {

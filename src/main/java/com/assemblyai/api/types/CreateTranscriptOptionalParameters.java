@@ -15,8 +15,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = BaseTranscriptCreate.Builder.class)
-public final class BaseTranscriptCreate implements IBaseTranscriptCreate {
+@JsonDeserialize(builder = CreateTranscriptOptionalParameters.Builder.class)
+public final class CreateTranscriptOptionalParameters implements ICreateTranscriptOptionalParameters {
     private final Optional<TranscriptLanguageCode> languageCode;
 
     private final Optional<Boolean> punctuate;
@@ -85,7 +85,7 @@ public final class BaseTranscriptCreate implements IBaseTranscriptCreate {
 
     private final Optional<List<String>> topics;
 
-    private BaseTranscriptCreate(
+    private CreateTranscriptOptionalParameters(
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
@@ -467,10 +467,11 @@ public final class BaseTranscriptCreate implements IBaseTranscriptCreate {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof BaseTranscriptCreate && equalTo((BaseTranscriptCreate) other);
+        return other instanceof CreateTranscriptOptionalParameters
+                && equalTo((CreateTranscriptOptionalParameters) other);
     }
 
-    private boolean equalTo(BaseTranscriptCreate other) {
+    private boolean equalTo(CreateTranscriptOptionalParameters other) {
         return languageCode.equals(other.languageCode)
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
@@ -627,7 +628,7 @@ public final class BaseTranscriptCreate implements IBaseTranscriptCreate {
 
         private Builder() {}
 
-        public Builder from(BaseTranscriptCreate other) {
+        public Builder from(CreateTranscriptOptionalParameters other) {
             languageCode(other.getLanguageCode());
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
@@ -1039,8 +1040,8 @@ public final class BaseTranscriptCreate implements IBaseTranscriptCreate {
             return this;
         }
 
-        public BaseTranscriptCreate build() {
-            return new BaseTranscriptCreate(
+        public CreateTranscriptOptionalParameters build() {
+            return new CreateTranscriptOptionalParameters(
                     languageCode,
                     punctuate,
                     formatText,

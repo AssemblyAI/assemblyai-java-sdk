@@ -12,15 +12,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SessionStart.Builder.class)
-public final class SessionStart {
+@JsonDeserialize(builder = SessionBegins.Builder.class)
+public final class SessionBegins {
     private final String messageType;
 
     private final String sessionId;
 
     private final String expiresAt;
 
-    private SessionStart(String messageType, String sessionId, String expiresAt) {
+    private SessionBegins(String messageType, String sessionId, String expiresAt) {
         this.messageType = messageType;
         this.sessionId = sessionId;
         this.expiresAt = expiresAt;
@@ -53,10 +53,10 @@ public final class SessionStart {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SessionStart && equalTo((SessionStart) other);
+        return other instanceof SessionBegins && equalTo((SessionBegins) other);
     }
 
-    private boolean equalTo(SessionStart other) {
+    private boolean equalTo(SessionBegins other) {
         return messageType.equals(other.messageType)
                 && sessionId.equals(other.sessionId)
                 && expiresAt.equals(other.expiresAt);
@@ -79,7 +79,7 @@ public final class SessionStart {
     public interface MessageTypeStage {
         SessionIdStage messageType(String messageType);
 
-        Builder from(SessionStart other);
+        Builder from(SessionBegins other);
     }
 
     public interface SessionIdStage {
@@ -91,7 +91,7 @@ public final class SessionStart {
     }
 
     public interface _FinalStage {
-        SessionStart build();
+        SessionBegins build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -105,7 +105,7 @@ public final class SessionStart {
         private Builder() {}
 
         @Override
-        public Builder from(SessionStart other) {
+        public Builder from(SessionBegins other) {
             messageType(other.getMessageType());
             sessionId(other.getSessionId());
             expiresAt(other.getExpiresAt());
@@ -146,8 +146,8 @@ public final class SessionStart {
         }
 
         @Override
-        public SessionStart build() {
-            return new SessionStart(messageType, sessionId, expiresAt);
+        public SessionBegins build() {
+            return new SessionBegins(messageType, sessionId, expiresAt);
         }
     }
 }

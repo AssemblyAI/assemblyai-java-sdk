@@ -3,9 +3,9 @@ package sample;
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.Transcriber;
 import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
-import com.assemblyai.api.resources.transcript.requests.TranscriptSearchRequest;
+import com.assemblyai.api.resources.transcript.requests.TranscriptWordSearchRequest;
 import com.assemblyai.api.types.Transcript;
-import com.assemblyai.api.types.UploadResponseBody;
+import com.assemblyai.api.types.UploadedFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,7 +37,7 @@ public final class App {
         var vtt = aai.transcript().exportAsVtt(transcript.getId());
         System.out.println("Get transcript vtt. " + vtt);
 
-        var search = aai.transcript().search(transcript.getId(), TranscriptSearchRequest.builder()
+        var search = aai.transcript().wordSearch(transcript.getId(), TranscriptWordSearchRequest.builder()
                 .words("NBC")
                 .build());
         System.out.println("Search transcript. " + search);
@@ -46,8 +46,8 @@ public final class App {
         System.out.println("Delete transcript. " + transcript);
 
         File file = new File("sample-app/src/main/resources/nZP7pb_t4oA.mp3");
-        UploadResponseBody uploadResponse = aai.files().upload(Files.readAllBytes(file.toPath()));
-        System.out.println("Uploaded file" + uploadResponse);
+        UploadedFile uploadedFile = aai.files().upload(Files.readAllBytes(file.toPath()));
+        System.out.println("Uploaded file" + uploadedFile);
 
         transcript = aai.transcript().create(CreateTranscriptParameters.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
