@@ -39,8 +39,8 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'io.github.fern-api'
-            artifactId = 'assemblyai'
+            groupId = 'com.assemblyai'
+            artifactId = 'assemblyai-java'
             version = '0.0.1-beta'
             from components.java
         }
