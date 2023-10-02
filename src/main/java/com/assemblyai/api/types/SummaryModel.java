@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class SummaryModel {
     public static final SummaryModel INFORMATIVE = new SummaryModel(Value.INFORMATIVE, "informative");
@@ -59,8 +58,7 @@ public final class SummaryModel {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SummaryModel valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "informative":
                 return INFORMATIVE;
             case "catchy":
@@ -68,7 +66,7 @@ public final class SummaryModel {
             case "conversational":
                 return CONVERSATIONAL;
             default:
-                return new SummaryModel(Value.UNKNOWN, upperCasedValue);
+                return new SummaryModel(Value.UNKNOWN, value);
         }
     }
 

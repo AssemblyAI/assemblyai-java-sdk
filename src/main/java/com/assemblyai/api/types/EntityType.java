@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class EntityType {
     public static final EntityType OCCUPATION = new EntityType(Value.OCCUPATION, "occupation");
@@ -167,8 +166,7 @@ public final class EntityType {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static EntityType valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "occupation":
                 return OCCUPATION;
             case "date_of_birth":
@@ -228,7 +226,7 @@ public final class EntityType {
             case "us_social_security_number":
                 return US_SOCIAL_SECURITY_NUMBER;
             default:
-                return new EntityType(Value.UNKNOWN, upperCasedValue);
+                return new EntityType(Value.UNKNOWN, value);
         }
     }
 

@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class TranscriptStatus {
     public static final TranscriptStatus ERROR = new TranscriptStatus(Value.ERROR, "error");
@@ -64,8 +63,7 @@ public final class TranscriptStatus {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static TranscriptStatus valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "error":
                 return ERROR;
             case "queued":
@@ -75,7 +73,7 @@ public final class TranscriptStatus {
             case "completed":
                 return COMPLETED;
             default:
-                return new TranscriptStatus(Value.UNKNOWN, upperCasedValue);
+                return new TranscriptStatus(Value.UNKNOWN, value);
         }
     }
 

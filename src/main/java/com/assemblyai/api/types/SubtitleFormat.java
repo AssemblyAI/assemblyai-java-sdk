@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class SubtitleFormat {
     public static final SubtitleFormat VTT = new SubtitleFormat(Value.VTT, "vtt");
@@ -56,14 +55,13 @@ public final class SubtitleFormat {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SubtitleFormat valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "vtt":
                 return VTT;
             case "srt":
                 return SRT;
             default:
-                return new SubtitleFormat(Value.UNKNOWN, upperCasedValue);
+                return new SubtitleFormat(Value.UNKNOWN, value);
         }
     }
 

@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class SummaryType {
     public static final SummaryType HEADLINE = new SummaryType(Value.HEADLINE, "headline");
@@ -67,8 +66,7 @@ public final class SummaryType {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SummaryType valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "headline":
                 return HEADLINE;
             case "gist":
@@ -80,7 +78,7 @@ public final class SummaryType {
             case "paragraph":
                 return PARAGRAPH;
             default:
-                return new SummaryType(Value.UNKNOWN, upperCasedValue);
+                return new SummaryType(Value.UNKNOWN, value);
         }
     }
 
