@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class Sentiment {
     public static final Sentiment NEUTRAL = new Sentiment(Value.NEUTRAL, "NEUTRAL");
@@ -59,8 +58,7 @@ public final class Sentiment {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static Sentiment valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "NEUTRAL":
                 return NEUTRAL;
             case "NEGATIVE":
@@ -68,7 +66,7 @@ public final class Sentiment {
             case "POSITIVE":
                 return POSITIVE;
             default:
-                return new Sentiment(Value.UNKNOWN, upperCasedValue);
+                return new Sentiment(Value.UNKNOWN, value);
         }
     }
 

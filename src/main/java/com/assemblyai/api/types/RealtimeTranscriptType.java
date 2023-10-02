@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class RealtimeTranscriptType {
     public static final RealtimeTranscriptType FINAL_TRANSCRIPT =
@@ -59,14 +58,13 @@ public final class RealtimeTranscriptType {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static RealtimeTranscriptType valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "FinalTranscript":
                 return FINAL_TRANSCRIPT;
             case "PartialTranscript":
                 return PARTIAL_TRANSCRIPT;
             default:
-                return new RealtimeTranscriptType(Value.UNKNOWN, upperCasedValue);
+                return new RealtimeTranscriptType(Value.UNKNOWN, value);
         }
     }
 

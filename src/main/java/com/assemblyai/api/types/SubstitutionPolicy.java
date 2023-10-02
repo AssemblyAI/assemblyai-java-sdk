@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class SubstitutionPolicy {
     public static final SubstitutionPolicy ENTITY_TYPE = new SubstitutionPolicy(Value.ENTITY_TYPE, "entity_type");
@@ -56,14 +55,13 @@ public final class SubstitutionPolicy {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SubstitutionPolicy valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "entity_type":
                 return ENTITY_TYPE;
             case "hash":
                 return HASH;
             default:
-                return new SubstitutionPolicy(Value.UNKNOWN, upperCasedValue);
+                return new SubstitutionPolicy(Value.UNKNOWN, value);
         }
     }
 

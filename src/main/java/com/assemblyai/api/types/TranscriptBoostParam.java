@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class TranscriptBoostParam {
     public static final TranscriptBoostParam HIGH = new TranscriptBoostParam(Value.HIGH, "high");
@@ -60,8 +59,7 @@ public final class TranscriptBoostParam {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static TranscriptBoostParam valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "high":
                 return HIGH;
             case "low":
@@ -69,7 +67,7 @@ public final class TranscriptBoostParam {
             case "default":
                 return DEFAULT;
             default:
-                return new TranscriptBoostParam(Value.UNKNOWN, upperCasedValue);
+                return new TranscriptBoostParam(Value.UNKNOWN, value);
         }
     }
 

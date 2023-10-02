@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class PiiPolicies {
     public static final PiiPolicies EMAIL_ADDRESS = new PiiPolicies(Value.EMAIL_ADDRESS, "email_address");
@@ -160,8 +159,7 @@ public final class PiiPolicies {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static PiiPolicies valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "email_address":
                 return EMAIL_ADDRESS;
             case "nationality":
@@ -217,7 +215,7 @@ public final class PiiPolicies {
             case "us_social_security_number":
                 return US_SOCIAL_SECURITY_NUMBER;
             default:
-                return new PiiPolicies(Value.UNKNOWN, upperCasedValue);
+                return new PiiPolicies(Value.UNKNOWN, value);
         }
     }
 

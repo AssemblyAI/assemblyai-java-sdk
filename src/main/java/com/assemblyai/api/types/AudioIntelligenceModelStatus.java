@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class AudioIntelligenceModelStatus {
     public static final AudioIntelligenceModelStatus SUCCESS =
@@ -59,14 +58,13 @@ public final class AudioIntelligenceModelStatus {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static AudioIntelligenceModelStatus valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "success":
                 return SUCCESS;
             case "unavailable":
                 return UNAVAILABLE;
             default:
-                return new AudioIntelligenceModelStatus(Value.UNKNOWN, upperCasedValue);
+                return new AudioIntelligenceModelStatus(Value.UNKNOWN, value);
         }
     }
 

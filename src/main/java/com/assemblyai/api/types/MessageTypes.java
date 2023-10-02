@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class MessageTypes {
     public static final MessageTypes FINAL_TRANSCRIPT = new MessageTypes(Value.FINAL_TRANSCRIPT, "FinalTranscript");
@@ -65,8 +64,7 @@ public final class MessageTypes {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static MessageTypes valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "FinalTranscript":
                 return FINAL_TRANSCRIPT;
             case "SessionBegins":
@@ -76,7 +74,7 @@ public final class MessageTypes {
             case "SessionTerminated":
                 return SESSION_TERMINATED;
             default:
-                return new MessageTypes(Value.UNKNOWN, upperCasedValue);
+                return new MessageTypes(Value.UNKNOWN, value);
         }
     }
 

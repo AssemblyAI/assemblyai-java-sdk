@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class TranscriptLanguageCode {
     public static final TranscriptLanguageCode ES = new TranscriptLanguageCode(Value.ES, "es");
@@ -129,8 +128,7 @@ public final class TranscriptLanguageCode {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static TranscriptLanguageCode valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "es":
                 return ES;
             case "en_au":
@@ -172,7 +170,7 @@ public final class TranscriptLanguageCode {
             case "uk":
                 return UK;
             default:
-                return new TranscriptLanguageCode(Value.UNKNOWN, upperCasedValue);
+                return new TranscriptLanguageCode(Value.UNKNOWN, value);
         }
     }
 

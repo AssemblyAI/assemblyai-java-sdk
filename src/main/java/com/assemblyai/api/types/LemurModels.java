@@ -5,7 +5,6 @@ package com.assemblyai.api.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
 public final class LemurModels {
     public static final LemurModels BASIC = new LemurModels(Value.BASIC, "basic");
@@ -55,14 +54,13 @@ public final class LemurModels {
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static LemurModels valueOf(String value) {
-        String upperCasedValue = value.toUpperCase(Locale.ROOT);
-        switch (upperCasedValue) {
+        switch (value) {
             case "basic":
                 return BASIC;
             case "default":
                 return DEFAULT;
             default:
-                return new LemurModels(Value.UNKNOWN, upperCasedValue);
+                return new LemurModels(Value.UNKNOWN, value);
         }
     }
 
