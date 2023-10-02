@@ -10,12 +10,12 @@ import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurSummaryParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParameters;
-import com.assemblyai.api.types.DeleteLemurRequestResource;
 import com.assemblyai.api.types.LemurActionItemsResult;
 import com.assemblyai.api.types.LemurBaseParameters;
 import com.assemblyai.api.types.LemurQuestionAnswerResults;
 import com.assemblyai.api.types.LemurSummaryResult;
 import com.assemblyai.api.types.LemurTaskResult;
+import com.assemblyai.api.types.PurgeLemurRequestDataResource;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -188,15 +188,15 @@ public class LemurClient {
         }
     }
 
-    public DeleteLemurRequestResource deleteRequestData(String requestId) {
-        return deleteRequestData(requestId, null);
+    public PurgeLemurRequestDataResource purgeRequestData(String requestId) {
+        return purgeRequestData(requestId, null);
     }
 
     /**
      * Delete the data for a previously submitted LeMUR request.
      * The LLM response data, as well as any context provided in the original request will be removed.
      */
-    public DeleteLemurRequestResource deleteRequestData(String requestId, RequestOptions requestOptions) {
+    public PurgeLemurRequestDataResource purgeRequestData(String requestId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3")
@@ -212,7 +212,8 @@ public class LemurClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), DeleteLemurRequestResource.class);
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), PurgeLemurRequestDataResource.class);
             }
             throw new ApiError(
                     response.code(),
