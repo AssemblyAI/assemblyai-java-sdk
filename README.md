@@ -1,6 +1,6 @@
 # AssemblyAI Java Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/assemblyai)](https://central.sonatype.com/artifact/io.github.fern-api/assemblyai)
+[![Maven Central](https://img.shields.io/maven-central/v/com.assemblyai/assemblyai-java)](https://central.sonatype.com/artifact/com.assemblyai/assemblyai-java)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 ## Documentation
@@ -15,7 +15,7 @@ Add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'io.github.fern-api:assemblyai:0.x.x'
+    implementation 'com.assemblyai:assemblyai-java:0.x.x'
 }
 ```
 
@@ -25,8 +25,8 @@ Add the dependency in your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>io.github.fern-api</groupId>
-    <artifactId>assemblyai</artifactId>
+    <groupId>com.assemblyai</groupId>
+    <artifactId>assemblyai-java</artifactId>
     <version>0.x.x</version>
 </dependency>
 ```
