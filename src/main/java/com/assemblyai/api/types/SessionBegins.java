@@ -14,24 +14,13 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SessionBegins.Builder.class)
 public final class SessionBegins {
-    private final String messageType;
-
     private final String sessionId;
 
     private final String expiresAt;
 
-    private SessionBegins(String messageType, String sessionId, String expiresAt) {
-        this.messageType = messageType;
+    private SessionBegins(String sessionId, String expiresAt) {
         this.sessionId = sessionId;
         this.expiresAt = expiresAt;
-    }
-
-    /**
-     * @return Describes the type of the message.
-     */
-    @JsonProperty("message_type")
-    public String getMessageType() {
-        return messageType;
     }
 
     /**
@@ -57,14 +46,12 @@ public final class SessionBegins {
     }
 
     private boolean equalTo(SessionBegins other) {
-        return messageType.equals(other.messageType)
-                && sessionId.equals(other.sessionId)
-                && expiresAt.equals(other.expiresAt);
+        return sessionId.equals(other.sessionId) && expiresAt.equals(other.expiresAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.messageType, this.sessionId, this.expiresAt);
+        return Objects.hash(this.sessionId, this.expiresAt);
     }
 
     @Override
@@ -72,18 +59,14 @@ public final class SessionBegins {
         return ObjectMappers.stringify(this);
     }
 
-    public static MessageTypeStage builder() {
+    public static SessionIdStage builder() {
         return new Builder();
-    }
-
-    public interface MessageTypeStage {
-        SessionIdStage messageType(String messageType);
-
-        Builder from(SessionBegins other);
     }
 
     public interface SessionIdStage {
         ExpiresAtStage sessionId(String sessionId);
+
+        Builder from(SessionBegins other);
     }
 
     public interface ExpiresAtStage {
@@ -95,9 +78,7 @@ public final class SessionBegins {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements MessageTypeStage, SessionIdStage, ExpiresAtStage, _FinalStage {
-        private String messageType;
-
+    public static final class Builder implements SessionIdStage, ExpiresAtStage, _FinalStage {
         private String sessionId;
 
         private String expiresAt;
@@ -106,20 +87,8 @@ public final class SessionBegins {
 
         @Override
         public Builder from(SessionBegins other) {
-            messageType(other.getMessageType());
             sessionId(other.getSessionId());
             expiresAt(other.getExpiresAt());
-            return this;
-        }
-
-        /**
-         * <p>Describes the type of the message.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("message_type")
-        public SessionIdStage messageType(String messageType) {
-            this.messageType = messageType;
             return this;
         }
 
@@ -147,7 +116,7 @@ public final class SessionBegins {
 
         @Override
         public SessionBegins build() {
-            return new SessionBegins(messageType, sessionId, expiresAt);
+            return new SessionBegins(sessionId, expiresAt);
         }
     }
 }
