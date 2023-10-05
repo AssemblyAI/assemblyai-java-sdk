@@ -14,7 +14,7 @@ import java.nio.file.Files;
 
 public final class App {
 
-    public static void main(String... args) throws IOException, InterruptedException {
+    public static void main(String... args) throws IOException {
         AssemblyAI aai = AssemblyAI.builder()
                 .apiKey(System.getenv("ASSEMBLY_AI_API_KEY"))
                 .build();

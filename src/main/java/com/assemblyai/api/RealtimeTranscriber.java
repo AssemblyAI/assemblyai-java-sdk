@@ -96,7 +96,10 @@ public final class RealtimeTranscriber implements AutoCloseable {
      */
     @Override
     public void close() {
-        this.webSocket.close(1000, "Shutting down");
+        boolean closed = this.webSocket.close(1000, "Shutting down");
+        if (!closed) {
+            this.webSocket.cancel();
+        }
     }
 
     public static RealtimeTranscriber.Builder builder() {
@@ -223,7 +226,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
             try {
                 RealtimeMessage realtimeMessage = ObjectMappers.JSON_MAPPER.readValue(text, RealtimeMessage.class);
                 realtimeMessage.visit(realtimeMessageVisitor);
-                System.out.println(realtimeMessage);
             } catch (JsonProcessingException e) {
                 onError.accept(e);
             }
