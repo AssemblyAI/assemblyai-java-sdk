@@ -1,6 +1,7 @@
 # Specify files that shouldn't be modified by Fern
 
 src/main/java/com/assemblyai/api/Transcriber.java
+src/main/java/com/assemblyai/api/RealtimeTranscriber.java
 
 sample-app/src/main/java/sample/App.java
 sample-app/src/main/resources/

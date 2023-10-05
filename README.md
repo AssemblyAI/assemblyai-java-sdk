@@ -33,14 +33,14 @@ Add the dependency in your `pom.xml`:
 
 ## HTTP Client Usage
 
-The SDK exports a vanilla HTTP client, `AssemblyAIClient`. You can
+The SDK exports a vanilla HTTP client, `AssemblyAI`. You can
 use this to call into each of our API endpoints and get typed
 responses back.
 
 ```typescript
-import com.assemblyai.api.AssemblyAIClient;
+import com.assemblyai.api.AssemblyAI;
 
-AssemblyAIClient aai = AssemblyAIClient.builder()
+AssemblyAI aai = AssemblyAI.builder()
   .apiKey("YOUR_API_KEY")
   .build();
   
@@ -66,7 +66,7 @@ try {
 }
 ```
 
-## Using the Transcriber class
+## Using the Transcriber
 Additionally, the SDK also exports a Transcriber class that has
 utilities on top of the HTTP client, such as automatic polling.
 
@@ -81,23 +81,41 @@ TranscriptResponse transcript = transcriber.transcribe(
     "https://example.org/audio.mp3", true);
 ```
 
+## Using the Realtime Transcriber
+The Realtime Transcriber can be used to process any live 
+audio streams and sends data over websockets. The Realtime Transcriber
+will take event handlers 
+
+```java
+import com.assemblyai.api.Transcriber;
+
+RealtimeTranscriber realtime = RealtimeTranscriber.builder()
+  .apiKey("YOUR_API_KEY")
+  .onPartialTranscript(partial -> System.out.println(partial))
+  .onFinalTranscript(finalTranscript -> System.out.println(finalTranscript))
+  .build();
+
+realtime.sendAudio(new byte[]{...});
+
+realtime.close();
+```
 
 ## Staged Builders
 The generated builders all follow the staged builder pattern. 
 Read more [here](https://immutables.github.io/immutable.html#staged-builder).
-Staged builders only allow you to build the object once all required 
+Staged builders only allow you to construct the object once all required 
 properties have been specified. 
 
 For example, in the snippet below, you will not be able to access the build
-method on `CreateTranscriptParams` until you have specified the mandatory 
-URL variable.
+method on `CreateTranscriptParameters` until you have specified the mandatory 
+audioUrl variable.
 
 ```java
 import com.assemblyai.api.CreateTranscriptParams;
 
-Transcriber transcriber = CreateTranscriptParams.builder()
-  .url("https://...")
-  .build(); // You cannot access build method till you specify URL
+CreateTranscriptParameters params = CreateTranscriptParameters.builder()
+  .audioUrl("https://...")
+  .build(); 
 ```
 
 ## Beta status
