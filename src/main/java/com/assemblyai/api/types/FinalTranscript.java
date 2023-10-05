@@ -29,8 +29,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
 
     private final String created;
 
-    private final String messageType;
-
     private final boolean punctuated;
 
     private final boolean textFormatted;
@@ -42,7 +40,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
             String text,
             List<Word> words,
             String created,
-            String messageType,
             boolean punctuated,
             boolean textFormatted) {
         this.audioStart = audioStart;
@@ -51,7 +48,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         this.text = text;
         this.words = words;
         this.created = created;
-        this.messageType = messageType;
         this.punctuated = punctuated;
         this.textFormatted = textFormatted;
     }
@@ -111,14 +107,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return Describes the type of message.
-     */
-    @JsonProperty("message_type")
-    public String getMessageType() {
-        return messageType;
-    }
-
-    /**
      * @return Whether the text has been punctuated and cased.
      */
     @JsonProperty("punctuated")
@@ -147,7 +135,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
                 && text.equals(other.text)
                 && words.equals(other.words)
                 && created.equals(other.created)
-                && messageType.equals(other.messageType)
                 && punctuated == other.punctuated
                 && textFormatted == other.textFormatted;
     }
@@ -161,7 +148,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
                 this.text,
                 this.words,
                 this.created,
-                this.messageType,
                 this.punctuated,
                 this.textFormatted);
     }
@@ -194,11 +180,7 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
     }
 
     public interface CreatedStage {
-        MessageTypeStage created(String created);
-    }
-
-    public interface MessageTypeStage {
-        PunctuatedStage messageType(String messageType);
+        PunctuatedStage created(String created);
     }
 
     public interface PunctuatedStage {
@@ -226,7 +208,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
                     ConfidenceStage,
                     TextStage,
                     CreatedStage,
-                    MessageTypeStage,
                     PunctuatedStage,
                     TextFormattedStage,
                     _FinalStage {
@@ -239,8 +220,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         private String text;
 
         private String created;
-
-        private String messageType;
 
         private boolean punctuated;
 
@@ -258,7 +237,6 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
             text(other.getText());
             words(other.getWords());
             created(other.getCreated());
-            messageType(other.getMessageType());
             punctuated(other.getPunctuated());
             textFormatted(other.getTextFormatted());
             return this;
@@ -314,19 +292,8 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
          */
         @Override
         @JsonSetter("created")
-        public MessageTypeStage created(String created) {
+        public PunctuatedStage created(String created) {
             this.created = created;
-            return this;
-        }
-
-        /**
-         * <p>Describes the type of message.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("message_type")
-        public PunctuatedStage messageType(String messageType) {
-            this.messageType = messageType;
             return this;
         }
 
@@ -383,7 +350,7 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         @Override
         public FinalTranscript build() {
             return new FinalTranscript(
-                    audioStart, audioEnd, confidence, text, words, created, messageType, punctuated, textFormatted);
+                    audioStart, audioEnd, confidence, text, words, created, punctuated, textFormatted);
         }
     }
 }

@@ -29,23 +29,14 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
 
     private final String created;
 
-    private final String messageType;
-
     private PartialTranscript(
-            int audioStart,
-            int audioEnd,
-            double confidence,
-            String text,
-            List<Word> words,
-            String created,
-            String messageType) {
+            int audioStart, int audioEnd, double confidence, String text, List<Word> words, String created) {
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
         this.text = text;
         this.words = words;
         this.created = created;
-        this.messageType = messageType;
     }
 
     /**
@@ -102,14 +93,6 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         return created;
     }
 
-    /**
-     * @return Describes the type of message.
-     */
-    @JsonProperty("message_type")
-    public String getMessageType() {
-        return messageType;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -122,14 +105,12 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
                 && confidence == other.confidence
                 && text.equals(other.text)
                 && words.equals(other.words)
-                && created.equals(other.created)
-                && messageType.equals(other.messageType);
+                && created.equals(other.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.audioStart, this.audioEnd, this.confidence, this.text, this.words, this.created, this.messageType);
+        return Objects.hash(this.audioStart, this.audioEnd, this.confidence, this.text, this.words, this.created);
     }
 
     @Override
@@ -160,11 +141,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     public interface CreatedStage {
-        MessageTypeStage created(String created);
-    }
-
-    public interface MessageTypeStage {
-        _FinalStage messageType(String messageType);
+        _FinalStage created(String created);
     }
 
     public interface _FinalStage {
@@ -179,13 +156,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements AudioStartStage,
-                    AudioEndStage,
-                    ConfidenceStage,
-                    TextStage,
-                    CreatedStage,
-                    MessageTypeStage,
-                    _FinalStage {
+            implements AudioStartStage, AudioEndStage, ConfidenceStage, TextStage, CreatedStage, _FinalStage {
         private int audioStart;
 
         private int audioEnd;
@@ -195,8 +166,6 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         private String text;
 
         private String created;
-
-        private String messageType;
 
         private List<Word> words = new ArrayList<>();
 
@@ -210,7 +179,6 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
             text(other.getText());
             words(other.getWords());
             created(other.getCreated());
-            messageType(other.getMessageType());
             return this;
         }
 
@@ -264,19 +232,8 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
          */
         @Override
         @JsonSetter("created")
-        public MessageTypeStage created(String created) {
+        public _FinalStage created(String created) {
             this.created = created;
-            return this;
-        }
-
-        /**
-         * <p>Describes the type of message.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("message_type")
-        public _FinalStage messageType(String messageType) {
-            this.messageType = messageType;
             return this;
         }
 
@@ -310,7 +267,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
 
         @Override
         public PartialTranscript build() {
-            return new PartialTranscript(audioStart, audioEnd, confidence, text, words, created, messageType);
+            return new PartialTranscript(audioStart, audioEnd, confidence, text, words, created);
         }
     }
 }

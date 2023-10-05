@@ -116,7 +116,7 @@ public final class RealtimeMessage {
 
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
-            property = "messageType",
+            property = "message_type",
             visible = true,
             defaultImpl = _UnknownValue.class)
     @JsonSubTypes({

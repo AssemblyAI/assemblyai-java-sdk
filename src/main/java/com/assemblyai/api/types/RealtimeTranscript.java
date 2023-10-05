@@ -82,7 +82,7 @@ public final class RealtimeTranscript {
 
     @JsonTypeInfo(
             use = JsonTypeInfo.Id.NAME,
-            property = "messageType",
+            property = "message_type",
             visible = true,
             defaultImpl = _UnknownValue.class)
     @JsonSubTypes({@JsonSubTypes.Type(PartialTranscriptValue.class), @JsonSubTypes.Type(FinalTranscriptValue.class)})
