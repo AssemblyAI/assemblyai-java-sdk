@@ -31,6 +31,9 @@ public class LemurClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
+     */
     public LemurSummaryResult summary(LemurSummaryParameters request) {
         return summary(request, null);
     }
@@ -70,12 +73,15 @@ public class LemurClient {
         }
     }
 
+    /**
+     * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
+     */
     public LemurQuestionAnswerResults questionAnswer(LemurQuestionAnswerParameters request) {
         return questionAnswer(request, null);
     }
 
     /**
-     * Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
+     * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
      */
     public LemurQuestionAnswerResults questionAnswer(
             LemurQuestionAnswerParameters request, RequestOptions requestOptions) {
@@ -110,6 +116,9 @@ public class LemurClient {
         }
     }
 
+    /**
+     * Use LeMUR to generate a list of Action Items from a transcript
+     */
     public LemurActionItemsResult actionItems(LemurBaseParameters request) {
         return actionItems(request, null);
     }
@@ -149,6 +158,9 @@ public class LemurClient {
         }
     }
 
+    /**
+     * Use LeMUR to ask anything with Custom Task
+     */
     public LemurTaskResult task(LemurTaskParameters request) {
         return task(request, null);
     }
@@ -188,6 +200,10 @@ public class LemurClient {
         }
     }
 
+    /**
+     * Delete the data for a previously submitted LeMUR request.
+     * The LLM response data, as well as any context provided in the original request will be removed.
+     */
     public PurgeLemurRequestDataResource purgeRequestData(String requestId) {
         return purgeRequestData(requestId, null);
     }

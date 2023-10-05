@@ -22,6 +22,9 @@ public class FilesClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.
+     */
     public UploadedFile upload(byte[] request) {
         return upload(request, null);
     }

@@ -33,6 +33,9 @@ public class TranscriptClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Retrieve a list of transcripts you have created.
+     */
     public TranscriptList list(TranscriptListRequest request) {
         return list(request, null);
     }
@@ -87,6 +90,9 @@ public class TranscriptClient {
         return list(TranscriptListRequest.builder().build());
     }
 
+    /**
+     * Create a transcript from an audio or video file that is accessible via a URL.
+     */
     public Transcript create(CreateTranscriptParameters request) {
         return create(request, null);
     }
@@ -126,12 +132,15 @@ public class TranscriptClient {
         }
     }
 
+    /**
+     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
+     */
     public Transcript get(String transcriptId) {
         return get(transcriptId, null);
     }
 
     /**
-     * Get the transcript resource. The transcript is ready when the "status" is "completed".
+     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
      */
     public Transcript get(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -159,6 +168,9 @@ public class TranscriptClient {
         }
     }
 
+    /**
+     * Delete the transcript
+     */
     public Transcript delete(String transcriptId) {
         return delete(transcriptId, null);
     }
@@ -192,6 +204,9 @@ public class TranscriptClient {
         }
     }
 
+    /**
+     * Export your transcript in VTT format, to be plugged into a video player for subtitles and closed captions.
+     */
     public String exportAsVtt(String transcriptId, TranscriptExportAsVttRequest request) {
         return exportAsVtt(transcriptId, request, null);
     }
@@ -234,6 +249,9 @@ public class TranscriptClient {
         return exportAsVtt(transcriptId, TranscriptExportAsVttRequest.builder().build());
     }
 
+    /**
+     * Export your transcript in SRT format, to be plugged into a video player for subtitles and closed captions.
+     */
     public String exportAsSrt(String transcriptId, TranscriptExportAsSrtRequest request) {
         return exportAsSrt(transcriptId, request, null);
     }
@@ -276,6 +294,9 @@ public class TranscriptClient {
         return exportAsSrt(transcriptId, TranscriptExportAsSrtRequest.builder().build());
     }
 
+    /**
+     * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
+     */
     public SentencesResource getSentences(String transcriptId) {
         return getSentences(transcriptId, null);
     }
@@ -310,6 +331,9 @@ public class TranscriptClient {
         }
     }
 
+    /**
+     * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
+     */
     public ParagraphsResource getParagraphs(String transcriptId) {
         return getParagraphs(transcriptId, null);
     }
@@ -344,6 +368,9 @@ public class TranscriptClient {
         }
     }
 
+    /**
+     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
+     */
     public WordSearchResults wordSearch(String transcriptId, TranscriptWordSearchRequest request) {
         return wordSearch(transcriptId, request, null);
     }
