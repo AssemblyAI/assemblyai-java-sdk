@@ -14,11 +14,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptExportAsSrtRequest.Builder.class)
-public final class TranscriptExportAsSrtRequest {
+@JsonDeserialize(builder = TranscriptGetSubtitlesRequest.Builder.class)
+public final class TranscriptGetSubtitlesRequest {
     private final Optional<Integer> charsPerCaption;
 
-    private TranscriptExportAsSrtRequest(Optional<Integer> charsPerCaption) {
+    private TranscriptGetSubtitlesRequest(Optional<Integer> charsPerCaption) {
         this.charsPerCaption = charsPerCaption;
     }
 
@@ -33,10 +33,10 @@ public final class TranscriptExportAsSrtRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptExportAsSrtRequest && equalTo((TranscriptExportAsSrtRequest) other);
+        return other instanceof TranscriptGetSubtitlesRequest && equalTo((TranscriptGetSubtitlesRequest) other);
     }
 
-    private boolean equalTo(TranscriptExportAsSrtRequest other) {
+    private boolean equalTo(TranscriptGetSubtitlesRequest other) {
         return charsPerCaption.equals(other.charsPerCaption);
     }
 
@@ -60,7 +60,7 @@ public final class TranscriptExportAsSrtRequest {
 
         private Builder() {}
 
-        public Builder from(TranscriptExportAsSrtRequest other) {
+        public Builder from(TranscriptGetSubtitlesRequest other) {
             charsPerCaption(other.getCharsPerCaption());
             return this;
         }
@@ -76,8 +76,8 @@ public final class TranscriptExportAsSrtRequest {
             return this;
         }
 
-        public TranscriptExportAsSrtRequest build() {
-            return new TranscriptExportAsSrtRequest(charsPerCaption);
+        public TranscriptGetSubtitlesRequest build() {
+            return new TranscriptGetSubtitlesRequest(charsPerCaption);
         }
     }
 }

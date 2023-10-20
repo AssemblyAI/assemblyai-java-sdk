@@ -14,9 +14,9 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RealtimeBaseMessage.Builder.class)
 public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
-    private final MessageTypes messageType;
+    private final MessageType messageType;
 
-    private RealtimeBaseMessage(MessageTypes messageType) {
+    private RealtimeBaseMessage(MessageType messageType) {
         this.messageType = messageType;
     }
 
@@ -25,7 +25,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
      */
     @JsonProperty("message_type")
     @Override
-    public MessageTypes getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 
@@ -54,7 +54,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
     }
 
     public interface MessageTypeStage {
-        _FinalStage messageType(MessageTypes messageType);
+        _FinalStage messageType(MessageType messageType);
 
         Builder from(RealtimeBaseMessage other);
     }
@@ -65,7 +65,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements MessageTypeStage, _FinalStage {
-        private MessageTypes messageType;
+        private MessageType messageType;
 
         private Builder() {}
 
@@ -81,7 +81,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
          */
         @Override
         @JsonSetter("message_type")
-        public _FinalStage messageType(MessageTypes messageType) {
+        public _FinalStage messageType(MessageType messageType) {
             this.messageType = messageType;
             return this;
         }

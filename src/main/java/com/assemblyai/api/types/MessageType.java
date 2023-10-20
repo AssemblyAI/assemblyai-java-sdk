@@ -6,22 +6,20 @@ package com.assemblyai.api.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class MessageTypes {
-    public static final MessageTypes FINAL_TRANSCRIPT = new MessageTypes(Value.FINAL_TRANSCRIPT, "FinalTranscript");
+public final class MessageType {
+    public static final MessageType FINAL_TRANSCRIPT = new MessageType(Value.FINAL_TRANSCRIPT, "FinalTranscript");
 
-    public static final MessageTypes SESSION_BEGINS = new MessageTypes(Value.SESSION_BEGINS, "SessionBegins");
+    public static final MessageType SESSION_BEGINS = new MessageType(Value.SESSION_BEGINS, "SessionBegins");
 
-    public static final MessageTypes PARTIAL_TRANSCRIPT =
-            new MessageTypes(Value.PARTIAL_TRANSCRIPT, "PartialTranscript");
+    public static final MessageType PARTIAL_TRANSCRIPT = new MessageType(Value.PARTIAL_TRANSCRIPT, "PartialTranscript");
 
-    public static final MessageTypes SESSION_TERMINATED =
-            new MessageTypes(Value.SESSION_TERMINATED, "SessionTerminated");
+    public static final MessageType SESSION_TERMINATED = new MessageType(Value.SESSION_TERMINATED, "SessionTerminated");
 
     private final Value value;
 
     private final String string;
 
-    MessageTypes(Value value, String string) {
+    MessageType(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -38,7 +36,7 @@ public final class MessageTypes {
 
     @Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof MessageTypes && this.string.equals(((MessageTypes) other).string));
+        return (this == other) || (other instanceof MessageType && this.string.equals(((MessageType) other).string));
     }
 
     @Override
@@ -63,7 +61,7 @@ public final class MessageTypes {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static MessageTypes valueOf(String value) {
+    public static MessageType valueOf(String value) {
         switch (value) {
             case "FinalTranscript":
                 return FINAL_TRANSCRIPT;
@@ -74,7 +72,7 @@ public final class MessageTypes {
             case "SessionTerminated":
                 return SESSION_TERMINATED;
             default:
-                return new MessageTypes(Value.UNKNOWN, value);
+                return new MessageType(Value.UNKNOWN, value);
         }
     }
 

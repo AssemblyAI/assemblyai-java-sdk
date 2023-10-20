@@ -12,16 +12,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = RealtimeTokenResource.Builder.class)
-public final class RealtimeTokenResource {
+@JsonDeserialize(builder = RealtimeTemporaryTokenResponse.Builder.class)
+public final class RealtimeTemporaryTokenResponse {
     private final String token;
 
-    private RealtimeTokenResource(String token) {
+    private RealtimeTemporaryTokenResponse(String token) {
         this.token = token;
     }
 
     /**
-     * @return The temporary authentication token for realtime transcription
+     * @return The temporary authentication token for real-time transcription
      */
     @JsonProperty("token")
     public String getToken() {
@@ -31,10 +31,10 @@ public final class RealtimeTokenResource {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof RealtimeTokenResource && equalTo((RealtimeTokenResource) other);
+        return other instanceof RealtimeTemporaryTokenResponse && equalTo((RealtimeTemporaryTokenResponse) other);
     }
 
-    private boolean equalTo(RealtimeTokenResource other) {
+    private boolean equalTo(RealtimeTemporaryTokenResponse other) {
         return token.equals(other.token);
     }
 
@@ -55,11 +55,11 @@ public final class RealtimeTokenResource {
     public interface TokenStage {
         _FinalStage token(String token);
 
-        Builder from(RealtimeTokenResource other);
+        Builder from(RealtimeTemporaryTokenResponse other);
     }
 
     public interface _FinalStage {
-        RealtimeTokenResource build();
+        RealtimeTemporaryTokenResponse build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,13 +69,13 @@ public final class RealtimeTokenResource {
         private Builder() {}
 
         @Override
-        public Builder from(RealtimeTokenResource other) {
+        public Builder from(RealtimeTemporaryTokenResponse other) {
             token(other.getToken());
             return this;
         }
 
         /**
-         * <p>The temporary authentication token for realtime transcription</p>
+         * <p>The temporary authentication token for real-time transcription</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -86,8 +86,8 @@ public final class RealtimeTokenResource {
         }
 
         @Override
-        public RealtimeTokenResource build() {
-            return new RealtimeTokenResource(token);
+        public RealtimeTemporaryTokenResponse build() {
+            return new RealtimeTemporaryTokenResponse(token);
         }
     }
 }

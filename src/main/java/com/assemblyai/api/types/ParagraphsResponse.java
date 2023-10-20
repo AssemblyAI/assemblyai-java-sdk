@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = ParagraphsResource.Builder.class)
-public final class ParagraphsResource {
+@JsonDeserialize(builder = ParagraphsResponse.Builder.class)
+public final class ParagraphsResponse {
     private final String id;
 
     private final double confidence;
@@ -25,7 +25,7 @@ public final class ParagraphsResource {
 
     private final List<TranscriptParagraph> paragraphs;
 
-    private ParagraphsResource(
+    private ParagraphsResponse(
             String id, double confidence, double audioDuration, List<TranscriptParagraph> paragraphs) {
         this.id = id;
         this.confidence = confidence;
@@ -56,10 +56,10 @@ public final class ParagraphsResource {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ParagraphsResource && equalTo((ParagraphsResource) other);
+        return other instanceof ParagraphsResponse && equalTo((ParagraphsResponse) other);
     }
 
-    private boolean equalTo(ParagraphsResource other) {
+    private boolean equalTo(ParagraphsResponse other) {
         return id.equals(other.id)
                 && confidence == other.confidence
                 && audioDuration == other.audioDuration
@@ -83,7 +83,7 @@ public final class ParagraphsResource {
     public interface IdStage {
         ConfidenceStage id(String id);
 
-        Builder from(ParagraphsResource other);
+        Builder from(ParagraphsResponse other);
     }
 
     public interface ConfidenceStage {
@@ -95,7 +95,7 @@ public final class ParagraphsResource {
     }
 
     public interface _FinalStage {
-        ParagraphsResource build();
+        ParagraphsResponse build();
 
         _FinalStage paragraphs(List<TranscriptParagraph> paragraphs);
 
@@ -117,7 +117,7 @@ public final class ParagraphsResource {
         private Builder() {}
 
         @Override
-        public Builder from(ParagraphsResource other) {
+        public Builder from(ParagraphsResponse other) {
             id(other.getId());
             confidence(other.getConfidence());
             audioDuration(other.getAudioDuration());
@@ -167,8 +167,8 @@ public final class ParagraphsResource {
         }
 
         @Override
-        public ParagraphsResource build() {
-            return new ParagraphsResource(id, confidence, audioDuration, paragraphs);
+        public ParagraphsResponse build() {
+            return new ParagraphsResponse(id, confidence, audioDuration, paragraphs);
         }
     }
 }

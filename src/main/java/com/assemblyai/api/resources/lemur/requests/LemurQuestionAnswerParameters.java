@@ -6,7 +6,7 @@ package com.assemblyai.api.resources.lemur.requests;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.ILemurBaseParameters;
 import com.assemblyai.api.types.LemurBaseParametersContext;
-import com.assemblyai.api.types.LemurModels;
+import com.assemblyai.api.types.LemurModel;
 import com.assemblyai.api.types.LemurQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,7 +26,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
 
     private final Optional<LemurBaseParametersContext> context;
 
-    private final Optional<LemurModels> finalModel;
+    private final Optional<LemurModel> finalModel;
 
     private final Optional<Integer> maxOutputSize;
 
@@ -37,7 +37,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
     private LemurQuestionAnswerParameters(
             List<String> transcriptIds,
             Optional<LemurBaseParametersContext> context,
-            Optional<LemurModels> finalModel,
+            Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
             List<LemurQuestion> questions) {
@@ -69,7 +69,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
 
     @JsonProperty("final_model")
     @Override
-    public Optional<LemurModels> getFinalModel() {
+    public Optional<LemurModel> getFinalModel() {
         return finalModel;
     }
 
@@ -142,7 +142,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
 
         private Optional<LemurBaseParametersContext> context = Optional.empty();
 
-        private Optional<LemurModels> finalModel = Optional.empty();
+        private Optional<LemurModel> finalModel = Optional.empty();
 
         private Optional<Integer> maxOutputSize = Optional.empty();
 
@@ -191,12 +191,12 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
         }
 
         @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
-        public Builder finalModel(Optional<LemurModels> finalModel) {
+        public Builder finalModel(Optional<LemurModel> finalModel) {
             this.finalModel = finalModel;
             return this;
         }
 
-        public Builder finalModel(LemurModels finalModel) {
+        public Builder finalModel(LemurModel finalModel) {
             this.finalModel = Optional.of(finalModel);
             return this;
         }

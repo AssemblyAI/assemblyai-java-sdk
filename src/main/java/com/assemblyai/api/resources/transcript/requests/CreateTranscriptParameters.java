@@ -5,7 +5,7 @@ package com.assemblyai.api.resources.transcript.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.ICreateTranscriptOptionalParameters;
-import com.assemblyai.api.types.PiiPolicies;
+import com.assemblyai.api.types.PiiPolicy;
 import com.assemblyai.api.types.SubstitutionPolicy;
 import com.assemblyai.api.types.SummaryModel;
 import com.assemblyai.api.types.SummaryType;
@@ -57,7 +57,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
 
     private final Optional<String> redactPiiAudioQuality;
 
-    private final Optional<List<PiiPolicies>> redactPiiPolicies;
+    private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
     private final Optional<SubstitutionPolicy> redactPiiSub;
 
@@ -112,7 +112,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
             Optional<Boolean> redactPii,
             Optional<Boolean> redactPiiAudio,
             Optional<String> redactPiiAudioQuality,
-            Optional<List<PiiPolicies>> redactPiiPolicies,
+            Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
             Optional<Integer> speakersExpected,
@@ -318,7 +318,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
      */
     @JsonProperty("redact_pii_policies")
     @Override
-    public Optional<List<PiiPolicies>> getRedactPiiPolicies() {
+    public Optional<List<PiiPolicy>> getRedactPiiPolicies() {
         return redactPiiPolicies;
     }
 
@@ -650,9 +650,9 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
 
         _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
 
-        _FinalStage redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies);
+        _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies);
 
-        _FinalStage redactPiiPolicies(List<PiiPolicies> redactPiiPolicies);
+        _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies);
 
         _FinalStage redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub);
 
@@ -761,7 +761,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
 
         private Optional<SubstitutionPolicy> redactPiiSub = Optional.empty();
 
-        private Optional<List<PiiPolicies>> redactPiiPolicies = Optional.empty();
+        private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
         private Optional<String> redactPiiAudioQuality = Optional.empty();
 
@@ -1143,14 +1143,14 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage redactPiiPolicies(List<PiiPolicies> redactPiiPolicies) {
+        public _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
             this.redactPiiPolicies = Optional.of(redactPiiPolicies);
             return this;
         }
 
         @Override
         @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
-        public _FinalStage redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies) {
+        public _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies) {
             this.redactPiiPolicies = redactPiiPolicies;
             return this;
         }

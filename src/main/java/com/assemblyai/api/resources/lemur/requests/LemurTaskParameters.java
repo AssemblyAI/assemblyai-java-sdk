@@ -6,7 +6,7 @@ package com.assemblyai.api.resources.lemur.requests;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.ILemurBaseParameters;
 import com.assemblyai.api.types.LemurBaseParametersContext;
-import com.assemblyai.api.types.LemurModels;
+import com.assemblyai.api.types.LemurModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,7 +25,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
     private final Optional<LemurBaseParametersContext> context;
 
-    private final Optional<LemurModels> finalModel;
+    private final Optional<LemurModel> finalModel;
 
     private final Optional<Integer> maxOutputSize;
 
@@ -36,7 +36,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
     private LemurTaskParameters(
             List<String> transcriptIds,
             Optional<LemurBaseParametersContext> context,
-            Optional<LemurModels> finalModel,
+            Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
             String prompt) {
@@ -68,7 +68,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
     @JsonProperty("final_model")
     @Override
-    public Optional<LemurModels> getFinalModel() {
+    public Optional<LemurModel> getFinalModel() {
         return finalModel;
     }
 
@@ -149,9 +149,9 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
         _FinalStage context(LemurBaseParametersContext context);
 
-        _FinalStage finalModel(Optional<LemurModels> finalModel);
+        _FinalStage finalModel(Optional<LemurModel> finalModel);
 
-        _FinalStage finalModel(LemurModels finalModel);
+        _FinalStage finalModel(LemurModel finalModel);
 
         _FinalStage maxOutputSize(Optional<Integer> maxOutputSize);
 
@@ -170,7 +170,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
         private Optional<Integer> maxOutputSize = Optional.empty();
 
-        private Optional<LemurModels> finalModel = Optional.empty();
+        private Optional<LemurModel> finalModel = Optional.empty();
 
         private Optional<LemurBaseParametersContext> context = Optional.empty();
 
@@ -237,14 +237,14 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
         }
 
         @Override
-        public _FinalStage finalModel(LemurModels finalModel) {
+        public _FinalStage finalModel(LemurModel finalModel) {
             this.finalModel = Optional.of(finalModel);
             return this;
         }
 
         @Override
         @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
-        public _FinalStage finalModel(Optional<LemurModels> finalModel) {
+        public _FinalStage finalModel(Optional<LemurModel> finalModel) {
             this.finalModel = finalModel;
             return this;
         }

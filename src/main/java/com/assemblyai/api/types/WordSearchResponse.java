@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = WordSearchResults.Builder.class)
-public final class WordSearchResults {
+@JsonDeserialize(builder = WordSearchResponse.Builder.class)
+public final class WordSearchResponse {
     private final String id;
 
     private final int totalCount;
 
     private final List<WordSearchMatch> matches;
 
-    private WordSearchResults(String id, int totalCount, List<WordSearchMatch> matches) {
+    private WordSearchResponse(String id, int totalCount, List<WordSearchMatch> matches) {
         this.id = id;
         this.totalCount = totalCount;
         this.matches = matches;
@@ -56,10 +56,10 @@ public final class WordSearchResults {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof WordSearchResults && equalTo((WordSearchResults) other);
+        return other instanceof WordSearchResponse && equalTo((WordSearchResponse) other);
     }
 
-    private boolean equalTo(WordSearchResults other) {
+    private boolean equalTo(WordSearchResponse other) {
         return id.equals(other.id) && totalCount == other.totalCount && matches.equals(other.matches);
     }
 
@@ -80,7 +80,7 @@ public final class WordSearchResults {
     public interface IdStage {
         TotalCountStage id(String id);
 
-        Builder from(WordSearchResults other);
+        Builder from(WordSearchResponse other);
     }
 
     public interface TotalCountStage {
@@ -88,7 +88,7 @@ public final class WordSearchResults {
     }
 
     public interface _FinalStage {
-        WordSearchResults build();
+        WordSearchResponse build();
 
         _FinalStage matches(List<WordSearchMatch> matches);
 
@@ -108,7 +108,7 @@ public final class WordSearchResults {
         private Builder() {}
 
         @Override
-        public Builder from(WordSearchResults other) {
+        public Builder from(WordSearchResponse other) {
             id(other.getId());
             totalCount(other.getTotalCount());
             matches(other.getMatches());
@@ -166,8 +166,8 @@ public final class WordSearchResults {
         }
 
         @Override
-        public WordSearchResults build() {
-            return new WordSearchResults(id, totalCount, matches);
+        public WordSearchResponse build() {
+            return new WordSearchResponse(id, totalCount, matches);
         }
     }
 }

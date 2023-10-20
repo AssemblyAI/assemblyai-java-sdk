@@ -12,13 +12,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = RedactedAudioResult.Builder.class)
-public final class RedactedAudioResult {
+@JsonDeserialize(builder = RedactedAudioResponse.Builder.class)
+public final class RedactedAudioResponse {
     private final String status;
 
     private final String redactedAudioUrl;
 
-    private RedactedAudioResult(String status, String redactedAudioUrl) {
+    private RedactedAudioResponse(String status, String redactedAudioUrl) {
         this.status = status;
         this.redactedAudioUrl = redactedAudioUrl;
     }
@@ -42,10 +42,10 @@ public final class RedactedAudioResult {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof RedactedAudioResult && equalTo((RedactedAudioResult) other);
+        return other instanceof RedactedAudioResponse && equalTo((RedactedAudioResponse) other);
     }
 
-    private boolean equalTo(RedactedAudioResult other) {
+    private boolean equalTo(RedactedAudioResponse other) {
         return status.equals(other.status) && redactedAudioUrl.equals(other.redactedAudioUrl);
     }
 
@@ -66,7 +66,7 @@ public final class RedactedAudioResult {
     public interface StatusStage {
         RedactedAudioUrlStage status(String status);
 
-        Builder from(RedactedAudioResult other);
+        Builder from(RedactedAudioResponse other);
     }
 
     public interface RedactedAudioUrlStage {
@@ -74,7 +74,7 @@ public final class RedactedAudioResult {
     }
 
     public interface _FinalStage {
-        RedactedAudioResult build();
+        RedactedAudioResponse build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -86,7 +86,7 @@ public final class RedactedAudioResult {
         private Builder() {}
 
         @Override
-        public Builder from(RedactedAudioResult other) {
+        public Builder from(RedactedAudioResponse other) {
             status(other.getStatus());
             redactedAudioUrl(other.getRedactedAudioUrl());
             return this;
@@ -115,8 +115,8 @@ public final class RedactedAudioResult {
         }
 
         @Override
-        public RedactedAudioResult build() {
-            return new RedactedAudioResult(status, redactedAudioUrl);
+        public RedactedAudioResponse build() {
+            return new RedactedAudioResponse(status, redactedAudioUrl);
         }
     }
 }

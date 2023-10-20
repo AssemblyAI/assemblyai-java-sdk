@@ -7,8 +7,8 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
-import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTokenParameters;
-import com.assemblyai.api.types.RealtimeTokenResource;
+import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParameters;
+import com.assemblyai.api.types.RealtimeTemporaryTokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -24,11 +24,18 @@ public class RealtimeClient {
         this.clientOptions = clientOptions;
     }
 
-    public RealtimeTokenResource createToken(CreateRealtimeTokenParameters request) {
-        return createToken(request, null);
+    /**
+     * Create a temporary authentication token for real-time transcription
+     */
+    public RealtimeTemporaryTokenResponse createTemporaryToken(CreateRealtimeTemporaryTokenParameters request) {
+        return createTemporaryToken(request, null);
     }
 
-    public RealtimeTokenResource createToken(CreateRealtimeTokenParameters request, RequestOptions requestOptions) {
+    /**
+     * Create a temporary authentication token for real-time transcription
+     */
+    public RealtimeTemporaryTokenResponse createTemporaryToken(
+            CreateRealtimeTemporaryTokenParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/realtime/token")
@@ -50,7 +57,8 @@ public class RealtimeClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RealtimeTokenResource.class);
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), RealtimeTemporaryTokenResponse.class);
             }
             throw new ApiError(
                     response.code(),

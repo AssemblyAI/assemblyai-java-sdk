@@ -3,317 +3,128 @@
  */
 package com.assemblyai.api.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
 
+@JsonDeserialize(using = RealtimeMessage.Deserializer.class)
 public final class RealtimeMessage {
-    private final Value value;
+    private final Object value;
 
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    private RealtimeMessage(Value value) {
+    private final int type;
+
+    private RealtimeMessage(Object value, int type) {
         this.value = value;
-    }
-
-    public <T> T visit(Visitor<T> visitor) {
-        return value.visit(visitor);
-    }
-
-    public static RealtimeMessage sessionBegins(SessionBegins value) {
-        return new RealtimeMessage(new SessionBeginsValue(value));
-    }
-
-    public static RealtimeMessage partialTranscript(PartialTranscript value) {
-        return new RealtimeMessage(new PartialTranscriptValue(value));
-    }
-
-    public static RealtimeMessage finalTranscript(FinalTranscript value) {
-        return new RealtimeMessage(new FinalTranscriptValue(value));
-    }
-
-    public static RealtimeMessage sessionTerminated(SessionTerminated value) {
-        return new RealtimeMessage(new SessionTerminatedValue(value));
-    }
-
-    public boolean isSessionBegins() {
-        return value instanceof SessionBeginsValue;
-    }
-
-    public boolean isPartialTranscript() {
-        return value instanceof PartialTranscriptValue;
-    }
-
-    public boolean isFinalTranscript() {
-        return value instanceof FinalTranscriptValue;
-    }
-
-    public boolean isSessionTerminated() {
-        return value instanceof SessionTerminatedValue;
-    }
-
-    public boolean _isUnknown() {
-        return value instanceof _UnknownValue;
-    }
-
-    public Optional<SessionBegins> getSessionBegins() {
-        if (isSessionBegins()) {
-            return Optional.of(((SessionBeginsValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<PartialTranscript> getPartialTranscript() {
-        if (isPartialTranscript()) {
-            return Optional.of(((PartialTranscriptValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<FinalTranscript> getFinalTranscript() {
-        if (isFinalTranscript()) {
-            return Optional.of(((FinalTranscriptValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<SessionTerminated> getSessionTerminated() {
-        if (isSessionTerminated()) {
-            return Optional.of(((SessionTerminatedValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<Object> _getUnknown() {
-        if (_isUnknown()) {
-            return Optional.of(((_UnknownValue) value).value);
-        }
-        return Optional.empty();
+        this.type = type;
     }
 
     @JsonValue
-    private Value getValue() {
+    public Object get() {
         return this.value;
     }
 
+    public <T> T visit(Visitor<T> visitor) {
+        if (this.type == 0) {
+            return visitor.visit((SessionBegins) this.value);
+        } else if (this.type == 1) {
+            return visitor.visit((PartialTranscript) this.value);
+        } else if (this.type == 2) {
+            return visitor.visit((FinalTranscript) this.value);
+        } else if (this.type == 3) {
+            return visitor.visit((SessionTerminated) this.value);
+        } else if (this.type == 4) {
+            return visitor.visit((RealtimeError) this.value);
+        }
+        throw new IllegalStateException("Failed to visit value. This should never happen.");
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof RealtimeMessage && equalTo((RealtimeMessage) other);
+    }
+
+    private boolean equalTo(RealtimeMessage other) {
+        return value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.value);
+    }
+
+    @Override
+    public String toString() {
+        return this.value.toString();
+    }
+
+    public static RealtimeMessage of(SessionBegins value) {
+        return new RealtimeMessage(value, 0);
+    }
+
+    public static RealtimeMessage of(PartialTranscript value) {
+        return new RealtimeMessage(value, 1);
+    }
+
+    public static RealtimeMessage of(FinalTranscript value) {
+        return new RealtimeMessage(value, 2);
+    }
+
+    public static RealtimeMessage of(SessionTerminated value) {
+        return new RealtimeMessage(value, 3);
+    }
+
+    public static RealtimeMessage of(RealtimeError value) {
+        return new RealtimeMessage(value, 4);
+    }
+
     public interface Visitor<T> {
-        T visitSessionBegins(SessionBegins sessionBegins);
+        T visit(SessionBegins value);
 
-        T visitPartialTranscript(PartialTranscript partialTranscript);
+        T visit(PartialTranscript value);
 
-        T visitFinalTranscript(FinalTranscript finalTranscript);
+        T visit(FinalTranscript value);
 
-        T visitSessionTerminated(SessionTerminated sessionTerminated);
+        T visit(SessionTerminated value);
 
-        T _visitUnknown(Object unknownType);
+        T visit(RealtimeError value);
     }
 
-    @JsonTypeInfo(
-            use = JsonTypeInfo.Id.NAME,
-            property = "message_type",
-            visible = true,
-            defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({
-        @JsonSubTypes.Type(SessionBeginsValue.class),
-        @JsonSubTypes.Type(PartialTranscriptValue.class),
-        @JsonSubTypes.Type(FinalTranscriptValue.class),
-        @JsonSubTypes.Type(SessionTerminatedValue.class)
-    })
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    private interface Value {
-        <T> T visit(Visitor<T> visitor);
-    }
-
-    @JsonTypeName("SessionBegins")
-    private static final class SessionBeginsValue implements Value {
-        @JsonUnwrapped
-        private SessionBegins value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private SessionBeginsValue() {}
-
-        private SessionBeginsValue(SessionBegins value) {
-            this.value = value;
+    static final class Deserializer extends StdDeserializer<RealtimeMessage> {
+        Deserializer() {
+            super(RealtimeMessage.class);
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitSessionBegins(value);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof SessionBeginsValue && equalTo((SessionBeginsValue) other);
-        }
-
-        private boolean equalTo(SessionBeginsValue other) {
-            return value.equals(other.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @Override
-        public String toString() {
-            return "RealtimeMessage{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("PartialTranscript")
-    private static final class PartialTranscriptValue implements Value {
-        @JsonUnwrapped
-        private PartialTranscript value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private PartialTranscriptValue() {}
-
-        private PartialTranscriptValue(PartialTranscript value) {
-            this.value = value;
-        }
-
-        @Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitPartialTranscript(value);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof PartialTranscriptValue && equalTo((PartialTranscriptValue) other);
-        }
-
-        private boolean equalTo(PartialTranscriptValue other) {
-            return value.equals(other.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @Override
-        public String toString() {
-            return "RealtimeMessage{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("FinalTranscript")
-    private static final class FinalTranscriptValue implements Value {
-        @JsonUnwrapped
-        private FinalTranscript value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private FinalTranscriptValue() {}
-
-        private FinalTranscriptValue(FinalTranscript value) {
-            this.value = value;
-        }
-
-        @Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitFinalTranscript(value);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof FinalTranscriptValue && equalTo((FinalTranscriptValue) other);
-        }
-
-        private boolean equalTo(FinalTranscriptValue other) {
-            return value.equals(other.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @Override
-        public String toString() {
-            return "RealtimeMessage{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("SessionTerminated")
-    private static final class SessionTerminatedValue implements Value {
-        @JsonUnwrapped
-        private SessionTerminated value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private SessionTerminatedValue() {}
-
-        private SessionTerminatedValue(SessionTerminated value) {
-            this.value = value;
-        }
-
-        @Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitSessionTerminated(value);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof SessionTerminatedValue && equalTo((SessionTerminatedValue) other);
-        }
-
-        private boolean equalTo(SessionTerminatedValue other) {
-            return value.equals(other.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @Override
-        public String toString() {
-            return "RealtimeMessage{" + "value: " + value + "}";
-        }
-    }
-
-    private static final class _UnknownValue implements Value {
-        private String type;
-
-        @JsonValue
-        private Object value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private _UnknownValue(@JsonProperty("value") Object value) {}
-
-        @Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor._visitUnknown(value);
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
-        }
-
-        private boolean equalTo(_UnknownValue other) {
-            return type.equals(other.type) && value.equals(other.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.type, this.value);
-        }
-
-        @Override
-        public String toString() {
-            return "RealtimeMessage{" + "type: " + type + ", value: " + value + "}";
+        public RealtimeMessage deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            Object value = p.readValueAs(Object.class);
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SessionBegins.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, PartialTranscript.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, FinalTranscript.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SessionTerminated.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, RealtimeError.class));
+            } catch (IllegalArgumentException e) {
+            }
+            throw new JsonParseException(p, "Failed to deserialize");
         }
     }
 }
