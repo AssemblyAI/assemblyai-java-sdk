@@ -5,6 +5,7 @@ import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.Transcriber;
 import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
 import com.assemblyai.api.resources.transcript.requests.TranscriptWordSearchRequest;
+import com.assemblyai.api.types.SubtitleFormat;
 import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.UploadedFile;
 import java.io.File;
@@ -33,10 +34,10 @@ public final class App {
         var paragraphs = aai.transcript().getParagraphs(transcript.getId());
         System.out.println("Get transcript paragraphs. " + paragraphs);
 
-        var srt = aai.transcript().exportAsSrt(transcript.getId());
+        var srt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.SRT);
         System.out.println("Get transcript srt. " + srt);
 
-        var vtt = aai.transcript().exportAsVtt(transcript.getId());
+        var vtt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
         System.out.println("Get transcript vtt. " + vtt);
 
         var search = aai.transcript().wordSearch(transcript.getId(), TranscriptWordSearchRequest.builder()
