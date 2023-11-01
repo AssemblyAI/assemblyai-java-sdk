@@ -6,16 +6,16 @@ package com.assemblyai.api.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class LemurModels {
-    public static final LemurModels BASIC = new LemurModels(Value.BASIC, "basic");
+public final class LemurModel {
+    public static final LemurModel BASIC = new LemurModel(Value.BASIC, "basic");
 
-    public static final LemurModels DEFAULT = new LemurModels(Value.DEFAULT, "default");
+    public static final LemurModel DEFAULT = new LemurModel(Value.DEFAULT, "default");
 
     private final Value value;
 
     private final String string;
 
-    LemurModels(Value value, String string) {
+    LemurModel(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -32,7 +32,7 @@ public final class LemurModels {
 
     @Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof LemurModels && this.string.equals(((LemurModels) other).string));
+        return (this == other) || (other instanceof LemurModel && this.string.equals(((LemurModel) other).string));
     }
 
     @Override
@@ -53,14 +53,14 @@ public final class LemurModels {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static LemurModels valueOf(String value) {
+    public static LemurModel valueOf(String value) {
         switch (value) {
             case "basic":
                 return BASIC;
             case "default":
                 return DEFAULT;
             default:
-                return new LemurModels(Value.UNKNOWN, value);
+                return new LemurModel(Value.UNKNOWN, value);
         }
     }
 

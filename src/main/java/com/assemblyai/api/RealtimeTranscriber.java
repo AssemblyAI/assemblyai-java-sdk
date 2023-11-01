@@ -4,6 +4,7 @@ import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.AudioData;
 import com.assemblyai.api.types.FinalTranscript;
 import com.assemblyai.api.types.PartialTranscript;
+import com.assemblyai.api.types.RealtimeError;
 import com.assemblyai.api.types.RealtimeMessage;
 import com.assemblyai.api.types.RealtimeTranscript;
 import com.assemblyai.api.types.SessionBegins;
@@ -238,34 +239,33 @@ public final class RealtimeTranscriber implements AutoCloseable {
     }
 
     private final class RealtimeMessageVisitor implements RealtimeMessage.Visitor<Void> {
-
         @Override
-        public Void visitSessionBegins(SessionBegins sessionBegins) {
-            onSessionStart.accept(sessionBegins);
+        public Void visit(SessionBegins value) {
+            onSessionStart.accept(value);
             return null;
         }
 
         @Override
-        public Void visitPartialTranscript(PartialTranscript partialTranscript) {
-            onPartialTranscript.accept(partialTranscript);
-            onTranscript.accept(RealtimeTranscript.partialTranscript(partialTranscript));
+        public Void visit(PartialTranscript value) {
+            onPartialTranscript.accept(value);
+            onTranscript.accept(RealtimeTranscript.of(value));
             return null;
         }
 
         @Override
-        public Void visitFinalTranscript(FinalTranscript finalTranscript) {
-            onFinalTranscript.accept(finalTranscript);
-            onTranscript.accept(RealtimeTranscript.finalTranscript(finalTranscript));
+        public Void visit(FinalTranscript value) {
+            onFinalTranscript.accept(value);
+            onTranscript.accept(RealtimeTranscript.of(value));
             return null;
         }
 
         @Override
-        public Void visitSessionTerminated(SessionTerminated _sessionTerminated) {
+        public Void visit(SessionTerminated value) {
             return null;
         }
 
         @Override
-        public Void _visitUnknown(Object _unknownType) {
+        public Void visit(RealtimeError value) {
             return null;
         }
     }

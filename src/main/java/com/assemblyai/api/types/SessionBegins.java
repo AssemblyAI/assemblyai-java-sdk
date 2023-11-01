@@ -23,6 +23,11 @@ public final class SessionBegins {
         this.expiresAt = expiresAt;
     }
 
+    @JsonProperty("message_type")
+    public String getMessageType() {
+        return "SessionBegins";
+    }
+
     /**
      * @return Unique identifier for the established session.
      */

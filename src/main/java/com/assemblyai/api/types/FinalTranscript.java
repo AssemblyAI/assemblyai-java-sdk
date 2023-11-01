@@ -106,6 +106,11 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         return created;
     }
 
+    @JsonProperty("message_type")
+    public String getMessageType() {
+        return "FinalTranscript";
+    }
+
     /**
      * @return Whether the text has been punctuated and cased.
      */

@@ -14,11 +14,11 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TerminateSession.Builder.class)
 public final class TerminateSession implements IRealtimeBaseMessage {
-    private final MessageTypes messageType;
+    private final MessageType messageType;
 
     private final boolean terminateSession;
 
-    private TerminateSession(MessageTypes messageType, boolean terminateSession) {
+    private TerminateSession(MessageType messageType, boolean terminateSession) {
         this.messageType = messageType;
         this.terminateSession = terminateSession;
     }
@@ -28,7 +28,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
      */
     @JsonProperty("message_type")
     @Override
-    public MessageTypes getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 
@@ -65,7 +65,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
     }
 
     public interface MessageTypeStage {
-        TerminateSessionStage messageType(MessageTypes messageType);
+        TerminateSessionStage messageType(MessageType messageType);
 
         Builder from(TerminateSession other);
     }
@@ -80,7 +80,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements MessageTypeStage, TerminateSessionStage, _FinalStage {
-        private MessageTypes messageType;
+        private MessageType messageType;
 
         private boolean terminateSession;
 
@@ -99,7 +99,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
          */
         @Override
         @JsonSetter("message_type")
-        public TerminateSessionStage messageType(MessageTypes messageType) {
+        public TerminateSessionStage messageType(MessageType messageType) {
             this.messageType = messageType;
             return this;
         }

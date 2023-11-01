@@ -49,7 +49,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
 
     private final Optional<String> redactPiiAudioQuality;
 
-    private final Optional<List<PiiPolicies>> redactPiiPolicies;
+    private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
     private final Optional<SubstitutionPolicy> redactPiiSub;
 
@@ -102,7 +102,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
             Optional<Boolean> redactPii,
             Optional<Boolean> redactPiiAudio,
             Optional<String> redactPiiAudioQuality,
-            Optional<List<PiiPolicies>> redactPiiPolicies,
+            Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
             Optional<Integer> speakersExpected,
@@ -306,7 +306,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
      */
     @JsonProperty("redact_pii_policies")
     @Override
-    public Optional<List<PiiPolicies>> getRedactPiiPolicies() {
+    public Optional<List<PiiPolicy>> getRedactPiiPolicies() {
         return redactPiiPolicies;
     }
 
@@ -590,7 +590,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
 
         private Optional<String> redactPiiAudioQuality = Optional.empty();
 
-        private Optional<List<PiiPolicies>> redactPiiPolicies = Optional.empty();
+        private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
         private Optional<SubstitutionPolicy> redactPiiSub = Optional.empty();
 
@@ -843,12 +843,12 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
         }
 
         @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
-        public Builder redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies) {
+        public Builder redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies) {
             this.redactPiiPolicies = redactPiiPolicies;
             return this;
         }
 
-        public Builder redactPiiPolicies(List<PiiPolicies> redactPiiPolicies) {
+        public Builder redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
             this.redactPiiPolicies = Optional.of(redactPiiPolicies);
             return this;
         }

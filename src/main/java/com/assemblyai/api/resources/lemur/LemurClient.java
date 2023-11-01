@@ -10,12 +10,12 @@ import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurSummaryParameters;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParameters;
-import com.assemblyai.api.types.LemurActionItemsResult;
+import com.assemblyai.api.types.LemurActionItemsResponse;
 import com.assemblyai.api.types.LemurBaseParameters;
-import com.assemblyai.api.types.LemurQuestionAnswerResults;
-import com.assemblyai.api.types.LemurSummaryResult;
-import com.assemblyai.api.types.LemurTaskResult;
-import com.assemblyai.api.types.PurgeLemurRequestDataResource;
+import com.assemblyai.api.types.LemurQuestionAnswerResponse;
+import com.assemblyai.api.types.LemurSummaryResponse;
+import com.assemblyai.api.types.LemurTaskResponse;
+import com.assemblyai.api.types.PurgeLemurRequestDataResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -34,14 +34,14 @@ public class LemurClient {
     /**
      * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
-    public LemurSummaryResult summary(LemurSummaryParameters request) {
+    public LemurSummaryResponse summary(LemurSummaryParameters request) {
         return summary(request, null);
     }
 
     /**
      * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
-    public LemurSummaryResult summary(LemurSummaryParameters request, RequestOptions requestOptions) {
+    public LemurSummaryResponse summary(LemurSummaryParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/summary")
@@ -63,7 +63,7 @@ public class LemurClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurSummaryResult.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurSummaryResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -76,14 +76,14 @@ public class LemurClient {
     /**
      * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
      */
-    public LemurQuestionAnswerResults questionAnswer(LemurQuestionAnswerParameters request) {
+    public LemurQuestionAnswerResponse questionAnswer(LemurQuestionAnswerParameters request) {
         return questionAnswer(request, null);
     }
 
     /**
      * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
      */
-    public LemurQuestionAnswerResults questionAnswer(
+    public LemurQuestionAnswerResponse questionAnswer(
             LemurQuestionAnswerParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -106,7 +106,7 @@ public class LemurClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurQuestionAnswerResults.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurQuestionAnswerResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -119,14 +119,14 @@ public class LemurClient {
     /**
      * Use LeMUR to generate a list of Action Items from a transcript
      */
-    public LemurActionItemsResult actionItems(LemurBaseParameters request) {
+    public LemurActionItemsResponse actionItems(LemurBaseParameters request) {
         return actionItems(request, null);
     }
 
     /**
      * Use LeMUR to generate a list of Action Items from a transcript
      */
-    public LemurActionItemsResult actionItems(LemurBaseParameters request, RequestOptions requestOptions) {
+    public LemurActionItemsResponse actionItems(LemurBaseParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/action-items")
@@ -148,7 +148,7 @@ public class LemurClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurActionItemsResult.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurActionItemsResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -161,14 +161,14 @@ public class LemurClient {
     /**
      * Use LeMUR to ask anything with Custom Task
      */
-    public LemurTaskResult task(LemurTaskParameters request) {
+    public LemurTaskResponse task(LemurTaskParameters request) {
         return task(request, null);
     }
 
     /**
      * Use LeMUR to ask anything with Custom Task
      */
-    public LemurTaskResult task(LemurTaskParameters request, RequestOptions requestOptions) {
+    public LemurTaskResponse task(LemurTaskParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/task")
@@ -190,7 +190,7 @@ public class LemurClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurTaskResult.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurTaskResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -204,7 +204,7 @@ public class LemurClient {
      * Delete the data for a previously submitted LeMUR request.
      * The LLM response data, as well as any context provided in the original request will be removed.
      */
-    public PurgeLemurRequestDataResource purgeRequestData(String requestId) {
+    public PurgeLemurRequestDataResponse purgeRequestData(String requestId) {
         return purgeRequestData(requestId, null);
     }
 
@@ -212,7 +212,7 @@ public class LemurClient {
      * Delete the data for a previously submitted LeMUR request.
      * The LLM response data, as well as any context provided in the original request will be removed.
      */
-    public PurgeLemurRequestDataResource purgeRequestData(String requestId, RequestOptions requestOptions) {
+    public PurgeLemurRequestDataResponse purgeRequestData(String requestId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3")
@@ -229,7 +229,7 @@ public class LemurClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(), PurgeLemurRequestDataResource.class);
+                        response.body().string(), PurgeLemurRequestDataResponse.class);
             }
             throw new ApiError(
                     response.code(),

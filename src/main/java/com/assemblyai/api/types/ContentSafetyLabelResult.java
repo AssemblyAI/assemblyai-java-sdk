@@ -11,9 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -29,25 +27,17 @@ public final class ContentSafetyLabelResult {
 
     private final Timestamp timestamp;
 
-    private final Map<String, Double> summary;
-
-    private final Map<String, SeverityScoreSummary> severityScoreSummary;
-
     private ContentSafetyLabelResult(
             String text,
             List<ContentSafetyLabel> labels,
             int sentencesIdxStart,
             int sentencesIdxEnd,
-            Timestamp timestamp,
-            Map<String, Double> summary,
-            Map<String, SeverityScoreSummary> severityScoreSummary) {
+            Timestamp timestamp) {
         this.text = text;
         this.labels = labels;
         this.sentencesIdxStart = sentencesIdxStart;
         this.sentencesIdxEnd = sentencesIdxEnd;
         this.timestamp = timestamp;
-        this.summary = summary;
-        this.severityScoreSummary = severityScoreSummary;
     }
 
     /**
@@ -90,22 +80,6 @@ public final class ContentSafetyLabelResult {
         return timestamp;
     }
 
-    /**
-     * @return A summary of the Content Moderation confidence results for the entire audio file
-     */
-    @JsonProperty("summary")
-    public Map<String, Double> getSummary() {
-        return summary;
-    }
-
-    /**
-     * @return A summary of the Content Moderation severity results for the entire audio file
-     */
-    @JsonProperty("severity_score_summary")
-    public Map<String, SeverityScoreSummary> getSeverityScoreSummary() {
-        return severityScoreSummary;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -117,21 +91,12 @@ public final class ContentSafetyLabelResult {
                 && labels.equals(other.labels)
                 && sentencesIdxStart == other.sentencesIdxStart
                 && sentencesIdxEnd == other.sentencesIdxEnd
-                && timestamp.equals(other.timestamp)
-                && summary.equals(other.summary)
-                && severityScoreSummary.equals(other.severityScoreSummary);
+                && timestamp.equals(other.timestamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.text,
-                this.labels,
-                this.sentencesIdxStart,
-                this.sentencesIdxEnd,
-                this.timestamp,
-                this.summary,
-                this.severityScoreSummary);
+        return Objects.hash(this.text, this.labels, this.sentencesIdxStart, this.sentencesIdxEnd, this.timestamp);
     }
 
     @Override
@@ -169,18 +134,6 @@ public final class ContentSafetyLabelResult {
         _FinalStage addLabels(ContentSafetyLabel labels);
 
         _FinalStage addAllLabels(List<ContentSafetyLabel> labels);
-
-        _FinalStage summary(Map<String, Double> summary);
-
-        _FinalStage putAllSummary(Map<String, Double> summary);
-
-        _FinalStage summary(String key, Double value);
-
-        _FinalStage severityScoreSummary(Map<String, SeverityScoreSummary> severityScoreSummary);
-
-        _FinalStage putAllSeverityScoreSummary(Map<String, SeverityScoreSummary> severityScoreSummary);
-
-        _FinalStage severityScoreSummary(String key, SeverityScoreSummary value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -194,10 +147,6 @@ public final class ContentSafetyLabelResult {
 
         private Timestamp timestamp;
 
-        private Map<String, SeverityScoreSummary> severityScoreSummary = new LinkedHashMap<>();
-
-        private Map<String, Double> summary = new LinkedHashMap<>();
-
         private List<ContentSafetyLabel> labels = new ArrayList<>();
 
         private Builder() {}
@@ -209,8 +158,6 @@ public final class ContentSafetyLabelResult {
             sentencesIdxStart(other.getSentencesIdxStart());
             sentencesIdxEnd(other.getSentencesIdxEnd());
             timestamp(other.getTimestamp());
-            summary(other.getSummary());
-            severityScoreSummary(other.getSeverityScoreSummary());
             return this;
         }
 
@@ -259,62 +206,6 @@ public final class ContentSafetyLabelResult {
         }
 
         /**
-         * <p>A summary of the Content Moderation severity results for the entire audio file</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage severityScoreSummary(String key, SeverityScoreSummary value) {
-            this.severityScoreSummary.put(key, value);
-            return this;
-        }
-
-        /**
-         * <p>A summary of the Content Moderation severity results for the entire audio file</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage putAllSeverityScoreSummary(Map<String, SeverityScoreSummary> severityScoreSummary) {
-            this.severityScoreSummary.putAll(severityScoreSummary);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "severity_score_summary", nulls = Nulls.SKIP)
-        public _FinalStage severityScoreSummary(Map<String, SeverityScoreSummary> severityScoreSummary) {
-            this.severityScoreSummary.clear();
-            this.severityScoreSummary.putAll(severityScoreSummary);
-            return this;
-        }
-
-        /**
-         * <p>A summary of the Content Moderation confidence results for the entire audio file</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage summary(String key, Double value) {
-            this.summary.put(key, value);
-            return this;
-        }
-
-        /**
-         * <p>A summary of the Content Moderation confidence results for the entire audio file</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage putAllSummary(Map<String, Double> summary) {
-            this.summary.putAll(summary);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "summary", nulls = Nulls.SKIP)
-        public _FinalStage summary(Map<String, Double> summary) {
-            this.summary.clear();
-            this.summary.putAll(summary);
-            return this;
-        }
-
-        /**
          * <p>An array of objects, one per sensitive topic that was detected in the section</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -344,8 +235,7 @@ public final class ContentSafetyLabelResult {
 
         @Override
         public ContentSafetyLabelResult build() {
-            return new ContentSafetyLabelResult(
-                    text, labels, sentencesIdxStart, sentencesIdxEnd, timestamp, summary, severityScoreSummary);
+            return new ContentSafetyLabelResult(text, labels, sentencesIdxStart, sentencesIdxEnd, timestamp);
         }
     }
 }

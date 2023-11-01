@@ -12,15 +12,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = PurgeLemurRequestDataResource.Builder.class)
-public final class PurgeLemurRequestDataResource {
+@JsonDeserialize(builder = PurgeLemurRequestDataResponse.Builder.class)
+public final class PurgeLemurRequestDataResponse {
     private final String requestId;
 
     private final String requestIdToPurge;
 
     private final boolean deleted;
 
-    private PurgeLemurRequestDataResource(String requestId, String requestIdToPurge, boolean deleted) {
+    private PurgeLemurRequestDataResponse(String requestId, String requestIdToPurge, boolean deleted) {
         this.requestId = requestId;
         this.requestIdToPurge = requestIdToPurge;
         this.deleted = deleted;
@@ -53,10 +53,10 @@ public final class PurgeLemurRequestDataResource {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof PurgeLemurRequestDataResource && equalTo((PurgeLemurRequestDataResource) other);
+        return other instanceof PurgeLemurRequestDataResponse && equalTo((PurgeLemurRequestDataResponse) other);
     }
 
-    private boolean equalTo(PurgeLemurRequestDataResource other) {
+    private boolean equalTo(PurgeLemurRequestDataResponse other) {
         return requestId.equals(other.requestId)
                 && requestIdToPurge.equals(other.requestIdToPurge)
                 && deleted == other.deleted;
@@ -79,7 +79,7 @@ public final class PurgeLemurRequestDataResource {
     public interface RequestIdStage {
         RequestIdToPurgeStage requestId(String requestId);
 
-        Builder from(PurgeLemurRequestDataResource other);
+        Builder from(PurgeLemurRequestDataResponse other);
     }
 
     public interface RequestIdToPurgeStage {
@@ -91,7 +91,7 @@ public final class PurgeLemurRequestDataResource {
     }
 
     public interface _FinalStage {
-        PurgeLemurRequestDataResource build();
+        PurgeLemurRequestDataResponse build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -105,7 +105,7 @@ public final class PurgeLemurRequestDataResource {
         private Builder() {}
 
         @Override
-        public Builder from(PurgeLemurRequestDataResource other) {
+        public Builder from(PurgeLemurRequestDataResponse other) {
             requestId(other.getRequestId());
             requestIdToPurge(other.getRequestIdToPurge());
             deleted(other.getDeleted());
@@ -146,8 +146,8 @@ public final class PurgeLemurRequestDataResource {
         }
 
         @Override
-        public PurgeLemurRequestDataResource build() {
-            return new PurgeLemurRequestDataResource(requestId, requestIdToPurge, deleted);
+        public PurgeLemurRequestDataResponse build() {
+            return new PurgeLemurRequestDataResponse(requestId, requestIdToPurge, deleted);
         }
     }
 }

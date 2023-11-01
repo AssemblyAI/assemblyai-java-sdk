@@ -93,6 +93,11 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         return created;
     }
 
+    @JsonProperty("message_type")
+    public String getMessageType() {
+        return "PartialTranscript";
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;

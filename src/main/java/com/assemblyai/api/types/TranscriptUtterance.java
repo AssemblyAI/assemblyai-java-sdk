@@ -17,8 +17,6 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptUtterance.Builder.class)
 public final class TranscriptUtterance {
-    private final String channel;
-
     private final double confidence;
 
     private final int start;
@@ -29,44 +27,64 @@ public final class TranscriptUtterance {
 
     private final List<TranscriptWord> words;
 
+    private final String speaker;
+
     private TranscriptUtterance(
-            String channel, double confidence, int start, int end, String text, List<TranscriptWord> words) {
-        this.channel = channel;
+            double confidence, int start, int end, String text, List<TranscriptWord> words, String speaker) {
         this.confidence = confidence;
         this.start = start;
         this.end = end;
         this.text = text;
         this.words = words;
+        this.speaker = speaker;
     }
 
-    @JsonProperty("channel")
-    public String getChannel() {
-        return channel;
-    }
-
+    /**
+     * @return The confidence score for the transcript of this utterance
+     */
     @JsonProperty("confidence")
     public double getConfidence() {
         return confidence;
     }
 
+    /**
+     * @return The starting time, in milliseconds, of the utterance in the audio file
+     */
     @JsonProperty("start")
     public int getStart() {
         return start;
     }
 
+    /**
+     * @return The ending time, in milliseconds, of the utterance in the audio file
+     */
     @JsonProperty("end")
     public int getEnd() {
         return end;
     }
 
+    /**
+     * @return The text for this utterance
+     */
     @JsonProperty("text")
     public String getText() {
         return text;
     }
 
+    /**
+     * @return The words in the utterance.
+     */
     @JsonProperty("words")
     public List<TranscriptWord> getWords() {
         return words;
+    }
+
+    /**
+     * @return The speaker of this utterance, where each speaker is assigned a sequential capital letter - e.g. &quot;A&quot; for Speaker A, &quot;B&quot; for Speaker B, etc.
+     */
+    @JsonProperty("speaker")
+    public String getSpeaker() {
+        return speaker;
     }
 
     @Override
@@ -76,17 +94,17 @@ public final class TranscriptUtterance {
     }
 
     private boolean equalTo(TranscriptUtterance other) {
-        return channel.equals(other.channel)
-                && confidence == other.confidence
+        return confidence == other.confidence
                 && start == other.start
                 && end == other.end
                 && text.equals(other.text)
-                && words.equals(other.words);
+                && words.equals(other.words)
+                && speaker.equals(other.speaker);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.channel, this.confidence, this.start, this.end, this.text, this.words);
+        return Objects.hash(this.confidence, this.start, this.end, this.text, this.words, this.speaker);
     }
 
     @Override
@@ -94,18 +112,14 @@ public final class TranscriptUtterance {
         return ObjectMappers.stringify(this);
     }
 
-    public static ChannelStage builder() {
+    public static ConfidenceStage builder() {
         return new Builder();
-    }
-
-    public interface ChannelStage {
-        ConfidenceStage channel(String channel);
-
-        Builder from(TranscriptUtterance other);
     }
 
     public interface ConfidenceStage {
         StartStage confidence(double confidence);
+
+        Builder from(TranscriptUtterance other);
     }
 
     public interface StartStage {
@@ -117,7 +131,11 @@ public final class TranscriptUtterance {
     }
 
     public interface TextStage {
-        _FinalStage text(String text);
+        SpeakerStage text(String text);
+    }
+
+    public interface SpeakerStage {
+        _FinalStage speaker(String speaker);
     }
 
     public interface _FinalStage {
@@ -132,9 +150,7 @@ public final class TranscriptUtterance {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements ChannelStage, ConfidenceStage, StartStage, EndStage, TextStage, _FinalStage {
-        private String channel;
-
+            implements ConfidenceStage, StartStage, EndStage, TextStage, SpeakerStage, _FinalStage {
         private double confidence;
 
         private int start;
@@ -143,28 +159,27 @@ public final class TranscriptUtterance {
 
         private String text;
 
+        private String speaker;
+
         private List<TranscriptWord> words = new ArrayList<>();
 
         private Builder() {}
 
         @Override
         public Builder from(TranscriptUtterance other) {
-            channel(other.getChannel());
             confidence(other.getConfidence());
             start(other.getStart());
             end(other.getEnd());
             text(other.getText());
             words(other.getWords());
+            speaker(other.getSpeaker());
             return this;
         }
 
-        @Override
-        @JsonSetter("channel")
-        public ConfidenceStage channel(String channel) {
-            this.channel = channel;
-            return this;
-        }
-
+        /**
+         * <p>The confidence score for the transcript of this utterance</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("confidence")
         public StartStage confidence(double confidence) {
@@ -172,6 +187,10 @@ public final class TranscriptUtterance {
             return this;
         }
 
+        /**
+         * <p>The starting time, in milliseconds, of the utterance in the audio file</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("start")
         public EndStage start(int start) {
@@ -179,6 +198,10 @@ public final class TranscriptUtterance {
             return this;
         }
 
+        /**
+         * <p>The ending time, in milliseconds, of the utterance in the audio file</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("end")
         public TextStage end(int end) {
@@ -186,19 +209,42 @@ public final class TranscriptUtterance {
             return this;
         }
 
+        /**
+         * <p>The text for this utterance</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("text")
-        public _FinalStage text(String text) {
+        public SpeakerStage text(String text) {
             this.text = text;
             return this;
         }
 
+        /**
+         * <p>The speaker of this utterance, where each speaker is assigned a sequential capital letter - e.g. &quot;A&quot; for Speaker A, &quot;B&quot; for Speaker B, etc.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        @JsonSetter("speaker")
+        public _FinalStage speaker(String speaker) {
+            this.speaker = speaker;
+            return this;
+        }
+
+        /**
+         * <p>The words in the utterance.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage addAllWords(List<TranscriptWord> words) {
             this.words.addAll(words);
             return this;
         }
 
+        /**
+         * <p>The words in the utterance.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage addWords(TranscriptWord words) {
             this.words.add(words);
@@ -215,7 +261,7 @@ public final class TranscriptUtterance {
 
         @Override
         public TranscriptUtterance build() {
-            return new TranscriptUtterance(channel, confidence, start, end, text, words);
+            return new TranscriptUtterance(confidence, start, end, text, words, speaker);
         }
     }
 }

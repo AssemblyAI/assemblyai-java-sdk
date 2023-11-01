@@ -75,7 +75,7 @@ public final class Transcript {
 
     private final Optional<String> redactPiiAudioQuality;
 
-    private final Optional<List<PiiPolicies>> redactPiiPolicies;
+    private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
     private final Optional<SubstitutionPolicy> redactPiiSub;
 
@@ -85,7 +85,7 @@ public final class Transcript {
 
     private final Optional<Boolean> contentSafety;
 
-    private final Optional<TranscriptContentSafetyLabels> contentSafetyLabels;
+    private final Optional<ContentSafetyLabelsResult> contentSafetyLabels;
 
     private final Optional<Boolean> iabCategories;
 
@@ -157,12 +157,12 @@ public final class Transcript {
             boolean redactPii,
             Optional<Boolean> redactPiiAudio,
             Optional<String> redactPiiAudioQuality,
-            Optional<List<PiiPolicies>> redactPiiPolicies,
+            Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
             Optional<Integer> speakersExpected,
             Optional<Boolean> contentSafety,
-            Optional<TranscriptContentSafetyLabels> contentSafetyLabels,
+            Optional<ContentSafetyLabelsResult> contentSafetyLabels,
             Optional<Boolean> iabCategories,
             Optional<TranscriptIabCategoriesResult> iabCategoriesResult,
             Optional<Boolean> languageDetection,
@@ -484,7 +484,7 @@ public final class Transcript {
      * See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more information.
      */
     @JsonProperty("redact_pii_policies")
-    public Optional<List<PiiPolicies>> getRedactPiiPolicies() {
+    public Optional<List<PiiPolicy>> getRedactPiiPolicies() {
         return redactPiiPolicies;
     }
 
@@ -525,7 +525,7 @@ public final class Transcript {
      * See <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content moderation</a> for more information.
      */
     @JsonProperty("content_safety_labels")
-    public Optional<TranscriptContentSafetyLabels> getContentSafetyLabels() {
+    public Optional<ContentSafetyLabelsResult> getContentSafetyLabels() {
         return contentSafetyLabels;
     }
 
@@ -538,7 +538,7 @@ public final class Transcript {
     }
 
     /**
-     * @return An array of results for the Topic Detection model, if it was enabled during the transcription request.
+     * @return The result of the Topic Detection model, if it was enabled during the transcription request.
      * See <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a> for more information.
      */
     @JsonProperty("iab_categories_result")
@@ -952,9 +952,9 @@ public final class Transcript {
 
         _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
 
-        _FinalStage redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies);
+        _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies);
 
-        _FinalStage redactPiiPolicies(List<PiiPolicies> redactPiiPolicies);
+        _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies);
 
         _FinalStage redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub);
 
@@ -972,9 +972,9 @@ public final class Transcript {
 
         _FinalStage contentSafety(Boolean contentSafety);
 
-        _FinalStage contentSafetyLabels(Optional<TranscriptContentSafetyLabels> contentSafetyLabels);
+        _FinalStage contentSafetyLabels(Optional<ContentSafetyLabelsResult> contentSafetyLabels);
 
-        _FinalStage contentSafetyLabels(TranscriptContentSafetyLabels contentSafetyLabels);
+        _FinalStage contentSafetyLabels(ContentSafetyLabelsResult contentSafetyLabels);
 
         _FinalStage iabCategories(Optional<Boolean> iabCategories);
 
@@ -1121,7 +1121,7 @@ public final class Transcript {
 
         private Optional<Boolean> iabCategories = Optional.empty();
 
-        private Optional<TranscriptContentSafetyLabels> contentSafetyLabels = Optional.empty();
+        private Optional<ContentSafetyLabelsResult> contentSafetyLabels = Optional.empty();
 
         private Optional<Boolean> contentSafety = Optional.empty();
 
@@ -1131,7 +1131,7 @@ public final class Transcript {
 
         private Optional<SubstitutionPolicy> redactPiiSub = Optional.empty();
 
-        private Optional<List<PiiPolicies>> redactPiiPolicies = Optional.empty();
+        private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
         private Optional<String> redactPiiAudioQuality = Optional.empty();
 
@@ -1630,7 +1630,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>An array of results for the Topic Detection model, if it was enabled during the transcription request.
+         * <p>The result of the Topic Detection model, if it was enabled during the transcription request.
          * See <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1670,14 +1670,14 @@ public final class Transcript {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage contentSafetyLabels(TranscriptContentSafetyLabels contentSafetyLabels) {
+        public _FinalStage contentSafetyLabels(ContentSafetyLabelsResult contentSafetyLabels) {
             this.contentSafetyLabels = Optional.of(contentSafetyLabels);
             return this;
         }
 
         @Override
         @JsonSetter(value = "content_safety_labels", nulls = Nulls.SKIP)
-        public _FinalStage contentSafetyLabels(Optional<TranscriptContentSafetyLabels> contentSafetyLabels) {
+        public _FinalStage contentSafetyLabels(Optional<ContentSafetyLabelsResult> contentSafetyLabels) {
             this.contentSafetyLabels = contentSafetyLabels;
             return this;
         }
@@ -1756,14 +1756,14 @@ public final class Transcript {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage redactPiiPolicies(List<PiiPolicies> redactPiiPolicies) {
+        public _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
             this.redactPiiPolicies = Optional.of(redactPiiPolicies);
             return this;
         }
 
         @Override
         @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
-        public _FinalStage redactPiiPolicies(Optional<List<PiiPolicies>> redactPiiPolicies) {
+        public _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies) {
             this.redactPiiPolicies = redactPiiPolicies;
             return this;
         }
