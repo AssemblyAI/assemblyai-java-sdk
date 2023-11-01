@@ -79,7 +79,7 @@ public final class SentimentAnalysisResult {
     }
 
     /**
-     * @return The speaker of the sentence if Speaker Diarization is enabled, else null
+     * @return The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null
      */
     @JsonProperty("speaker")
     public Optional<String> getSpeaker() {
@@ -229,7 +229,7 @@ public final class SentimentAnalysisResult {
         }
 
         /**
-         * <p>The speaker of the sentence if Speaker Diarization is enabled, else null</p>
+         * <p>The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

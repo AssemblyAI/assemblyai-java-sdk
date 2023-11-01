@@ -12,13 +12,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LemurTaskResult.Builder.class)
-public final class LemurTaskResult implements ILemurBaseResult {
+@JsonDeserialize(builder = LemurSummaryResponse.Builder.class)
+public final class LemurSummaryResponse implements ILemurBaseResponse {
     private final String requestId;
 
     private final String response;
 
-    private LemurTaskResult(String requestId, String response) {
+    private LemurSummaryResponse(String requestId, String response) {
         this.requestId = requestId;
         this.response = response;
     }
@@ -43,10 +43,10 @@ public final class LemurTaskResult implements ILemurBaseResult {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurTaskResult && equalTo((LemurTaskResult) other);
+        return other instanceof LemurSummaryResponse && equalTo((LemurSummaryResponse) other);
     }
 
-    private boolean equalTo(LemurTaskResult other) {
+    private boolean equalTo(LemurSummaryResponse other) {
         return requestId.equals(other.requestId) && response.equals(other.response);
     }
 
@@ -67,7 +67,7 @@ public final class LemurTaskResult implements ILemurBaseResult {
     public interface RequestIdStage {
         ResponseStage requestId(String requestId);
 
-        Builder from(LemurTaskResult other);
+        Builder from(LemurSummaryResponse other);
     }
 
     public interface ResponseStage {
@@ -75,7 +75,7 @@ public final class LemurTaskResult implements ILemurBaseResult {
     }
 
     public interface _FinalStage {
-        LemurTaskResult build();
+        LemurSummaryResponse build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -87,7 +87,7 @@ public final class LemurTaskResult implements ILemurBaseResult {
         private Builder() {}
 
         @Override
-        public Builder from(LemurTaskResult other) {
+        public Builder from(LemurSummaryResponse other) {
             requestId(other.getRequestId());
             response(other.getResponse());
             return this;
@@ -116,8 +116,8 @@ public final class LemurTaskResult implements ILemurBaseResult {
         }
 
         @Override
-        public LemurTaskResult build() {
-            return new LemurTaskResult(requestId, response);
+        public LemurSummaryResponse build() {
+            return new LemurSummaryResponse(requestId, response);
         }
     }
 }

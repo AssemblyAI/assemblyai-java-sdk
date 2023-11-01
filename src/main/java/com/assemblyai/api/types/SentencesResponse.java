@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SentencesResource.Builder.class)
-public final class SentencesResource {
+@JsonDeserialize(builder = SentencesResponse.Builder.class)
+public final class SentencesResponse {
     private final String id;
 
     private final double confidence;
@@ -25,7 +25,7 @@ public final class SentencesResource {
 
     private final List<TranscriptSentence> sentences;
 
-    private SentencesResource(String id, double confidence, double audioDuration, List<TranscriptSentence> sentences) {
+    private SentencesResponse(String id, double confidence, double audioDuration, List<TranscriptSentence> sentences) {
         this.id = id;
         this.confidence = confidence;
         this.audioDuration = audioDuration;
@@ -55,10 +55,10 @@ public final class SentencesResource {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SentencesResource && equalTo((SentencesResource) other);
+        return other instanceof SentencesResponse && equalTo((SentencesResponse) other);
     }
 
-    private boolean equalTo(SentencesResource other) {
+    private boolean equalTo(SentencesResponse other) {
         return id.equals(other.id)
                 && confidence == other.confidence
                 && audioDuration == other.audioDuration
@@ -82,7 +82,7 @@ public final class SentencesResource {
     public interface IdStage {
         ConfidenceStage id(String id);
 
-        Builder from(SentencesResource other);
+        Builder from(SentencesResponse other);
     }
 
     public interface ConfidenceStage {
@@ -94,7 +94,7 @@ public final class SentencesResource {
     }
 
     public interface _FinalStage {
-        SentencesResource build();
+        SentencesResponse build();
 
         _FinalStage sentences(List<TranscriptSentence> sentences);
 
@@ -116,7 +116,7 @@ public final class SentencesResource {
         private Builder() {}
 
         @Override
-        public Builder from(SentencesResource other) {
+        public Builder from(SentencesResponse other) {
             id(other.getId());
             confidence(other.getConfidence());
             audioDuration(other.getAudioDuration());
@@ -166,8 +166,8 @@ public final class SentencesResource {
         }
 
         @Override
-        public SentencesResource build() {
-            return new SentencesResource(id, confidence, audioDuration, sentences);
+        public SentencesResponse build() {
+            return new SentencesResponse(id, confidence, audioDuration, sentences);
         }
     }
 }

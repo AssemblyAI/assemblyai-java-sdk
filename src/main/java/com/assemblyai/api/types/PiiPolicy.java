@@ -6,71 +6,69 @@ package com.assemblyai.api.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class PiiPolicies {
-    public static final PiiPolicies EMAIL_ADDRESS = new PiiPolicies(Value.EMAIL_ADDRESS, "email_address");
+public final class PiiPolicy {
+    public static final PiiPolicy EMAIL_ADDRESS = new PiiPolicy(Value.EMAIL_ADDRESS, "email_address");
 
-    public static final PiiPolicies NATIONALITY = new PiiPolicies(Value.NATIONALITY, "nationality");
+    public static final PiiPolicy NATIONALITY = new PiiPolicy(Value.NATIONALITY, "nationality");
 
-    public static final PiiPolicies MEDICAL_PROCESS = new PiiPolicies(Value.MEDICAL_PROCESS, "medical_process");
+    public static final PiiPolicy MEDICAL_PROCESS = new PiiPolicy(Value.MEDICAL_PROCESS, "medical_process");
 
-    public static final PiiPolicies PERSON_AGE = new PiiPolicies(Value.PERSON_AGE, "person_age");
+    public static final PiiPolicy PERSON_AGE = new PiiPolicy(Value.PERSON_AGE, "person_age");
 
-    public static final PiiPolicies DATE = new PiiPolicies(Value.DATE, "date");
+    public static final PiiPolicy DATE = new PiiPolicy(Value.DATE, "date");
 
-    public static final PiiPolicies BANKING_INFORMATION =
-            new PiiPolicies(Value.BANKING_INFORMATION, "banking_information");
+    public static final PiiPolicy BANKING_INFORMATION = new PiiPolicy(Value.BANKING_INFORMATION, "banking_information");
 
-    public static final PiiPolicies CREDIT_CARD_CVV = new PiiPolicies(Value.CREDIT_CARD_CVV, "credit_card_cvv");
+    public static final PiiPolicy CREDIT_CARD_CVV = new PiiPolicy(Value.CREDIT_CARD_CVV, "credit_card_cvv");
 
-    public static final PiiPolicies OCCUPATION = new PiiPolicies(Value.OCCUPATION, "occupation");
+    public static final PiiPolicy OCCUPATION = new PiiPolicy(Value.OCCUPATION, "occupation");
 
-    public static final PiiPolicies LANGUAGE = new PiiPolicies(Value.LANGUAGE, "language");
+    public static final PiiPolicy LANGUAGE = new PiiPolicy(Value.LANGUAGE, "language");
 
-    public static final PiiPolicies CREDIT_CARD_EXPIRATION =
-            new PiiPolicies(Value.CREDIT_CARD_EXPIRATION, "credit_card_expiration");
+    public static final PiiPolicy CREDIT_CARD_EXPIRATION =
+            new PiiPolicy(Value.CREDIT_CARD_EXPIRATION, "credit_card_expiration");
 
-    public static final PiiPolicies MONEY_AMOUNT = new PiiPolicies(Value.MONEY_AMOUNT, "money_amount");
+    public static final PiiPolicy MONEY_AMOUNT = new PiiPolicy(Value.MONEY_AMOUNT, "money_amount");
 
-    public static final PiiPolicies DRUG = new PiiPolicies(Value.DRUG, "drug");
+    public static final PiiPolicy DRUG = new PiiPolicy(Value.DRUG, "drug");
 
-    public static final PiiPolicies PHONE_NUMBER = new PiiPolicies(Value.PHONE_NUMBER, "phone_number");
+    public static final PiiPolicy PHONE_NUMBER = new PiiPolicy(Value.PHONE_NUMBER, "phone_number");
 
-    public static final PiiPolicies DATE_OF_BIRTH = new PiiPolicies(Value.DATE_OF_BIRTH, "date_of_birth");
+    public static final PiiPolicy DATE_OF_BIRTH = new PiiPolicy(Value.DATE_OF_BIRTH, "date_of_birth");
 
-    public static final PiiPolicies INJURY = new PiiPolicies(Value.INJURY, "injury");
+    public static final PiiPolicy INJURY = new PiiPolicy(Value.INJURY, "injury");
 
-    public static final PiiPolicies NUMBER_SEQUENCE = new PiiPolicies(Value.NUMBER_SEQUENCE, "number_sequence");
+    public static final PiiPolicy NUMBER_SEQUENCE = new PiiPolicy(Value.NUMBER_SEQUENCE, "number_sequence");
 
-    public static final PiiPolicies POLITICAL_AFFILIATION =
-            new PiiPolicies(Value.POLITICAL_AFFILIATION, "political_affiliation");
+    public static final PiiPolicy POLITICAL_AFFILIATION =
+            new PiiPolicy(Value.POLITICAL_AFFILIATION, "political_affiliation");
 
-    public static final PiiPolicies LOCATION = new PiiPolicies(Value.LOCATION, "location");
+    public static final PiiPolicy LOCATION = new PiiPolicy(Value.LOCATION, "location");
 
-    public static final PiiPolicies EVENT = new PiiPolicies(Value.EVENT, "event");
+    public static final PiiPolicy EVENT = new PiiPolicy(Value.EVENT, "event");
 
-    public static final PiiPolicies PERSON_NAME = new PiiPolicies(Value.PERSON_NAME, "person_name");
+    public static final PiiPolicy PERSON_NAME = new PiiPolicy(Value.PERSON_NAME, "person_name");
 
-    public static final PiiPolicies ORGANIZATION = new PiiPolicies(Value.ORGANIZATION, "organization");
+    public static final PiiPolicy ORGANIZATION = new PiiPolicy(Value.ORGANIZATION, "organization");
 
-    public static final PiiPolicies DRIVERS_LICENSE = new PiiPolicies(Value.DRIVERS_LICENSE, "drivers_license");
+    public static final PiiPolicy DRIVERS_LICENSE = new PiiPolicy(Value.DRIVERS_LICENSE, "drivers_license");
 
-    public static final PiiPolicies MEDICAL_CONDITION = new PiiPolicies(Value.MEDICAL_CONDITION, "medical_condition");
+    public static final PiiPolicy MEDICAL_CONDITION = new PiiPolicy(Value.MEDICAL_CONDITION, "medical_condition");
 
-    public static final PiiPolicies BLOOD_TYPE = new PiiPolicies(Value.BLOOD_TYPE, "blood_type");
+    public static final PiiPolicy BLOOD_TYPE = new PiiPolicy(Value.BLOOD_TYPE, "blood_type");
 
-    public static final PiiPolicies CREDIT_CARD_NUMBER =
-            new PiiPolicies(Value.CREDIT_CARD_NUMBER, "credit_card_number");
+    public static final PiiPolicy CREDIT_CARD_NUMBER = new PiiPolicy(Value.CREDIT_CARD_NUMBER, "credit_card_number");
 
-    public static final PiiPolicies RELIGION = new PiiPolicies(Value.RELIGION, "religion");
+    public static final PiiPolicy RELIGION = new PiiPolicy(Value.RELIGION, "religion");
 
-    public static final PiiPolicies US_SOCIAL_SECURITY_NUMBER =
-            new PiiPolicies(Value.US_SOCIAL_SECURITY_NUMBER, "us_social_security_number");
+    public static final PiiPolicy US_SOCIAL_SECURITY_NUMBER =
+            new PiiPolicy(Value.US_SOCIAL_SECURITY_NUMBER, "us_social_security_number");
 
     private final Value value;
 
     private final String string;
 
-    PiiPolicies(Value value, String string) {
+    PiiPolicy(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -87,7 +85,7 @@ public final class PiiPolicies {
 
     @Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof PiiPolicies && this.string.equals(((PiiPolicies) other).string));
+        return (this == other) || (other instanceof PiiPolicy && this.string.equals(((PiiPolicy) other).string));
     }
 
     @Override
@@ -158,7 +156,7 @@ public final class PiiPolicies {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static PiiPolicies valueOf(String value) {
+    public static PiiPolicy valueOf(String value) {
         switch (value) {
             case "email_address":
                 return EMAIL_ADDRESS;
@@ -215,7 +213,7 @@ public final class PiiPolicies {
             case "us_social_security_number":
                 return US_SOCIAL_SECURITY_NUMBER;
             default:
-                return new PiiPolicies(Value.UNKNOWN, value);
+                return new PiiPolicy(Value.UNKNOWN, value);
         }
     }
 

@@ -8,16 +8,16 @@ import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
-import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsSrtRequest;
-import com.assemblyai.api.resources.transcript.requests.TranscriptExportAsVttRequest;
+import com.assemblyai.api.resources.transcript.requests.TranscriptGetSubtitlesRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptListRequest;
 import com.assemblyai.api.resources.transcript.requests.TranscriptWordSearchRequest;
-import com.assemblyai.api.types.ParagraphsResource;
-import com.assemblyai.api.types.RedactedAudioResult;
-import com.assemblyai.api.types.SentencesResource;
+import com.assemblyai.api.types.ParagraphsResponse;
+import com.assemblyai.api.types.RedactedAudioResponse;
+import com.assemblyai.api.types.SentencesResponse;
+import com.assemblyai.api.types.SubtitleFormat;
 import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.TranscriptList;
-import com.assemblyai.api.types.WordSearchResults;
+import com.assemblyai.api.types.WordSearchResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -205,22 +205,26 @@ public class TranscriptClient {
     }
 
     /**
-     * Export your transcript in VTT format, to be plugged into a video player for subtitles and closed captions.
+     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public String exportAsVtt(String transcriptId, TranscriptExportAsVttRequest request) {
-        return exportAsVtt(transcriptId, request, null);
+    public String getSubtitles(
+            String transcriptId, SubtitleFormat subtitleFormat, TranscriptGetSubtitlesRequest request) {
+        return getSubtitles(transcriptId, subtitleFormat, request, null);
     }
 
     /**
-     * Export your transcript in VTT format, to be plugged into a video player for subtitles and closed captions.
+     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public String exportAsVtt(
-            String transcriptId, TranscriptExportAsVttRequest request, RequestOptions requestOptions) {
+    public String getSubtitles(
+            String transcriptId,
+            SubtitleFormat subtitleFormat,
+            TranscriptGetSubtitlesRequest request,
+            RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
                 .addPathSegment(transcriptId)
-                .addPathSegments("vtt");
+                .addPathSegment(subtitleFormat.toString());
         if (request.getCharsPerCaption().isPresent()) {
             httpUrl.addQueryParameter(
                     "chars_per_caption", request.getCharsPerCaption().get().toString());
@@ -245,66 +249,24 @@ public class TranscriptClient {
         }
     }
 
-    public String exportAsVtt(String transcriptId) {
-        return exportAsVtt(transcriptId, TranscriptExportAsVttRequest.builder().build());
-    }
-
-    /**
-     * Export your transcript in SRT format, to be plugged into a video player for subtitles and closed captions.
-     */
-    public String exportAsSrt(String transcriptId, TranscriptExportAsSrtRequest request) {
-        return exportAsSrt(transcriptId, request, null);
-    }
-
-    /**
-     * Export your transcript in SRT format, to be plugged into a video player for subtitles and closed captions.
-     */
-    public String exportAsSrt(
-            String transcriptId, TranscriptExportAsSrtRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
-                .addPathSegments("srt");
-        if (request.getCharsPerCaption().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "chars_per_caption", request.getCharsPerCaption().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return response.body().string();
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public String exportAsSrt(String transcriptId) {
-        return exportAsSrt(transcriptId, TranscriptExportAsSrtRequest.builder().build());
+    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
+        return getSubtitles(
+                transcriptId,
+                subtitleFormat,
+                TranscriptGetSubtitlesRequest.builder().build());
     }
 
     /**
      * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public SentencesResource getSentences(String transcriptId) {
+    public SentencesResponse getSentences(String transcriptId) {
         return getSentences(transcriptId, null);
     }
 
     /**
      * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public SentencesResource getSentences(String transcriptId, RequestOptions requestOptions) {
+    public SentencesResponse getSentences(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -321,7 +283,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SentencesResource.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SentencesResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -334,14 +296,14 @@ public class TranscriptClient {
     /**
      * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
      */
-    public ParagraphsResource getParagraphs(String transcriptId) {
+    public ParagraphsResponse getParagraphs(String transcriptId) {
         return getParagraphs(transcriptId, null);
     }
 
     /**
      * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
      */
-    public ParagraphsResource getParagraphs(String transcriptId, RequestOptions requestOptions) {
+    public ParagraphsResponse getParagraphs(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -358,7 +320,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ParagraphsResource.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ParagraphsResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -371,14 +333,14 @@ public class TranscriptClient {
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResults wordSearch(String transcriptId, TranscriptWordSearchRequest request) {
+    public WordSearchResponse wordSearch(String transcriptId, TranscriptWordSearchRequest request) {
         return wordSearch(transcriptId, request, null);
     }
 
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResults wordSearch(
+    public WordSearchResponse wordSearch(
             String transcriptId, TranscriptWordSearchRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -398,7 +360,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), WordSearchResults.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), WordSearchResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -408,15 +370,21 @@ public class TranscriptClient {
         }
     }
 
-    public WordSearchResults wordSearch(String transcriptId) {
+    public WordSearchResponse wordSearch(String transcriptId) {
         return wordSearch(transcriptId, TranscriptWordSearchRequest.builder().build());
     }
 
-    public RedactedAudioResult getRedactedAudio(String transcriptId) {
+    /**
+     * Retrieves the redacted audio object containing the status and URL to the redacted audio.
+     */
+    public RedactedAudioResponse getRedactedAudio(String transcriptId) {
         return getRedactedAudio(transcriptId, null);
     }
 
-    public RedactedAudioResult getRedactedAudio(String transcriptId, RequestOptions requestOptions) {
+    /**
+     * Retrieves the redacted audio object containing the status and URL to the redacted audio.
+     */
+    public RedactedAudioResponse getRedactedAudio(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -433,7 +401,7 @@ public class TranscriptClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RedactedAudioResult.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RedactedAudioResponse.class);
             }
             throw new ApiError(
                     response.code(),

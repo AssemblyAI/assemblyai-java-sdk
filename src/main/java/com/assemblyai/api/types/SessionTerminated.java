@@ -4,9 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class SessionTerminated {
     private SessionTerminated() {}
+
+    @JsonProperty("message_type")
+    public String getMessageType() {
+        return "SessionTerminated";
+    }
 
     @Override
     public boolean equals(Object other) {

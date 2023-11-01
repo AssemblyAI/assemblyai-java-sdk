@@ -4,5 +4,5 @@
 package com.assemblyai.api.types;
 
 public interface IRealtimeBaseMessage {
-    MessageTypes getMessageType();
+    MessageType getMessageType();
 }

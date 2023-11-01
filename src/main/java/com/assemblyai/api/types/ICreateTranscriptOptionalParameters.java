@@ -39,7 +39,7 @@ public interface ICreateTranscriptOptionalParameters {
 
     Optional<String> getRedactPiiAudioQuality();
 
-    Optional<List<PiiPolicies>> getRedactPiiPolicies();
+    Optional<List<PiiPolicy>> getRedactPiiPolicies();
 
     Optional<SubstitutionPolicy> getRedactPiiSub();
 

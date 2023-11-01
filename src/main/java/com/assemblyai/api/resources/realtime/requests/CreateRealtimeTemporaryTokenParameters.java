@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = CreateRealtimeTokenParameters.Builder.class)
-public final class CreateRealtimeTokenParameters {
+@JsonDeserialize(builder = CreateRealtimeTemporaryTokenParameters.Builder.class)
+public final class CreateRealtimeTemporaryTokenParameters {
     private final int expiresIn;
 
-    private CreateRealtimeTokenParameters(int expiresIn) {
+    private CreateRealtimeTemporaryTokenParameters(int expiresIn) {
         this.expiresIn = expiresIn;
     }
 
@@ -31,10 +31,11 @@ public final class CreateRealtimeTokenParameters {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateRealtimeTokenParameters && equalTo((CreateRealtimeTokenParameters) other);
+        return other instanceof CreateRealtimeTemporaryTokenParameters
+                && equalTo((CreateRealtimeTemporaryTokenParameters) other);
     }
 
-    private boolean equalTo(CreateRealtimeTokenParameters other) {
+    private boolean equalTo(CreateRealtimeTemporaryTokenParameters other) {
         return expiresIn == other.expiresIn;
     }
 
@@ -55,11 +56,11 @@ public final class CreateRealtimeTokenParameters {
     public interface ExpiresInStage {
         _FinalStage expiresIn(int expiresIn);
 
-        Builder from(CreateRealtimeTokenParameters other);
+        Builder from(CreateRealtimeTemporaryTokenParameters other);
     }
 
     public interface _FinalStage {
-        CreateRealtimeTokenParameters build();
+        CreateRealtimeTemporaryTokenParameters build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,7 +70,7 @@ public final class CreateRealtimeTokenParameters {
         private Builder() {}
 
         @Override
-        public Builder from(CreateRealtimeTokenParameters other) {
+        public Builder from(CreateRealtimeTemporaryTokenParameters other) {
             expiresIn(other.getExpiresIn());
             return this;
         }
@@ -86,8 +87,8 @@ public final class CreateRealtimeTokenParameters {
         }
 
         @Override
-        public CreateRealtimeTokenParameters build() {
-            return new CreateRealtimeTokenParameters(expiresIn);
+        public CreateRealtimeTemporaryTokenParameters build() {
+            return new CreateRealtimeTemporaryTokenParameters(expiresIn);
         }
     }
 }

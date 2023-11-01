@@ -3,6 +3,6 @@
  */
 package com.assemblyai.api.types;
 
-public interface ILemurBaseResult {
+public interface ILemurBaseResponse {
     String getRequestId();
 }
