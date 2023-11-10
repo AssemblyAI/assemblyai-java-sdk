@@ -77,8 +77,8 @@ Transcriber transcriber = Transcriber.builder()
   .apiKey("YOUR_API_KEY")
   .build();
 
-TranscriptResponse transcript = transcriber.transcribe(
-    "https://example.org/audio.mp3", true);
+TranscriptResponse transcript =
+        transcriber.transcribe("https://example.org/audio.mp3");
 ```
 
 ## Using the Realtime Transcriber

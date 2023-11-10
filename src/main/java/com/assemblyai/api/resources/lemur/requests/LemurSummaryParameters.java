@@ -7,6 +7,8 @@ import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.ILemurBaseParameters;
 import com.assemblyai.api.types.LemurBaseParametersContext;
 import com.assemblyai.api.types.LemurModel;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,19 +37,23 @@ public final class LemurSummaryParameters implements ILemurBaseParameters {
 
     private final Optional<String> answerFormat;
 
+    private final Map<String, Object> additionalProperties;
+
     private LemurSummaryParameters(
             List<String> transcriptIds,
             Optional<LemurBaseParametersContext> context,
             Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
-            Optional<String> answerFormat) {
+            Optional<String> answerFormat,
+            Map<String, Object> additionalProperties) {
         this.transcriptIds = transcriptIds;
         this.context = context;
         this.finalModel = finalModel;
         this.maxOutputSize = maxOutputSize;
         this.temperature = temperature;
         this.answerFormat = answerFormat;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -106,6 +114,11 @@ public final class LemurSummaryParameters implements ILemurBaseParameters {
         return other instanceof LemurSummaryParameters && equalTo((LemurSummaryParameters) other);
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
     private boolean equalTo(LemurSummaryParameters other) {
         return transcriptIds.equals(other.transcriptIds)
                 && context.equals(other.context)
@@ -148,6 +161,9 @@ public final class LemurSummaryParameters implements ILemurBaseParameters {
         private Optional<Double> temperature = Optional.empty();
 
         private Optional<String> answerFormat = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -235,7 +251,7 @@ public final class LemurSummaryParameters implements ILemurBaseParameters {
 
         public LemurSummaryParameters build() {
             return new LemurSummaryParameters(
-                    transcriptIds, context, finalModel, maxOutputSize, temperature, answerFormat);
+                    transcriptIds, context, finalModel, maxOutputSize, temperature, answerFormat, additionalProperties);
         }
     }
 }

@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,11 @@ import java.util.Objects;
 public final class UploadedFile {
     private final String uploadUrl;
 
-    private UploadedFile(String uploadUrl) {
+    private final Map<String, Object> additionalProperties;
+
+    private UploadedFile(String uploadUrl, Map<String, Object> additionalProperties) {
         this.uploadUrl = uploadUrl;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -32,6 +39,11 @@ public final class UploadedFile {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UploadedFile && equalTo((UploadedFile) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(UploadedFile other) {
@@ -66,6 +78,9 @@ public final class UploadedFile {
     public static final class Builder implements UploadUrlStage, _FinalStage {
         private String uploadUrl;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -87,7 +102,7 @@ public final class UploadedFile {
 
         @Override
         public UploadedFile build() {
-            return new UploadedFile(uploadUrl);
+            return new UploadedFile(uploadUrl, additionalProperties);
         }
     }
 }

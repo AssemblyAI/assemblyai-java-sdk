@@ -4,12 +4,16 @@
 package com.assemblyai.api.resources.transcript.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,8 +22,11 @@ import java.util.Optional;
 public final class TranscriptGetSubtitlesRequest {
     private final Optional<Integer> charsPerCaption;
 
-    private TranscriptGetSubtitlesRequest(Optional<Integer> charsPerCaption) {
+    private final Map<String, Object> additionalProperties;
+
+    private TranscriptGetSubtitlesRequest(Optional<Integer> charsPerCaption, Map<String, Object> additionalProperties) {
         this.charsPerCaption = charsPerCaption;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -34,6 +41,11 @@ public final class TranscriptGetSubtitlesRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptGetSubtitlesRequest && equalTo((TranscriptGetSubtitlesRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptGetSubtitlesRequest other) {
@@ -58,6 +70,9 @@ public final class TranscriptGetSubtitlesRequest {
     public static final class Builder {
         private Optional<Integer> charsPerCaption = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         public Builder from(TranscriptGetSubtitlesRequest other) {
@@ -77,7 +92,7 @@ public final class TranscriptGetSubtitlesRequest {
         }
 
         public TranscriptGetSubtitlesRequest build() {
-            return new TranscriptGetSubtitlesRequest(charsPerCaption);
+            return new TranscriptGetSubtitlesRequest(charsPerCaption, additionalProperties);
         }
     }
 }

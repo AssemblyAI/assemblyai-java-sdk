@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,11 @@ import java.util.Objects;
 public final class LemurBaseResponse implements ILemurBaseResponse {
     private final String requestId;
 
-    private LemurBaseResponse(String requestId) {
+    private final Map<String, Object> additionalProperties;
+
+    private LemurBaseResponse(String requestId, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -33,6 +40,11 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurBaseResponse && equalTo((LemurBaseResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LemurBaseResponse other) {
@@ -67,6 +79,9 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
     public static final class Builder implements RequestIdStage, _FinalStage {
         private String requestId;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -88,7 +103,7 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
 
         @Override
         public LemurBaseResponse build() {
-            return new LemurBaseResponse(requestId);
+            return new LemurBaseResponse(requestId, additionalProperties);
         }
     }
 }

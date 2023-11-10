@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -33,6 +37,8 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
 
     private final boolean textFormatted;
 
+    private final Map<String, Object> additionalProperties;
+
     private FinalTranscript(
             int audioStart,
             int audioEnd,
@@ -41,7 +47,8 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
             List<Word> words,
             String created,
             boolean punctuated,
-            boolean textFormatted) {
+            boolean textFormatted,
+            Map<String, Object> additionalProperties) {
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
@@ -50,6 +57,7 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         this.created = created;
         this.punctuated = punctuated;
         this.textFormatted = textFormatted;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -131,6 +139,11 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FinalTranscript && equalTo((FinalTranscript) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(FinalTranscript other) {
@@ -231,6 +244,9 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         private boolean textFormatted;
 
         private List<Word> words = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -355,7 +371,15 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         @Override
         public FinalTranscript build() {
             return new FinalTranscript(
-                    audioStart, audioEnd, confidence, text, words, created, punctuated, textFormatted);
+                    audioStart,
+                    audioEnd,
+                    confidence,
+                    text,
+                    words,
+                    created,
+                    punctuated,
+                    textFormatted,
+                    additionalProperties);
         }
     }
 }

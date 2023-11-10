@@ -4,12 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,19 +32,23 @@ public final class TranscriptListItem {
 
     private final String audioUrl;
 
+    private final Map<String, Object> additionalProperties;
+
     private TranscriptListItem(
             String id,
             String resourceUrl,
             TranscriptStatus status,
             String created,
             Optional<String> completed,
-            String audioUrl) {
+            String audioUrl,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.resourceUrl = resourceUrl;
         this.status = status;
         this.created = created;
         this.completed = completed;
         this.audioUrl = audioUrl;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
@@ -77,6 +85,11 @@ public final class TranscriptListItem {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptListItem && equalTo((TranscriptListItem) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptListItem other) {
@@ -147,6 +160,9 @@ public final class TranscriptListItem {
 
         private Optional<String> completed = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -210,7 +226,7 @@ public final class TranscriptListItem {
 
         @Override
         public TranscriptListItem build() {
-            return new TranscriptListItem(id, resourceUrl, status, created, completed, audioUrl);
+            return new TranscriptListItem(id, resourceUrl, status, created, completed, audioUrl, additionalProperties);
         }
     }
 }

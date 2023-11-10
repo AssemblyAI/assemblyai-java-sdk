@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,15 +30,19 @@ public final class ContentSafetyLabelsResult {
 
     private final Map<String, SeverityScoreSummary> severityScoreSummary;
 
+    private final Map<String, Object> additionalProperties;
+
     private ContentSafetyLabelsResult(
             AudioIntelligenceModelStatus status,
             List<ContentSafetyLabelResult> results,
             Map<String, Double> summary,
-            Map<String, SeverityScoreSummary> severityScoreSummary) {
+            Map<String, SeverityScoreSummary> severityScoreSummary,
+            Map<String, Object> additionalProperties) {
         this.status = status;
         this.results = results;
         this.summary = summary;
         this.severityScoreSummary = severityScoreSummary;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -71,6 +78,11 @@ public final class ContentSafetyLabelsResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ContentSafetyLabelsResult && equalTo((ContentSafetyLabelsResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ContentSafetyLabelsResult other) {
@@ -131,6 +143,9 @@ public final class ContentSafetyLabelsResult {
         private Map<String, Double> summary = new LinkedHashMap<>();
 
         private List<ContentSafetyLabelResult> results = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -232,7 +247,7 @@ public final class ContentSafetyLabelsResult {
 
         @Override
         public ContentSafetyLabelsResult build() {
-            return new ContentSafetyLabelsResult(status, results, summary, severityScoreSummary);
+            return new ContentSafetyLabelsResult(status, results, summary, severityScoreSummary, additionalProperties);
         }
     }
 }

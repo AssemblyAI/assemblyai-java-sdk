@@ -36,8 +36,8 @@ public class TranscriptClient {
     /**
      * Retrieve a list of transcripts you have created.
      */
-    public TranscriptList list(TranscriptListRequest request) {
-        return list(request, null);
+    public TranscriptList list() {
+        return list(TranscriptListRequest.builder().build());
     }
 
     /**
@@ -86,15 +86,11 @@ public class TranscriptClient {
         }
     }
 
-    public TranscriptList list() {
-        return list(TranscriptListRequest.builder().build());
-    }
-
     /**
-     * Create a transcript from an audio or video file that is accessible via a URL.
+     * Retrieve a list of transcripts you have created.
      */
-    public Transcript create(CreateTranscriptParameters request) {
-        return create(request, null);
+    public TranscriptList list(TranscriptListRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -133,10 +129,10 @@ public class TranscriptClient {
     }
 
     /**
-     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
+     * Create a transcript from an audio or video file that is accessible via a URL.
      */
-    public Transcript get(String transcriptId) {
-        return get(transcriptId, null);
+    public Transcript create(CreateTranscriptParameters request) {
+        return create(request, null);
     }
 
     /**
@@ -169,10 +165,10 @@ public class TranscriptClient {
     }
 
     /**
-     * Delete the transcript
+     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
      */
-    public Transcript delete(String transcriptId) {
-        return delete(transcriptId, null);
+    public Transcript get(String transcriptId) {
+        return get(transcriptId, null);
     }
 
     /**
@@ -205,11 +201,20 @@ public class TranscriptClient {
     }
 
     /**
+     * Delete the transcript
+     */
+    public Transcript delete(String transcriptId) {
+        return delete(transcriptId, null);
+    }
+
+    /**
      * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public String getSubtitles(
-            String transcriptId, SubtitleFormat subtitleFormat, TranscriptGetSubtitlesRequest request) {
-        return getSubtitles(transcriptId, subtitleFormat, request, null);
+    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
+        return getSubtitles(
+                transcriptId,
+                subtitleFormat,
+                TranscriptGetSubtitlesRequest.builder().build());
     }
 
     /**
@@ -249,18 +254,12 @@ public class TranscriptClient {
         }
     }
 
-    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
-        return getSubtitles(
-                transcriptId,
-                subtitleFormat,
-                TranscriptGetSubtitlesRequest.builder().build());
-    }
-
     /**
-     * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
+     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public SentencesResponse getSentences(String transcriptId) {
-        return getSentences(transcriptId, null);
+    public String getSubtitles(
+            String transcriptId, SubtitleFormat subtitleFormat, TranscriptGetSubtitlesRequest request) {
+        return getSubtitles(transcriptId, subtitleFormat, request, null);
     }
 
     /**
@@ -294,10 +293,10 @@ public class TranscriptClient {
     }
 
     /**
-     * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
+     * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public ParagraphsResponse getParagraphs(String transcriptId) {
-        return getParagraphs(transcriptId, null);
+    public SentencesResponse getSentences(String transcriptId) {
+        return getSentences(transcriptId, null);
     }
 
     /**
@@ -331,10 +330,17 @@ public class TranscriptClient {
     }
 
     /**
+     * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
+     */
+    public ParagraphsResponse getParagraphs(String transcriptId) {
+        return getParagraphs(transcriptId, null);
+    }
+
+    /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(String transcriptId, TranscriptWordSearchRequest request) {
-        return wordSearch(transcriptId, request, null);
+    public WordSearchResponse wordSearch(String transcriptId) {
+        return wordSearch(transcriptId, TranscriptWordSearchRequest.builder().build());
     }
 
     /**
@@ -370,15 +376,11 @@ public class TranscriptClient {
         }
     }
 
-    public WordSearchResponse wordSearch(String transcriptId) {
-        return wordSearch(transcriptId, TranscriptWordSearchRequest.builder().build());
-    }
-
     /**
-     * Retrieves the redacted audio object containing the status and URL to the redacted audio.
+     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public RedactedAudioResponse getRedactedAudio(String transcriptId) {
-        return getRedactedAudio(transcriptId, null);
+    public WordSearchResponse wordSearch(String transcriptId, TranscriptWordSearchRequest request) {
+        return wordSearch(transcriptId, request, null);
     }
 
     /**
@@ -409,5 +411,12 @@ public class TranscriptClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Retrieves the redacted audio object containing the status and URL to the redacted audio.
+     */
+    public RedactedAudioResponse getRedactedAudio(String transcriptId) {
+        return getRedactedAudio(transcriptId, null);
     }
 }

@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,11 @@ import java.util.Objects;
 public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
     private final MessageType messageType;
 
-    private RealtimeBaseMessage(MessageType messageType) {
+    private final Map<String, Object> additionalProperties;
+
+    private RealtimeBaseMessage(MessageType messageType, Map<String, Object> additionalProperties) {
         this.messageType = messageType;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -33,6 +40,11 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeBaseMessage && equalTo((RealtimeBaseMessage) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RealtimeBaseMessage other) {
@@ -67,6 +79,9 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
     public static final class Builder implements MessageTypeStage, _FinalStage {
         private MessageType messageType;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -88,7 +103,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
 
         @Override
         public RealtimeBaseMessage build() {
-            return new RealtimeBaseMessage(messageType);
+            return new RealtimeBaseMessage(messageType, additionalProperties);
         }
     }
 }

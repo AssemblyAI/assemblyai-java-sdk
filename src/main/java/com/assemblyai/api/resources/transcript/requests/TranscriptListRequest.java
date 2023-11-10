@@ -5,12 +5,16 @@ package com.assemblyai.api.resources.transcript.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.types.TranscriptListRequestStatus;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,19 +33,23 @@ public final class TranscriptListRequest {
 
     private final Optional<Boolean> throttledOnly;
 
+    private final Map<String, Object> additionalProperties;
+
     private TranscriptListRequest(
             Optional<Integer> limit,
             Optional<TranscriptListRequestStatus> status,
             Optional<String> createdOn,
             Optional<String> beforeId,
             Optional<String> afterId,
-            Optional<Boolean> throttledOnly) {
+            Optional<Boolean> throttledOnly,
+            Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.status = status;
         this.createdOn = createdOn;
         this.beforeId = beforeId;
         this.afterId = afterId;
         this.throttledOnly = throttledOnly;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -98,6 +106,11 @@ public final class TranscriptListRequest {
         return other instanceof TranscriptListRequest && equalTo((TranscriptListRequest) other);
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
     private boolean equalTo(TranscriptListRequest other) {
         return limit.equals(other.limit)
                 && status.equals(other.status)
@@ -134,6 +147,9 @@ public final class TranscriptListRequest {
         private Optional<String> afterId = Optional.empty();
 
         private Optional<Boolean> throttledOnly = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -214,7 +230,8 @@ public final class TranscriptListRequest {
         }
 
         public TranscriptListRequest build() {
-            return new TranscriptListRequest(limit, status, createdOn, beforeId, afterId, throttledOnly);
+            return new TranscriptListRequest(
+                    limit, status, createdOn, beforeId, afterId, throttledOnly, additionalProperties);
         }
     }
 }

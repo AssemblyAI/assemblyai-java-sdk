@@ -4,13 +4,17 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -25,15 +29,19 @@ public final class LemurQuestion {
 
     private final Optional<List<String>> answerOptions;
 
+    private final Map<String, Object> additionalProperties;
+
     private LemurQuestion(
             String question,
             Optional<LemurQuestionContext> context,
             Optional<String> answerFormat,
-            Optional<List<String>> answerOptions) {
+            Optional<List<String>> answerOptions,
+            Map<String, Object> additionalProperties) {
         this.question = question;
         this.context = context;
         this.answerFormat = answerFormat;
         this.answerOptions = answerOptions;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -72,6 +80,11 @@ public final class LemurQuestion {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurQuestion && equalTo((LemurQuestion) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LemurQuestion other) {
@@ -126,6 +139,9 @@ public final class LemurQuestion {
         private Optional<String> answerFormat = Optional.empty();
 
         private Optional<LemurQuestionContext> context = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -202,7 +218,7 @@ public final class LemurQuestion {
 
         @Override
         public LemurQuestion build() {
-            return new LemurQuestion(question, context, answerFormat, answerOptions);
+            return new LemurQuestion(question, context, answerFormat, answerOptions, additionalProperties);
         }
     }
 }

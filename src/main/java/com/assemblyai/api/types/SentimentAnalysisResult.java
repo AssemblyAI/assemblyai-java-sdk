@@ -4,12 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,14 +32,23 @@ public final class SentimentAnalysisResult {
 
     private final Optional<String> speaker;
 
+    private final Map<String, Object> additionalProperties;
+
     private SentimentAnalysisResult(
-            String text, int start, int end, Sentiment sentiment, double confidence, Optional<String> speaker) {
+            String text,
+            int start,
+            int end,
+            Sentiment sentiment,
+            double confidence,
+            Optional<String> speaker,
+            Map<String, Object> additionalProperties) {
         this.text = text;
         this.start = start;
         this.end = end;
         this.sentiment = sentiment;
         this.confidence = confidence;
         this.speaker = speaker;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -90,6 +103,11 @@ public final class SentimentAnalysisResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SentimentAnalysisResult && equalTo((SentimentAnalysisResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SentimentAnalysisResult other) {
@@ -159,6 +177,9 @@ public final class SentimentAnalysisResult {
         private double confidence;
 
         private Optional<String> speaker = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -247,7 +268,7 @@ public final class SentimentAnalysisResult {
 
         @Override
         public SentimentAnalysisResult build() {
-            return new SentimentAnalysisResult(text, start, end, sentiment, confidence, speaker);
+            return new SentimentAnalysisResult(text, start, end, sentiment, confidence, speaker, additionalProperties);
         }
     }
 }

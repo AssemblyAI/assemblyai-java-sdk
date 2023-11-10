@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,13 @@ public final class SeverityScoreSummary {
 
     private final double high;
 
-    private SeverityScoreSummary(double low, double medium, double high) {
+    private final Map<String, Object> additionalProperties;
+
+    private SeverityScoreSummary(double low, double medium, double high, Map<String, Object> additionalProperties) {
         this.low = low;
         this.medium = medium;
         this.high = high;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("low")
@@ -45,6 +52,11 @@ public final class SeverityScoreSummary {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SeverityScoreSummary && equalTo((SeverityScoreSummary) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SeverityScoreSummary other) {
@@ -91,6 +103,9 @@ public final class SeverityScoreSummary {
 
         private double high;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -124,7 +139,7 @@ public final class SeverityScoreSummary {
 
         @Override
         public SeverityScoreSummary build() {
-            return new SeverityScoreSummary(low, medium, high);
+            return new SeverityScoreSummary(low, medium, high, additionalProperties);
         }
     }
 }

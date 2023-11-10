@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,11 @@ import java.util.Objects;
 public final class AudioData {
     private final String audioData;
 
-    private AudioData(String audioData) {
+    private final Map<String, Object> additionalProperties;
+
+    private AudioData(String audioData, Map<String, Object> additionalProperties) {
         this.audioData = audioData;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -32,6 +39,11 @@ public final class AudioData {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AudioData && equalTo((AudioData) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(AudioData other) {
@@ -66,6 +78,9 @@ public final class AudioData {
     public static final class Builder implements AudioDataStage, _FinalStage {
         private String audioData;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -87,7 +102,7 @@ public final class AudioData {
 
         @Override
         public AudioData build() {
-            return new AudioData(audioData);
+            return new AudioData(audioData, additionalProperties);
         }
     }
 }

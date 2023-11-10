@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,12 @@ public final class RedactedAudioResponse {
 
     private final String redactedAudioUrl;
 
-    private RedactedAudioResponse(String status, String redactedAudioUrl) {
+    private final Map<String, Object> additionalProperties;
+
+    private RedactedAudioResponse(String status, String redactedAudioUrl, Map<String, Object> additionalProperties) {
         this.status = status;
         this.redactedAudioUrl = redactedAudioUrl;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -43,6 +50,11 @@ public final class RedactedAudioResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RedactedAudioResponse && equalTo((RedactedAudioResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RedactedAudioResponse other) {
@@ -83,6 +95,9 @@ public final class RedactedAudioResponse {
 
         private String redactedAudioUrl;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -116,7 +131,7 @@ public final class RedactedAudioResponse {
 
         @Override
         public RedactedAudioResponse build() {
-            return new RedactedAudioResponse(status, redactedAudioUrl);
+            return new RedactedAudioResponse(status, redactedAudioUrl, additionalProperties);
         }
     }
 }

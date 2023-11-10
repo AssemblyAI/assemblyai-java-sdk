@@ -4,12 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,9 +24,12 @@ public final class Error {
 
     private final Optional<String> status;
 
-    private Error(String error, Optional<String> status) {
+    private final Map<String, Object> additionalProperties;
+
+    private Error(String error, Optional<String> status, Map<String, Object> additionalProperties) {
         this.error = error;
         this.status = status;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -42,6 +49,11 @@ public final class Error {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Error && equalTo((Error) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Error other) {
@@ -82,6 +94,9 @@ public final class Error {
 
         private Optional<String> status = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -117,7 +132,7 @@ public final class Error {
 
         @Override
         public Error build() {
-            return new Error(error, status);
+            return new Error(error, status, additionalProperties);
         }
     }
 }

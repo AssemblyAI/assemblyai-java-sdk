@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -27,17 +31,21 @@ public final class ContentSafetyLabelResult {
 
     private final Timestamp timestamp;
 
+    private final Map<String, Object> additionalProperties;
+
     private ContentSafetyLabelResult(
             String text,
             List<ContentSafetyLabel> labels,
             int sentencesIdxStart,
             int sentencesIdxEnd,
-            Timestamp timestamp) {
+            Timestamp timestamp,
+            Map<String, Object> additionalProperties) {
         this.text = text;
         this.labels = labels;
         this.sentencesIdxStart = sentencesIdxStart;
         this.sentencesIdxEnd = sentencesIdxEnd;
         this.timestamp = timestamp;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -84,6 +92,11 @@ public final class ContentSafetyLabelResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ContentSafetyLabelResult && equalTo((ContentSafetyLabelResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ContentSafetyLabelResult other) {
@@ -148,6 +161,9 @@ public final class ContentSafetyLabelResult {
         private Timestamp timestamp;
 
         private List<ContentSafetyLabel> labels = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -235,7 +251,8 @@ public final class ContentSafetyLabelResult {
 
         @Override
         public ContentSafetyLabelResult build() {
-            return new ContentSafetyLabelResult(text, labels, sentencesIdxStart, sentencesIdxEnd, timestamp);
+            return new ContentSafetyLabelResult(
+                    text, labels, sentencesIdxStart, sentencesIdxEnd, timestamp, additionalProperties);
         }
     }
 }

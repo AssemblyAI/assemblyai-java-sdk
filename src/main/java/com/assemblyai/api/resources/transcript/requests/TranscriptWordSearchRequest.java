@@ -4,12 +4,16 @@
 package com.assemblyai.api.resources.transcript.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,8 +22,11 @@ import java.util.Optional;
 public final class TranscriptWordSearchRequest {
     private final Optional<String> words;
 
-    private TranscriptWordSearchRequest(Optional<String> words) {
+    private final Map<String, Object> additionalProperties;
+
+    private TranscriptWordSearchRequest(Optional<String> words, Map<String, Object> additionalProperties) {
         this.words = words;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -34,6 +41,11 @@ public final class TranscriptWordSearchRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptWordSearchRequest && equalTo((TranscriptWordSearchRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptWordSearchRequest other) {
@@ -58,6 +70,9 @@ public final class TranscriptWordSearchRequest {
     public static final class Builder {
         private Optional<String> words = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         public Builder from(TranscriptWordSearchRequest other) {
@@ -77,7 +92,7 @@ public final class TranscriptWordSearchRequest {
         }
 
         public TranscriptWordSearchRequest build() {
-            return new TranscriptWordSearchRequest(words);
+            return new TranscriptWordSearchRequest(words, additionalProperties);
         }
     }
 }

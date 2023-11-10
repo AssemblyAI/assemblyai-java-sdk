@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,11 @@ import java.util.Objects;
 public final class RealtimeTemporaryTokenResponse {
     private final String token;
 
-    private RealtimeTemporaryTokenResponse(String token) {
+    private final Map<String, Object> additionalProperties;
+
+    private RealtimeTemporaryTokenResponse(String token, Map<String, Object> additionalProperties) {
         this.token = token;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -32,6 +39,11 @@ public final class RealtimeTemporaryTokenResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeTemporaryTokenResponse && equalTo((RealtimeTemporaryTokenResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RealtimeTemporaryTokenResponse other) {
@@ -66,6 +78,9 @@ public final class RealtimeTemporaryTokenResponse {
     public static final class Builder implements TokenStage, _FinalStage {
         private String token;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -87,7 +102,7 @@ public final class RealtimeTemporaryTokenResponse {
 
         @Override
         public RealtimeTemporaryTokenResponse build() {
-            return new RealtimeTemporaryTokenResponse(token);
+            return new RealtimeTemporaryTokenResponse(token, additionalProperties);
         }
     }
 }

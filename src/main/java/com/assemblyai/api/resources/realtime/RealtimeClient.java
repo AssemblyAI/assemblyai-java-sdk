@@ -27,13 +27,6 @@ public class RealtimeClient {
     /**
      * Create a temporary authentication token for real-time transcription
      */
-    public RealtimeTemporaryTokenResponse createTemporaryToken(CreateRealtimeTemporaryTokenParameters request) {
-        return createTemporaryToken(request, null);
-    }
-
-    /**
-     * Create a temporary authentication token for real-time transcription
-     */
     public RealtimeTemporaryTokenResponse createTemporaryToken(
             CreateRealtimeTemporaryTokenParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -66,5 +59,12 @@ public class RealtimeClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Create a temporary authentication token for real-time transcription
+     */
+    public RealtimeTemporaryTokenResponse createTemporaryToken(CreateRealtimeTemporaryTokenParameters request) {
+        return createTemporaryToken(request, null);
     }
 }

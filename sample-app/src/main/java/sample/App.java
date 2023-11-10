@@ -5,9 +5,13 @@ import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.Transcriber;
 import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
 import com.assemblyai.api.resources.transcript.requests.TranscriptWordSearchRequest;
+import com.assemblyai.api.types.ParagraphsResponse;
+import com.assemblyai.api.types.SentencesResponse;
 import com.assemblyai.api.types.SubtitleFormat;
 import com.assemblyai.api.types.Transcript;
+import com.assemblyai.api.types.TranscriptList;
 import com.assemblyai.api.types.UploadedFile;
+import com.assemblyai.api.types.WordSearchResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,19 +32,19 @@ public final class App {
                 transcriber.transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3", true);
         System.out.println(transcript);
 
-        var sentences = aai.transcript().getSentences(transcript.getId());
+        SentencesResponse sentences = aai.transcript().getSentences(transcript.getId());
         System.out.println("Get transcript sentences. " + sentences);
 
-        var paragraphs = aai.transcript().getParagraphs(transcript.getId());
+        ParagraphsResponse paragraphs = aai.transcript().getParagraphs(transcript.getId());
         System.out.println("Get transcript paragraphs. " + paragraphs);
 
-        var srt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.SRT);
+        String srt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.SRT);
         System.out.println("Get transcript srt. " + srt);
 
-        var vtt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
+        String vtt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
         System.out.println("Get transcript vtt. " + vtt);
 
-        var search = aai.transcript().wordSearch(transcript.getId(), TranscriptWordSearchRequest.builder()
+        WordSearchResponse search = aai.transcript().wordSearch(transcript.getId(), TranscriptWordSearchRequest.builder()
                 .words("NBC")
                 .build());
         System.out.println("Search transcript. " + search);
@@ -60,7 +64,7 @@ public final class App {
         transcript = aai.transcript().get(transcript.getId());
         System.out.println("Got transcript. " + transcript);
 
-        var transcripts = aai.transcript().list();
+        TranscriptList transcripts = aai.transcript().list();
         System.out.println("List transcript. " + transcripts);
 
         RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()

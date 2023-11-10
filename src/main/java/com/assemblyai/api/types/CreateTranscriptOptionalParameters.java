@@ -4,13 +4,17 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -85,6 +89,8 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
 
     private final Optional<List<String>> topics;
 
+    private final Map<String, Object> additionalProperties;
+
     private CreateTranscriptOptionalParameters(
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
@@ -119,7 +125,8 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
             Optional<SummaryModel> summaryModel,
             Optional<SummaryType> summaryType,
             Optional<Boolean> customTopics,
-            Optional<List<String>> topics) {
+            Optional<List<String>> topics,
+            Map<String, Object> additionalProperties) {
         this.languageCode = languageCode;
         this.punctuate = punctuate;
         this.formatText = formatText;
@@ -154,6 +161,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
         this.summaryType = summaryType;
         this.customTopics = customTopics;
         this.topics = topics;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -471,6 +479,11 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
                 && equalTo((CreateTranscriptOptionalParameters) other);
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
     private boolean equalTo(CreateTranscriptOptionalParameters other) {
         return languageCode.equals(other.languageCode)
                 && punctuate.equals(other.punctuate)
@@ -625,6 +638,9 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
         private Optional<Boolean> customTopics = Optional.empty();
 
         private Optional<List<String>> topics = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -1075,7 +1091,8 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
                     summaryModel,
                     summaryType,
                     customTopics,
-                    topics);
+                    topics,
+                    additionalProperties);
         }
     }
 }
