@@ -20,6 +20,14 @@ public final class Transcriber {
 
     /**
      * Transcribes an audio file whose location can be specified via a URL.
+     * Polls until transcription is done.
+     */
+    public Transcript transcribe(String url) {
+        return transcribe(url, CreateTranscriptOptionalParameters.builder().build(), true);
+    }
+
+    /**
+     * Transcribes an audio file whose location can be specified via a URL.
      */
     public Transcript transcribe(String url, boolean poll) {
         return transcribe(url, CreateTranscriptOptionalParameters.builder().build(), poll);
@@ -54,6 +62,14 @@ public final class Transcriber {
             return awaitCompletion(transcriptResponse.getId());
         }
         return transcriptResponse;
+    }
+
+    /**
+     * Transcribes an audio file whose location can be specified via a filepath.
+     * Polls until transcription is done.
+     */
+    public Transcript transcribe(File data) throws IOException {
+        return transcribe(data, CreateTranscriptOptionalParameters.builder().build(), true);
     }
 
     /**
