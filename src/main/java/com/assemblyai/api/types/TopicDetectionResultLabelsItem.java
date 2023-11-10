@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,12 @@ public final class TopicDetectionResultLabelsItem {
 
     private final String label;
 
-    private TopicDetectionResultLabelsItem(double relevance, String label) {
+    private final Map<String, Object> additionalProperties;
+
+    private TopicDetectionResultLabelsItem(double relevance, String label, Map<String, Object> additionalProperties) {
         this.relevance = relevance;
         this.label = label;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -43,6 +50,11 @@ public final class TopicDetectionResultLabelsItem {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TopicDetectionResultLabelsItem && equalTo((TopicDetectionResultLabelsItem) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TopicDetectionResultLabelsItem other) {
@@ -83,6 +95,9 @@ public final class TopicDetectionResultLabelsItem {
 
         private String label;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -116,7 +131,7 @@ public final class TopicDetectionResultLabelsItem {
 
         @Override
         public TopicDetectionResultLabelsItem build() {
-            return new TopicDetectionResultLabelsItem(relevance, label);
+            return new TopicDetectionResultLabelsItem(relevance, label, additionalProperties);
         }
     }
 }

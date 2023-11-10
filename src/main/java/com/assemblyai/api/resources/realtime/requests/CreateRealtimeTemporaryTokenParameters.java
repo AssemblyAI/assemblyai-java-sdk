@@ -4,11 +4,15 @@
 package com.assemblyai.api.resources.realtime.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,11 @@ import java.util.Objects;
 public final class CreateRealtimeTemporaryTokenParameters {
     private final int expiresIn;
 
-    private CreateRealtimeTemporaryTokenParameters(int expiresIn) {
+    private final Map<String, Object> additionalProperties;
+
+    private CreateRealtimeTemporaryTokenParameters(int expiresIn, Map<String, Object> additionalProperties) {
         this.expiresIn = expiresIn;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -33,6 +40,11 @@ public final class CreateRealtimeTemporaryTokenParameters {
         if (this == other) return true;
         return other instanceof CreateRealtimeTemporaryTokenParameters
                 && equalTo((CreateRealtimeTemporaryTokenParameters) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(CreateRealtimeTemporaryTokenParameters other) {
@@ -67,6 +79,9 @@ public final class CreateRealtimeTemporaryTokenParameters {
     public static final class Builder implements ExpiresInStage, _FinalStage {
         private int expiresIn;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -88,7 +103,7 @@ public final class CreateRealtimeTemporaryTokenParameters {
 
         @Override
         public CreateRealtimeTemporaryTokenParameters build() {
-            return new CreateRealtimeTemporaryTokenParameters(expiresIn);
+            return new CreateRealtimeTemporaryTokenParameters(expiresIn, additionalProperties);
         }
     }
 }

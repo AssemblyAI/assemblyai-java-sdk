@@ -4,12 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,12 +30,21 @@ public final class PageDetails {
 
     private final Optional<String> nextUrl;
 
-    private PageDetails(int limit, int resultCount, String currentUrl, String prevUrl, Optional<String> nextUrl) {
+    private final Map<String, Object> additionalProperties;
+
+    private PageDetails(
+            int limit,
+            int resultCount,
+            String currentUrl,
+            String prevUrl,
+            Optional<String> nextUrl,
+            Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.resultCount = resultCount;
         this.currentUrl = currentUrl;
         this.prevUrl = prevUrl;
         this.nextUrl = nextUrl;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("limit")
@@ -63,6 +76,11 @@ public final class PageDetails {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PageDetails && equalTo((PageDetails) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(PageDetails other) {
@@ -126,6 +144,9 @@ public final class PageDetails {
 
         private Optional<String> nextUrl = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -181,7 +202,7 @@ public final class PageDetails {
 
         @Override
         public PageDetails build() {
-            return new PageDetails(limit, resultCount, currentUrl, prevUrl, nextUrl);
+            return new PageDetails(limit, resultCount, currentUrl, prevUrl, nextUrl, additionalProperties);
         }
     }
 }

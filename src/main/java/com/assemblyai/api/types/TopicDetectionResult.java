@@ -4,13 +4,17 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,11 +27,17 @@ public final class TopicDetectionResult {
 
     private final Optional<Timestamp> timestamp;
 
+    private final Map<String, Object> additionalProperties;
+
     private TopicDetectionResult(
-            String text, Optional<List<TopicDetectionResultLabelsItem>> labels, Optional<Timestamp> timestamp) {
+            String text,
+            Optional<List<TopicDetectionResultLabelsItem>> labels,
+            Optional<Timestamp> timestamp,
+            Map<String, Object> additionalProperties) {
         this.text = text;
         this.labels = labels;
         this.timestamp = timestamp;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -52,6 +62,11 @@ public final class TopicDetectionResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TopicDetectionResult && equalTo((TopicDetectionResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TopicDetectionResult other) {
@@ -97,6 +112,9 @@ public final class TopicDetectionResult {
         private Optional<Timestamp> timestamp = Optional.empty();
 
         private Optional<List<TopicDetectionResultLabelsItem>> labels = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -147,7 +165,7 @@ public final class TopicDetectionResult {
 
         @Override
         public TopicDetectionResult build() {
-            return new TopicDetectionResult(text, labels, timestamp);
+            return new TopicDetectionResult(text, labels, timestamp, additionalProperties);
         }
     }
 }

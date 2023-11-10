@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -25,11 +29,15 @@ public final class AutoHighlightResult {
 
     private final List<Timestamp> timestamps;
 
-    private AutoHighlightResult(int count, double rank, String text, List<Timestamp> timestamps) {
+    private final Map<String, Object> additionalProperties;
+
+    private AutoHighlightResult(
+            int count, double rank, String text, List<Timestamp> timestamps, Map<String, Object> additionalProperties) {
         this.count = count;
         this.rank = rank;
         this.text = text;
         this.timestamps = timestamps;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -68,6 +76,11 @@ public final class AutoHighlightResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AutoHighlightResult && equalTo((AutoHighlightResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(AutoHighlightResult other) {
@@ -124,6 +137,9 @@ public final class AutoHighlightResult {
         private String text;
 
         private List<Timestamp> timestamps = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -199,7 +215,7 @@ public final class AutoHighlightResult {
 
         @Override
         public AutoHighlightResult build() {
-            return new AutoHighlightResult(count, rank, text, timestamps);
+            return new AutoHighlightResult(count, rank, text, timestamps, additionalProperties);
         }
     }
 }

@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -25,11 +29,19 @@ public final class WordSearchMatch {
 
     private final List<Integer> indexes;
 
-    private WordSearchMatch(String text, int count, List<List<Integer>> timestamps, List<Integer> indexes) {
+    private final Map<String, Object> additionalProperties;
+
+    private WordSearchMatch(
+            String text,
+            int count,
+            List<List<Integer>> timestamps,
+            List<Integer> indexes,
+            Map<String, Object> additionalProperties) {
         this.text = text;
         this.count = count;
         this.timestamps = timestamps;
         this.indexes = indexes;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -68,6 +80,11 @@ public final class WordSearchMatch {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WordSearchMatch && equalTo((WordSearchMatch) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WordSearchMatch other) {
@@ -126,6 +143,9 @@ public final class WordSearchMatch {
         private List<Integer> indexes = new ArrayList<>();
 
         private List<List<Integer>> timestamps = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -218,7 +238,7 @@ public final class WordSearchMatch {
 
         @Override
         public WordSearchMatch build() {
-            return new WordSearchMatch(text, count, timestamps, indexes);
+            return new WordSearchMatch(text, count, timestamps, indexes, additionalProperties);
         }
     }
 }

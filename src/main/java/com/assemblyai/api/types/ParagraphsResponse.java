@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -25,12 +29,19 @@ public final class ParagraphsResponse {
 
     private final List<TranscriptParagraph> paragraphs;
 
+    private final Map<String, Object> additionalProperties;
+
     private ParagraphsResponse(
-            String id, double confidence, double audioDuration, List<TranscriptParagraph> paragraphs) {
+            String id,
+            double confidence,
+            double audioDuration,
+            List<TranscriptParagraph> paragraphs,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.confidence = confidence;
         this.audioDuration = audioDuration;
         this.paragraphs = paragraphs;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
@@ -57,6 +68,11 @@ public final class ParagraphsResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ParagraphsResponse && equalTo((ParagraphsResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ParagraphsResponse other) {
@@ -114,6 +130,9 @@ public final class ParagraphsResponse {
 
         private List<TranscriptParagraph> paragraphs = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -168,7 +187,7 @@ public final class ParagraphsResponse {
 
         @Override
         public ParagraphsResponse build() {
-            return new ParagraphsResponse(id, confidence, audioDuration, paragraphs);
+            return new ParagraphsResponse(id, confidence, audioDuration, paragraphs, additionalProperties);
         }
     }
 }

@@ -4,10 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Map;
 
 public final class SessionTerminated {
-    private SessionTerminated() {}
+    private final Map<String, Object> additionalProperties;
+
+    private SessionTerminated(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
     @JsonProperty("message_type")
     public String getMessageType() {
@@ -18,6 +24,11 @@ public final class SessionTerminated {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SessionTerminated;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     @Override

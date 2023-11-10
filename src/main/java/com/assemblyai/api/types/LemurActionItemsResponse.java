@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,12 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
 
     private final String response;
 
-    private LemurActionItemsResponse(String requestId, String response) {
+    private final Map<String, Object> additionalProperties;
+
+    private LemurActionItemsResponse(String requestId, String response, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
         this.response = response;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -44,6 +51,11 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurActionItemsResponse && equalTo((LemurActionItemsResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LemurActionItemsResponse other) {
@@ -84,6 +96,9 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
 
         private String response;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -117,7 +132,7 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
 
         @Override
         public LemurActionItemsResponse build() {
-            return new LemurActionItemsResponse(requestId, response);
+            return new LemurActionItemsResponse(requestId, response, additionalProperties);
         }
     }
 }

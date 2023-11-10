@@ -4,12 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,19 +32,23 @@ public final class TranscriptListParameters {
 
     private final Optional<Boolean> throttledOnly;
 
+    private final Map<String, Object> additionalProperties;
+
     private TranscriptListParameters(
             Optional<Integer> limit,
             Optional<TranscriptStatus> status,
             Optional<String> createdOn,
             Optional<String> beforeId,
             Optional<String> afterId,
-            Optional<Boolean> throttledOnly) {
+            Optional<Boolean> throttledOnly,
+            Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.status = status;
         this.createdOn = createdOn;
         this.beforeId = beforeId;
         this.afterId = afterId;
         this.throttledOnly = throttledOnly;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -97,6 +105,11 @@ public final class TranscriptListParameters {
         return other instanceof TranscriptListParameters && equalTo((TranscriptListParameters) other);
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
     private boolean equalTo(TranscriptListParameters other) {
         return limit.equals(other.limit)
                 && status.equals(other.status)
@@ -133,6 +146,9 @@ public final class TranscriptListParameters {
         private Optional<String> afterId = Optional.empty();
 
         private Optional<Boolean> throttledOnly = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -213,7 +229,8 @@ public final class TranscriptListParameters {
         }
 
         public TranscriptListParameters build() {
-            return new TranscriptListParameters(limit, status, createdOn, beforeId, afterId, throttledOnly);
+            return new TranscriptListParameters(
+                    limit, status, createdOn, beforeId, afterId, throttledOnly, additionalProperties);
         }
     }
 }

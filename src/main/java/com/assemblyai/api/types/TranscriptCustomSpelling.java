@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -21,9 +25,12 @@ public final class TranscriptCustomSpelling {
 
     private final String to;
 
-    private TranscriptCustomSpelling(List<String> from, String to) {
+    private final Map<String, Object> additionalProperties;
+
+    private TranscriptCustomSpelling(List<String> from, String to, Map<String, Object> additionalProperties) {
         this.from = from;
         this.to = to;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -46,6 +53,11 @@ public final class TranscriptCustomSpelling {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptCustomSpelling && equalTo((TranscriptCustomSpelling) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptCustomSpelling other) {
@@ -87,6 +99,9 @@ public final class TranscriptCustomSpelling {
         private String to;
 
         private List<String> from = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -138,7 +153,7 @@ public final class TranscriptCustomSpelling {
 
         @Override
         public TranscriptCustomSpelling build() {
-            return new TranscriptCustomSpelling(from, to);
+            return new TranscriptCustomSpelling(from, to, additionalProperties);
         }
     }
 }

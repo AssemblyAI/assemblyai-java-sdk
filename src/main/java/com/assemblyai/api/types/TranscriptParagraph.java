@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -27,12 +31,21 @@ public final class TranscriptParagraph {
 
     private final List<TranscriptWord> words;
 
-    private TranscriptParagraph(String text, int start, int end, double confidence, List<TranscriptWord> words) {
+    private final Map<String, Object> additionalProperties;
+
+    private TranscriptParagraph(
+            String text,
+            int start,
+            int end,
+            double confidence,
+            List<TranscriptWord> words,
+            Map<String, Object> additionalProperties) {
         this.text = text;
         this.start = start;
         this.end = end;
         this.confidence = confidence;
         this.words = words;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("text")
@@ -64,6 +77,11 @@ public final class TranscriptParagraph {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptParagraph && equalTo((TranscriptParagraph) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptParagraph other) {
@@ -128,6 +146,9 @@ public final class TranscriptParagraph {
 
         private List<TranscriptWord> words = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -190,7 +211,7 @@ public final class TranscriptParagraph {
 
         @Override
         public TranscriptParagraph build() {
-            return new TranscriptParagraph(text, start, end, confidence, words);
+            return new TranscriptParagraph(text, start, end, confidence, words, additionalProperties);
         }
     }
 }

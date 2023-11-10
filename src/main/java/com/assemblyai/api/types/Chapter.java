@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -24,12 +28,21 @@ public final class Chapter {
 
     private final int end;
 
-    private Chapter(String gist, String headline, String summary, int start, int end) {
+    private final Map<String, Object> additionalProperties;
+
+    private Chapter(
+            String gist,
+            String headline,
+            String summary,
+            int start,
+            int end,
+            Map<String, Object> additionalProperties) {
         this.gist = gist;
         this.headline = headline;
         this.summary = summary;
         this.start = start;
         this.end = end;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -76,6 +89,11 @@ public final class Chapter {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Chapter && equalTo((Chapter) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Chapter other) {
@@ -138,6 +156,9 @@ public final class Chapter {
         private int start;
 
         private int end;
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -208,7 +229,7 @@ public final class Chapter {
 
         @Override
         public Chapter build() {
-            return new Chapter(gist, headline, summary, start, end);
+            return new Chapter(gist, headline, summary, start, end, additionalProperties);
         }
     }
 }

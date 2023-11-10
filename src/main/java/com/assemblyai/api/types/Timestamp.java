@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,12 @@ public final class Timestamp {
 
     private final int end;
 
-    private Timestamp(int start, int end) {
+    private final Map<String, Object> additionalProperties;
+
+    private Timestamp(int start, int end, Map<String, Object> additionalProperties) {
         this.start = start;
         this.end = end;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -43,6 +50,11 @@ public final class Timestamp {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Timestamp && equalTo((Timestamp) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Timestamp other) {
@@ -83,6 +95,9 @@ public final class Timestamp {
 
         private int end;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -116,7 +131,7 @@ public final class Timestamp {
 
         @Override
         public Timestamp build() {
-            return new Timestamp(start, end);
+            return new Timestamp(start, end, additionalProperties);
         }
     }
 }

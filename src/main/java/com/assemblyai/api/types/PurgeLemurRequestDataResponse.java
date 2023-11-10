@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,14 @@ public final class PurgeLemurRequestDataResponse {
 
     private final boolean deleted;
 
-    private PurgeLemurRequestDataResponse(String requestId, String requestIdToPurge, boolean deleted) {
+    private final Map<String, Object> additionalProperties;
+
+    private PurgeLemurRequestDataResponse(
+            String requestId, String requestIdToPurge, boolean deleted, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
         this.requestIdToPurge = requestIdToPurge;
         this.deleted = deleted;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -54,6 +62,11 @@ public final class PurgeLemurRequestDataResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PurgeLemurRequestDataResponse && equalTo((PurgeLemurRequestDataResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(PurgeLemurRequestDataResponse other) {
@@ -102,6 +115,9 @@ public final class PurgeLemurRequestDataResponse {
 
         private boolean deleted;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -147,7 +163,7 @@ public final class PurgeLemurRequestDataResponse {
 
         @Override
         public PurgeLemurRequestDataResponse build() {
-            return new PurgeLemurRequestDataResponse(requestId, requestIdToPurge, deleted);
+            return new PurgeLemurRequestDataResponse(requestId, requestIdToPurge, deleted, additionalProperties);
         }
     }
 }

@@ -4,12 +4,16 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,12 +30,21 @@ public final class TranscriptWord {
 
     private final Optional<String> speaker;
 
-    private TranscriptWord(double confidence, int start, int end, String text, Optional<String> speaker) {
+    private final Map<String, Object> additionalProperties;
+
+    private TranscriptWord(
+            double confidence,
+            int start,
+            int end,
+            String text,
+            Optional<String> speaker,
+            Map<String, Object> additionalProperties) {
         this.confidence = confidence;
         this.start = start;
         this.end = end;
         this.text = text;
         this.speaker = speaker;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("confidence")
@@ -63,6 +76,11 @@ public final class TranscriptWord {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptWord && equalTo((TranscriptWord) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptWord other) {
@@ -125,6 +143,9 @@ public final class TranscriptWord {
 
         private Optional<String> speaker = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -180,7 +201,7 @@ public final class TranscriptWord {
 
         @Override
         public TranscriptWord build() {
-            return new TranscriptWord(confidence, start, end, text, speaker);
+            return new TranscriptWord(confidence, start, end, text, speaker, additionalProperties);
         }
     }
 }

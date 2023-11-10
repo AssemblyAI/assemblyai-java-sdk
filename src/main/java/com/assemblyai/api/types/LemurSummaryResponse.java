@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,12 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
 
     private final String response;
 
-    private LemurSummaryResponse(String requestId, String response) {
+    private final Map<String, Object> additionalProperties;
+
+    private LemurSummaryResponse(String requestId, String response, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
         this.response = response;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -44,6 +51,11 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurSummaryResponse && equalTo((LemurSummaryResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LemurSummaryResponse other) {
@@ -84,6 +96,9 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
 
         private String response;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -117,7 +132,7 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
 
         @Override
         public LemurSummaryResponse build() {
-            return new LemurSummaryResponse(requestId, response);
+            return new LemurSummaryResponse(requestId, response, additionalProperties);
         }
     }
 }

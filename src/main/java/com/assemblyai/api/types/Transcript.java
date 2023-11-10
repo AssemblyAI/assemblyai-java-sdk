@@ -4,13 +4,17 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -127,6 +131,8 @@ public final class Transcript {
 
     private final Optional<String> error;
 
+    private final Map<String, Object> additionalProperties;
+
     private Transcript(
             String id,
             String languageModel,
@@ -182,7 +188,8 @@ public final class Transcript {
             Optional<List<Entity>> entities,
             Optional<Double> speechThreshold,
             Optional<Boolean> throttled,
-            Optional<String> error) {
+            Optional<String> error,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.languageModel = languageModel;
         this.acousticModel = acousticModel;
@@ -238,6 +245,7 @@ public final class Transcript {
         this.speechThreshold = speechThreshold;
         this.throttled = throttled;
         this.error = error;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -698,6 +706,11 @@ public final class Transcript {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Transcript && equalTo((Transcript) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Transcript other) {
@@ -1174,6 +1187,9 @@ public final class Transcript {
         private Optional<String> text = Optional.empty();
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -2189,7 +2205,8 @@ public final class Transcript {
                     entities,
                     speechThreshold,
                     throttled,
-                    error);
+                    error,
+                    additionalProperties);
         }
     }
 }

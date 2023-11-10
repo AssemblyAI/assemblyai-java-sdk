@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -21,9 +25,13 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
 
     private final List<LemurQuestionAnswer> response;
 
-    private LemurQuestionAnswerResponse(String requestId, List<LemurQuestionAnswer> response) {
+    private final Map<String, Object> additionalProperties;
+
+    private LemurQuestionAnswerResponse(
+            String requestId, List<LemurQuestionAnswer> response, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
         this.response = response;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -47,6 +55,11 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurQuestionAnswerResponse && equalTo((LemurQuestionAnswerResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LemurQuestionAnswerResponse other) {
@@ -88,6 +101,9 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
         private String requestId;
 
         private List<LemurQuestionAnswer> response = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -139,7 +155,7 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
 
         @Override
         public LemurQuestionAnswerResponse build() {
-            return new LemurQuestionAnswerResponse(requestId, response);
+            return new LemurQuestionAnswerResponse(requestId, response, additionalProperties);
         }
     }
 }

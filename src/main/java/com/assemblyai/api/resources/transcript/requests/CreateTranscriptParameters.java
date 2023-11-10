@@ -12,13 +12,17 @@ import com.assemblyai.api.types.SummaryType;
 import com.assemblyai.api.types.TranscriptBoostParam;
 import com.assemblyai.api.types.TranscriptCustomSpelling;
 import com.assemblyai.api.types.TranscriptLanguageCode;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -95,6 +99,8 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
 
     private final String audioUrl;
 
+    private final Map<String, Object> additionalProperties;
+
     private CreateTranscriptParameters(
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
@@ -130,7 +136,8 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
             Optional<SummaryType> summaryType,
             Optional<Boolean> customTopics,
             Optional<List<String>> topics,
-            String audioUrl) {
+            String audioUrl,
+            Map<String, Object> additionalProperties) {
         this.languageCode = languageCode;
         this.punctuate = punctuate;
         this.formatText = formatText;
@@ -166,6 +173,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         this.customTopics = customTopics;
         this.topics = topics;
         this.audioUrl = audioUrl;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -490,6 +498,11 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         return other instanceof CreateTranscriptParameters && equalTo((CreateTranscriptParameters) other);
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
     private boolean equalTo(CreateTranscriptParameters other) {
         return languageCode.equals(other.languageCode)
                 && punctuate.equals(other.punctuate)
@@ -794,6 +807,9 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         private Optional<Boolean> punctuate = Optional.empty();
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -1465,7 +1481,8 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
                     summaryType,
                     customTopics,
                     topics,
-                    audioUrl);
+                    audioUrl,
+                    additionalProperties);
         }
     }
 }

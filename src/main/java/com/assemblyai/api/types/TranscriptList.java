@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -21,9 +25,13 @@ public final class TranscriptList {
 
     private final List<TranscriptListItem> transcripts;
 
-    private TranscriptList(PageDetails pageDetails, List<TranscriptListItem> transcripts) {
+    private final Map<String, Object> additionalProperties;
+
+    private TranscriptList(
+            PageDetails pageDetails, List<TranscriptListItem> transcripts, Map<String, Object> additionalProperties) {
         this.pageDetails = pageDetails;
         this.transcripts = transcripts;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("page_details")
@@ -40,6 +48,11 @@ public final class TranscriptList {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptList && equalTo((TranscriptList) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TranscriptList other) {
@@ -82,6 +95,9 @@ public final class TranscriptList {
 
         private List<TranscriptListItem> transcripts = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -120,7 +136,7 @@ public final class TranscriptList {
 
         @Override
         public TranscriptList build() {
-            return new TranscriptList(pageDetails, transcripts);
+            return new TranscriptList(pageDetails, transcripts, additionalProperties);
         }
     }
 }

@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,14 @@ public final class ContentSafetyLabel {
 
     private final double severity;
 
-    private ContentSafetyLabel(String label, double confidence, double severity) {
+    private final Map<String, Object> additionalProperties;
+
+    private ContentSafetyLabel(
+            String label, double confidence, double severity, Map<String, Object> additionalProperties) {
         this.label = label;
         this.confidence = confidence;
         this.severity = severity;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -54,6 +62,11 @@ public final class ContentSafetyLabel {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ContentSafetyLabel && equalTo((ContentSafetyLabel) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ContentSafetyLabel other) {
@@ -100,6 +113,9 @@ public final class ContentSafetyLabel {
 
         private double severity;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -145,7 +161,7 @@ public final class ContentSafetyLabel {
 
         @Override
         public ContentSafetyLabel build() {
-            return new ContentSafetyLabel(label, confidence, severity);
+            return new ContentSafetyLabel(label, confidence, severity, additionalProperties);
         }
     }
 }

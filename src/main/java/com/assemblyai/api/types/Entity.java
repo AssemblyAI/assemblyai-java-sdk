@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,11 +26,14 @@ public final class Entity {
 
     private final int end;
 
-    private Entity(EntityType entityType, String text, int start, int end) {
+    private final Map<String, Object> additionalProperties;
+
+    private Entity(EntityType entityType, String text, int start, int end, Map<String, Object> additionalProperties) {
         this.entityType = entityType;
         this.text = text;
         this.start = start;
         this.end = end;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -65,6 +72,11 @@ public final class Entity {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Entity && equalTo((Entity) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Entity other) {
@@ -119,6 +131,9 @@ public final class Entity {
         private int start;
 
         private int end;
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -177,7 +192,7 @@ public final class Entity {
 
         @Override
         public Entity build() {
-            return new Entity(entityType, text, start, end);
+            return new Entity(entityType, text, start, end, additionalProperties);
         }
     }
 }

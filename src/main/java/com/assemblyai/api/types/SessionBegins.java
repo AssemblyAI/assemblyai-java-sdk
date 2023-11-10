@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,12 @@ public final class SessionBegins {
 
     private final String expiresAt;
 
-    private SessionBegins(String sessionId, String expiresAt) {
+    private final Map<String, Object> additionalProperties;
+
+    private SessionBegins(String sessionId, String expiresAt, Map<String, Object> additionalProperties) {
         this.sessionId = sessionId;
         this.expiresAt = expiresAt;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("message_type")
@@ -48,6 +55,11 @@ public final class SessionBegins {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SessionBegins && equalTo((SessionBegins) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SessionBegins other) {
@@ -88,6 +100,9 @@ public final class SessionBegins {
 
         private String expiresAt;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -121,7 +136,7 @@ public final class SessionBegins {
 
         @Override
         public SessionBegins build() {
-            return new SessionBegins(sessionId, expiresAt);
+            return new SessionBegins(sessionId, expiresAt, additionalProperties);
         }
     }
 }

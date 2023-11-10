@@ -4,6 +4,8 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -29,14 +33,23 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
 
     private final String created;
 
+    private final Map<String, Object> additionalProperties;
+
     private RealtimeBaseTranscript(
-            int audioStart, int audioEnd, double confidence, String text, List<Word> words, String created) {
+            int audioStart,
+            int audioEnd,
+            double confidence,
+            String text,
+            List<Word> words,
+            String created,
+            Map<String, Object> additionalProperties) {
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
         this.text = text;
         this.words = words;
         this.created = created;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -97,6 +110,11 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeBaseTranscript && equalTo((RealtimeBaseTranscript) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RealtimeBaseTranscript other) {
@@ -168,6 +186,9 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
         private String created;
 
         private List<Word> words = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -267,7 +288,8 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
 
         @Override
         public RealtimeBaseTranscript build() {
-            return new RealtimeBaseTranscript(audioStart, audioEnd, confidence, text, words, created);
+            return new RealtimeBaseTranscript(
+                    audioStart, audioEnd, confidence, text, words, created, additionalProperties);
         }
     }
 }

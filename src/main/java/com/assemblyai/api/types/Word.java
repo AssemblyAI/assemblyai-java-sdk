@@ -4,11 +4,15 @@
 package com.assemblyai.api.types;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,11 +26,14 @@ public final class Word {
 
     private final String text;
 
-    private Word(int start, int end, double confidence, String text) {
+    private final Map<String, Object> additionalProperties;
+
+    private Word(int start, int end, double confidence, String text, Map<String, Object> additionalProperties) {
         this.start = start;
         this.end = end;
         this.confidence = confidence;
         this.text = text;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -65,6 +72,11 @@ public final class Word {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Word && equalTo((Word) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Word other) {
@@ -116,6 +128,9 @@ public final class Word {
         private double confidence;
 
         private String text;
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -174,7 +189,7 @@ public final class Word {
 
         @Override
         public Word build() {
-            return new Word(start, end, confidence, text);
+            return new Word(start, end, confidence, text, additionalProperties);
         }
     }
 }
