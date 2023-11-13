@@ -28,9 +28,10 @@ public final class Transcriber {
 
     /**
      * Transcribes an audio file whose location can be specified via a URL.
+     * Polls until transcription is done.
      */
-    public Transcript transcribe(String url, boolean poll) {
-        return transcribe(url, CreateTranscriptOptionalParameters.builder().build(), poll);
+    public Transcript transcribe(String url, CreateTranscriptOptionalParameters transcriptRequest) {
+        return transcribe(url, transcriptRequest, true);
     }
 
     /**
@@ -39,14 +40,31 @@ public final class Transcriber {
     public Transcript transcribe(String url, CreateTranscriptOptionalParameters transcriptRequest, boolean poll) {
         CreateTranscriptParameters createTranscript = CreateTranscriptParameters.builder()
                 .audioUrl(url)
-                .topics(transcriptRequest.getTopics())
-                .customTopics(transcriptRequest.getCustomTopics())
-                .summaryType(transcriptRequest.getSummaryType())
-                .summaryModel(transcriptRequest.getSummaryModel())
-                .summarization(transcriptRequest.getSummarization())
-                .speechThreshold(transcriptRequest.getSpeechThreshold())
-                .entityDetection(transcriptRequest.getEntityDetection())
-                .autoChapters(transcriptRequest.getAutoChapters())
+                .languageCode(transcriptRequest.getLanguageCode())
+                .punctuate(transcriptRequest.getPunctuate())
+                .formatText(transcriptRequest.getFormatText())
+                .dualChannel(transcriptRequest.getDualChannel())
+                .webhookUrl(transcriptRequest.getWebhookUrl())
+                .webhookAuthHeaderName(transcriptRequest.getWebhookAuthHeaderName())
+                .webhookAuthHeaderValue(transcriptRequest.getWebhookAuthHeaderValue())
+                .autoHighlights(transcriptRequest.getAutoHighlights())
+                .audioStartFrom(transcriptRequest.getAudioStartFrom())
+                .audioEndAt(transcriptRequest.getAudioEndAt())
+                .wordBoost(transcriptRequest.getWordBoost())
+                .boostParam(transcriptRequest.getBoostParam())
+                .filterProfanity(transcriptRequest.getFilterProfanity())
+                .redactPii(transcriptRequest.getRedactPii())
+                .redactPiiAudio(transcriptRequest.getRedactPiiAudio())
+                .redactPiiAudioQuality(transcriptRequest.getRedactPiiAudioQuality())
+                .redactPiiPolicies(transcriptRequest.getRedactPiiPolicies())
+                .redactPiiSub(transcriptRequest.getRedactPiiSub())
+                .speakerLabels(transcriptRequest.getSpeakerLabels())
+                .speakersExpected(transcriptRequest.getSpeakersExpected())
+                .contentSafety(transcriptRequest.getContentSafety())
+                .iabCategories(transcriptRequest.getIabCategories())
+                .languageDetection(transcriptRequest.getLanguageDetection())
+                .customSpelling(transcriptRequest.getCustomSpelling())
+                .disfluencies(transcriptRequest.getDisfluencies())
                 .sentimentAnalysis(transcriptRequest.getSentimentAnalysis())
                 .autoChapters(transcriptRequest.getAutoChapters())
                 .entityDetection(transcriptRequest.getEntityDetection())
@@ -74,9 +92,10 @@ public final class Transcriber {
 
     /**
      * Transcribes an audio file whose location can be specified via a filepath.
+     * Polls until transcription is done.
      */
-    public Transcript transcribe(File data, boolean poll) throws IOException {
-        return transcribe(data, CreateTranscriptOptionalParameters.builder().build(), poll);
+    public Transcript transcribe(File data, CreateTranscriptOptionalParameters transcriptRequest) throws IOException {
+        return transcribe(data, transcriptRequest, true);
     }
 
     /**

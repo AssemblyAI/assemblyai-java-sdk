@@ -29,7 +29,7 @@ public final class App {
                 .build();
 
         Transcript transcript =
-                transcriber.transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3", true);
+                transcriber.transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3");
         System.out.println(transcript);
 
         SentencesResponse sentences = aai.transcript().getSentences(transcript.getId());
