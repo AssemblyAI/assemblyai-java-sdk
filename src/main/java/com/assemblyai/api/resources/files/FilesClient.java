@@ -23,7 +23,7 @@ public class FilesClient {
     }
 
     /**
-     * Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.
+     * Upload your media file directly to the AssemblyAI API if it isn't accessible via a URL already.
      */
     public UploadedFile upload(byte[] request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -52,7 +52,7 @@ public class FilesClient {
     }
 
     /**
-     * Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.
+     * Upload your media file directly to the AssemblyAI API if it isn't accessible via a URL already.
      */
     public UploadedFile upload(byte[] request) {
         return upload(request, null);

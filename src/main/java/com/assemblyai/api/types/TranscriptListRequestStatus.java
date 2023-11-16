@@ -11,11 +11,11 @@ public final class TranscriptListRequestStatus {
 
     public static final TranscriptListRequestStatus QUEUED = new TranscriptListRequestStatus(Value.QUEUED, "queued");
 
-    public static final TranscriptListRequestStatus PROCESSING =
-            new TranscriptListRequestStatus(Value.PROCESSING, "processing");
-
     public static final TranscriptListRequestStatus COMPLETED =
             new TranscriptListRequestStatus(Value.COMPLETED, "completed");
+
+    public static final TranscriptListRequestStatus PROCESSING =
+            new TranscriptListRequestStatus(Value.PROCESSING, "processing");
 
     private final Value value;
 
@@ -54,10 +54,10 @@ public final class TranscriptListRequestStatus {
                 return visitor.visitError();
             case QUEUED:
                 return visitor.visitQueued();
-            case PROCESSING:
-                return visitor.visitProcessing();
             case COMPLETED:
                 return visitor.visitCompleted();
+            case PROCESSING:
+                return visitor.visitProcessing();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -71,10 +71,10 @@ public final class TranscriptListRequestStatus {
                 return ERROR;
             case "queued":
                 return QUEUED;
-            case "processing":
-                return PROCESSING;
             case "completed":
                 return COMPLETED;
+            case "processing":
+                return PROCESSING;
             default:
                 return new TranscriptListRequestStatus(Value.UNKNOWN, value);
         }

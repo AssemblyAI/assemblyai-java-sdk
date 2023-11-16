@@ -32,7 +32,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
     }
 
     /**
-     * @return Describes the type of the message.
+     * @return Describes the type of the message
      */
     @JsonProperty("message_type")
     @Override
@@ -41,7 +41,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
     }
 
     /**
-     * @return A boolean value to communicate that you wish to end your real-time session forever.
+     * @return Set to true to end your real-time session forever
      */
     @JsonProperty("terminate_session")
     public boolean getTerminateSession() {
@@ -110,7 +110,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
         }
 
         /**
-         * <p>Describes the type of the message.</p>
+         * <p>Describes the type of the message</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -121,7 +121,7 @@ public final class TerminateSession implements IRealtimeBaseMessage {
         }
 
         /**
-         * <p>A boolean value to communicate that you wish to end your real-time session forever.</p>
+         * <p>Set to true to end your real-time session forever</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

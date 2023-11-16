@@ -28,7 +28,7 @@ public final class CreateRealtimeTemporaryTokenParameters {
     }
 
     /**
-     * @return The amount of time until the token expires in seconds.
+     * @return The amount of time until the token expires in seconds
      */
     @JsonProperty("expires_in")
     public int getExpiresIn() {
@@ -91,7 +91,7 @@ public final class CreateRealtimeTemporaryTokenParameters {
         }
 
         /**
-         * <p>The amount of time until the token expires in seconds.</p>
+         * <p>The amount of time until the token expires in seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
