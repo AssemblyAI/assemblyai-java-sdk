@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurBaseParameters.Builder.class)
 public final class LemurBaseParameters implements ILemurBaseParameters {
-    private final List<String> transcriptIds;
+    private final Optional<List<String>> transcriptIds;
+
+    private final Optional<String> inputText;
 
     private final Optional<LemurBaseParametersContext> context;
 
@@ -35,13 +36,15 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
     private final Map<String, Object> additionalProperties;
 
     private LemurBaseParameters(
-            List<String> transcriptIds,
+            Optional<List<String>> transcriptIds,
+            Optional<String> inputText,
             Optional<LemurBaseParametersContext> context,
             Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
             Map<String, Object> additionalProperties) {
         this.transcriptIds = transcriptIds;
+        this.inputText = inputText;
         this.context = context;
         this.finalModel = finalModel;
         this.maxOutputSize = maxOutputSize;
@@ -50,12 +53,23 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
     }
 
     /**
-     * @return A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.
+     * @return A list of completed transcripts with text. Up to a maximum of 100 files or 100 hours, whichever is lower.
+     * Use either transcript_ids or input_text as input into LeMUR.
      */
     @JsonProperty("transcript_ids")
     @Override
-    public List<String> getTranscriptIds() {
+    public Optional<List<String>> getTranscriptIds() {
         return transcriptIds;
+    }
+
+    /**
+     * @return Custom formatted transcript data. Maximum size is the context limit of the selected model, which defaults to 100000.
+     * Use either transcript_ids or input_text as input into LeMUR.
+     */
+    @JsonProperty("input_text")
+    @Override
+    public Optional<String> getInputText() {
+        return inputText;
     }
 
     /**
@@ -74,7 +88,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
     }
 
     /**
-     * @return Max output size in tokens. Up to 4000 allowed.
+     * @return Max output size in tokens, up to 4000
      */
     @JsonProperty("max_output_size")
     @Override
@@ -106,6 +120,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
     private boolean equalTo(LemurBaseParameters other) {
         return transcriptIds.equals(other.transcriptIds)
+                && inputText.equals(other.inputText)
                 && context.equals(other.context)
                 && finalModel.equals(other.finalModel)
                 && maxOutputSize.equals(other.maxOutputSize)
@@ -114,7 +129,13 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.transcriptIds, this.context, this.finalModel, this.maxOutputSize, this.temperature);
+        return Objects.hash(
+                this.transcriptIds,
+                this.inputText,
+                this.context,
+                this.finalModel,
+                this.maxOutputSize,
+                this.temperature);
     }
 
     @Override
@@ -128,7 +149,9 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<String> transcriptIds = new ArrayList<>();
+        private Optional<List<String>> transcriptIds = Optional.empty();
+
+        private Optional<String> inputText = Optional.empty();
 
         private Optional<LemurBaseParametersContext> context = Optional.empty();
 
@@ -145,6 +168,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
         public Builder from(LemurBaseParameters other) {
             transcriptIds(other.getTranscriptIds());
+            inputText(other.getInputText());
             context(other.getContext());
             finalModel(other.getFinalModel());
             maxOutputSize(other.getMaxOutputSize());
@@ -153,19 +177,24 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
         }
 
         @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
+        public Builder transcriptIds(Optional<List<String>> transcriptIds) {
+            this.transcriptIds = transcriptIds;
+            return this;
+        }
+
         public Builder transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds.clear();
-            this.transcriptIds.addAll(transcriptIds);
+            this.transcriptIds = Optional.of(transcriptIds);
             return this;
         }
 
-        public Builder addTranscriptIds(String transcriptIds) {
-            this.transcriptIds.add(transcriptIds);
+        @JsonSetter(value = "input_text", nulls = Nulls.SKIP)
+        public Builder inputText(Optional<String> inputText) {
+            this.inputText = inputText;
             return this;
         }
 
-        public Builder addAllTranscriptIds(List<String> transcriptIds) {
-            this.transcriptIds.addAll(transcriptIds);
+        public Builder inputText(String inputText) {
+            this.inputText = Optional.of(inputText);
             return this;
         }
 
@@ -215,7 +244,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
         public LemurBaseParameters build() {
             return new LemurBaseParameters(
-                    transcriptIds, context, finalModel, maxOutputSize, temperature, additionalProperties);
+                    transcriptIds, inputText, context, finalModel, maxOutputSize, temperature, additionalProperties);
         }
     }
 }

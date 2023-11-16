@@ -53,7 +53,7 @@ public final class LemurQuestion {
     }
 
     /**
-     * @return Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.
+     * @return Any context about the transcripts you wish to provide. This can be a string or any object.
      */
     @JsonProperty("context")
     public Optional<LemurQuestionContext> getContext() {
@@ -200,7 +200,7 @@ public final class LemurQuestion {
         }
 
         /**
-         * <p>Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.</p>
+         * <p>Any context about the transcripts you wish to provide. This can be a string or any object.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

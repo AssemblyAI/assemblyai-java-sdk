@@ -35,7 +35,7 @@ public final class PurgeLemurRequestDataResponse {
     }
 
     /**
-     * @return The ID of the LeMUR request
+     * @return The ID of the deletion request of the LeMUR request
      */
     @JsonProperty("request_id")
     public String getRequestId() {
@@ -43,7 +43,7 @@ public final class PurgeLemurRequestDataResponse {
     }
 
     /**
-     * @return The ID of the deletion request of the LeMUR request
+     * @return The ID of the LeMUR request to purge the data for
      */
     @JsonProperty("request_id_to_purge")
     public String getRequestIdToPurge() {
@@ -51,7 +51,7 @@ public final class PurgeLemurRequestDataResponse {
     }
 
     /**
-     * @return Whether the request data was deleted.
+     * @return Whether the request data was deleted
      */
     @JsonProperty("deleted")
     public boolean getDeleted() {
@@ -129,7 +129,7 @@ public final class PurgeLemurRequestDataResponse {
         }
 
         /**
-         * <p>The ID of the LeMUR request</p>
+         * <p>The ID of the deletion request of the LeMUR request</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -140,7 +140,7 @@ public final class PurgeLemurRequestDataResponse {
         }
 
         /**
-         * <p>The ID of the deletion request of the LeMUR request</p>
+         * <p>The ID of the LeMUR request to purge the data for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -151,7 +151,7 @@ public final class PurgeLemurRequestDataResponse {
         }
 
         /**
-         * <p>Whether the request data was deleted.</p>
+         * <p>Whether the request data was deleted</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

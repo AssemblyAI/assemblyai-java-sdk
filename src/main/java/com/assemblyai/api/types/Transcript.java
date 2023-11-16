@@ -93,7 +93,7 @@ public final class Transcript {
 
     private final Optional<Boolean> iabCategories;
 
-    private final Optional<TranscriptIabCategoriesResult> iabCategoriesResult;
+    private final Optional<TopicDetectionModelResult> iabCategoriesResult;
 
     private final Optional<Boolean> languageDetection;
 
@@ -170,7 +170,7 @@ public final class Transcript {
             Optional<Boolean> contentSafety,
             Optional<ContentSafetyLabelsResult> contentSafetyLabels,
             Optional<Boolean> iabCategories,
-            Optional<TranscriptIabCategoriesResult> iabCategoriesResult,
+            Optional<TopicDetectionModelResult> iabCategoriesResult,
             Optional<Boolean> languageDetection,
             Optional<List<TranscriptCustomSpelling>> customSpelling,
             Optional<Boolean> autoChapters,
@@ -249,7 +249,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The unique identifier of your transcription
+     * @return The unique identifier of your transcript
      */
     @JsonProperty("id")
     public String getId() {
@@ -257,7 +257,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The language model that was used for the transcription
+     * @return The language model that was used for the transcript
      */
     @JsonProperty("language_model")
     public String getLanguageModel() {
@@ -265,7 +265,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The acoustic model that was used for the transcription
+     * @return The acoustic model that was used for the transcript
      */
     @JsonProperty("acoustic_model")
     public String getAcousticModel() {
@@ -273,7 +273,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The status of your transcription. Possible values are queued, processing, completed, or error.
+     * @return The status of your transcript. Possible values are queued, processing, completed, or error.
      */
     @JsonProperty("status")
     public TranscriptStatus getStatus() {
@@ -341,7 +341,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether Automatic Punctuation was enabled in the transcription request, either true or false.
+     * @return Whether Automatic Punctuation is enabled, either true or false
      */
     @JsonProperty("punctuate")
     public Optional<Boolean> getPunctuate() {
@@ -349,7 +349,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether Text Formatting was enabled in the transcription request, either true or false
+     * @return Whether Text Formatting is enabled, either true or false
      */
     @JsonProperty("format_text")
     public Optional<Boolean> getFormatText() {
@@ -357,7 +357,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual channel transcription</a> was enabled in the transcription request, either true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual channel transcription</a> is enabled, either true or false
      */
     @JsonProperty("dual_channel")
     public Optional<Boolean> getDualChannel() {
@@ -365,7 +365,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The URL to which we send webhooks upon trancription completion, if provided in the transcription request
+     * @return The URL to which we send webhooks upon trancription completion
      */
     @JsonProperty("webhook_url")
     public Optional<String> getWebhookUrl() {
@@ -373,7 +373,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request
+     * @return The status code we received from your server when delivering your webhook, if a webhook URL was provided
      */
     @JsonProperty("webhook_status_code")
     public Optional<Integer> getWebhookStatusCode() {
@@ -381,7 +381,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether webhook authentication details were provided in the transcription request
+     * @return Whether webhook authentication details were provided
      */
     @JsonProperty("webhook_auth")
     public boolean getWebhookAuth() {
@@ -389,7 +389,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The header name which should be sent back with webhook calls, if provided in the transcription request
+     * @return The header name which should be sent back with webhook calls
      */
     @JsonProperty("webhook_auth_header_name")
     public Optional<String> getWebhookAuthHeaderName() {
@@ -397,7 +397,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether speed boost was enabled in the transcription request
+     * @return Whether speed boost is enabled
      */
     @JsonProperty("speed_boost")
     public Optional<Boolean> getSpeedBoost() {
@@ -405,24 +405,20 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether Key Phrases was enabled in the transcription request, either true or false
+     * @return Whether Key Phrases is enabled, either true or false
      */
     @JsonProperty("auto_highlights")
     public boolean getAutoHighlights() {
         return autoHighlights;
     }
 
-    /**
-     * @return An array of results for the Key Phrases model, if it was enabled during the transcription request.
-     * See <a href="https://www.assemblyai.com/docs/Models/key_phrases">Key phrases</a> for more information.
-     */
     @JsonProperty("auto_highlights_result")
     public Optional<AutoHighlightsResult> getAutoHighlightsResult() {
         return autoHighlightsResult;
     }
 
     /**
-     * @return The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request
+     * @return The point in time, in milliseconds, in the file at which the transcription was started
      */
     @JsonProperty("audio_start_from")
     public Optional<Integer> getAudioStartFrom() {
@@ -430,7 +426,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request
+     * @return The point in time, in milliseconds, in the file at which the transcription was terminated
      */
     @JsonProperty("audio_end_at")
     public Optional<Integer> getAudioEndAt() {
@@ -438,7 +434,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The list of custom vocabulary to boost transcription probability for, if provided in the transcription request
+     * @return The list of custom vocabulary to boost transcription probability for
      */
     @JsonProperty("word_boost")
     public Optional<List<String>> getWordBoost() {
@@ -446,7 +442,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The word boost parameter value, if provided in the transcription request
+     * @return The word boost parameter value
      */
     @JsonProperty("boost_param")
     public Optional<String> getBoostParam() {
@@ -454,7 +450,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering">Profanity Filtering</a> was enabled in the transcription request, either true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering">Profanity Filtering</a> is enabled, either true or false
      */
     @JsonProperty("filter_profanity")
     public Optional<Boolean> getFilterProfanity() {
@@ -462,7 +458,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII Redaction</a> was enabled in the transcription request, either true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII Redaction</a> is enabled, either true or false
      */
     @JsonProperty("redact_pii")
     public boolean getRedactPii() {
@@ -470,7 +466,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
+     * @return Whether a redacted version of the audio file was generated,
      * either true or false. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more information.
      */
     @JsonProperty("redact_pii_audio")
@@ -479,7 +475,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The audio quality of the PII-redacted audio file, if enabled in the transcription request.
+     * @return The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
      * See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more information.
      */
     @JsonProperty("redact_pii_audio_quality")
@@ -505,7 +501,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a>, can be true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> is enabled, can be true or false
      */
     @JsonProperty("speaker_labels")
     public Optional<Boolean> getSpeakerLabels() {
@@ -513,7 +509,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.
+     * @return Tell the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.
      */
     @JsonProperty("speakers_expected")
     public Optional<Integer> getSpeakersExpected() {
@@ -521,41 +517,33 @@ public final class Transcript {
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content Moderation</a>, can be true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content Moderation</a> is enabled, can be true or false
      */
     @JsonProperty("content_safety")
     public Optional<Boolean> getContentSafety() {
         return contentSafety;
     }
 
-    /**
-     * @return An array of results for the Content Moderation model, if it was enabled during the transcription request.
-     * See <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content moderation</a> for more information.
-     */
     @JsonProperty("content_safety_labels")
     public Optional<ContentSafetyLabelsResult> getContentSafetyLabels() {
         return contentSafetyLabels;
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a>, can be true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a> is enabled, can be true or false
      */
     @JsonProperty("iab_categories")
     public Optional<Boolean> getIabCategories() {
         return iabCategories;
     }
 
-    /**
-     * @return The result of the Topic Detection model, if it was enabled during the transcription request.
-     * See <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a> for more information.
-     */
     @JsonProperty("iab_categories_result")
-    public Optional<TranscriptIabCategoriesResult> getIabCategoriesResult() {
+    public Optional<TopicDetectionModelResult> getIabCategoriesResult() {
         return iabCategoriesResult;
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false
      */
     @JsonProperty("language_detection")
     public Optional<Boolean> getLanguageDetection() {
@@ -571,7 +559,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/auto_chapters">Auto Chapters</a>, can be true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/auto_chapters">Auto Chapters</a> is enabled, can be true or false
      */
     @JsonProperty("auto_chapters")
     public Optional<Boolean> getAutoChapters() {
@@ -587,7 +575,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request, either true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled, either true or false
      */
     @JsonProperty("summarization")
     public boolean getSummarization() {
@@ -595,7 +583,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The type of summary generated, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request
+     * @return The type of summary generated, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled
      */
     @JsonProperty("summary_type")
     public Optional<String> getSummaryType() {
@@ -604,7 +592,7 @@ public final class Transcript {
 
     /**
      * @return The Summarization model used to generate the summary,
-     * if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request
+     * if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled
      */
     @JsonProperty("summary_model")
     public Optional<String> getSummaryModel() {
@@ -612,7 +600,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The generated summary of the media file, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request
+     * @return The generated summary of the media file, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled
      */
     @JsonProperty("summary")
     public Optional<String> getSummary() {
@@ -620,7 +608,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether custom topics was enabled in the transcription request, either true or false
+     * @return Whether custom topics is enabled, either true or false
      */
     @JsonProperty("custom_topics")
     public Optional<Boolean> getCustomTopics() {
@@ -628,7 +616,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The list of custom topics provided if custom topics was enabled in the transcription request
+     * @return The list of custom topics provided if custom topics is enabled
      */
     @JsonProperty("topics")
     public Optional<List<String>> getTopics() {
@@ -644,7 +632,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment Analysis</a>, can be true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment Analysis</a> is enabled, can be true or false
      */
     @JsonProperty("sentiment_analysis")
     public Optional<Boolean> getSentimentAnalysis() {
@@ -652,7 +640,7 @@ public final class Transcript {
     }
 
     /**
-     * @return An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
+     * @return An array of results for the Sentiment Analysis model, if it is enabled.
      * See <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment analysis</a> for more information.
      */
     @JsonProperty("sentiment_analysis_results")
@@ -661,7 +649,7 @@ public final class Transcript {
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity Detection</a>, can be true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity Detection</a> is enabled, can be true or false
      */
     @JsonProperty("entity_detection")
     public Optional<Boolean> getEntityDetection() {
@@ -669,7 +657,7 @@ public final class Transcript {
     }
 
     /**
-     * @return An array of results for the Entity Detection model, if it was enabled during the transcription request.
+     * @return An array of results for the Entity Detection model, if it is enabled.
      * See <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity detection</a> for more information.
      */
     @JsonProperty("entities")
@@ -993,9 +981,9 @@ public final class Transcript {
 
         _FinalStage iabCategories(Boolean iabCategories);
 
-        _FinalStage iabCategoriesResult(Optional<TranscriptIabCategoriesResult> iabCategoriesResult);
+        _FinalStage iabCategoriesResult(Optional<TopicDetectionModelResult> iabCategoriesResult);
 
-        _FinalStage iabCategoriesResult(TranscriptIabCategoriesResult iabCategoriesResult);
+        _FinalStage iabCategoriesResult(TopicDetectionModelResult iabCategoriesResult);
 
         _FinalStage languageDetection(Optional<Boolean> languageDetection);
 
@@ -1130,7 +1118,7 @@ public final class Transcript {
 
         private Optional<Boolean> languageDetection = Optional.empty();
 
-        private Optional<TranscriptIabCategoriesResult> iabCategoriesResult = Optional.empty();
+        private Optional<TopicDetectionModelResult> iabCategoriesResult = Optional.empty();
 
         private Optional<Boolean> iabCategories = Optional.empty();
 
@@ -1254,7 +1242,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The unique identifier of your transcription</p>
+         * <p>The unique identifier of your transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1265,7 +1253,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The language model that was used for the transcription</p>
+         * <p>The language model that was used for the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1276,7 +1264,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The acoustic model that was used for the transcription</p>
+         * <p>The acoustic model that was used for the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1287,7 +1275,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The status of your transcription. Possible values are queued, processing, completed, or error.</p>
+         * <p>The status of your transcript. Possible values are queued, processing, completed, or error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1309,7 +1297,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether webhook authentication details were provided in the transcription request</p>
+         * <p>Whether webhook authentication details were provided</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1320,7 +1308,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether Key Phrases was enabled in the transcription request, either true or false</p>
+         * <p>Whether Key Phrases is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1331,7 +1319,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII Redaction</a> was enabled in the transcription request, either true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII Redaction</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1342,7 +1330,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request, either true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1405,7 +1393,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>An array of results for the Entity Detection model, if it was enabled during the transcription request.
+         * <p>An array of results for the Entity Detection model, if it is enabled.
          * See <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity detection</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1423,7 +1411,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity Detection</a>, can be true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity Detection</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1440,7 +1428,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
+         * <p>An array of results for the Sentiment Analysis model, if it is enabled.
          * See <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment analysis</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1458,7 +1446,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment Analysis</a>, can be true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment Analysis</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1492,7 +1480,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The list of custom topics provided if custom topics was enabled in the transcription request</p>
+         * <p>The list of custom topics provided if custom topics is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1509,7 +1497,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether custom topics was enabled in the transcription request, either true or false</p>
+         * <p>Whether custom topics is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1526,7 +1514,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The generated summary of the media file, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request</p>
+         * <p>The generated summary of the media file, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1544,7 +1532,7 @@ public final class Transcript {
 
         /**
          * <p>The Summarization model used to generate the summary,
-         * if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request</p>
+         * if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1561,7 +1549,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The type of summary generated, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> was enabled in the transcription request</p>
+         * <p>The type of summary generated, if <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a> is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1595,7 +1583,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/auto_chapters">Auto Chapters</a>, can be true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/auto_chapters">Auto Chapters</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1629,7 +1617,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1645,26 +1633,21 @@ public final class Transcript {
             return this;
         }
 
-        /**
-         * <p>The result of the Topic Detection model, if it was enabled during the transcription request.
-         * See <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a> for more information.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
-        public _FinalStage iabCategoriesResult(TranscriptIabCategoriesResult iabCategoriesResult) {
+        public _FinalStage iabCategoriesResult(TopicDetectionModelResult iabCategoriesResult) {
             this.iabCategoriesResult = Optional.of(iabCategoriesResult);
             return this;
         }
 
         @Override
         @JsonSetter(value = "iab_categories_result", nulls = Nulls.SKIP)
-        public _FinalStage iabCategoriesResult(Optional<TranscriptIabCategoriesResult> iabCategoriesResult) {
+        public _FinalStage iabCategoriesResult(Optional<TopicDetectionModelResult> iabCategoriesResult) {
             this.iabCategoriesResult = iabCategoriesResult;
             return this;
         }
 
         /**
-         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a>, can be true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1680,11 +1663,6 @@ public final class Transcript {
             return this;
         }
 
-        /**
-         * <p>An array of results for the Content Moderation model, if it was enabled during the transcription request.
-         * See <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content moderation</a> for more information.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage contentSafetyLabels(ContentSafetyLabelsResult contentSafetyLabels) {
             this.contentSafetyLabels = Optional.of(contentSafetyLabels);
@@ -1699,7 +1677,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content Moderation</a>, can be true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content Moderation</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1716,7 +1694,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.</p>
+         * <p>Tell the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1733,7 +1711,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Enable <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a>, can be true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1785,7 +1763,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The audio quality of the PII-redacted audio file, if enabled in the transcription request.
+         * <p>The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
          * See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1803,7 +1781,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
+         * <p>Whether a redacted version of the audio file was generated,
          * either true or false. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1821,7 +1799,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering">Profanity Filtering</a> was enabled in the transcription request, either true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering">Profanity Filtering</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1838,7 +1816,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The word boost parameter value, if provided in the transcription request</p>
+         * <p>The word boost parameter value</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1855,7 +1833,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The list of custom vocabulary to boost transcription probability for, if provided in the transcription request</p>
+         * <p>The list of custom vocabulary to boost transcription probability for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1872,7 +1850,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request</p>
+         * <p>The point in time, in milliseconds, in the file at which the transcription was terminated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1889,7 +1867,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request</p>
+         * <p>The point in time, in milliseconds, in the file at which the transcription was started</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1905,11 +1883,6 @@ public final class Transcript {
             return this;
         }
 
-        /**
-         * <p>An array of results for the Key Phrases model, if it was enabled during the transcription request.
-         * See <a href="https://www.assemblyai.com/docs/Models/key_phrases">Key phrases</a> for more information.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage autoHighlightsResult(AutoHighlightsResult autoHighlightsResult) {
             this.autoHighlightsResult = Optional.of(autoHighlightsResult);
@@ -1924,7 +1897,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether speed boost was enabled in the transcription request</p>
+         * <p>Whether speed boost is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1941,7 +1914,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The header name which should be sent back with webhook calls, if provided in the transcription request</p>
+         * <p>The header name which should be sent back with webhook calls</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1958,7 +1931,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request</p>
+         * <p>The status code we received from your server when delivering your webhook, if a webhook URL was provided</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1975,7 +1948,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The URL to which we send webhooks upon trancription completion, if provided in the transcription request</p>
+         * <p>The URL to which we send webhooks upon trancription completion</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1992,7 +1965,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual channel transcription</a> was enabled in the transcription request, either true or false</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual channel transcription</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -2009,7 +1982,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether Text Formatting was enabled in the transcription request, either true or false</p>
+         * <p>Whether Text Formatting is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -2026,7 +1999,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>Whether Automatic Punctuation was enabled in the transcription request, either true or false.</p>
+         * <p>Whether Automatic Punctuation is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

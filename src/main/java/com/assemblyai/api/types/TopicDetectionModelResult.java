@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = TranscriptIabCategoriesResult.Builder.class)
-public final class TranscriptIabCategoriesResult {
+@JsonDeserialize(builder = TopicDetectionModelResult.Builder.class)
+public final class TopicDetectionModelResult {
     private final AudioIntelligenceModelStatus status;
 
     private final List<TopicDetectionResult> results;
@@ -30,7 +30,7 @@ public final class TranscriptIabCategoriesResult {
 
     private final Map<String, Object> additionalProperties;
 
-    private TranscriptIabCategoriesResult(
+    private TopicDetectionModelResult(
             AudioIntelligenceModelStatus status,
             List<TopicDetectionResult> results,
             Map<String, Double> summary,
@@ -42,7 +42,7 @@ public final class TranscriptIabCategoriesResult {
     }
 
     /**
-     * @return Will be either success, or unavailable in the rare case that the Content Moderation model failed.
+     * @return The status of the Topic Detection model. Either success, or unavailable in the rare case that the model failed.
      */
     @JsonProperty("status")
     public AudioIntelligenceModelStatus getStatus() {
@@ -50,7 +50,7 @@ public final class TranscriptIabCategoriesResult {
     }
 
     /**
-     * @return An array of results for the Topic Detection model.
+     * @return An array of results for the Topic Detection model
      */
     @JsonProperty("results")
     public List<TopicDetectionResult> getResults() {
@@ -68,7 +68,7 @@ public final class TranscriptIabCategoriesResult {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof TranscriptIabCategoriesResult && equalTo((TranscriptIabCategoriesResult) other);
+        return other instanceof TopicDetectionModelResult && equalTo((TopicDetectionModelResult) other);
     }
 
     @JsonAnyGetter
@@ -76,7 +76,7 @@ public final class TranscriptIabCategoriesResult {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(TranscriptIabCategoriesResult other) {
+    private boolean equalTo(TopicDetectionModelResult other) {
         return status.equals(other.status) && results.equals(other.results) && summary.equals(other.summary);
     }
 
@@ -97,11 +97,11 @@ public final class TranscriptIabCategoriesResult {
     public interface StatusStage {
         _FinalStage status(AudioIntelligenceModelStatus status);
 
-        Builder from(TranscriptIabCategoriesResult other);
+        Builder from(TopicDetectionModelResult other);
     }
 
     public interface _FinalStage {
-        TranscriptIabCategoriesResult build();
+        TopicDetectionModelResult build();
 
         _FinalStage results(List<TopicDetectionResult> results);
 
@@ -130,7 +130,7 @@ public final class TranscriptIabCategoriesResult {
         private Builder() {}
 
         @Override
-        public Builder from(TranscriptIabCategoriesResult other) {
+        public Builder from(TopicDetectionModelResult other) {
             status(other.getStatus());
             results(other.getResults());
             summary(other.getSummary());
@@ -138,7 +138,7 @@ public final class TranscriptIabCategoriesResult {
         }
 
         /**
-         * <p>Will be either success, or unavailable in the rare case that the Content Moderation model failed.</p>
+         * <p>The status of the Topic Detection model. Either success, or unavailable in the rare case that the model failed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -177,7 +177,7 @@ public final class TranscriptIabCategoriesResult {
         }
 
         /**
-         * <p>An array of results for the Topic Detection model.</p>
+         * <p>An array of results for the Topic Detection model</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -187,7 +187,7 @@ public final class TranscriptIabCategoriesResult {
         }
 
         /**
-         * <p>An array of results for the Topic Detection model.</p>
+         * <p>An array of results for the Topic Detection model</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -205,8 +205,8 @@ public final class TranscriptIabCategoriesResult {
         }
 
         @Override
-        public TranscriptIabCategoriesResult build() {
-            return new TranscriptIabCategoriesResult(status, results, summary, additionalProperties);
+        public TopicDetectionModelResult build() {
+            return new TopicDetectionModelResult(status, results, summary, additionalProperties);
         }
     }
 }

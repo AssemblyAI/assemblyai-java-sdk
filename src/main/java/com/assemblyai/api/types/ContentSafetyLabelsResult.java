@@ -46,7 +46,7 @@ public final class ContentSafetyLabelsResult {
     }
 
     /**
-     * @return Will be either success, or unavailable in the rare case that the Content Moderation model failed.
+     * @return The status of the Content Moderation model. Either success, or unavailable in the rare case that the model failed.
      */
     @JsonProperty("status")
     public AudioIntelligenceModelStatus getStatus() {
@@ -159,7 +159,7 @@ public final class ContentSafetyLabelsResult {
         }
 
         /**
-         * <p>Will be either success, or unavailable in the rare case that the Content Moderation model failed.</p>
+         * <p>The status of the Content Moderation model. Either success, or unavailable in the rare case that the model failed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

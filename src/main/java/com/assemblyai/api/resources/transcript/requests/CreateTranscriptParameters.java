@@ -176,10 +176,6 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         this.additionalProperties = additionalProperties;
     }
 
-    /**
-     * @return The language of your audio file. Possible values are found in <a href="https://www.assemblyai.com/docs/Concepts/supported_languages">Supported Languages</a>.
-     * The default value is 'en_us'.
-     */
     @JsonProperty("language_code")
     @Override
     public Optional<TranscriptLanguageCode> getLanguageCode() {
@@ -187,7 +183,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Enable Automatic Punctuation, can be true or false.
+     * @return Enable Automatic Punctuation, can be true or false
      */
     @JsonProperty("punctuate")
     @Override
@@ -196,7 +192,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Enable Text Formatting, can be true or false.
+     * @return Enable Text Formatting, can be true or false
      */
     @JsonProperty("format_text")
     @Override
@@ -205,7 +201,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Enable <a href="https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.
+     * @return Enable <a href="https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false
      */
     @JsonProperty("dual_channel")
     @Override
@@ -214,7 +210,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return The URL to which we send webhooks upon trancription completion, if provided in the transcription request.
+     * @return The URL to which AssemblyAI send webhooks upon trancription completion
      */
     @JsonProperty("webhook_url")
     @Override
@@ -223,7 +219,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return The header name which should be sent back with webhook calls, if provided in the transcription request.
+     * @return The header name which should be sent back with webhook calls
      */
     @JsonProperty("webhook_auth_header_name")
     @Override
@@ -232,7 +228,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.
+     * @return Specify a header name and value to send back with a webhook call for added security
      */
     @JsonProperty("webhook_auth_header_value")
     @Override
@@ -241,7 +237,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Whether Key Phrases was enabled in the transcription request, either true or false
+     * @return Whether Key Phrases is enabled, either true or false
      */
     @JsonProperty("auto_highlights")
     @Override
@@ -250,7 +246,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return The point in time, in milliseconds, to begin transcription from in your media file
+     * @return The point in time, in milliseconds, to begin transcribing in your media file
      */
     @JsonProperty("audio_start_from")
     @Override
@@ -268,7 +264,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.
+     * @return The list of custom vocabulary to boost transcription probability for
      */
     @JsonProperty("word_boost")
     @Override
@@ -277,7 +273,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return The word boost parameter value, if provided in the transcription request.
+     * @return The word boost parameter value
      */
     @JsonProperty("boost_param")
     @Override
@@ -286,7 +282,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Filter profanity from the transcribed text, can be true or false.
+     * @return Filter profanity from the transcribed text, can be true or false
      */
     @JsonProperty("filter_profanity")
     @Override
@@ -330,9 +326,6 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         return redactPiiPolicies;
     }
 
-    /**
-     * @return The replacement logic for detected PII, can be &quot;entity_type&quot; or &quot;hash&quot;. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.
-     */
     @JsonProperty("redact_pii_sub")
     @Override
     public Optional<SubstitutionPolicy> getRedactPiiSub() {
@@ -349,7 +342,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.
+     * @return Tell the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.
      */
     @JsonProperty("speakers_expected")
     @Override
@@ -376,7 +369,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.
+     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false
      */
     @JsonProperty("language_detection")
     @Override
@@ -394,7 +387,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false.
+     * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false
      */
     @JsonProperty("disfluencies")
     @Override
@@ -467,7 +460,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return Whether custom topics was enabled in the transcription request, either true or false
+     * @return Whether custom topics is enabled, either true or false
      */
     @JsonProperty("custom_topics")
     @Override
@@ -476,7 +469,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
     }
 
     /**
-     * @return The list of custom topics provided if custom topics was enabled in the transcription request
+     * @return The list of custom topics provided, if custom topics is enabled
      */
     @JsonProperty("topics")
     @Override
@@ -865,7 +858,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>The list of custom topics provided if custom topics was enabled in the transcription request</p>
+         * <p>The list of custom topics provided, if custom topics is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -882,7 +875,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Whether custom topics was enabled in the transcription request, either true or false</p>
+         * <p>Whether custom topics is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1019,7 +1012,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false.</p>
+         * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1053,7 +1046,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.</p>
+         * <p>Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1104,7 +1097,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.</p>
+         * <p>Tell the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1137,10 +1130,6 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
             return this;
         }
 
-        /**
-         * <p>The replacement logic for detected PII, can be &quot;entity_type&quot; or &quot;hash&quot;. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage redactPiiSub(SubstitutionPolicy redactPiiSub) {
             this.redactPiiSub = Optional.of(redactPiiSub);
@@ -1223,7 +1212,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Filter profanity from the transcribed text, can be true or false.</p>
+         * <p>Filter profanity from the transcribed text, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1240,7 +1229,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>The word boost parameter value, if provided in the transcription request.</p>
+         * <p>The word boost parameter value</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1257,7 +1246,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.</p>
+         * <p>The list of custom vocabulary to boost transcription probability for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1291,7 +1280,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>The point in time, in milliseconds, to begin transcription from in your media file</p>
+         * <p>The point in time, in milliseconds, to begin transcribing in your media file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1308,7 +1297,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Whether Key Phrases was enabled in the transcription request, either true or false</p>
+         * <p>Whether Key Phrases is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1325,7 +1314,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.</p>
+         * <p>Specify a header name and value to send back with a webhook call for added security</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1342,7 +1331,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>The header name which should be sent back with webhook calls, if provided in the transcription request.</p>
+         * <p>The header name which should be sent back with webhook calls</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1359,7 +1348,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>The URL to which we send webhooks upon trancription completion, if provided in the transcription request.</p>
+         * <p>The URL to which AssemblyAI send webhooks upon trancription completion</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1376,7 +1365,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Enable <a href="https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.</p>
+         * <p>Enable <a href="https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1393,7 +1382,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Enable Text Formatting, can be true or false.</p>
+         * <p>Enable Text Formatting, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1410,7 +1399,7 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
         }
 
         /**
-         * <p>Enable Automatic Punctuation, can be true or false.</p>
+         * <p>Enable Automatic Punctuation, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -1426,11 +1415,6 @@ public final class CreateTranscriptParameters implements ICreateTranscriptOption
             return this;
         }
 
-        /**
-         * <p>The language of your audio file. Possible values are found in <a href="https://www.assemblyai.com/docs/Concepts/supported_languages">Supported Languages</a>.
-         * The default value is 'en_us'.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage languageCode(TranscriptLanguageCode languageCode) {
             this.languageCode = Optional.of(languageCode);

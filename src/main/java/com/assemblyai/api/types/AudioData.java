@@ -28,7 +28,7 @@ public final class AudioData {
     }
 
     /**
-     * @return Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.
+     * @return Base64 encoded raw audio data
      */
     @JsonProperty("audio_data")
     public String getAudioData() {
@@ -90,7 +90,7 @@ public final class AudioData {
         }
 
         /**
-         * <p>Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.</p>
+         * <p>Base64 encoded raw audio data</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

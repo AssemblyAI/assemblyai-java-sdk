@@ -34,6 +34,13 @@ public class LemurClient {
     /**
      * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
+    public LemurSummaryResponse summary() {
+        return summary(LemurSummaryParameters.builder().build());
+    }
+
+    /**
+     * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
+     */
     public LemurSummaryResponse summary(LemurSummaryParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -119,6 +126,13 @@ public class LemurClient {
     /**
      * Use LeMUR to generate a list of Action Items from a transcript
      */
+    public LemurActionItemsResponse actionItems() {
+        return actionItems(LemurBaseParameters.builder().build());
+    }
+
+    /**
+     * Use LeMUR to generate a list of Action Items from a transcript
+     */
     public LemurActionItemsResponse actionItems(LemurBaseParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -159,7 +173,7 @@ public class LemurClient {
     }
 
     /**
-     * Use LeMUR to ask anything with Custom Task
+     * Use your own prompt to run a Custom Task to handle your specialized task.
      */
     public LemurTaskResponse task(LemurTaskParameters request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -194,7 +208,7 @@ public class LemurClient {
     }
 
     /**
-     * Use LeMUR to ask anything with Custom Task
+     * Use your own prompt to run a Custom Task to handle your specialized task.
      */
     public LemurTaskResponse task(LemurTaskParameters request) {
         return task(request, null);

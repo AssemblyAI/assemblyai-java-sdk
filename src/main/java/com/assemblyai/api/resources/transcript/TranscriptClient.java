@@ -34,14 +34,14 @@ public class TranscriptClient {
     }
 
     /**
-     * Retrieve a list of transcripts you have created.
+     * Retrieve a list of transcripts you created
      */
     public TranscriptList list() {
         return list(TranscriptListRequest.builder().build());
     }
 
     /**
-     * Retrieve a list of transcripts you have created.
+     * Retrieve a list of transcripts you created
      */
     public TranscriptList list(TranscriptListRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -87,7 +87,7 @@ public class TranscriptClient {
     }
 
     /**
-     * Retrieve a list of transcripts you have created.
+     * Retrieve a list of transcripts you created
      */
     public TranscriptList list(TranscriptListRequest request) {
         return list(request, null);
@@ -384,7 +384,7 @@ public class TranscriptClient {
     }
 
     /**
-     * Retrieves the redacted audio object containing the status and URL to the redacted audio.
+     * Retrieve the redacted audio object containing the status and URL to the redacted audio.
      */
     public RedactedAudioResponse getRedactedAudio(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -414,7 +414,7 @@ public class TranscriptClient {
     }
 
     /**
-     * Retrieves the redacted audio object containing the status and URL to the redacted audio.
+     * Retrieve the redacted audio object containing the status and URL to the redacted audio.
      */
     public RedactedAudioResponse getRedactedAudio(String transcriptId) {
         return getRedactedAudio(transcriptId, null);

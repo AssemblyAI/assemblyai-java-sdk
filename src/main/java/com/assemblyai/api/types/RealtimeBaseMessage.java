@@ -28,7 +28,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
     }
 
     /**
-     * @return Describes the type of the message.
+     * @return Describes the type of the message
      */
     @JsonProperty("message_type")
     @Override
@@ -91,7 +91,7 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
         }
 
         /**
-         * <p>Describes the type of the message.</p>
+         * <p>Describes the type of the message</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

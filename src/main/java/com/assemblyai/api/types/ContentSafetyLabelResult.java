@@ -57,7 +57,7 @@ public final class ContentSafetyLabelResult {
     }
 
     /**
-     * @return An array of objects, one per sensitive topic that was detected in the section
+     * @return An array of safety labels, one per sensitive topic that was detected in the section
      */
     @JsonProperty("labels")
     public List<ContentSafetyLabel> getLabels() {
@@ -222,7 +222,7 @@ public final class ContentSafetyLabelResult {
         }
 
         /**
-         * <p>An array of objects, one per sensitive topic that was detected in the section</p>
+         * <p>An array of safety labels, one per sensitive topic that was detected in the section</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -232,7 +232,7 @@ public final class ContentSafetyLabelResult {
         }
 
         /**
-         * <p>An array of objects, one per sensitive topic that was detected in the section</p>
+         * <p>An array of safety labels, one per sensitive topic that was detected in the section</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

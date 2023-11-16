@@ -36,7 +36,7 @@ public final class SessionBegins {
     }
 
     /**
-     * @return Unique identifier for the established session.
+     * @return Unique identifier for the established session
      */
     @JsonProperty("session_id")
     public String getSessionId() {
@@ -44,7 +44,7 @@ public final class SessionBegins {
     }
 
     /**
-     * @return Timestamp when this session will expire.
+     * @return Timestamp when this session will expire
      */
     @JsonProperty("expires_at")
     public String getExpiresAt() {
@@ -113,7 +113,7 @@ public final class SessionBegins {
         }
 
         /**
-         * <p>Unique identifier for the established session.</p>
+         * <p>Unique identifier for the established session</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -124,7 +124,7 @@ public final class SessionBegins {
         }
 
         /**
-         * <p>Timestamp when this session will expire.</p>
+         * <p>Timestamp when this session will expire</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

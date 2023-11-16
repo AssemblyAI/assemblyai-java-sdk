@@ -53,7 +53,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return Start time of audio sample relative to session start, in milliseconds.
+     * @return Start time of audio sample relative to session start, in milliseconds
      */
     @JsonProperty("audio_start")
     @Override
@@ -62,7 +62,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return End time of audio sample relative to session start, in milliseconds.
+     * @return End time of audio sample relative to session start, in milliseconds
      */
     @JsonProperty("audio_end")
     @Override
@@ -71,7 +71,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return The confidence score of the entire transcription, between 0 and 1.
+     * @return The confidence score of the entire transcription, between 0 and 1
      */
     @JsonProperty("confidence")
     @Override
@@ -80,7 +80,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return The partial transcript for your audio.
+     * @return The partial transcript for your audio
      */
     @JsonProperty("text")
     @Override
@@ -89,7 +89,8 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).
+     * @return An array of objects, with the information for each word in the transcription text.
+     * Includes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself.
      */
     @JsonProperty("words")
     @Override
@@ -98,7 +99,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     }
 
     /**
-     * @return The timestamp for the partial transcript.
+     * @return The timestamp for the partial transcript
      */
     @JsonProperty("created")
     @Override
@@ -209,7 +210,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>Start time of audio sample relative to session start, in milliseconds.</p>
+         * <p>Start time of audio sample relative to session start, in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -220,7 +221,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>End time of audio sample relative to session start, in milliseconds.</p>
+         * <p>End time of audio sample relative to session start, in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -231,7 +232,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>The confidence score of the entire transcription, between 0 and 1.</p>
+         * <p>The confidence score of the entire transcription, between 0 and 1</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -242,7 +243,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>The partial transcript for your audio.</p>
+         * <p>The partial transcript for your audio</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -253,7 +254,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>The timestamp for the partial transcript.</p>
+         * <p>The timestamp for the partial transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -264,7 +265,8 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).</p>
+         * <p>An array of objects, with the information for each word in the transcription text.
+         * Includes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -274,7 +276,8 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
         }
 
         /**
-         * <p>An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).</p>
+         * <p>An array of objects, with the information for each word in the transcription text.
+         * Includes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
