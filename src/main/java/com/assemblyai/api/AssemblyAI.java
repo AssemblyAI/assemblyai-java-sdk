@@ -8,7 +8,7 @@ import com.assemblyai.api.core.Suppliers;
 import com.assemblyai.api.resources.files.FilesClient;
 import com.assemblyai.api.resources.lemur.LemurClient;
 import com.assemblyai.api.resources.realtime.RealtimeClient;
-import com.assemblyai.api.resources.transcript.TranscriptClient;
+import com.assemblyai.api.resources.transcripts.TranscriptsClient;
 import java.util.function.Supplier;
 
 public class AssemblyAI {
@@ -16,7 +16,7 @@ public class AssemblyAI {
 
     protected final Supplier<FilesClient> filesClient;
 
-    protected final Supplier<TranscriptClient> transcriptClient;
+    protected final Supplier<TranscriptsClient> transcriptsClient;
 
     protected final Supplier<RealtimeClient> realtimeClient;
 
@@ -25,7 +25,7 @@ public class AssemblyAI {
     public AssemblyAI(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
-        this.transcriptClient = Suppliers.memoize(() -> new TranscriptClient(clientOptions));
+        this.transcriptsClient = Suppliers.memoize(() -> new TranscriptsClient(clientOptions));
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
         this.lemurClient = Suppliers.memoize(() -> new LemurClient(clientOptions));
     }
@@ -34,8 +34,8 @@ public class AssemblyAI {
         return this.filesClient.get();
     }
 
-    public TranscriptClient transcript() {
-        return this.transcriptClient.get();
+    public TranscriptsClient transcripts() {
+        return this.transcriptsClient.get();
     }
 
     public RealtimeClient realtime() {
