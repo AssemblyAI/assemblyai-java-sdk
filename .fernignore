@@ -6,4 +6,5 @@ src/main/java/com/assemblyai/api/RealtimeTranscriber.java
 sample-app/src/main/java/sample/App.java
 sample-app/src/main/resources/
 
+LICENSE
 README.md
