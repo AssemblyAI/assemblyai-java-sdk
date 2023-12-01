@@ -266,6 +266,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         @Override
         public Void visit(RealtimeError value) {
+            onError.accept(new Exception(value.getError()));
             return null;
         }
     }
