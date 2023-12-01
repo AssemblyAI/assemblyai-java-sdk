@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonDeserialize(using = LemurBaseParametersContext.Deserializer.class)
-public final class LemurBaseParametersContext {
+@JsonDeserialize(using = LemurBaseParamsContext.Deserializer.class)
+public final class LemurBaseParamsContext {
     private final Object value;
 
     private final int type;
 
-    private LemurBaseParametersContext(Object value, int type) {
+    private LemurBaseParamsContext(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -43,10 +43,10 @@ public final class LemurBaseParametersContext {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurBaseParametersContext && equalTo((LemurBaseParametersContext) other);
+        return other instanceof LemurBaseParamsContext && equalTo((LemurBaseParamsContext) other);
     }
 
-    private boolean equalTo(LemurBaseParametersContext other) {
+    private boolean equalTo(LemurBaseParamsContext other) {
         return value.equals(other.value);
     }
 
@@ -60,12 +60,12 @@ public final class LemurBaseParametersContext {
         return this.value.toString();
     }
 
-    public static LemurBaseParametersContext of(String value) {
-        return new LemurBaseParametersContext(value, 0);
+    public static LemurBaseParamsContext of(String value) {
+        return new LemurBaseParamsContext(value, 0);
     }
 
-    public static LemurBaseParametersContext of(Map<String, Object> value) {
-        return new LemurBaseParametersContext(value, 1);
+    public static LemurBaseParamsContext of(Map<String, Object> value) {
+        return new LemurBaseParamsContext(value, 1);
     }
 
     public interface Visitor<T> {
@@ -74,13 +74,13 @@ public final class LemurBaseParametersContext {
         T visit(Map<String, Object> value);
     }
 
-    static final class Deserializer extends StdDeserializer<LemurBaseParametersContext> {
+    static final class Deserializer extends StdDeserializer<LemurBaseParamsContext> {
         Deserializer() {
-            super(LemurBaseParametersContext.class);
+            super(LemurBaseParamsContext.class);
         }
 
         @Override
-        public LemurBaseParametersContext deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public LemurBaseParamsContext deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));

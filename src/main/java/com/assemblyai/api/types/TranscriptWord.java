@@ -67,6 +67,9 @@ public final class TranscriptWord {
         return text;
     }
 
+    /**
+     * @return The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null
+     */
     @JsonProperty("speaker")
     public Optional<String> getSpeaker() {
         return speaker;
@@ -186,6 +189,10 @@ public final class TranscriptWord {
             return this;
         }
 
+        /**
+         * <p>The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage speaker(String speaker) {
             this.speaker = Optional.of(speaker);

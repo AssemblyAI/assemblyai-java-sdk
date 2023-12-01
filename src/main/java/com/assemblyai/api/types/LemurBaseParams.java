@@ -19,13 +19,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LemurBaseParameters.Builder.class)
-public final class LemurBaseParameters implements ILemurBaseParameters {
+@JsonDeserialize(builder = LemurBaseParams.Builder.class)
+public final class LemurBaseParams implements ILemurBaseParams {
     private final Optional<List<String>> transcriptIds;
 
     private final Optional<String> inputText;
 
-    private final Optional<LemurBaseParametersContext> context;
+    private final Optional<LemurBaseParamsContext> context;
 
     private final Optional<LemurModel> finalModel;
 
@@ -35,10 +35,10 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurBaseParameters(
+    private LemurBaseParams(
             Optional<List<String>> transcriptIds,
             Optional<String> inputText,
-            Optional<LemurBaseParametersContext> context,
+            Optional<LemurBaseParamsContext> context,
             Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
@@ -77,7 +77,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
      */
     @JsonProperty("context")
     @Override
-    public Optional<LemurBaseParametersContext> getContext() {
+    public Optional<LemurBaseParamsContext> getContext() {
         return context;
     }
 
@@ -110,7 +110,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurBaseParameters && equalTo((LemurBaseParameters) other);
+        return other instanceof LemurBaseParams && equalTo((LemurBaseParams) other);
     }
 
     @JsonAnyGetter
@@ -118,7 +118,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(LemurBaseParameters other) {
+    private boolean equalTo(LemurBaseParams other) {
         return transcriptIds.equals(other.transcriptIds)
                 && inputText.equals(other.inputText)
                 && context.equals(other.context)
@@ -153,7 +153,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
         private Optional<String> inputText = Optional.empty();
 
-        private Optional<LemurBaseParametersContext> context = Optional.empty();
+        private Optional<LemurBaseParamsContext> context = Optional.empty();
 
         private Optional<LemurModel> finalModel = Optional.empty();
 
@@ -166,7 +166,7 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
 
         private Builder() {}
 
-        public Builder from(LemurBaseParameters other) {
+        public Builder from(LemurBaseParams other) {
             transcriptIds(other.getTranscriptIds());
             inputText(other.getInputText());
             context(other.getContext());
@@ -199,12 +199,12 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
         }
 
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public Builder context(Optional<LemurBaseParametersContext> context) {
+        public Builder context(Optional<LemurBaseParamsContext> context) {
             this.context = context;
             return this;
         }
 
-        public Builder context(LemurBaseParametersContext context) {
+        public Builder context(LemurBaseParamsContext context) {
             this.context = Optional.of(context);
             return this;
         }
@@ -242,8 +242,8 @@ public final class LemurBaseParameters implements ILemurBaseParameters {
             return this;
         }
 
-        public LemurBaseParameters build() {
-            return new LemurBaseParameters(
+        public LemurBaseParams build() {
+            return new LemurBaseParams(
                     transcriptIds, inputText, context, finalModel, maxOutputSize, temperature, additionalProperties);
         }
     }

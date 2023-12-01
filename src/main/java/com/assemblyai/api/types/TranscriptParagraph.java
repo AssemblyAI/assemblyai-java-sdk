@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptParagraph.Builder.class)
@@ -31,6 +32,8 @@ public final class TranscriptParagraph {
 
     private final List<TranscriptWord> words;
 
+    private final Optional<String> speaker;
+
     private final Map<String, Object> additionalProperties;
 
     private TranscriptParagraph(
@@ -39,12 +42,14 @@ public final class TranscriptParagraph {
             int end,
             double confidence,
             List<TranscriptWord> words,
+            Optional<String> speaker,
             Map<String, Object> additionalProperties) {
         this.text = text;
         this.start = start;
         this.end = end;
         this.confidence = confidence;
         this.words = words;
+        this.speaker = speaker;
         this.additionalProperties = additionalProperties;
     }
 
@@ -73,6 +78,14 @@ public final class TranscriptParagraph {
         return words;
     }
 
+    /**
+     * @return The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null
+     */
+    @JsonProperty("speaker")
+    public Optional<String> getSpeaker() {
+        return speaker;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -89,12 +102,13 @@ public final class TranscriptParagraph {
                 && start == other.start
                 && end == other.end
                 && confidence == other.confidence
-                && words.equals(other.words);
+                && words.equals(other.words)
+                && speaker.equals(other.speaker);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.text, this.start, this.end, this.confidence, this.words);
+        return Objects.hash(this.text, this.start, this.end, this.confidence, this.words, this.speaker);
     }
 
     @Override
@@ -132,6 +146,10 @@ public final class TranscriptParagraph {
         _FinalStage addWords(TranscriptWord words);
 
         _FinalStage addAllWords(List<TranscriptWord> words);
+
+        _FinalStage speaker(Optional<String> speaker);
+
+        _FinalStage speaker(String speaker);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -143,6 +161,8 @@ public final class TranscriptParagraph {
         private int end;
 
         private double confidence;
+
+        private Optional<String> speaker = Optional.empty();
 
         private List<TranscriptWord> words = new ArrayList<>();
 
@@ -158,6 +178,7 @@ public final class TranscriptParagraph {
             end(other.getEnd());
             confidence(other.getConfidence());
             words(other.getWords());
+            speaker(other.getSpeaker());
             return this;
         }
 
@@ -189,6 +210,23 @@ public final class TranscriptParagraph {
             return this;
         }
 
+        /**
+         * <p>The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage speaker(String speaker) {
+            this.speaker = Optional.of(speaker);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speaker", nulls = Nulls.SKIP)
+        public _FinalStage speaker(Optional<String> speaker) {
+            this.speaker = speaker;
+            return this;
+        }
+
         @Override
         public _FinalStage addAllWords(List<TranscriptWord> words) {
             this.words.addAll(words);
@@ -211,7 +249,7 @@ public final class TranscriptParagraph {
 
         @Override
         public TranscriptParagraph build() {
-            return new TranscriptParagraph(text, start, end, confidence, words, additionalProperties);
+            return new TranscriptParagraph(text, start, end, confidence, words, speaker, additionalProperties);
         }
     }
 }
