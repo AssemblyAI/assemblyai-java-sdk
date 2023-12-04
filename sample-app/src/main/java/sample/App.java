@@ -58,6 +58,11 @@ public final class App {
 
         transcript = aai.transcript().create(CreateTranscriptParameters.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
+                .build(), true);
+        System.out.println("Created and polled transcript " + transcript);
+
+        transcript = aai.transcript().create(CreateTranscriptParameters.builder()
+                .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
                 .build());
         System.out.println("Created transcript " + transcript);
 
