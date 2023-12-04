@@ -1,11 +1,11 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ClientOptions;
-import com.assemblyai.api.resources.transcript.TranscriptClient;
-import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
+import com.assemblyai.api.resources.transcripts.TranscriptsClient;
+import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
 import com.assemblyai.api.types.Transcript;
 
-public class PollingTranscriptClient extends TranscriptClient {
+public class PollingTranscriptClient extends TranscriptsClient {
 
     private final Transcriber transcriber;
 
@@ -17,7 +17,7 @@ public class PollingTranscriptClient extends TranscriptClient {
     /**
      * Create a transcript from an audio or video file that is accessible via a URL.
      */
-    public Transcript create(CreateTranscriptParameters request, boolean poll) {
+    public Transcript create(TranscriptParams request, boolean poll) {
         return transcriber.transcribe(request.getAudioUrl(), request, poll);
     }
 

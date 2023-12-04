@@ -1,10 +1,10 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.Environment;
-import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
-import com.assemblyai.api.types.CreateTranscriptOptionalParameters;
-import com.assemblyai.api.types.ICreateTranscriptOptionalParameters;
+import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
+import com.assemblyai.api.types.ITranscriptOptionalParams;
 import com.assemblyai.api.types.Transcript;
+import com.assemblyai.api.types.TranscriptOptionalParams;
 import com.assemblyai.api.types.TranscriptStatus;
 import com.assemblyai.api.types.UploadedFile;
 import java.io.File;
@@ -24,14 +24,14 @@ public final class Transcriber {
      * Polls until transcription is done.
      */
     public Transcript transcribe(String url) {
-        return transcribe(url, CreateTranscriptOptionalParameters.builder().build(), true);
+        return transcribe(url, TranscriptOptionalParams.builder().build(), true);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a URL.
      * Polls until transcription is done.
      */
-    public Transcript transcribe(String url, CreateTranscriptOptionalParameters transcriptRequest) {
+    public Transcript transcribe(String url, TranscriptOptionalParams transcriptRequest) {
         return transcribe(url, transcriptRequest, true);
     }
 
@@ -40,9 +40,9 @@ public final class Transcriber {
      */
     public Transcript transcribe(
             String url,
-            ICreateTranscriptOptionalParameters transcriptRequest,
+            ITranscriptOptionalParams transcriptRequest,
             boolean poll) {
-        CreateTranscriptParameters createTranscript = CreateTranscriptParameters.builder()
+        TranscriptParams createTranscript = TranscriptParams.builder()
                 .audioUrl(url)
                 .languageCode(transcriptRequest.getLanguageCode())
                 .punctuate(transcriptRequest.getPunctuate())
@@ -91,21 +91,21 @@ public final class Transcriber {
      * Polls until transcription is done.
      */
     public Transcript transcribe(File data) throws IOException {
-        return transcribe(data, CreateTranscriptOptionalParameters.builder().build(), true);
+        return transcribe(data, TranscriptOptionalParams.builder().build(), true);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a filepath.
      * Polls until transcription is done.
      */
-    public Transcript transcribe(File data, CreateTranscriptOptionalParameters transcriptRequest) throws IOException {
+    public Transcript transcribe(File data, TranscriptOptionalParams transcriptRequest) throws IOException {
         return transcribe(data, transcriptRequest, true);
     }
 
     /**
      * Transcribes an audio file whose location can be specified via a filepath.
      */
-    public Transcript transcribe(File data, CreateTranscriptOptionalParameters transcriptRequest, boolean poll)
+    public Transcript transcribe(File data, TranscriptOptionalParams transcriptRequest, boolean poll)
             throws IOException {
         UploadedFile uploadedFile = this.client.files().upload(Files.readAllBytes(data.toPath()));
         return transcribe(uploadedFile.getUploadUrl(), transcriptRequest, poll);

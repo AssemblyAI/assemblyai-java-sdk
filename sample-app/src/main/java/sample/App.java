@@ -3,8 +3,8 @@ package sample;
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.Transcriber;
-import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
-import com.assemblyai.api.resources.transcript.requests.TranscriptWordSearchRequest;
+import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
+import com.assemblyai.api.resources.transcripts.requests.TranscriptsWordSearchRequest;
 import com.assemblyai.api.types.ParagraphsResponse;
 import com.assemblyai.api.types.SentencesResponse;
 import com.assemblyai.api.types.SubtitleFormat;
@@ -44,7 +44,7 @@ public final class App {
         String vtt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
         System.out.println("Get transcript vtt. " + vtt);
 
-        WordSearchResponse search = aai.transcript().wordSearch(transcript.getId(), TranscriptWordSearchRequest.builder()
+        WordSearchResponse search = aai.transcript().wordSearch(transcript.getId(), TranscriptsWordSearchRequest.builder()
                 .words("NBC")
                 .build());
         System.out.println("Search transcript. " + search);
@@ -56,12 +56,12 @@ public final class App {
         UploadedFile uploadedFile = aai.files().upload(Files.readAllBytes(file.toPath()));
         System.out.println("Uploaded file" + uploadedFile);
 
-        transcript = aai.transcript().create(CreateTranscriptParameters.builder()
+        transcript = aai.transcript().create(TranscriptParams.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
                 .build(), true);
         System.out.println("Created and polled transcript " + transcript);
 
-        transcript = aai.transcript().create(CreateTranscriptParameters.builder()
+        transcript = aai.transcript().create(TranscriptParams.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
                 .build());
         System.out.println("Created transcript " + transcript);
