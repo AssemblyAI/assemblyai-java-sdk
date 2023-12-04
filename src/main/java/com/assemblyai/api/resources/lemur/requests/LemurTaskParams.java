@@ -4,8 +4,8 @@
 package com.assemblyai.api.resources.lemur.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.types.ILemurBaseParameters;
-import com.assemblyai.api.types.LemurBaseParametersContext;
+import com.assemblyai.api.types.ILemurBaseParams;
+import com.assemblyai.api.types.LemurBaseParamsContext;
 import com.assemblyai.api.types.LemurModel;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -22,13 +22,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LemurTaskParameters.Builder.class)
-public final class LemurTaskParameters implements ILemurBaseParameters {
+@JsonDeserialize(builder = LemurTaskParams.Builder.class)
+public final class LemurTaskParams implements ILemurBaseParams {
     private final Optional<List<String>> transcriptIds;
 
     private final Optional<String> inputText;
 
-    private final Optional<LemurBaseParametersContext> context;
+    private final Optional<LemurBaseParamsContext> context;
 
     private final Optional<LemurModel> finalModel;
 
@@ -40,10 +40,10 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurTaskParameters(
+    private LemurTaskParams(
             Optional<List<String>> transcriptIds,
             Optional<String> inputText,
-            Optional<LemurBaseParametersContext> context,
+            Optional<LemurBaseParamsContext> context,
             Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
@@ -84,7 +84,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
      */
     @JsonProperty("context")
     @Override
-    public Optional<LemurBaseParametersContext> getContext() {
+    public Optional<LemurBaseParamsContext> getContext() {
         return context;
     }
 
@@ -125,7 +125,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurTaskParameters && equalTo((LemurTaskParameters) other);
+        return other instanceof LemurTaskParams && equalTo((LemurTaskParams) other);
     }
 
     @JsonAnyGetter
@@ -133,7 +133,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(LemurTaskParameters other) {
+    private boolean equalTo(LemurTaskParams other) {
         return transcriptIds.equals(other.transcriptIds)
                 && inputText.equals(other.inputText)
                 && context.equals(other.context)
@@ -167,11 +167,11 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
     public interface PromptStage {
         _FinalStage prompt(String prompt);
 
-        Builder from(LemurTaskParameters other);
+        Builder from(LemurTaskParams other);
     }
 
     public interface _FinalStage {
-        LemurTaskParameters build();
+        LemurTaskParams build();
 
         _FinalStage transcriptIds(Optional<List<String>> transcriptIds);
 
@@ -181,9 +181,9 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
         _FinalStage inputText(String inputText);
 
-        _FinalStage context(Optional<LemurBaseParametersContext> context);
+        _FinalStage context(Optional<LemurBaseParamsContext> context);
 
-        _FinalStage context(LemurBaseParametersContext context);
+        _FinalStage context(LemurBaseParamsContext context);
 
         _FinalStage finalModel(Optional<LemurModel> finalModel);
 
@@ -208,7 +208,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
 
         private Optional<LemurModel> finalModel = Optional.empty();
 
-        private Optional<LemurBaseParametersContext> context = Optional.empty();
+        private Optional<LemurBaseParamsContext> context = Optional.empty();
 
         private Optional<String> inputText = Optional.empty();
 
@@ -220,7 +220,7 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
         private Builder() {}
 
         @Override
-        public Builder from(LemurTaskParameters other) {
+        public Builder from(LemurTaskParams other) {
             transcriptIds(other.getTranscriptIds());
             inputText(other.getInputText());
             context(other.getContext());
@@ -296,14 +296,14 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage context(LemurBaseParametersContext context) {
+        public _FinalStage context(LemurBaseParamsContext context) {
             this.context = Optional.of(context);
             return this;
         }
 
         @Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public _FinalStage context(Optional<LemurBaseParametersContext> context) {
+        public _FinalStage context(Optional<LemurBaseParamsContext> context) {
             this.context = context;
             return this;
         }
@@ -345,8 +345,8 @@ public final class LemurTaskParameters implements ILemurBaseParameters {
         }
 
         @Override
-        public LemurTaskParameters build() {
-            return new LemurTaskParameters(
+        public LemurTaskParams build() {
+            return new LemurTaskParams(
                     transcriptIds,
                     inputText,
                     context,

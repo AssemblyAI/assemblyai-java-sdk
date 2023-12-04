@@ -6,22 +6,22 @@ package com.assemblyai.api.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class TranscriptListRequestStatus {
-    public static final TranscriptListRequestStatus ERROR = new TranscriptListRequestStatus(Value.ERROR, "error");
+public final class TranscriptsListRequestStatus {
+    public static final TranscriptsListRequestStatus ERROR = new TranscriptsListRequestStatus(Value.ERROR, "error");
 
-    public static final TranscriptListRequestStatus QUEUED = new TranscriptListRequestStatus(Value.QUEUED, "queued");
+    public static final TranscriptsListRequestStatus QUEUED = new TranscriptsListRequestStatus(Value.QUEUED, "queued");
 
-    public static final TranscriptListRequestStatus COMPLETED =
-            new TranscriptListRequestStatus(Value.COMPLETED, "completed");
+    public static final TranscriptsListRequestStatus COMPLETED =
+            new TranscriptsListRequestStatus(Value.COMPLETED, "completed");
 
-    public static final TranscriptListRequestStatus PROCESSING =
-            new TranscriptListRequestStatus(Value.PROCESSING, "processing");
+    public static final TranscriptsListRequestStatus PROCESSING =
+            new TranscriptsListRequestStatus(Value.PROCESSING, "processing");
 
     private final Value value;
 
     private final String string;
 
-    TranscriptListRequestStatus(Value value, String string) {
+    TranscriptsListRequestStatus(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -39,8 +39,8 @@ public final class TranscriptListRequestStatus {
     @Override
     public boolean equals(Object other) {
         return (this == other)
-                || (other instanceof TranscriptListRequestStatus
-                        && this.string.equals(((TranscriptListRequestStatus) other).string));
+                || (other instanceof TranscriptsListRequestStatus
+                        && this.string.equals(((TranscriptsListRequestStatus) other).string));
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class TranscriptListRequestStatus {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static TranscriptListRequestStatus valueOf(String value) {
+    public static TranscriptsListRequestStatus valueOf(String value) {
         switch (value) {
             case "error":
                 return ERROR;
@@ -76,7 +76,7 @@ public final class TranscriptListRequestStatus {
             case "processing":
                 return PROCESSING;
             default:
-                return new TranscriptListRequestStatus(Value.UNKNOWN, value);
+                return new TranscriptsListRequestStatus(Value.UNKNOWN, value);
         }
     }
 
