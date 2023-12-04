@@ -71,19 +71,35 @@ try {
 }
 ```
 
-## Using the Transcriber
-Additionally, the SDK also exports a Transcriber class that has
-utilities on top of the HTTP client, such as automatic polling.
+## Creating a transcript
+When you create a transcript, you can either pass in a URL to an audio file 
+or upload a file directly.
 
 ```java
-import com.assemblyai.api.Transcriber;
+import com.assemblyai.api.types.Transcript;
 
-Transcriber transcriber = Transcriber.builder()
-  .apiKey("YOUR_API_KEY")
-  .build();
+// Transcribe file at remote URL
+Transcript transcript = aai.transcripts().transcribe(
+        "https://storage.googleapis.com/aai-web-samples/espn-bears.m4a");
 
-TranscriptResponse transcript =
-        transcriber.transcribe("https://example.org/audio.mp3");
+// Upload a file via local path and transcribe
+transcript = aai.transcripts().transcribe(
+        new File("./news.mp4"));
+```
+
+`transcribe` queues a transcription job and polls it until the status is completed or error.
+If you don't want to wait until the transcript is ready, you can use submit:
+
+```java
+import com.assemblyai.api.types.Transcript;
+
+// Transcribe file at remote URL
+Transcript transcript = aai.transcripts().submit(
+        "https://storage.googleapis.com/aai-web-samples/espn-bears.m4a");
+
+// Upload a file via local path and transcribe
+transcript = aai.transcripts().submit(
+        new File("./news.mp4"));
 ```
 
 ## Using the Realtime Transcriber
