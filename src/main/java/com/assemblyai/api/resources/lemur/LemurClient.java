@@ -7,11 +7,11 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
-import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParameters;
-import com.assemblyai.api.resources.lemur.requests.LemurSummaryParameters;
-import com.assemblyai.api.resources.lemur.requests.LemurTaskParameters;
+import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParams;
+import com.assemblyai.api.resources.lemur.requests.LemurSummaryParams;
+import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.types.LemurActionItemsResponse;
-import com.assemblyai.api.types.LemurBaseParameters;
+import com.assemblyai.api.types.LemurBaseParams;
 import com.assemblyai.api.types.LemurQuestionAnswerResponse;
 import com.assemblyai.api.types.LemurSummaryResponse;
 import com.assemblyai.api.types.LemurTaskResponse;
@@ -32,16 +32,58 @@ public class LemurClient {
     }
 
     /**
-     * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
+     * Use the LeMUR task endpoint to input your own LLM prompt.
      */
-    public LemurSummaryResponse summary() {
-        return summary(LemurSummaryParameters.builder().build());
+    public LemurTaskResponse task(LemurTaskParams request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("lemur/v3/generate/task")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurTaskResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Use the LeMUR task endpoint to input your own LLM prompt.
+     */
+    public LemurTaskResponse task(LemurTaskParams request) {
+        return task(request, null);
     }
 
     /**
      * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
-    public LemurSummaryResponse summary(LemurSummaryParameters request, RequestOptions requestOptions) {
+    public LemurSummaryResponse summary() {
+        return summary(LemurSummaryParams.builder().build());
+    }
+
+    /**
+     * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
+     */
+    public LemurSummaryResponse summary(LemurSummaryParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/summary")
@@ -76,7 +118,7 @@ public class LemurClient {
     /**
      * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
-    public LemurSummaryResponse summary(LemurSummaryParameters request) {
+    public LemurSummaryResponse summary(LemurSummaryParams request) {
         return summary(request, null);
     }
 
@@ -84,7 +126,7 @@ public class LemurClient {
      * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
      */
     public LemurQuestionAnswerResponse questionAnswer(
-            LemurQuestionAnswerParameters request, RequestOptions requestOptions) {
+            LemurQuestionAnswerParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/question-answer")
@@ -119,21 +161,21 @@ public class LemurClient {
     /**
      * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
      */
-    public LemurQuestionAnswerResponse questionAnswer(LemurQuestionAnswerParameters request) {
+    public LemurQuestionAnswerResponse questionAnswer(LemurQuestionAnswerParams request) {
         return questionAnswer(request, null);
     }
 
     /**
-     * Use LeMUR to generate a list of Action Items from a transcript
+     * Use LeMUR to generate a list of action items from a transcript
      */
     public LemurActionItemsResponse actionItems() {
-        return actionItems(LemurBaseParameters.builder().build());
+        return actionItems(LemurBaseParams.builder().build());
     }
 
     /**
-     * Use LeMUR to generate a list of Action Items from a transcript
+     * Use LeMUR to generate a list of action items from a transcript
      */
-    public LemurActionItemsResponse actionItems(LemurBaseParameters request, RequestOptions requestOptions) {
+    public LemurActionItemsResponse actionItems(LemurBaseParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/action-items")
@@ -166,52 +208,10 @@ public class LemurClient {
     }
 
     /**
-     * Use LeMUR to generate a list of Action Items from a transcript
+     * Use LeMUR to generate a list of action items from a transcript
      */
-    public LemurActionItemsResponse actionItems(LemurBaseParameters request) {
+    public LemurActionItemsResponse actionItems(LemurBaseParams request) {
         return actionItems(request, null);
-    }
-
-    /**
-     * Use your own prompt to run a Custom Task to handle your specialized task.
-     */
-    public LemurTaskResponse task(LemurTaskParameters request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("lemur/v3/generate/task")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurTaskResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Use your own prompt to run a Custom Task to handle your specialized task.
-     */
-    public LemurTaskResponse task(LemurTaskParameters request) {
-        return task(request, null);
     }
 
     /**

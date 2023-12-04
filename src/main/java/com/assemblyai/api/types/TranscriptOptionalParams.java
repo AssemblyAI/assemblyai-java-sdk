@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = CreateTranscriptOptionalParameters.Builder.class)
-public final class CreateTranscriptOptionalParameters implements ICreateTranscriptOptionalParameters {
+@JsonDeserialize(builder = TranscriptOptionalParams.Builder.class)
+public final class TranscriptOptionalParams implements ITranscriptOptionalParams {
     private final Optional<TranscriptLanguageCode> languageCode;
 
     private final Optional<Boolean> punctuate;
@@ -91,7 +91,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateTranscriptOptionalParameters(
+    private TranscriptOptionalParams(
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
@@ -189,7 +189,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.
      */
     @JsonProperty("dual_channel")
     @Override
@@ -288,7 +288,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Generate a copy of the original media file with spoken PII &quot;beeped&quot; out, can be true or false. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.
+     * @return Generate a copy of the original media file with spoken PII &quot;beeped&quot; out, can be true or false. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.
      */
     @JsonProperty("redact_pii_audio")
     @Override
@@ -297,7 +297,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.
+     * @return Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.
      */
     @JsonProperty("redact_pii_audio_quality")
     @Override
@@ -306,7 +306,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return The list of PII Redaction policies to enable. See <a href="https://www.assemblyai.com/docs/Models/pii_redaction">PII redaction</a> for more details.
+     * @return The list of PII Redaction policies to enable. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.
      */
     @JsonProperty("redact_pii_policies")
     @Override
@@ -321,7 +321,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a>, can be true or false
      */
     @JsonProperty("speaker_labels")
     @Override
@@ -330,7 +330,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Tell the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/Models/speaker_diarization">Speaker diarization</a> for more details.
+     * @return Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more details.
      */
     @JsonProperty("speakers_expected")
     @Override
@@ -339,7 +339,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/content_moderation">Content Moderation</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/content-moderation">Content Moderation</a>, can be true or false
      */
     @JsonProperty("content_safety")
     @Override
@@ -348,7 +348,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/iab_classification">Topic Detection</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/topic-detection">Topic Detection</a>, can be true or false
      */
     @JsonProperty("iab_categories")
     @Override
@@ -357,7 +357,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false
+     * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.
      */
     @JsonProperty("language_detection")
     @Override
@@ -384,7 +384,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/sentiment_analysis">Sentiment Analysis</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a>, can be true or false
      */
     @JsonProperty("sentiment_analysis")
     @Override
@@ -393,7 +393,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/auto_chapters">Auto Chapters</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/auto-chapters">Auto Chapters</a>, can be true or false
      */
     @JsonProperty("auto_chapters")
     @Override
@@ -402,7 +402,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/entity_detection">Entity Detection</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/entity-detection">Entity Detection</a>, can be true or false
      */
     @JsonProperty("entity_detection")
     @Override
@@ -421,7 +421,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/Models/summarization">Summarization</a>, can be true or false
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a>, can be true or false
      */
     @JsonProperty("summarization")
     @Override
@@ -468,8 +468,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateTranscriptOptionalParameters
-                && equalTo((CreateTranscriptOptionalParameters) other);
+        return other instanceof TranscriptOptionalParams && equalTo((TranscriptOptionalParams) other);
     }
 
     @JsonAnyGetter
@@ -477,7 +476,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
         return this.additionalProperties;
     }
 
-    private boolean equalTo(CreateTranscriptOptionalParameters other) {
+    private boolean equalTo(TranscriptOptionalParams other) {
         return languageCode.equals(other.languageCode)
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
@@ -637,7 +636,7 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
 
         private Builder() {}
 
-        public Builder from(CreateTranscriptOptionalParameters other) {
+        public Builder from(TranscriptOptionalParams other) {
             languageCode(other.getLanguageCode());
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
@@ -1049,8 +1048,8 @@ public final class CreateTranscriptOptionalParameters implements ICreateTranscri
             return this;
         }
 
-        public CreateTranscriptOptionalParameters build() {
-            return new CreateTranscriptOptionalParameters(
+        public TranscriptOptionalParams build() {
+            return new TranscriptOptionalParams(
                     languageCode,
                     punctuate,
                     formatText,
