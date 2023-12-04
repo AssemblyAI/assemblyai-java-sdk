@@ -42,7 +42,7 @@ The SDK exports a vanilla HTTP client, `AssemblyAI`. You can
 use this to call into each of our API endpoints and get typed
 responses back.
 
-```typescript
+```java
 import com.assemblyai.api.AssemblyAI;
 
 AssemblyAI aai = AssemblyAI.builder()
@@ -60,7 +60,7 @@ When the API returns a non-success status code (4xx or 5xx response),
 a subclass of [ApiError](src/main/java/com/assemblyai/api/core/ApiError.java)
 will be thrown:
 
-```ts
+```java
 import com.assemblyai.api.core.ApiError;
 
 try {

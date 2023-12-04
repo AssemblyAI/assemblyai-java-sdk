@@ -3,6 +3,7 @@ package com.assemblyai.api;
 import com.assemblyai.api.core.Environment;
 import com.assemblyai.api.resources.transcript.requests.CreateTranscriptParameters;
 import com.assemblyai.api.types.CreateTranscriptOptionalParameters;
+import com.assemblyai.api.types.ICreateTranscriptOptionalParameters;
 import com.assemblyai.api.types.Transcript;
 import com.assemblyai.api.types.TranscriptStatus;
 import com.assemblyai.api.types.UploadedFile;
@@ -14,7 +15,7 @@ public final class Transcriber {
 
     private final AssemblyAI client;
 
-    private Transcriber(AssemblyAI client) {
+    Transcriber(AssemblyAI client) {
         this.client = client;
     }
 
@@ -37,7 +38,10 @@ public final class Transcriber {
     /**
      * Transcribes an audio file whose location can be specified via a URL.
      */
-    public Transcript transcribe(String url, CreateTranscriptOptionalParameters transcriptRequest, boolean poll) {
+    public Transcript transcribe(
+            String url,
+            ICreateTranscriptOptionalParameters transcriptRequest,
+            boolean poll) {
         CreateTranscriptParameters createTranscript = CreateTranscriptParameters.builder()
                 .audioUrl(url)
                 .languageCode(transcriptRequest.getLanguageCode())
