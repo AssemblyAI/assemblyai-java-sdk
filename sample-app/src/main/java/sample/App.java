@@ -56,9 +56,9 @@ public final class App {
         UploadedFile uploadedFile = aai.files().upload(Files.readAllBytes(file.toPath()));
         System.out.println("Uploaded file" + uploadedFile);
 
-        transcript = aai.transcript().create(TranscriptParams.builder()
+        transcript = aai.transcript().transcribe(TranscriptParams.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
-                .build(), true);
+                .build());
         System.out.println("Created and polled transcript " + transcript);
 
         transcript = aai.transcript().create(TranscriptParams.builder()

@@ -14,11 +14,12 @@ public class PollingTranscriptClient extends TranscriptsClient {
         this.transcriber = transcriber;
     }
 
-    /**
-     * Create a transcript from an audio or video file that is accessible via a URL.
-     */
-    public Transcript create(TranscriptParams request, boolean poll) {
-        return transcriber.transcribe(request.getAudioUrl(), request, poll);
+    public Transcript submit(TranscriptParams request) {
+        return transcriber.transcribe(request.getAudioUrl(), request, false);
+    }
+
+    public Transcript transcribe(TranscriptParams request) {
+        return transcriber.transcribe(request.getAudioUrl(), request, true);
     }
 
 }
