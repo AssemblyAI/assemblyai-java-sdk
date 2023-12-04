@@ -15,7 +15,7 @@ public class PollingTranscriptClient extends TranscriptClient {
     }
 
     /**
-     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
+     * Create a transcript from an audio or video file that is accessible via a URL.
      */
     public Transcript create(CreateTranscriptParameters request, boolean poll) {
         return transcriber.transcribe(request.getAudioUrl(), request, poll);
