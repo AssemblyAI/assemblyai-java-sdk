@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public final class Transcriber {
+final class Transcriber {
 
     private final AssemblyAI client;
 

@@ -15,7 +15,7 @@ public class AssemblyAI {
 
     protected final Supplier<FilesClient> filesClient;
 
-    protected final Supplier<PollingTranscriptClient> transcriptClient;
+    protected final Supplier<PollingTranscriptsClient> transcriptClient;
 
     protected final Supplier<RealtimeClient> realtimeClient;
 
@@ -25,7 +25,7 @@ public class AssemblyAI {
         this.clientOptions = clientOptions;
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
         this.transcriptClient = Suppliers.memoize(() ->
-                        new PollingTranscriptClient(clientOptions, new Transcriber(this)));
+                        new PollingTranscriptsClient(clientOptions, new Transcriber(this)));
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
         this.lemurClient = Suppliers.memoize(() -> new LemurClient(clientOptions));
     }
@@ -34,7 +34,7 @@ public class AssemblyAI {
         return this.filesClient.get();
     }
 
-    public PollingTranscriptClient transcript() {
+    public PollingTranscriptsClient transcript() {
         return this.transcriptClient.get();
     }
 

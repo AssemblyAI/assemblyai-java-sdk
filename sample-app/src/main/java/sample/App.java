@@ -2,7 +2,6 @@ package sample;
 
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
-import com.assemblyai.api.Transcriber;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptsWordSearchRequest;
 import com.assemblyai.api.types.ParagraphsResponse;
@@ -24,12 +23,8 @@ public final class App {
                 .apiKey(System.getenv("ASSEMBLY_AI_API_KEY"))
                 .build();
 
-        Transcriber transcriber = Transcriber.builder()
-                .apiKey(System.getenv("ASSEMBLY_AI_API_KEY"))
-                .build();
-
         Transcript transcript =
-                transcriber.transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3");
+                aai.transcript().transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3");
         System.out.println(transcript);
 
         SentencesResponse sentences = aai.transcript().getSentences(transcript.getId());
@@ -55,11 +50,6 @@ public final class App {
         File file = new File("sample-app/src/main/resources/nZP7pb_t4oA.mp3");
         UploadedFile uploadedFile = aai.files().upload(Files.readAllBytes(file.toPath()));
         System.out.println("Uploaded file" + uploadedFile);
-
-        transcript = aai.transcript().create(TranscriptParams.builder()
-                .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
-                .build(), true);
-        System.out.println("Created and polled transcript " + transcript);
 
         transcript = aai.transcript().create(TranscriptParams.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
