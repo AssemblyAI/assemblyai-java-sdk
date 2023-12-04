@@ -8,7 +8,6 @@ import com.assemblyai.api.core.Suppliers;
 import com.assemblyai.api.resources.files.FilesClient;
 import com.assemblyai.api.resources.lemur.LemurClient;
 import com.assemblyai.api.resources.realtime.RealtimeClient;
-import com.assemblyai.api.resources.transcript.TranscriptClient;
 import java.util.function.Supplier;
 
 public class AssemblyAI {

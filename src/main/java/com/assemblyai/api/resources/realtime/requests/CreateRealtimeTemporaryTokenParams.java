@@ -16,13 +16,13 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = CreateRealtimeTemporaryTokenParameters.Builder.class)
-public final class CreateRealtimeTemporaryTokenParameters {
+@JsonDeserialize(builder = CreateRealtimeTemporaryTokenParams.Builder.class)
+public final class CreateRealtimeTemporaryTokenParams {
     private final int expiresIn;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateRealtimeTemporaryTokenParameters(int expiresIn, Map<String, Object> additionalProperties) {
+    private CreateRealtimeTemporaryTokenParams(int expiresIn, Map<String, Object> additionalProperties) {
         this.expiresIn = expiresIn;
         this.additionalProperties = additionalProperties;
     }
@@ -38,8 +38,8 @@ public final class CreateRealtimeTemporaryTokenParameters {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateRealtimeTemporaryTokenParameters
-                && equalTo((CreateRealtimeTemporaryTokenParameters) other);
+        return other instanceof CreateRealtimeTemporaryTokenParams
+                && equalTo((CreateRealtimeTemporaryTokenParams) other);
     }
 
     @JsonAnyGetter
@@ -47,7 +47,7 @@ public final class CreateRealtimeTemporaryTokenParameters {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(CreateRealtimeTemporaryTokenParameters other) {
+    private boolean equalTo(CreateRealtimeTemporaryTokenParams other) {
         return expiresIn == other.expiresIn;
     }
 
@@ -68,11 +68,11 @@ public final class CreateRealtimeTemporaryTokenParameters {
     public interface ExpiresInStage {
         _FinalStage expiresIn(int expiresIn);
 
-        Builder from(CreateRealtimeTemporaryTokenParameters other);
+        Builder from(CreateRealtimeTemporaryTokenParams other);
     }
 
     public interface _FinalStage {
-        CreateRealtimeTemporaryTokenParameters build();
+        CreateRealtimeTemporaryTokenParams build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -85,7 +85,7 @@ public final class CreateRealtimeTemporaryTokenParameters {
         private Builder() {}
 
         @Override
-        public Builder from(CreateRealtimeTemporaryTokenParameters other) {
+        public Builder from(CreateRealtimeTemporaryTokenParams other) {
             expiresIn(other.getExpiresIn());
             return this;
         }
@@ -102,8 +102,8 @@ public final class CreateRealtimeTemporaryTokenParameters {
         }
 
         @Override
-        public CreateRealtimeTemporaryTokenParameters build() {
-            return new CreateRealtimeTemporaryTokenParameters(expiresIn, additionalProperties);
+        public CreateRealtimeTemporaryTokenParams build() {
+            return new CreateRealtimeTemporaryTokenParams(expiresIn, additionalProperties);
         }
     }
 }

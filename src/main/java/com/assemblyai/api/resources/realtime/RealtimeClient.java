@@ -7,7 +7,7 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
-import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParameters;
+import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParams;
 import com.assemblyai.api.types.RealtimeTemporaryTokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -28,7 +28,7 @@ public class RealtimeClient {
      * Create a temporary authentication token for real-time transcription
      */
     public RealtimeTemporaryTokenResponse createTemporaryToken(
-            CreateRealtimeTemporaryTokenParameters request, RequestOptions requestOptions) {
+            CreateRealtimeTemporaryTokenParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/realtime/token")
@@ -64,7 +64,7 @@ public class RealtimeClient {
     /**
      * Create a temporary authentication token for real-time transcription
      */
-    public RealtimeTemporaryTokenResponse createTemporaryToken(CreateRealtimeTemporaryTokenParameters request) {
+    public RealtimeTemporaryTokenResponse createTemporaryToken(CreateRealtimeTemporaryTokenParams request) {
         return createTemporaryToken(request, null);
     }
 }

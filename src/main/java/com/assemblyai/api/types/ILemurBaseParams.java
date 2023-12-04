@@ -6,12 +6,12 @@ package com.assemblyai.api.types;
 import java.util.List;
 import java.util.Optional;
 
-public interface ILemurBaseParameters {
+public interface ILemurBaseParams {
     Optional<List<String>> getTranscriptIds();
 
     Optional<String> getInputText();
 
-    Optional<LemurBaseParametersContext> getContext();
+    Optional<LemurBaseParamsContext> getContext();
 
     Optional<LemurModel> getFinalModel();
 

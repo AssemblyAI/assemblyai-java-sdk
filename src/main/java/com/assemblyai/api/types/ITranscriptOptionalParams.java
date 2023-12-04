@@ -6,7 +6,7 @@ package com.assemblyai.api.types;
 import java.util.List;
 import java.util.Optional;
 
-public interface ICreateTranscriptOptionalParameters {
+public interface ITranscriptOptionalParams {
     Optional<TranscriptLanguageCode> getLanguageCode();
 
     Optional<Boolean> getPunctuate();

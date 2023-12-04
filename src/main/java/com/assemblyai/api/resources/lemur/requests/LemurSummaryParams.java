@@ -4,10 +4,9 @@
 package com.assemblyai.api.resources.lemur.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.types.ILemurBaseParameters;
-import com.assemblyai.api.types.LemurBaseParametersContext;
+import com.assemblyai.api.types.ILemurBaseParams;
+import com.assemblyai.api.types.LemurBaseParamsContext;
 import com.assemblyai.api.types.LemurModel;
-import com.assemblyai.api.types.LemurQuestion;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +22,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LemurQuestionAnswerParameters.Builder.class)
-public final class LemurQuestionAnswerParameters implements ILemurBaseParameters {
+@JsonDeserialize(builder = LemurSummaryParams.Builder.class)
+public final class LemurSummaryParams implements ILemurBaseParams {
     private final Optional<List<String>> transcriptIds;
 
     private final Optional<String> inputText;
 
-    private final Optional<LemurBaseParametersContext> context;
+    private final Optional<LemurBaseParamsContext> context;
 
     private final Optional<LemurModel> finalModel;
 
@@ -38,18 +36,18 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
 
     private final Optional<Double> temperature;
 
-    private final List<LemurQuestion> questions;
+    private final Optional<String> answerFormat;
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurQuestionAnswerParameters(
+    private LemurSummaryParams(
             Optional<List<String>> transcriptIds,
             Optional<String> inputText,
-            Optional<LemurBaseParametersContext> context,
+            Optional<LemurBaseParamsContext> context,
             Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
-            List<LemurQuestion> questions,
+            Optional<String> answerFormat,
             Map<String, Object> additionalProperties) {
         this.transcriptIds = transcriptIds;
         this.inputText = inputText;
@@ -57,7 +55,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
         this.finalModel = finalModel;
         this.maxOutputSize = maxOutputSize;
         this.temperature = temperature;
-        this.questions = questions;
+        this.answerFormat = answerFormat;
         this.additionalProperties = additionalProperties;
     }
 
@@ -86,7 +84,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
      */
     @JsonProperty("context")
     @Override
-    public Optional<LemurBaseParametersContext> getContext() {
+    public Optional<LemurBaseParamsContext> getContext() {
         return context;
     }
 
@@ -117,17 +115,17 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
     }
 
     /**
-     * @return A list of questions to ask
+     * @return How you want the summary to be returned. This can be any text. Examples: &quot;TLDR&quot;, &quot;bullet points&quot;
      */
-    @JsonProperty("questions")
-    public List<LemurQuestion> getQuestions() {
-        return questions;
+    @JsonProperty("answer_format")
+    public Optional<String> getAnswerFormat() {
+        return answerFormat;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurQuestionAnswerParameters && equalTo((LemurQuestionAnswerParameters) other);
+        return other instanceof LemurSummaryParams && equalTo((LemurSummaryParams) other);
     }
 
     @JsonAnyGetter
@@ -135,14 +133,14 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
         return this.additionalProperties;
     }
 
-    private boolean equalTo(LemurQuestionAnswerParameters other) {
+    private boolean equalTo(LemurSummaryParams other) {
         return transcriptIds.equals(other.transcriptIds)
                 && inputText.equals(other.inputText)
                 && context.equals(other.context)
                 && finalModel.equals(other.finalModel)
                 && maxOutputSize.equals(other.maxOutputSize)
                 && temperature.equals(other.temperature)
-                && questions.equals(other.questions);
+                && answerFormat.equals(other.answerFormat);
     }
 
     @Override
@@ -154,7 +152,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
                 this.finalModel,
                 this.maxOutputSize,
                 this.temperature,
-                this.questions);
+                this.answerFormat);
     }
 
     @Override
@@ -172,7 +170,7 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
 
         private Optional<String> inputText = Optional.empty();
 
-        private Optional<LemurBaseParametersContext> context = Optional.empty();
+        private Optional<LemurBaseParamsContext> context = Optional.empty();
 
         private Optional<LemurModel> finalModel = Optional.empty();
 
@@ -180,21 +178,21 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
 
         private Optional<Double> temperature = Optional.empty();
 
-        private List<LemurQuestion> questions = new ArrayList<>();
+        private Optional<String> answerFormat = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        public Builder from(LemurQuestionAnswerParameters other) {
+        public Builder from(LemurSummaryParams other) {
             transcriptIds(other.getTranscriptIds());
             inputText(other.getInputText());
             context(other.getContext());
             finalModel(other.getFinalModel());
             maxOutputSize(other.getMaxOutputSize());
             temperature(other.getTemperature());
-            questions(other.getQuestions());
+            answerFormat(other.getAnswerFormat());
             return this;
         }
 
@@ -221,12 +219,12 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
         }
 
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
-        public Builder context(Optional<LemurBaseParametersContext> context) {
+        public Builder context(Optional<LemurBaseParamsContext> context) {
             this.context = context;
             return this;
         }
 
-        public Builder context(LemurBaseParametersContext context) {
+        public Builder context(LemurBaseParamsContext context) {
             this.context = Optional.of(context);
             return this;
         }
@@ -264,32 +262,26 @@ public final class LemurQuestionAnswerParameters implements ILemurBaseParameters
             return this;
         }
 
-        @JsonSetter(value = "questions", nulls = Nulls.SKIP)
-        public Builder questions(List<LemurQuestion> questions) {
-            this.questions.clear();
-            this.questions.addAll(questions);
+        @JsonSetter(value = "answer_format", nulls = Nulls.SKIP)
+        public Builder answerFormat(Optional<String> answerFormat) {
+            this.answerFormat = answerFormat;
             return this;
         }
 
-        public Builder addQuestions(LemurQuestion questions) {
-            this.questions.add(questions);
+        public Builder answerFormat(String answerFormat) {
+            this.answerFormat = Optional.of(answerFormat);
             return this;
         }
 
-        public Builder addAllQuestions(List<LemurQuestion> questions) {
-            this.questions.addAll(questions);
-            return this;
-        }
-
-        public LemurQuestionAnswerParameters build() {
-            return new LemurQuestionAnswerParameters(
+        public LemurSummaryParams build() {
+            return new LemurSummaryParams(
                     transcriptIds,
                     inputText,
                     context,
                     finalModel,
                     maxOutputSize,
                     temperature,
-                    questions,
+                    answerFormat,
                     additionalProperties);
         }
     }
