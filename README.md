@@ -116,9 +116,9 @@ method on `CreateTranscriptParameters` until you have specified the mandatory
 audioUrl variable.
 
 ```java
-import com.assemblyai.api.CreateTranscriptParams;
+import com.assemblyai.api.TranscriptParams;
 
-CreateTranscriptParameters params = CreateTranscriptParameters.builder()
+TranscriptParams params = TranscriptParams.builder()
   .audioUrl("https://...")
   .build();
 ```
