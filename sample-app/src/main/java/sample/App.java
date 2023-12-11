@@ -3,14 +3,14 @@ package sample;
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
-import com.assemblyai.api.resources.transcripts.requests.TranscriptsWordSearchRequest;
-import com.assemblyai.api.types.ParagraphsResponse;
-import com.assemblyai.api.types.SentencesResponse;
-import com.assemblyai.api.types.SubtitleFormat;
-import com.assemblyai.api.types.Transcript;
-import com.assemblyai.api.types.TranscriptList;
-import com.assemblyai.api.types.UploadedFile;
-import com.assemblyai.api.types.WordSearchResponse;
+import com.assemblyai.api.resources.transcripts.requests.WordSearchParams;
+import com.assemblyai.api.resources.transcripts.types.ParagraphsResponse;
+import com.assemblyai.api.resources.transcripts.types.SentencesResponse;
+import com.assemblyai.api.resources.transcripts.types.SubtitleFormat;
+import com.assemblyai.api.resources.transcripts.types.Transcript;
+import com.assemblyai.api.resources.transcripts.types.TranscriptList;
+import com.assemblyai.api.resources.files.types.UploadedFile;
+import com.assemblyai.api.resources.transcripts.types.WordSearchResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public final class App {
         String vtt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
         System.out.println("Get transcript vtt. " + vtt);
 
-        WordSearchResponse search = aai.transcript().wordSearch(transcript.getId(), TranscriptsWordSearchRequest.builder()
+        WordSearchResponse search = aai.transcript().wordSearch(transcript.getId(), WordSearchParams.builder()
                 .words("NBC")
                 .build());
         System.out.println("Search transcript. " + search);
@@ -51,7 +51,7 @@ public final class App {
         UploadedFile uploadedFile = aai.files().upload(Files.readAllBytes(file.toPath()));
         System.out.println("Uploaded file" + uploadedFile);
 
-        transcript = aai.transcript().create(TranscriptParams.builder()
+        transcript = aai.transcript().submit(TranscriptParams.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
                 .build());
         System.out.println("Created transcript " + transcript);
@@ -66,9 +66,7 @@ public final class App {
                 .apiKey(System.getenv("ASSEMBLY_AI_API_KEY"))
                 .onPartialTranscript(System.out::println)
                 .onFinalTranscript(System.out::println)
-                .onError((err) -> {
-                    System.out.println(err.getMessage());
-                })
+                .onError((err) -> System.out.println(err.getMessage()))
                 .build();
         realtimeTranscriber.connect();
         streamFile("sample-app/src/main/resources/gore-short.wav", realtimeTranscriber);
@@ -79,9 +77,8 @@ public final class App {
         try (FileInputStream fileInputStream =
                 new FileInputStream(filePath)) {
             byte[] buffer = new byte[8192];
-            int bytesRead;
 
-            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+            while (fileInputStream.read(buffer) != -1) {
                 realtimeTranscriber.sendAudio(buffer);
             }
         } catch (IOException e) {

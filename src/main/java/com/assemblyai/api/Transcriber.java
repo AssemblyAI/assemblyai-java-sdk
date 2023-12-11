@@ -2,11 +2,11 @@ package com.assemblyai.api;
 
 import com.assemblyai.api.core.Environment;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
-import com.assemblyai.api.types.ITranscriptOptionalParams;
-import com.assemblyai.api.types.Transcript;
-import com.assemblyai.api.types.TranscriptOptionalParams;
-import com.assemblyai.api.types.TranscriptStatus;
-import com.assemblyai.api.types.UploadedFile;
+import com.assemblyai.api.resources.transcripts.types.ITranscriptOptionalParams;
+import com.assemblyai.api.resources.transcripts.types.Transcript;
+import com.assemblyai.api.resources.transcripts.types.TranscriptOptionalParams;
+import com.assemblyai.api.resources.transcripts.types.TranscriptStatus;
+import com.assemblyai.api.resources.files.types.UploadedFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -79,7 +79,7 @@ final class Transcriber {
                 .customTopics(transcriptRequest.getCustomTopics())
                 .topics(transcriptRequest.getTopics())
                 .build();
-        Transcript transcriptResponse = this.client.transcript().create(createTranscript);
+        Transcript transcriptResponse = this.client.transcript().submit(createTranscript);
         if (poll) {
             return awaitCompletion(transcriptResponse.getId());
         }

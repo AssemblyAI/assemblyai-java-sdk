@@ -1,14 +1,14 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.types.AudioData;
-import com.assemblyai.api.types.FinalTranscript;
-import com.assemblyai.api.types.PartialTranscript;
-import com.assemblyai.api.types.RealtimeError;
-import com.assemblyai.api.types.RealtimeMessage;
-import com.assemblyai.api.types.RealtimeTranscript;
-import com.assemblyai.api.types.SessionBegins;
-import com.assemblyai.api.types.SessionTerminated;
+import com.assemblyai.api.resources.realtime.types.AudioData;
+import com.assemblyai.api.resources.realtime.types.FinalTranscript;
+import com.assemblyai.api.resources.realtime.types.PartialTranscript;
+import com.assemblyai.api.resources.realtime.types.RealtimeError;
+import com.assemblyai.api.resources.realtime.types.RealtimeMessage;
+import com.assemblyai.api.resources.realtime.types.RealtimeTranscript;
+import com.assemblyai.api.resources.realtime.types.SessionBegins;
+import com.assemblyai.api.resources.realtime.types.SessionTerminated;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

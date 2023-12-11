@@ -43,9 +43,7 @@ public final class ClientOptions {
 
     public Map<String, String> headers(RequestOptions requestOptions) {
         Map<String, String> values = new HashMap<>(this.headers);
-        headerSuppliers.forEach((key, supplier) -> {
-            values.put(key, supplier.get());
-        });
+        headerSuppliers.forEach((key, supplier) -> values.put(key, supplier.get()));
         if (requestOptions != null) {
             values.putAll(requestOptions.getHeaders());
         }
