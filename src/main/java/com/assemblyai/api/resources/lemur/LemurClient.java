@@ -5,21 +5,21 @@ package com.assemblyai.api.resources.lemur;
 
 import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
+import com.assemblyai.api.core.MediaTypes;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParams;
 import com.assemblyai.api.resources.lemur.requests.LemurSummaryParams;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
-import com.assemblyai.api.types.LemurActionItemsResponse;
-import com.assemblyai.api.types.LemurBaseParams;
-import com.assemblyai.api.types.LemurQuestionAnswerResponse;
-import com.assemblyai.api.types.LemurSummaryResponse;
-import com.assemblyai.api.types.LemurTaskResponse;
-import com.assemblyai.api.types.PurgeLemurRequestDataResponse;
+import com.assemblyai.api.resources.lemur.types.LemurActionItemsResponse;
+import com.assemblyai.api.resources.lemur.types.LemurBaseParams;
+import com.assemblyai.api.resources.lemur.types.LemurQuestionAnswerResponse;
+import com.assemblyai.api.resources.lemur.types.LemurSummaryResponse;
+import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
+import com.assemblyai.api.resources.lemur.types.PurgeLemurRequestDataResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -42,7 +42,7 @@ public class LemurClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -91,7 +91,7 @@ public class LemurClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -134,7 +134,7 @@ public class LemurClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -183,7 +183,7 @@ public class LemurClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
