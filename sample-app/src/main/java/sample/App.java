@@ -20,46 +20,46 @@ public final class App {
 
     public static void main(String... args) throws IOException {
         AssemblyAI aai = AssemblyAI.builder()
-                .apiKey(System.getenv("ASSEMBLY_AI_API_KEY"))
+                .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
                 .build();
 
         Transcript transcript =
-                aai.transcript().transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3");
+                aai.transcripts().transcribe("https://storage.googleapis.com/aai-docs-samples/nbc.mp3");
         System.out.println(transcript);
 
-        SentencesResponse sentences = aai.transcript().getSentences(transcript.getId());
+        SentencesResponse sentences = aai.transcripts().getSentences(transcript.getId());
         System.out.println("Get transcript sentences. " + sentences);
 
-        ParagraphsResponse paragraphs = aai.transcript().getParagraphs(transcript.getId());
+        ParagraphsResponse paragraphs = aai.transcripts().getParagraphs(transcript.getId());
         System.out.println("Get transcript paragraphs. " + paragraphs);
 
-        String srt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.SRT);
+        String srt = aai.transcripts().getSubtitles(transcript.getId(), SubtitleFormat.SRT);
         System.out.println("Get transcript srt. " + srt);
 
-        String vtt = aai.transcript().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
+        String vtt = aai.transcripts().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
         System.out.println("Get transcript vtt. " + vtt);
 
-        WordSearchResponse search = aai.transcript().wordSearch(transcript.getId(), WordSearchParams.builder()
+        WordSearchResponse search = aai.transcripts().wordSearch(transcript.getId(), WordSearchParams.builder()
                 .words("NBC")
                 .build());
         System.out.println("Search transcript. " + search);
 
-        transcript = aai.transcript().delete(transcript.getId());
+        transcript = aai.transcripts().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);
 
         File file = new File("sample-app/src/main/resources/nZP7pb_t4oA.mp3");
         UploadedFile uploadedFile = aai.files().upload(Files.readAllBytes(file.toPath()));
         System.out.println("Uploaded file" + uploadedFile);
 
-        transcript = aai.transcript().submit(TranscriptParams.builder()
+        transcript = aai.transcripts().submit(TranscriptParams.builder()
                 .audioUrl("https://storage.googleapis.com/aai-docs-samples/nbc.mp3")
                 .build());
         System.out.println("Created transcript " + transcript);
 
-        transcript = aai.transcript().get(transcript.getId());
+        transcript = aai.transcripts().get(transcript.getId());
         System.out.println("Got transcript. " + transcript);
 
-        TranscriptList transcripts = aai.transcript().list();
+        TranscriptList transcripts = aai.transcripts().list();
         System.out.println("List transcript. " + transcripts);
 
         RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
@@ -75,7 +75,7 @@ public final class App {
 
     public static void streamFile(String filePath, RealtimeTranscriber realtimeTranscriber) {
         try (FileInputStream fileInputStream =
-                new FileInputStream(filePath)) {
+                     new FileInputStream(filePath)) {
             byte[] buffer = new byte[8192];
 
             while (fileInputStream.read(buffer) != -1) {

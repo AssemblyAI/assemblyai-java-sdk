@@ -37,7 +37,7 @@ public class AssemblyAI {
         return this.filesClient.get();
     }
 
-    public PollingTranscriptsClient transcript() {
+    public PollingTranscriptsClient transcripts() {
         return this.transcriptClient.get();
     }
 

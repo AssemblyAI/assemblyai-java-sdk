@@ -108,7 +108,7 @@ public class PollingTranscriptsClient extends TranscriptsClient {
     private Transcript awaitCompletion(String transcriptId) {
         try {
             while (true) {
-                Transcript transcript = this.client.transcript().get(transcriptId);
+                Transcript transcript = this.client.transcripts().get(transcriptId);
                 if (transcript.getStatus().equals(TranscriptStatus.COMPLETED)) {
                     return transcript;
                 }
