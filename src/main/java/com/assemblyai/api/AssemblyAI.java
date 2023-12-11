@@ -8,6 +8,9 @@ import com.assemblyai.api.core.Suppliers;
 import com.assemblyai.api.resources.files.FilesClient;
 import com.assemblyai.api.resources.lemur.LemurClient;
 import com.assemblyai.api.resources.realtime.RealtimeClient;
+import com.assemblyai.api.resources.transcripts.types.Transcript;
+import com.assemblyai.api.resources.transcripts.types.TranscriptStatus;
+
 import java.util.function.Supplier;
 
 public class AssemblyAI {
@@ -25,7 +28,7 @@ public class AssemblyAI {
         this.clientOptions = clientOptions;
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
         this.transcriptClient = Suppliers.memoize(() ->
-                        new PollingTranscriptsClient(clientOptions, new Transcriber(this)));
+                        new PollingTranscriptsClient(clientOptions, this));
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
         this.lemurClient = Suppliers.memoize(() -> new LemurClient(clientOptions));
     }
