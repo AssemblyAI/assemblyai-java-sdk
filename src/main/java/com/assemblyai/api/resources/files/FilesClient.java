@@ -7,7 +7,7 @@ import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
-import com.assemblyai.api.types.UploadedFile;
+import com.assemblyai.api.resources.files.types.UploadedFile;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;

@@ -5,14 +5,14 @@ package com.assemblyai.api.resources.realtime;
 
 import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
+import com.assemblyai.api.core.MediaTypes;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParams;
-import com.assemblyai.api.types.RealtimeTemporaryTokenResponse;
+import com.assemblyai.api.resources.realtime.types.RealtimeTemporaryTokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,7 +36,7 @@ public class RealtimeClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

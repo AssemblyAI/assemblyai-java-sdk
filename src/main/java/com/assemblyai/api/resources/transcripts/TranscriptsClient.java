@@ -5,23 +5,23 @@ package com.assemblyai.api.resources.transcripts;
 
 import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.ClientOptions;
+import com.assemblyai.api.core.MediaTypes;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
+import com.assemblyai.api.resources.transcripts.requests.GetSubtitlesParams;
+import com.assemblyai.api.resources.transcripts.requests.ListTranscriptParams;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
-import com.assemblyai.api.resources.transcripts.requests.TranscriptsGetSubtitlesRequest;
-import com.assemblyai.api.resources.transcripts.requests.TranscriptsListRequest;
-import com.assemblyai.api.resources.transcripts.requests.TranscriptsWordSearchRequest;
-import com.assemblyai.api.types.ParagraphsResponse;
-import com.assemblyai.api.types.RedactedAudioResponse;
-import com.assemblyai.api.types.SentencesResponse;
-import com.assemblyai.api.types.SubtitleFormat;
-import com.assemblyai.api.types.Transcript;
-import com.assemblyai.api.types.TranscriptList;
-import com.assemblyai.api.types.WordSearchResponse;
+import com.assemblyai.api.resources.transcripts.requests.WordSearchParams;
+import com.assemblyai.api.resources.transcripts.types.ParagraphsResponse;
+import com.assemblyai.api.resources.transcripts.types.RedactedAudioResponse;
+import com.assemblyai.api.resources.transcripts.types.SentencesResponse;
+import com.assemblyai.api.resources.transcripts.types.SubtitleFormat;
+import com.assemblyai.api.resources.transcripts.types.Transcript;
+import com.assemblyai.api.resources.transcripts.types.TranscriptList;
+import com.assemblyai.api.resources.transcripts.types.WordSearchResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -37,13 +37,13 @@ public class TranscriptsClient {
      * Retrieve a list of transcripts you created
      */
     public TranscriptList list() {
-        return list(TranscriptsListRequest.builder().build());
+        return list(ListTranscriptParams.builder().build());
     }
 
     /**
      * Retrieve a list of transcripts you created
      */
-    public TranscriptList list(TranscriptsListRequest request, RequestOptions requestOptions) {
+    public TranscriptList list(ListTranscriptParams request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript");
@@ -89,14 +89,14 @@ public class TranscriptsClient {
     /**
      * Retrieve a list of transcripts you created
      */
-    public TranscriptList list(TranscriptsListRequest request) {
+    public TranscriptList list(ListTranscriptParams request) {
         return list(request, null);
     }
 
     /**
      * Create a transcript from an audio or video file that is accessible via a URL.
      */
-    public Transcript create(TranscriptParams request, RequestOptions requestOptions) {
+    public Transcript submit(TranscriptParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -104,7 +104,7 @@ public class TranscriptsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -131,8 +131,8 @@ public class TranscriptsClient {
     /**
      * Create a transcript from an audio or video file that is accessible via a URL.
      */
-    public Transcript create(TranscriptParams request) {
-        return create(request, null);
+    public Transcript submit(TranscriptParams request) {
+        return submit(request, null);
     }
 
     /**
@@ -212,9 +212,7 @@ public class TranscriptsClient {
      */
     public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
         return getSubtitles(
-                transcriptId,
-                subtitleFormat,
-                TranscriptsGetSubtitlesRequest.builder().build());
+                transcriptId, subtitleFormat, GetSubtitlesParams.builder().build());
     }
 
     /**
@@ -223,7 +221,7 @@ public class TranscriptsClient {
     public String getSubtitles(
             String transcriptId,
             SubtitleFormat subtitleFormat,
-            TranscriptsGetSubtitlesRequest request,
+            GetSubtitlesParams request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -257,8 +255,7 @@ public class TranscriptsClient {
     /**
      * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public String getSubtitles(
-            String transcriptId, SubtitleFormat subtitleFormat, TranscriptsGetSubtitlesRequest request) {
+    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
         return getSubtitles(transcriptId, subtitleFormat, request, null);
     }
 
@@ -340,14 +337,13 @@ public class TranscriptsClient {
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
     public WordSearchResponse wordSearch(String transcriptId) {
-        return wordSearch(transcriptId, TranscriptsWordSearchRequest.builder().build());
+        return wordSearch(transcriptId, WordSearchParams.builder().build());
     }
 
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(
-            String transcriptId, TranscriptsWordSearchRequest request, RequestOptions requestOptions) {
+    public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -379,7 +375,7 @@ public class TranscriptsClient {
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(String transcriptId, TranscriptsWordSearchRequest request) {
+    public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request) {
         return wordSearch(transcriptId, request, null);
     }
 

@@ -4,10 +4,10 @@
 package com.assemblyai.api.resources.lemur.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.types.ILemurBaseParams;
-import com.assemblyai.api.types.LemurBaseParamsContext;
-import com.assemblyai.api.types.LemurModel;
-import com.assemblyai.api.types.LemurQuestion;
+import com.assemblyai.api.resources.lemur.types.ILemurBaseParams;
+import com.assemblyai.api.resources.lemur.types.LemurBaseParamsContext;
+import com.assemblyai.api.resources.lemur.types.LemurModel;
+import com.assemblyai.api.resources.lemur.types.LemurQuestion;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

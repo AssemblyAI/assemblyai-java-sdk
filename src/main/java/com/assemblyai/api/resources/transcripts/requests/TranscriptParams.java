@@ -4,14 +4,14 @@
 package com.assemblyai.api.resources.transcripts.requests;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.types.ITranscriptOptionalParams;
-import com.assemblyai.api.types.PiiPolicy;
-import com.assemblyai.api.types.SubstitutionPolicy;
-import com.assemblyai.api.types.SummaryModel;
-import com.assemblyai.api.types.SummaryType;
-import com.assemblyai.api.types.TranscriptBoostParam;
-import com.assemblyai.api.types.TranscriptCustomSpelling;
-import com.assemblyai.api.types.TranscriptLanguageCode;
+import com.assemblyai.api.resources.transcripts.types.ITranscriptOptionalParams;
+import com.assemblyai.api.resources.transcripts.types.PiiPolicy;
+import com.assemblyai.api.resources.transcripts.types.SubstitutionPolicy;
+import com.assemblyai.api.resources.transcripts.types.SummaryModel;
+import com.assemblyai.api.resources.transcripts.types.SummaryType;
+import com.assemblyai.api.resources.transcripts.types.TranscriptBoostParam;
+import com.assemblyai.api.resources.transcripts.types.TranscriptCustomSpelling;
+import com.assemblyai.api.resources.transcripts.types.TranscriptLanguageCode;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
