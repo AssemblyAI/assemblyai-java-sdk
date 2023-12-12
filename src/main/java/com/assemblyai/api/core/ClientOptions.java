@@ -29,7 +29,7 @@ public final class ClientOptions {
                 "X-Fern-SDK-Name",
                 "com.assemblyai.fern:api-sdk",
                 "X-Fern-SDK-Version",
-                "0.0.5-beta10",
+                "0.0.5-beta11",
                 "X-Fern-Language",
                 "JAVA"));
         this.headerSuppliers = headerSuppliers;
@@ -43,7 +43,9 @@ public final class ClientOptions {
 
     public Map<String, String> headers(RequestOptions requestOptions) {
         Map<String, String> values = new HashMap<>(this.headers);
-        headerSuppliers.forEach((key, supplier) -> values.put(key, supplier.get()));
+        headerSuppliers.forEach((key, supplier) -> {
+            values.put(key, supplier.get());
+        });
         if (requestOptions != null) {
             values.putAll(requestOptions.getHeaders());
         }
