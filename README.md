@@ -20,7 +20,7 @@ Add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'com.assemblyai:assemblyai-java:0.x.x'
+    implementation 'com.assemblyai:assemblyai-java:1.x.x'
 }
 ```
 
@@ -32,7 +32,7 @@ Add the dependency in your `pom.xml`:
 <dependency>
     <groupId>com.assemblyai</groupId>
     <artifactId>assemblyai-java</artifactId>
-    <version>0.x.x</version>
+    <version>1.x.x</version>
 </dependency>
 ```
 
@@ -138,13 +138,6 @@ TranscriptParams params = TranscriptParams.builder()
   .audioUrl("https://...")
   .build();
 ```
-
-## Beta status
-This SDK is in beta, and there may be breaking changes between versions
-without a major version update. Therefore, we recommend pinning the package
-version to a specific version in your build.gradle file. This way, you can
-install the same version each time without breaking changes unless you are
-intentionally looking for the latest version.
 
 ## Contributing
 While we value open-source contributions to this SDK, this library
