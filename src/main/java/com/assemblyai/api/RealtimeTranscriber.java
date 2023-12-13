@@ -79,13 +79,21 @@ public final class RealtimeTranscriber implements AutoCloseable {
     }
 
     /**
-     * Stream binary data
-     * @param data byte array
+     * Stream binary audio data
+     * @param data byte array audio data
      */
     public void sendAudio(byte[] data) {
         String encoded = new String(Base64.getEncoder().encode(data), StandardCharsets.UTF_8);
+        sendAudio(encoded);
+    }
+
+    /**
+     * Stream base64 encoded audio data
+     * @param data base64 audio data string
+     */
+    public void sendAudio(String data) {
         try {
-            AudioData audioData = AudioData.builder().audioData(encoded).build();
+            AudioData audioData = AudioData.builder().audioData(data).build();
             this.webSocket.send(ObjectMappers.JSON_MAPPER.writeValueAsString(audioData));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -111,7 +119,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private static final int DEFAULT_SAMPLE_RATE = 16_000;
         private String apiKey;
         private Integer sampleRate;
-        private List<String> words;
+        private List<String> wordBoost;
         private Consumer<SessionBegins> onSessionStart = _unused -> {};
         private Consumer<PartialTranscript> onPartialTranscript = _unused -> {};
         private Consumer<FinalTranscript> onFinalTranscript = _unused -> {};
@@ -140,11 +148,11 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets word boost
-         * @param words An array of words
+         * @param wordBoost An array of words to boost
          * @return this
          */
-        public RealtimeTranscriber.Builder words(List<String> words) {
-            this.words = words;
+        public RealtimeTranscriber.Builder wordBoost(List<String> wordBoost) {
+            this.wordBoost = wordBoost;
             return this;
         }
 
@@ -200,15 +208,12 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         public RealtimeTranscriber build() {
             if (apiKey == null) {
-                throw new RuntimeException("apiKey must be specified to consruct RealtimeTranscriber");
-            }
-            if (onError == null) {
-                throw new RuntimeException("onData must be specified to consruct RealtimeTranscriber");
+                throw new RuntimeException("apiKey must be specified to construct RealtimeTranscriber");
             }
             return new RealtimeTranscriber(
                     apiKey,
                     sampleRate == null ? DEFAULT_SAMPLE_RATE : sampleRate,
-                    Optional.ofNullable(words),
+                    Optional.ofNullable(wordBoost),
                     onSessionStart,
                     onPartialTranscript,
                     onFinalTranscript,
