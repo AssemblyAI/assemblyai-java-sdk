@@ -47,7 +47,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.assemblyai'
             artifactId = 'assemblyai-java'
-            version = '0.0.5-beta11'
+            version = '1.0.0'
             from components.java
         }
     }
