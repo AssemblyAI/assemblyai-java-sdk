@@ -5,6 +5,7 @@ package com.assemblyai.api.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
 
@@ -85,6 +86,8 @@ public final class ClientOptions {
         public ClientOptions build() {
             OkHttpClient okhttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(3))
+                    // set longer timeout for LeMUR
+                    .connectTimeout(30, TimeUnit.SECONDS)
                     .build();
             return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
         }
