@@ -5,6 +5,15 @@ src/main/java/com/assemblyai/api/PollingTranscriptsClient.java
 src/main/java/com/assemblyai/api/Transcriber.java
 src/main/java/com/assemblyai/api/RealtimeTranscriber.java
 
+# Temporarily update deserialization logic
+src/main/java/com/assemblyai/api/core/ObjectMappers.java
+src/main/java/com/assemblyai/api/resources/realtime/types/FinalTranscript.java
+src/main/java/com/assemblyai/api/resources/realtime/types/PartialTranscript.java
+src/main/java/com/assemblyai/api/resources/realtime/types/RealtimeMessage.java
+src/main/java/com/assemblyai/api/resources/realtime/types/SessionBegins.java
+src/main/java/com/assemblyai/api/resources/realtime/types/SessionTerminated.java
+
+
 sample-app/src/main/java/sample/App.java
 sample-app/src/main/resources/
 

@@ -2,6 +2,7 @@ package sample;
 
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
+import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
 import com.assemblyai.api.resources.transcripts.requests.WordSearchParams;
 import com.assemblyai.api.resources.transcripts.types.ParagraphsResponse;
@@ -9,7 +10,6 @@ import com.assemblyai.api.resources.transcripts.types.SentencesResponse;
 import com.assemblyai.api.resources.transcripts.types.SubtitleFormat;
 import com.assemblyai.api.resources.transcripts.types.Transcript;
 import com.assemblyai.api.resources.transcripts.types.TranscriptList;
-import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.transcripts.types.WordSearchResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,6 +63,7 @@ public final class App {
         System.out.println("List transcript. " + transcripts);
 
         RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
+                .onSessionStart(System.out::println)
                 .apiKey(System.getenv("ASSEMBLY_AI_API_KEY"))
                 .onPartialTranscript(System.out::println)
                 .onFinalTranscript(System.out::println)

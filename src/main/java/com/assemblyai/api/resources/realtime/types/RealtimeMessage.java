@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonDeserialize(using = RealtimeMessage.Deserializer.class)
 public final class RealtimeMessage {
@@ -103,28 +104,34 @@ public final class RealtimeMessage {
 
         @Override
         public RealtimeMessage deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-            Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SessionBegins.class));
-            } catch (IllegalArgumentException e) {
+            String json = ObjectMappers.JSON_MAPPER.writeValueAsString(p.readValueAs(Object.class));
+
+            Optional<SessionBegins> sessionBegins = ObjectMappers.parse(json, SessionBegins.class);
+            if (sessionBegins.isPresent()) {
+                return of(sessionBegins.get());
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, PartialTranscript.class));
-            } catch (IllegalArgumentException e) {
+
+            Optional<PartialTranscript> partialTranscript = ObjectMappers.parse(json, PartialTranscript.class);
+            if (partialTranscript.isPresent()) {
+                return of(partialTranscript.get());
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, FinalTranscript.class));
-            } catch (IllegalArgumentException e) {
+
+            Optional<FinalTranscript> finalTranscript = ObjectMappers.parse(json, FinalTranscript.class);
+            if (finalTranscript.isPresent()) {
+                return of(finalTranscript.get());
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SessionTerminated.class));
-            } catch (IllegalArgumentException e) {
+
+            Optional<SessionTerminated> sessionTerminated = ObjectMappers.parse(json, SessionTerminated.class);
+            if (sessionTerminated.isPresent()) {
+                return of(sessionTerminated.get());
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, RealtimeError.class));
-            } catch (IllegalArgumentException e) {
+
+            Optional<RealtimeError> realtimeError = ObjectMappers.parse(json, RealtimeError.class);
+            if (realtimeError.isPresent()) {
+                return of(sessionBegins.get());
             }
-            throw new JsonParseException(p, "Failed to deserialize");
+
+            throw new JsonParseException(p, "Received unknown RealtimeMessage: " + json);
         }
     }
 }

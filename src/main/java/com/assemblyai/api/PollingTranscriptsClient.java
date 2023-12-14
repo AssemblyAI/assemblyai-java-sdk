@@ -7,14 +7,14 @@ import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
 import com.assemblyai.api.resources.transcripts.types.Transcript;
 import com.assemblyai.api.resources.transcripts.types.TranscriptOptionalParams;
 import com.assemblyai.api.resources.transcripts.types.TranscriptStatus;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 public class PollingTranscriptsClient extends TranscriptsClient {
 
-    private static final TranscriptOptionalParams EMPTY_PARAMS = TranscriptOptionalParams.builder().build();
+    private static final TranscriptOptionalParams EMPTY_PARAMS =
+            TranscriptOptionalParams.builder().build();
 
     private final AssemblyAI client;
 
@@ -23,12 +23,10 @@ public class PollingTranscriptsClient extends TranscriptsClient {
         this.client = client;
     }
 
-
     /*********************************************************************
      * Submit methods will immediately return the transcript
      *********************************************************************
      */
-
     public Transcript submit(File file) throws IOException {
         return submit(file, EMPTY_PARAMS);
     }

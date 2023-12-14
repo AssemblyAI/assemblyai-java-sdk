@@ -37,6 +37,7 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     private final Map<String, Object> additionalProperties;
 
     private PartialTranscript(
+            String messageType,
             int audioStart,
             int audioEnd,
             double confidence,
@@ -44,6 +45,9 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
             List<Word> words,
             OffsetDateTime created,
             Map<String, Object> additionalProperties) {
+        if (!messageType.equals("PartialTranscript")) {
+            throw new IllegalArgumentException("messageType must be PartialTranscript");
+        }
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
@@ -182,6 +186,10 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements AudioStartStage, AudioEndStage, ConfidenceStage, TextStage, CreatedStage, _FinalStage {
+
+        @JsonSetter("message_type")
+        private String messageType = "PartialTranscript";
+
         private int audioStart;
 
         private int audioEnd;
@@ -297,7 +305,8 @@ public final class PartialTranscript implements IRealtimeBaseTranscript {
 
         @Override
         public PartialTranscript build() {
-            return new PartialTranscript(audioStart, audioEnd, confidence, text, words, created, additionalProperties);
+            return new PartialTranscript(
+                    messageType, audioStart, audioEnd, confidence, text, words, created, additionalProperties);
         }
     }
 }
