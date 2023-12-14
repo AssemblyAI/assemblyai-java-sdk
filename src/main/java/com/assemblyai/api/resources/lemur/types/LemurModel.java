@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class LemurModel {
+    public static final LemurModel MISTRAL_7_B = new LemurModel(Value.MISTRAL_7_B, "mistral-7b");
+
     public static final LemurModel BASIC = new LemurModel(Value.BASIC, "basic");
 
     public static final LemurModel DEFAULT = new LemurModel(Value.DEFAULT, "default");
@@ -42,6 +44,8 @@ public final class LemurModel {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case MISTRAL_7_B:
+                return visitor.visitMistral7B();
             case BASIC:
                 return visitor.visitBasic();
             case DEFAULT:
@@ -55,6 +59,8 @@ public final class LemurModel {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static LemurModel valueOf(String value) {
         switch (value) {
+            case "mistral-7b":
+                return MISTRAL_7_B;
             case "basic":
                 return BASIC;
             case "default":
@@ -69,6 +75,8 @@ public final class LemurModel {
 
         BASIC,
 
+        MISTRAL_7_B,
+
         UNKNOWN
     }
 
@@ -76,6 +84,8 @@ public final class LemurModel {
         T visitDefault();
 
         T visitBasic();
+
+        T visitMistral7B();
 
         T visitUnknown(String unknownType);
     }
