@@ -41,6 +41,7 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
     private final Map<String, Object> additionalProperties;
 
     private FinalTranscript(
+            String messageType,
             int audioStart,
             int audioEnd,
             double confidence,
@@ -50,6 +51,9 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
             boolean punctuated,
             boolean textFormatted,
             Map<String, Object> additionalProperties) {
+        if (!messageType.equals("FinalTranscript")) {
+            throw new IllegalArgumentException("messageType must be FinalTranscript");
+        }
         this.audioStart = audioStart;
         this.audioEnd = audioEnd;
         this.confidence = confidence;
@@ -231,6 +235,10 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
                     PunctuatedStage,
                     TextFormattedStage,
                     _FinalStage {
+
+        @JsonSetter("message_type")
+        private String messageType = "FinalTranscript";
+
         private int audioStart;
 
         private int audioEnd;
@@ -375,6 +383,7 @@ public final class FinalTranscript implements IRealtimeBaseTranscript {
         @Override
         public FinalTranscript build() {
             return new FinalTranscript(
+                    messageType,
                     audioStart,
                     audioEnd,
                     confidence,
