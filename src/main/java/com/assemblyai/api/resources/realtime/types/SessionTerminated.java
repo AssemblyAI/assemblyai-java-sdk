@@ -6,12 +6,19 @@ package com.assemblyai.api.resources.realtime.types;
 import com.assemblyai.api.core.ObjectMappers;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.Map;
 
 public final class SessionTerminated {
+
+    @JsonSetter("message_type")
+    private final String messageType = "SessionTerminated";
     private final Map<String, Object> additionalProperties;
 
-    private SessionTerminated(Map<String, Object> additionalProperties) {
+    private SessionTerminated(String messageType, Map<String, Object> additionalProperties) {
+        if (!messageType.equals("SessionTerminated")) {
+            throw new IllegalArgumentException("messageType must be SessionTerminated");
+        }
         this.additionalProperties = additionalProperties;
     }
 

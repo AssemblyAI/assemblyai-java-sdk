@@ -25,7 +25,11 @@ public final class SessionBegins {
 
     private final Map<String, Object> additionalProperties;
 
-    private SessionBegins(String sessionId, OffsetDateTime expiresAt, Map<String, Object> additionalProperties) {
+    private SessionBegins(
+            String sessionId, OffsetDateTime expiresAt, String messageType, Map<String, Object> additionalProperties) {
+        if (!messageType.equals("SessionBegins")) {
+            throw new IllegalArgumentException("messageType must be SessionBegins");
+        }
         this.sessionId = sessionId;
         this.expiresAt = expiresAt;
         this.additionalProperties = additionalProperties;
@@ -97,6 +101,10 @@ public final class SessionBegins {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SessionIdStage, ExpiresAtStage, _FinalStage {
+
+        @JsonSetter("message_type")
+        private String messageType = "SessionBegins";
+
         private String sessionId;
 
         private OffsetDateTime expiresAt;
@@ -137,7 +145,7 @@ public final class SessionBegins {
 
         @Override
         public SessionBegins build() {
-            return new SessionBegins(sessionId, expiresAt, additionalProperties);
+            return new SessionBegins(sessionId, expiresAt, messageType, additionalProperties);
         }
     }
 }
