@@ -13,7 +13,7 @@ public interface ILemurBaseParams {
 
     Optional<LemurBaseParamsContext> getContext();
 
-    Optional<LemurModel> getFinalModel();
+    Optional<LemurBaseParamsFinalModel> getFinalModel();
 
     Optional<Integer> getMaxOutputSize();
 

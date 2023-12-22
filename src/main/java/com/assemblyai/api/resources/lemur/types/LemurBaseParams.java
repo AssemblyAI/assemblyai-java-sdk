@@ -27,7 +27,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
 
     private final Optional<LemurBaseParamsContext> context;
 
-    private final Optional<LemurModel> finalModel;
+    private final Optional<LemurBaseParamsFinalModel> finalModel;
 
     private final Optional<Integer> maxOutputSize;
 
@@ -39,7 +39,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
             Optional<List<String>> transcriptIds,
             Optional<String> inputText,
             Optional<LemurBaseParamsContext> context,
-            Optional<LemurModel> finalModel,
+            Optional<LemurBaseParamsFinalModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
             Map<String, Object> additionalProperties) {
@@ -81,9 +81,13 @@ public final class LemurBaseParams implements ILemurBaseParams {
         return context;
     }
 
+    /**
+     * @return The model that is used for the final prompt after compression is performed.
+     * Defaults to &quot;default&quot;.
+     */
     @JsonProperty("final_model")
     @Override
-    public Optional<LemurModel> getFinalModel() {
+    public Optional<LemurBaseParamsFinalModel> getFinalModel() {
         return finalModel;
     }
 
@@ -155,7 +159,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
 
         private Optional<LemurBaseParamsContext> context = Optional.empty();
 
-        private Optional<LemurModel> finalModel = Optional.empty();
+        private Optional<LemurBaseParamsFinalModel> finalModel = Optional.empty();
 
         private Optional<Integer> maxOutputSize = Optional.empty();
 
@@ -210,12 +214,12 @@ public final class LemurBaseParams implements ILemurBaseParams {
         }
 
         @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
-        public Builder finalModel(Optional<LemurModel> finalModel) {
+        public Builder finalModel(Optional<LemurBaseParamsFinalModel> finalModel) {
             this.finalModel = finalModel;
             return this;
         }
 
-        public Builder finalModel(LemurModel finalModel) {
+        public Builder finalModel(LemurBaseParamsFinalModel finalModel) {
             this.finalModel = Optional.of(finalModel);
             return this;
         }

@@ -6,7 +6,7 @@ package com.assemblyai.api.resources.lemur.requests;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.resources.lemur.types.ILemurBaseParams;
 import com.assemblyai.api.resources.lemur.types.LemurBaseParamsContext;
-import com.assemblyai.api.resources.lemur.types.LemurModel;
+import com.assemblyai.api.resources.lemur.types.LemurBaseParamsFinalModel;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,7 +30,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
     private final Optional<LemurBaseParamsContext> context;
 
-    private final Optional<LemurModel> finalModel;
+    private final Optional<LemurBaseParamsFinalModel> finalModel;
 
     private final Optional<Integer> maxOutputSize;
 
@@ -44,7 +44,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
             Optional<List<String>> transcriptIds,
             Optional<String> inputText,
             Optional<LemurBaseParamsContext> context,
-            Optional<LemurModel> finalModel,
+            Optional<LemurBaseParamsFinalModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
             String prompt,
@@ -88,9 +88,13 @@ public final class LemurTaskParams implements ILemurBaseParams {
         return context;
     }
 
+    /**
+     * @return The model that is used for the final prompt after compression is performed.
+     * Defaults to &quot;default&quot;.
+     */
     @JsonProperty("final_model")
     @Override
-    public Optional<LemurModel> getFinalModel() {
+    public Optional<LemurBaseParamsFinalModel> getFinalModel() {
         return finalModel;
     }
 
@@ -185,9 +189,9 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
         _FinalStage context(LemurBaseParamsContext context);
 
-        _FinalStage finalModel(Optional<LemurModel> finalModel);
+        _FinalStage finalModel(Optional<LemurBaseParamsFinalModel> finalModel);
 
-        _FinalStage finalModel(LemurModel finalModel);
+        _FinalStage finalModel(LemurBaseParamsFinalModel finalModel);
 
         _FinalStage maxOutputSize(Optional<Integer> maxOutputSize);
 
@@ -206,7 +210,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
         private Optional<Integer> maxOutputSize = Optional.empty();
 
-        private Optional<LemurModel> finalModel = Optional.empty();
+        private Optional<LemurBaseParamsFinalModel> finalModel = Optional.empty();
 
         private Optional<LemurBaseParamsContext> context = Optional.empty();
 
@@ -278,15 +282,20 @@ public final class LemurTaskParams implements ILemurBaseParams {
             return this;
         }
 
+        /**
+         * <p>The model that is used for the final prompt after compression is performed.
+         * Defaults to &quot;default&quot;.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
-        public _FinalStage finalModel(LemurModel finalModel) {
+        public _FinalStage finalModel(LemurBaseParamsFinalModel finalModel) {
             this.finalModel = Optional.of(finalModel);
             return this;
         }
 
         @Override
         @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
-        public _FinalStage finalModel(Optional<LemurModel> finalModel) {
+        public _FinalStage finalModel(Optional<LemurBaseParamsFinalModel> finalModel) {
             this.finalModel = finalModel;
             return this;
         }
