@@ -10,6 +10,9 @@ public final class LemurModel {
     public static final LemurModel ASSEMBLYAI_MISTRAL_7_B =
             new LemurModel(Value.ASSEMBLYAI_MISTRAL_7_B, "assemblyai/mistral-7b");
 
+    public static final LemurModel ANTHROPIC_CLAUDE_2_1 =
+            new LemurModel(Value.ANTHROPIC_CLAUDE_2_1, "anthropic/claude-2-1");
+
     public static final LemurModel BASIC = new LemurModel(Value.BASIC, "basic");
 
     public static final LemurModel DEFAULT = new LemurModel(Value.DEFAULT, "default");
@@ -51,6 +54,8 @@ public final class LemurModel {
                 return visitor.visitBasic();
             case DEFAULT:
                 return visitor.visitDefault();
+            case ANTHROPIC_CLAUDE_2_1:
+                return visitor.visitAnthropicClaude21();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -62,6 +67,8 @@ public final class LemurModel {
         switch (value) {
             case "assemblyai/mistral-7b":
                 return ASSEMBLYAI_MISTRAL_7_B;
+            case "anthropic/claude-2-1":
+                return ANTHROPIC_CLAUDE_2_1;
             case "basic":
                 return BASIC;
             case "default":
@@ -78,6 +85,8 @@ public final class LemurModel {
 
         ASSEMBLYAI_MISTRAL_7_B,
 
+        ANTHROPIC_CLAUDE_2_1,
+
         UNKNOWN
     }
 
@@ -89,5 +98,7 @@ public final class LemurModel {
         T visitAssemblyaiMistral7B();
 
         T visitUnknown(String unknownType);
+
+        T visitAnthropicClaude21();
     }
 }
