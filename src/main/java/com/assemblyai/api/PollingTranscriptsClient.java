@@ -82,7 +82,7 @@ public class PollingTranscriptsClient extends TranscriptsClient {
     }
 
     /*********************************************************************
-     * Transcribe methods will poll until transcription happens
+     * Transcribe audio. This will create a transcript and wait until the transcript status is "completed" or "error".
      *********************************************************************
      */
     public Transcript transcribe(File file) throws IOException {
@@ -107,7 +107,8 @@ public class PollingTranscriptsClient extends TranscriptsClient {
         try {
             while (true) {
                 Transcript transcript = this.client.transcripts().get(transcriptId);
-                if (transcript.getStatus().equals(TranscriptStatus.COMPLETED)) {
+                TranscriptStatus status = transcript.getStatus();
+                if (status.equals(TranscriptStatus.COMPLETED) || status.equals(TranscriptStatus.ERROR)) {
                     return transcript;
                 }
                 Thread.sleep(1000);
