@@ -63,6 +63,8 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     private final Optional<Boolean> contentSafety;
 
+    private final Optional<Integer> contentSafetyConfidence;
+
     private final Optional<Boolean> iabCategories;
 
     private final Optional<Boolean> languageDetection;
@@ -113,6 +115,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             Optional<Boolean> speakerLabels,
             Optional<Integer> speakersExpected,
             Optional<Boolean> contentSafety,
+            Optional<Integer> contentSafetyConfidence,
             Optional<Boolean> iabCategories,
             Optional<Boolean> languageDetection,
             Optional<List<TranscriptCustomSpelling>> customSpelling,
@@ -148,6 +151,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         this.speakerLabels = speakerLabels;
         this.speakersExpected = speakersExpected;
         this.contentSafety = contentSafety;
+        this.contentSafetyConfidence = contentSafetyConfidence;
         this.iabCategories = iabCategories;
         this.languageDetection = languageDetection;
         this.customSpelling = customSpelling;
@@ -348,6 +352,15 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
+     * @return The confidence threshold for content moderation. Values must be between 25 and 100.
+     */
+    @JsonProperty("content_safety_confidence")
+    @Override
+    public Optional<Integer> getContentSafetyConfidence() {
+        return contentSafetyConfidence;
+    }
+
+    /**
      * @return Enable <a href="https://www.assemblyai.com/docs/models/topic-detection">Topic Detection</a>, can be true or false
      */
     @JsonProperty("iab_categories")
@@ -498,6 +511,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                 && speakerLabels.equals(other.speakerLabels)
                 && speakersExpected.equals(other.speakersExpected)
                 && contentSafety.equals(other.contentSafety)
+                && contentSafetyConfidence.equals(other.contentSafetyConfidence)
                 && iabCategories.equals(other.iabCategories)
                 && languageDetection.equals(other.languageDetection)
                 && customSpelling.equals(other.customSpelling)
@@ -537,6 +551,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                 this.speakerLabels,
                 this.speakersExpected,
                 this.contentSafety,
+                this.contentSafetyConfidence,
                 this.iabCategories,
                 this.languageDetection,
                 this.customSpelling,
@@ -605,6 +620,8 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         private Optional<Boolean> contentSafety = Optional.empty();
 
+        private Optional<Integer> contentSafetyConfidence = Optional.empty();
+
         private Optional<Boolean> iabCategories = Optional.empty();
 
         private Optional<Boolean> languageDetection = Optional.empty();
@@ -658,6 +675,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             speakerLabels(other.getSpeakerLabels());
             speakersExpected(other.getSpeakersExpected());
             contentSafety(other.getContentSafety());
+            contentSafetyConfidence(other.getContentSafetyConfidence());
             iabCategories(other.getIabCategories());
             languageDetection(other.getLanguageDetection());
             customSpelling(other.getCustomSpelling());
@@ -905,6 +923,17 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             return this;
         }
 
+        @JsonSetter(value = "content_safety_confidence", nulls = Nulls.SKIP)
+        public Builder contentSafetyConfidence(Optional<Integer> contentSafetyConfidence) {
+            this.contentSafetyConfidence = contentSafetyConfidence;
+            return this;
+        }
+
+        public Builder contentSafetyConfidence(Integer contentSafetyConfidence) {
+            this.contentSafetyConfidence = Optional.of(contentSafetyConfidence);
+            return this;
+        }
+
         @JsonSetter(value = "iab_categories", nulls = Nulls.SKIP)
         public Builder iabCategories(Optional<Boolean> iabCategories) {
             this.iabCategories = iabCategories;
@@ -1071,6 +1100,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                     speakerLabels,
                     speakersExpected,
                     contentSafety,
+                    contentSafetyConfidence,
                     iabCategories,
                     languageDetection,
                     customSpelling,
