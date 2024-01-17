@@ -88,6 +88,10 @@ public final class LemurTaskParams implements ILemurBaseParams {
         return context;
     }
 
+    /**
+     * @return The model that is used for the final prompt after compression is performed.
+     * Defaults to &quot;default&quot;.
+     */
     @JsonProperty("final_model")
     @Override
     public Optional<LemurModel> getFinalModel() {
@@ -278,6 +282,11 @@ public final class LemurTaskParams implements ILemurBaseParams {
             return this;
         }
 
+        /**
+         * <p>The model that is used for the final prompt after compression is performed.
+         * Defaults to &quot;default&quot;.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage finalModel(LemurModel finalModel) {
             this.finalModel = Optional.of(finalModel);

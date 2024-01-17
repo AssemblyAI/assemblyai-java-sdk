@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class EntityType {
+    public static final EntityType DRIVERS_LICENSE = new EntityType(Value.DRIVERS_LICENSE, "drivers_license");
+
+    public static final EntityType CREDIT_CARD_CVV = new EntityType(Value.CREDIT_CARD_CVV, "credit_card_cvv");
+
     public static final EntityType DRUG = new EntityType(Value.DRUG, "drug");
 
     public static final EntityType PERSON_AGE = new EntityType(Value.PERSON_AGE, "person_age");
@@ -20,19 +24,17 @@ public final class EntityType {
     public static final EntityType CREDIT_CARD_EXPIRATION =
             new EntityType(Value.CREDIT_CARD_EXPIRATION, "credit_card_expiration");
 
-    public static final EntityType DATE_OF_BIRTH = new EntityType(Value.DATE_OF_BIRTH, "date_of_birth");
-
     public static final EntityType OCCUPATION = new EntityType(Value.OCCUPATION, "occupation");
 
     public static final EntityType EVENT = new EntityType(Value.EVENT, "event");
 
     public static final EntityType LOCATION = new EntityType(Value.LOCATION, "location");
 
-    public static final EntityType DRIVERS_LICENSE = new EntityType(Value.DRIVERS_LICENSE, "drivers_license");
-
     public static final EntityType LANGUAGE = new EntityType(Value.LANGUAGE, "language");
 
     public static final EntityType BLOOD_TYPE = new EntityType(Value.BLOOD_TYPE, "blood_type");
+
+    public static final EntityType DATE_OF_BIRTH = new EntityType(Value.DATE_OF_BIRTH, "date_of_birth");
 
     public static final EntityType PERSON_NAME = new EntityType(Value.PERSON_NAME, "person_name");
 
@@ -42,8 +44,6 @@ public final class EntityType {
 
     public static final EntityType BANKING_INFORMATION =
             new EntityType(Value.BANKING_INFORMATION, "banking_information");
-
-    public static final EntityType CREDIT_CARD_CVV = new EntityType(Value.CREDIT_CARD_CVV, "credit_card_cvv");
 
     public static final EntityType NATIONALITY = new EntityType(Value.NATIONALITY, "nationality");
 
@@ -100,6 +100,10 @@ public final class EntityType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case DRIVERS_LICENSE:
+                return visitor.visitDriversLicense();
+            case CREDIT_CARD_CVV:
+                return visitor.visitCreditCardCvv();
             case DRUG:
                 return visitor.visitDrug();
             case PERSON_AGE:
@@ -112,20 +116,18 @@ public final class EntityType {
                 return visitor.visitPhoneNumber();
             case CREDIT_CARD_EXPIRATION:
                 return visitor.visitCreditCardExpiration();
-            case DATE_OF_BIRTH:
-                return visitor.visitDateOfBirth();
             case OCCUPATION:
                 return visitor.visitOccupation();
             case EVENT:
                 return visitor.visitEvent();
             case LOCATION:
                 return visitor.visitLocation();
-            case DRIVERS_LICENSE:
-                return visitor.visitDriversLicense();
             case LANGUAGE:
                 return visitor.visitLanguage();
             case BLOOD_TYPE:
                 return visitor.visitBloodType();
+            case DATE_OF_BIRTH:
+                return visitor.visitDateOfBirth();
             case PERSON_NAME:
                 return visitor.visitPersonName();
             case MEDICAL_PROCESS:
@@ -134,8 +136,6 @@ public final class EntityType {
                 return visitor.visitEmailAddress();
             case BANKING_INFORMATION:
                 return visitor.visitBankingInformation();
-            case CREDIT_CARD_CVV:
-                return visitor.visitCreditCardCvv();
             case NATIONALITY:
                 return visitor.visitNationality();
             case US_SOCIAL_SECURITY_NUMBER:
@@ -167,6 +167,10 @@ public final class EntityType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static EntityType valueOf(String value) {
         switch (value) {
+            case "drivers_license":
+                return DRIVERS_LICENSE;
+            case "credit_card_cvv":
+                return CREDIT_CARD_CVV;
             case "drug":
                 return DRUG;
             case "person_age":
@@ -179,20 +183,18 @@ public final class EntityType {
                 return PHONE_NUMBER;
             case "credit_card_expiration":
                 return CREDIT_CARD_EXPIRATION;
-            case "date_of_birth":
-                return DATE_OF_BIRTH;
             case "occupation":
                 return OCCUPATION;
             case "event":
                 return EVENT;
             case "location":
                 return LOCATION;
-            case "drivers_license":
-                return DRIVERS_LICENSE;
             case "language":
                 return LANGUAGE;
             case "blood_type":
                 return BLOOD_TYPE;
+            case "date_of_birth":
+                return DATE_OF_BIRTH;
             case "person_name":
                 return PERSON_NAME;
             case "medical_process":
@@ -201,8 +203,6 @@ public final class EntityType {
                 return EMAIL_ADDRESS;
             case "banking_information":
                 return BANKING_INFORMATION;
-            case "credit_card_cvv":
-                return CREDIT_CARD_CVV;
             case "nationality":
                 return NATIONALITY;
             case "us_social_security_number":

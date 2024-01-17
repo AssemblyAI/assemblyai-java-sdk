@@ -49,6 +49,8 @@ public interface ITranscriptOptionalParams {
 
     Optional<Boolean> getContentSafety();
 
+    Optional<Integer> getContentSafetyConfidence();
+
     Optional<Boolean> getIabCategories();
 
     Optional<Boolean> getLanguageDetection();
