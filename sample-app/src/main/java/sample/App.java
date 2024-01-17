@@ -79,10 +79,11 @@ public final class App {
 
         RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
-                .onSessionStart(System.out::println)
+                .onSessionBegins(System.out::println)
                 .onPartialTranscript(System.out::println)
                 .onFinalTranscript(System.out::println)
                 .onError((err) -> System.out.println(err.getMessage()))
+                .onClose((code, reason) -> System.out.printf("%s: %s", code, reason))
                 .build();
         realtimeTranscriber.connect();
         streamFile("sample-app/src/main/resources/gore-short.wav", realtimeTranscriber);
@@ -90,8 +91,7 @@ public final class App {
     }
 
     public static void streamFile(String filePath, RealtimeTranscriber realtimeTranscriber) {
-        try (FileInputStream fileInputStream =
-                     new FileInputStream(filePath)) {
+        try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
             byte[] buffer = new byte[8192];
 
             while (fileInputStream.read(buffer) != -1) {

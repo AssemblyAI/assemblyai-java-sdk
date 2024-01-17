@@ -22,3 +22,6 @@ generated/
 
 bin
 build
+
+.env
+*.env
