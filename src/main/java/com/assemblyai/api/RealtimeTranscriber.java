@@ -11,7 +11,6 @@ import com.assemblyai.api.resources.realtime.types.SessionBegins;
 import com.assemblyai.api.resources.realtime.types.SessionTerminated;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +20,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -80,24 +80,18 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
     /**
      * Stream binary audio data
-     * @param data byte array audio data
+     * @param audio byte array audio data
      */
-    public void sendAudio(byte[] data) {
-        String encoded = new String(Base64.getEncoder().encode(data), StandardCharsets.UTF_8);
-        sendAudio(encoded);
+    public void sendAudio(byte[] audio) {
+        this.webSocket.send(ByteString.of(audio));
     }
 
     /**
      * Stream base64 encoded audio data
-     * @param data base64 audio data string
+     * @param audio base64 audio data string
      */
-    public void sendAudio(String data) {
-        try {
-            AudioData audioData = AudioData.builder().audioData(data).build();
-            this.webSocket.send(ObjectMappers.JSON_MAPPER.writeValueAsString(audioData));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void sendAudio(String audio) {
+        sendAudio(Base64.getDecoder().decode(audio));
     }
 
     /**
