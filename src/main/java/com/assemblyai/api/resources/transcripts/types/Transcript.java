@@ -77,7 +77,7 @@ public final class Transcript {
 
     private final Optional<Boolean> redactPiiAudio;
 
-    private final Optional<String> redactPiiAudioQuality;
+    private final Optional<RedactPiiAudioQuality> redactPiiAudioQuality;
 
     private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
@@ -162,7 +162,7 @@ public final class Transcript {
             Optional<Boolean> filterProfanity,
             boolean redactPii,
             Optional<Boolean> redactPiiAudio,
-            Optional<String> redactPiiAudioQuality,
+            Optional<RedactPiiAudioQuality> redactPiiAudioQuality,
             Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
@@ -474,12 +474,8 @@ public final class Transcript {
         return redactPiiAudio;
     }
 
-    /**
-     * @return The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
-     * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.
-     */
     @JsonProperty("redact_pii_audio_quality")
-    public Optional<String> getRedactPiiAudioQuality() {
+    public Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality() {
         return redactPiiAudioQuality;
     }
 
@@ -949,9 +945,9 @@ public final class Transcript {
 
         _FinalStage redactPiiAudio(Boolean redactPiiAudio);
 
-        _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality);
 
-        _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality);
 
         _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies);
 
@@ -1134,7 +1130,7 @@ public final class Transcript {
 
         private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
-        private Optional<String> redactPiiAudioQuality = Optional.empty();
+        private Optional<RedactPiiAudioQuality> redactPiiAudioQuality = Optional.empty();
 
         private Optional<Boolean> redactPiiAudio = Optional.empty();
 
@@ -1762,20 +1758,15 @@ public final class Transcript {
             return this;
         }
 
-        /**
-         * <p>The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
-         * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
-        public _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
 
         @Override
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
-        public _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
             return this;
         }

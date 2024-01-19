@@ -37,7 +37,7 @@ public interface ITranscriptOptionalParams {
 
     Optional<Boolean> getRedactPiiAudio();
 
-    Optional<String> getRedactPiiAudioQuality();
+    Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality();
 
     Optional<List<PiiPolicy>> getRedactPiiPolicies();
 

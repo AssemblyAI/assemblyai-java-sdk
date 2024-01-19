@@ -51,7 +51,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     private final Optional<Boolean> redactPiiAudio;
 
-    private final Optional<String> redactPiiAudioQuality;
+    private final Optional<RedactPiiAudioQuality> redactPiiAudioQuality;
 
     private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
@@ -109,7 +109,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             Optional<Boolean> filterProfanity,
             Optional<Boolean> redactPii,
             Optional<Boolean> redactPiiAudio,
-            Optional<String> redactPiiAudioQuality,
+            Optional<RedactPiiAudioQuality> redactPiiAudioQuality,
             Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
@@ -305,7 +305,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
      */
     @JsonProperty("redact_pii_audio_quality")
     @Override
-    public Optional<String> getRedactPiiAudioQuality() {
+    public Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality() {
         return redactPiiAudioQuality;
     }
 
@@ -608,7 +608,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         private Optional<Boolean> redactPiiAudio = Optional.empty();
 
-        private Optional<String> redactPiiAudioQuality = Optional.empty();
+        private Optional<RedactPiiAudioQuality> redactPiiAudioQuality = Optional.empty();
 
         private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
@@ -858,12 +858,12 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
-        public Builder redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
+        public Builder redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
             return this;
         }
 
-        public Builder redactPiiAudioQuality(String redactPiiAudioQuality) {
+        public Builder redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
