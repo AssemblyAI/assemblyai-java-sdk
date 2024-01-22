@@ -10,18 +10,20 @@ import com.assemblyai.api.resources.realtime.types.RealtimeTranscript;
 import com.assemblyai.api.resources.realtime.types.SessionBegins;
 import com.assemblyai.api.resources.realtime.types.SessionTerminated;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -84,26 +86,18 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
     /**
      * Stream binary audio data
-     *
-     * @param data byte array audio data
+     * @param audio byte array audio data
      */
-    public void sendAudio(byte[] data) {
-        String encoded = new String(Base64.getEncoder().encode(data), StandardCharsets.UTF_8);
-        sendAudio(encoded);
+    public void sendAudio(byte[] audio) {
+        this.webSocket.send(ByteString.of(audio));
     }
 
     /**
      * Stream base64 encoded audio data
-     *
-     * @param data base64 audio data string
+     * @param audio base64 audio data string
      */
-    public void sendAudio(String data) {
-        try {
-            AudioData audioData = AudioData.builder().audioData(data).build();
-            this.webSocket.send(ObjectMappers.JSON_MAPPER.writeValueAsString(audioData));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void sendAudio(String audio) {
+        sendAudio(Base64.getDecoder().decode(audio));
     }
 
     /**
@@ -135,7 +129,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets api key
-         *
          * @param apiKey The AssemblyAI API Key
          * @return this
          */
@@ -146,7 +139,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets sample rate
-         *
          * @param sampleRate The audio sample rate. Defaults to 16_000
          * @return this
          */
@@ -157,7 +149,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets word boost
-         *
          * @param wordBoost An array of words to boost
          * @return this
          */
@@ -168,7 +159,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onSessionStart
-         *
          * @param onSessionStart an event handler for the start event. Defaults to a noop.
          * @return this
          * @deprecated use {@link #onSessionBegins(Consumer)} instead.
@@ -192,7 +182,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onPartialTranscript
-         *
          * @param onPartialTranscript an event handler for the partial transcript event. Defaults to a noop.
          * @return this
          */
@@ -203,7 +192,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onPartialTranscript
-         *
          * @param onFinalTranscript an event handler for the final transcript event. Defaults to a noop.
          * @return this
          */
@@ -214,7 +202,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onTranscript
-         *
          * @param onTranscript an event handler for any transcript event (partial or final). Defaults to a noop.
          * @return this
          */
@@ -225,7 +212,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onError
-         *
          * @param onError an event handler for an error event. Defaults to a noop.
          * @return this
          */
@@ -236,7 +222,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onClose
-         *
          * @param onClose an event handler for the closing event. Defaults to a noop.
          * @return this
          */
@@ -265,8 +250,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private final class Listener extends WebSocketListener {
 
         @Override
-        public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
-        }
+        public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {}
 
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
