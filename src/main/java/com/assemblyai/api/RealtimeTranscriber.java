@@ -1,7 +1,6 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.resources.realtime.types.AudioData;
 import com.assemblyai.api.resources.realtime.types.FinalTranscript;
 import com.assemblyai.api.resources.realtime.types.PartialTranscript;
 import com.assemblyai.api.resources.realtime.types.RealtimeError;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
