@@ -27,9 +27,9 @@ public final class ListTranscriptParams {
 
     private final Optional<String> createdOn;
 
-    private final Optional<String> beforeId;
+    private final Optional<String> beforeID;
 
-    private final Optional<String> afterId;
+    private final Optional<String> afterID;
 
     private final Optional<Boolean> throttledOnly;
 
@@ -39,15 +39,15 @@ public final class ListTranscriptParams {
             Optional<Integer> limit,
             Optional<TranscriptStatus> status,
             Optional<String> createdOn,
-            Optional<String> beforeId,
-            Optional<String> afterId,
+            Optional<String> beforeID,
+            Optional<String> afterID,
             Optional<Boolean> throttledOnly,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.status = status;
         this.createdOn = createdOn;
-        this.beforeId = beforeId;
-        this.afterId = afterId;
+        this.beforeID = beforeID;
+        this.afterID = afterID;
         this.throttledOnly = throttledOnly;
         this.additionalProperties = additionalProperties;
     }
@@ -80,16 +80,16 @@ public final class ListTranscriptParams {
      * @return Get transcripts that were created before this transcript ID
      */
     @JsonProperty("before_id")
-    public Optional<String> getBeforeId() {
-        return beforeId;
+    public Optional<String> getBeforeID() {
+        return beforeID;
     }
 
     /**
      * @return Get transcripts that were created after this transcript ID
      */
     @JsonProperty("after_id")
-    public Optional<String> getAfterId() {
-        return afterId;
+    public Optional<String> getAfterID() {
+        return afterID;
     }
 
     /**
@@ -115,14 +115,14 @@ public final class ListTranscriptParams {
         return limit.equals(other.limit)
                 && status.equals(other.status)
                 && createdOn.equals(other.createdOn)
-                && beforeId.equals(other.beforeId)
-                && afterId.equals(other.afterId)
+                && beforeID.equals(other.beforeID)
+                && afterID.equals(other.afterID)
                 && throttledOnly.equals(other.throttledOnly);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.limit, this.status, this.createdOn, this.beforeId, this.afterId, this.throttledOnly);
+        return Objects.hash(this.limit, this.status, this.createdOn, this.beforeID, this.afterID, this.throttledOnly);
     }
 
     @Override
@@ -142,9 +142,9 @@ public final class ListTranscriptParams {
 
         private Optional<String> createdOn = Optional.empty();
 
-        private Optional<String> beforeId = Optional.empty();
+        private Optional<String> beforeID = Optional.empty();
 
-        private Optional<String> afterId = Optional.empty();
+        private Optional<String> afterID = Optional.empty();
 
         private Optional<Boolean> throttledOnly = Optional.empty();
 
@@ -157,8 +157,8 @@ public final class ListTranscriptParams {
             limit(other.getLimit());
             status(other.getStatus());
             createdOn(other.getCreatedOn());
-            beforeId(other.getBeforeId());
-            afterId(other.getAfterId());
+            beforeID(other.getBeforeID());
+            afterID(other.getAfterID());
             throttledOnly(other.getThrottledOnly());
             return this;
         }
@@ -197,24 +197,24 @@ public final class ListTranscriptParams {
         }
 
         @JsonSetter(value = "before_id", nulls = Nulls.SKIP)
-        public Builder beforeId(Optional<String> beforeId) {
-            this.beforeId = beforeId;
+        public Builder beforeID(Optional<String> beforeID) {
+            this.beforeID = beforeID;
             return this;
         }
 
-        public Builder beforeId(String beforeId) {
-            this.beforeId = Optional.of(beforeId);
+        public Builder beforeID(String beforeID) {
+            this.beforeID = Optional.of(beforeID);
             return this;
         }
 
         @JsonSetter(value = "after_id", nulls = Nulls.SKIP)
-        public Builder afterId(Optional<String> afterId) {
-            this.afterId = afterId;
+        public Builder afterID(Optional<String> afterID) {
+            this.afterID = afterID;
             return this;
         }
 
-        public Builder afterId(String afterId) {
-            this.afterId = Optional.of(afterId);
+        public Builder afterID(String afterID) {
+            this.afterID = Optional.of(afterID);
             return this;
         }
 
@@ -231,7 +231,7 @@ public final class ListTranscriptParams {
 
         public ListTranscriptParams build() {
             return new ListTranscriptParams(
-                    limit, status, createdOn, beforeId, afterId, throttledOnly, additionalProperties);
+                    limit, status, createdOn, beforeID, afterID, throttledOnly, additionalProperties);
         }
     }
 }

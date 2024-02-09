@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ILemurBaseParams {
-    Optional<List<String>> getTranscriptIds();
+    Optional<List<String>> getTranscriptIDs();
 
     Optional<String> getInputText();
 

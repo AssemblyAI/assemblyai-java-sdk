@@ -18,18 +18,18 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PurgeLemurRequestDataResponse.Builder.class)
 public final class PurgeLemurRequestDataResponse {
-    private final String requestId;
+    private final String requestID;
 
-    private final String requestIdToPurge;
+    private final String requestIDToPurge;
 
     private final boolean deleted;
 
     private final Map<String, Object> additionalProperties;
 
     private PurgeLemurRequestDataResponse(
-            String requestId, String requestIdToPurge, boolean deleted, Map<String, Object> additionalProperties) {
-        this.requestId = requestId;
-        this.requestIdToPurge = requestIdToPurge;
+            String requestID, String requestIDToPurge, boolean deleted, Map<String, Object> additionalProperties) {
+        this.requestID = requestID;
+        this.requestIDToPurge = requestIDToPurge;
         this.deleted = deleted;
         this.additionalProperties = additionalProperties;
     }
@@ -38,16 +38,16 @@ public final class PurgeLemurRequestDataResponse {
      * @return The ID of the deletion request of the LeMUR request
      */
     @JsonProperty("request_id")
-    public String getRequestId() {
-        return requestId;
+    public String getRequestID() {
+        return requestID;
     }
 
     /**
      * @return The ID of the LeMUR request to purge the data for
      */
     @JsonProperty("request_id_to_purge")
-    public String getRequestIdToPurge() {
-        return requestIdToPurge;
+    public String getRequestIDToPurge() {
+        return requestIDToPurge;
     }
 
     /**
@@ -70,14 +70,14 @@ public final class PurgeLemurRequestDataResponse {
     }
 
     private boolean equalTo(PurgeLemurRequestDataResponse other) {
-        return requestId.equals(other.requestId)
-                && requestIdToPurge.equals(other.requestIdToPurge)
+        return requestID.equals(other.requestID)
+                && requestIDToPurge.equals(other.requestIDToPurge)
                 && deleted == other.deleted;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.requestId, this.requestIdToPurge, this.deleted);
+        return Objects.hash(this.requestID, this.requestIDToPurge, this.deleted);
     }
 
     @Override
@@ -85,18 +85,18 @@ public final class PurgeLemurRequestDataResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static RequestIdStage builder() {
+    public static RequestIDStage builder() {
         return new Builder();
     }
 
-    public interface RequestIdStage {
-        RequestIdToPurgeStage requestId(String requestId);
+    public interface RequestIDStage {
+        RequestIDToPurgeStage requestID(String requestID);
 
         Builder from(PurgeLemurRequestDataResponse other);
     }
 
-    public interface RequestIdToPurgeStage {
-        DeletedStage requestIdToPurge(String requestIdToPurge);
+    public interface RequestIDToPurgeStage {
+        DeletedStage requestIDToPurge(String requestIDToPurge);
     }
 
     public interface DeletedStage {
@@ -108,10 +108,10 @@ public final class PurgeLemurRequestDataResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RequestIdStage, RequestIdToPurgeStage, DeletedStage, _FinalStage {
-        private String requestId;
+    public static final class Builder implements RequestIDStage, RequestIDToPurgeStage, DeletedStage, _FinalStage {
+        private String requestID;
 
-        private String requestIdToPurge;
+        private String requestIDToPurge;
 
         private boolean deleted;
 
@@ -122,8 +122,8 @@ public final class PurgeLemurRequestDataResponse {
 
         @Override
         public Builder from(PurgeLemurRequestDataResponse other) {
-            requestId(other.getRequestId());
-            requestIdToPurge(other.getRequestIdToPurge());
+            requestID(other.getRequestID());
+            requestIDToPurge(other.getRequestIDToPurge());
             deleted(other.getDeleted());
             return this;
         }
@@ -134,8 +134,8 @@ public final class PurgeLemurRequestDataResponse {
          */
         @Override
         @JsonSetter("request_id")
-        public RequestIdToPurgeStage requestId(String requestId) {
-            this.requestId = requestId;
+        public RequestIDToPurgeStage requestID(String requestID) {
+            this.requestID = requestID;
             return this;
         }
 
@@ -145,8 +145,8 @@ public final class PurgeLemurRequestDataResponse {
          */
         @Override
         @JsonSetter("request_id_to_purge")
-        public DeletedStage requestIdToPurge(String requestIdToPurge) {
-            this.requestIdToPurge = requestIdToPurge;
+        public DeletedStage requestIDToPurge(String requestIDToPurge) {
+            this.requestIDToPurge = requestIDToPurge;
             return this;
         }
 
@@ -163,7 +163,7 @@ public final class PurgeLemurRequestDataResponse {
 
         @Override
         public PurgeLemurRequestDataResponse build() {
-            return new PurgeLemurRequestDataResponse(requestId, requestIdToPurge, deleted, additionalProperties);
+            return new PurgeLemurRequestDataResponse(requestID, requestIDToPurge, deleted, additionalProperties);
         }
     }
 }

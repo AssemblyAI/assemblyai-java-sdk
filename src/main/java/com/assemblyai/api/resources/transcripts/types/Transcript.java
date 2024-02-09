@@ -23,6 +23,8 @@ import java.util.Optional;
 public final class Transcript {
     private final String id;
 
+    private final Optional<String> speechModel;
+
     private final String languageModel;
 
     private final String acousticModel;
@@ -31,7 +33,7 @@ public final class Transcript {
 
     private final Optional<TranscriptLanguageCode> languageCode;
 
-    private final String audioUrl;
+    private final String audioURL;
 
     private final Optional<String> text;
 
@@ -49,7 +51,7 @@ public final class Transcript {
 
     private final Optional<Boolean> dualChannel;
 
-    private final Optional<String> webhookUrl;
+    private final Optional<String> webhookURL;
 
     private final Optional<Integer> webhookStatusCode;
 
@@ -77,7 +79,7 @@ public final class Transcript {
 
     private final Optional<Boolean> redactPiiAudio;
 
-    private final Optional<String> redactPiiAudioQuality;
+    private final Optional<RedactPiiAudioQuality> redactPiiAudioQuality;
 
     private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
@@ -135,11 +137,12 @@ public final class Transcript {
 
     private Transcript(
             String id,
+            Optional<String> speechModel,
             String languageModel,
             String acousticModel,
             TranscriptStatus status,
             Optional<TranscriptLanguageCode> languageCode,
-            String audioUrl,
+            String audioURL,
             Optional<String> text,
             Optional<List<TranscriptWord>> words,
             Optional<List<TranscriptUtterance>> utterances,
@@ -148,7 +151,7 @@ public final class Transcript {
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> dualChannel,
-            Optional<String> webhookUrl,
+            Optional<String> webhookURL,
             Optional<Integer> webhookStatusCode,
             boolean webhookAuth,
             Optional<String> webhookAuthHeaderName,
@@ -162,7 +165,7 @@ public final class Transcript {
             Optional<Boolean> filterProfanity,
             boolean redactPii,
             Optional<Boolean> redactPiiAudio,
-            Optional<String> redactPiiAudioQuality,
+            Optional<RedactPiiAudioQuality> redactPiiAudioQuality,
             Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
@@ -191,11 +194,12 @@ public final class Transcript {
             Optional<String> error,
             Map<String, Object> additionalProperties) {
         this.id = id;
+        this.speechModel = speechModel;
         this.languageModel = languageModel;
         this.acousticModel = acousticModel;
         this.status = status;
         this.languageCode = languageCode;
-        this.audioUrl = audioUrl;
+        this.audioURL = audioURL;
         this.text = text;
         this.words = words;
         this.utterances = utterances;
@@ -204,7 +208,7 @@ public final class Transcript {
         this.punctuate = punctuate;
         this.formatText = formatText;
         this.dualChannel = dualChannel;
-        this.webhookUrl = webhookUrl;
+        this.webhookURL = webhookURL;
         this.webhookStatusCode = webhookStatusCode;
         this.webhookAuth = webhookAuth;
         this.webhookAuthHeaderName = webhookAuthHeaderName;
@@ -252,8 +256,13 @@ public final class Transcript {
      * @return The unique identifier of your transcript
      */
     @JsonProperty("id")
-    public String getId() {
+    public String getID() {
         return id;
+    }
+
+    @JsonProperty("speech_model")
+    public Optional<String> getSpeechModel() {
+        return speechModel;
     }
 
     /**
@@ -294,8 +303,8 @@ public final class Transcript {
      * @return The URL of the media that was transcribed
      */
     @JsonProperty("audio_url")
-    public String getAudioUrl() {
-        return audioUrl;
+    public String getAudioURL() {
+        return audioURL;
     }
 
     /**
@@ -368,8 +377,8 @@ public final class Transcript {
      * @return The URL to which we send webhooks upon trancription completion
      */
     @JsonProperty("webhook_url")
-    public Optional<String> getWebhookUrl() {
-        return webhookUrl;
+    public Optional<String> getWebhookURL() {
+        return webhookURL;
     }
 
     /**
@@ -474,12 +483,8 @@ public final class Transcript {
         return redactPiiAudio;
     }
 
-    /**
-     * @return The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
-     * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.
-     */
     @JsonProperty("redact_pii_audio_quality")
-    public Optional<String> getRedactPiiAudioQuality() {
+    public Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality() {
         return redactPiiAudioQuality;
     }
 
@@ -703,11 +708,12 @@ public final class Transcript {
 
     private boolean equalTo(Transcript other) {
         return id.equals(other.id)
+                && speechModel.equals(other.speechModel)
                 && languageModel.equals(other.languageModel)
                 && acousticModel.equals(other.acousticModel)
                 && status.equals(other.status)
                 && languageCode.equals(other.languageCode)
-                && audioUrl.equals(other.audioUrl)
+                && audioURL.equals(other.audioURL)
                 && text.equals(other.text)
                 && words.equals(other.words)
                 && utterances.equals(other.utterances)
@@ -716,7 +722,7 @@ public final class Transcript {
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && dualChannel.equals(other.dualChannel)
-                && webhookUrl.equals(other.webhookUrl)
+                && webhookURL.equals(other.webhookURL)
                 && webhookStatusCode.equals(other.webhookStatusCode)
                 && webhookAuth == other.webhookAuth
                 && webhookAuthHeaderName.equals(other.webhookAuthHeaderName)
@@ -763,11 +769,12 @@ public final class Transcript {
     public int hashCode() {
         return Objects.hash(
                 this.id,
+                this.speechModel,
                 this.languageModel,
                 this.acousticModel,
                 this.status,
                 this.languageCode,
-                this.audioUrl,
+                this.audioURL,
                 this.text,
                 this.words,
                 this.utterances,
@@ -776,7 +783,7 @@ public final class Transcript {
                 this.punctuate,
                 this.formatText,
                 this.dualChannel,
-                this.webhookUrl,
+                this.webhookURL,
                 this.webhookStatusCode,
                 this.webhookAuth,
                 this.webhookAuthHeaderName,
@@ -824,11 +831,11 @@ public final class Transcript {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static IDStage builder() {
         return new Builder();
     }
 
-    public interface IdStage {
+    public interface IDStage {
         LanguageModelStage id(String id);
 
         Builder from(Transcript other);
@@ -843,11 +850,11 @@ public final class Transcript {
     }
 
     public interface StatusStage {
-        AudioUrlStage status(TranscriptStatus status);
+        AudioURLStage status(TranscriptStatus status);
     }
 
-    public interface AudioUrlStage {
-        WebhookAuthStage audioUrl(String audioUrl);
+    public interface AudioURLStage {
+        WebhookAuthStage audioURL(String audioURL);
     }
 
     public interface WebhookAuthStage {
@@ -868,6 +875,10 @@ public final class Transcript {
 
     public interface _FinalStage {
         Transcript build();
+
+        _FinalStage speechModel(Optional<String> speechModel);
+
+        _FinalStage speechModel(String speechModel);
 
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
@@ -905,9 +916,9 @@ public final class Transcript {
 
         _FinalStage dualChannel(Boolean dualChannel);
 
-        _FinalStage webhookUrl(Optional<String> webhookUrl);
+        _FinalStage webhookURL(Optional<String> webhookURL);
 
-        _FinalStage webhookUrl(String webhookUrl);
+        _FinalStage webhookURL(String webhookURL);
 
         _FinalStage webhookStatusCode(Optional<Integer> webhookStatusCode);
 
@@ -949,9 +960,9 @@ public final class Transcript {
 
         _FinalStage redactPiiAudio(Boolean redactPiiAudio);
 
-        _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality);
 
-        _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality);
 
         _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies);
 
@@ -1056,11 +1067,11 @@ public final class Transcript {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage,
+            implements IDStage,
                     LanguageModelStage,
                     AcousticModelStage,
                     StatusStage,
-                    AudioUrlStage,
+                    AudioURLStage,
                     WebhookAuthStage,
                     AutoHighlightsStage,
                     RedactPiiStage,
@@ -1074,7 +1085,7 @@ public final class Transcript {
 
         private TranscriptStatus status;
 
-        private String audioUrl;
+        private String audioURL;
 
         private boolean webhookAuth;
 
@@ -1134,7 +1145,7 @@ public final class Transcript {
 
         private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
-        private Optional<String> redactPiiAudioQuality = Optional.empty();
+        private Optional<RedactPiiAudioQuality> redactPiiAudioQuality = Optional.empty();
 
         private Optional<Boolean> redactPiiAudio = Optional.empty();
 
@@ -1156,7 +1167,7 @@ public final class Transcript {
 
         private Optional<Integer> webhookStatusCode = Optional.empty();
 
-        private Optional<String> webhookUrl = Optional.empty();
+        private Optional<String> webhookURL = Optional.empty();
 
         private Optional<Boolean> dualChannel = Optional.empty();
 
@@ -1176,6 +1187,8 @@ public final class Transcript {
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
+        private Optional<String> speechModel = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -1183,12 +1196,13 @@ public final class Transcript {
 
         @Override
         public Builder from(Transcript other) {
-            id(other.getId());
+            id(other.getID());
+            speechModel(other.getSpeechModel());
             languageModel(other.getLanguageModel());
             acousticModel(other.getAcousticModel());
             status(other.getStatus());
             languageCode(other.getLanguageCode());
-            audioUrl(other.getAudioUrl());
+            audioURL(other.getAudioURL());
             text(other.getText());
             words(other.getWords());
             utterances(other.getUtterances());
@@ -1197,7 +1211,7 @@ public final class Transcript {
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
             dualChannel(other.getDualChannel());
-            webhookUrl(other.getWebhookUrl());
+            webhookURL(other.getWebhookURL());
             webhookStatusCode(other.getWebhookStatusCode());
             webhookAuth(other.getWebhookAuth());
             webhookAuthHeaderName(other.getWebhookAuthHeaderName());
@@ -1280,7 +1294,7 @@ public final class Transcript {
          */
         @Override
         @JsonSetter("status")
-        public AudioUrlStage status(TranscriptStatus status) {
+        public AudioURLStage status(TranscriptStatus status) {
             this.status = status;
             return this;
         }
@@ -1291,8 +1305,8 @@ public final class Transcript {
          */
         @Override
         @JsonSetter("audio_url")
-        public WebhookAuthStage audioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
+        public WebhookAuthStage audioURL(String audioURL) {
+            this.audioURL = audioURL;
             return this;
         }
 
@@ -1762,20 +1776,15 @@ public final class Transcript {
             return this;
         }
 
-        /**
-         * <p>The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
-         * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
-        public _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
 
         @Override
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
-        public _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
             return this;
         }
@@ -1952,15 +1961,15 @@ public final class Transcript {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage webhookUrl(String webhookUrl) {
-            this.webhookUrl = Optional.of(webhookUrl);
+        public _FinalStage webhookURL(String webhookURL) {
+            this.webhookURL = Optional.of(webhookURL);
             return this;
         }
 
         @Override
         @JsonSetter(value = "webhook_url", nulls = Nulls.SKIP)
-        public _FinalStage webhookUrl(Optional<String> webhookUrl) {
-            this.webhookUrl = webhookUrl;
+        public _FinalStage webhookURL(Optional<String> webhookURL) {
+            this.webhookURL = webhookURL;
             return this;
         }
 
@@ -2122,14 +2131,28 @@ public final class Transcript {
         }
 
         @Override
+        public _FinalStage speechModel(String speechModel) {
+            this.speechModel = Optional.of(speechModel);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public _FinalStage speechModel(Optional<String> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
+        @Override
         public Transcript build() {
             return new Transcript(
                     id,
+                    speechModel,
                     languageModel,
                     acousticModel,
                     status,
                     languageCode,
-                    audioUrl,
+                    audioURL,
                     text,
                     words,
                     utterances,
@@ -2138,7 +2161,7 @@ public final class Transcript {
                     punctuate,
                     formatText,
                     dualChannel,
-                    webhookUrl,
+                    webhookURL,
                     webhookStatusCode,
                     webhookAuth,
                     webhookAuthHeaderName,

@@ -10,56 +10,54 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptListItem.Builder.class)
 public final class TranscriptListItem {
     private final String id;
 
-    private final String resourceUrl;
+    private final String resourceURL;
 
     private final TranscriptStatus status;
 
     private final OffsetDateTime created;
 
-    private final Optional<OffsetDateTime> completed;
+    private final OffsetDateTime completed;
 
-    private final String audioUrl;
+    private final String audioURL;
 
     private final Map<String, Object> additionalProperties;
 
     private TranscriptListItem(
             String id,
-            String resourceUrl,
+            String resourceURL,
             TranscriptStatus status,
             OffsetDateTime created,
-            Optional<OffsetDateTime> completed,
-            String audioUrl,
+            OffsetDateTime completed,
+            String audioURL,
             Map<String, Object> additionalProperties) {
         this.id = id;
-        this.resourceUrl = resourceUrl;
+        this.resourceURL = resourceURL;
         this.status = status;
         this.created = created;
         this.completed = completed;
-        this.audioUrl = audioUrl;
+        this.audioURL = audioURL;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public String getID() {
         return id;
     }
 
     @JsonProperty("resource_url")
-    public String getResourceUrl() {
-        return resourceUrl;
+    public String getResourceURL() {
+        return resourceURL;
     }
 
     @JsonProperty("status")
@@ -73,13 +71,13 @@ public final class TranscriptListItem {
     }
 
     @JsonProperty("completed")
-    public Optional<OffsetDateTime> getCompleted() {
+    public OffsetDateTime getCompleted() {
         return completed;
     }
 
     @JsonProperty("audio_url")
-    public String getAudioUrl() {
-        return audioUrl;
+    public String getAudioURL() {
+        return audioURL;
     }
 
     @Override
@@ -95,16 +93,16 @@ public final class TranscriptListItem {
 
     private boolean equalTo(TranscriptListItem other) {
         return id.equals(other.id)
-                && resourceUrl.equals(other.resourceUrl)
+                && resourceURL.equals(other.resourceURL)
                 && status.equals(other.status)
                 && created.equals(other.created)
                 && completed.equals(other.completed)
-                && audioUrl.equals(other.audioUrl);
+                && audioURL.equals(other.audioURL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.resourceUrl, this.status, this.created, this.completed, this.audioUrl);
+        return Objects.hash(this.id, this.resourceURL, this.status, this.created, this.completed, this.audioURL);
     }
 
     @Override
@@ -112,18 +110,18 @@ public final class TranscriptListItem {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static IDStage builder() {
         return new Builder();
     }
 
-    public interface IdStage {
-        ResourceUrlStage id(String id);
+    public interface IDStage {
+        ResourceURLStage id(String id);
 
         Builder from(TranscriptListItem other);
     }
 
-    public interface ResourceUrlStage {
-        StatusStage resourceUrl(String resourceUrl);
+    public interface ResourceURLStage {
+        StatusStage resourceURL(String resourceURL);
     }
 
     public interface StatusStage {
@@ -131,35 +129,41 @@ public final class TranscriptListItem {
     }
 
     public interface CreatedStage {
-        AudioUrlStage created(OffsetDateTime created);
+        CompletedStage created(OffsetDateTime created);
     }
 
-    public interface AudioUrlStage {
-        _FinalStage audioUrl(String audioUrl);
+    public interface CompletedStage {
+        AudioURLStage completed(OffsetDateTime completed);
+    }
+
+    public interface AudioURLStage {
+        _FinalStage audioURL(String audioURL);
     }
 
     public interface _FinalStage {
         TranscriptListItem build();
-
-        _FinalStage completed(Optional<OffsetDateTime> completed);
-
-        _FinalStage completed(OffsetDateTime completed);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, ResourceUrlStage, StatusStage, CreatedStage, AudioUrlStage, _FinalStage {
+            implements IDStage,
+                    ResourceURLStage,
+                    StatusStage,
+                    CreatedStage,
+                    CompletedStage,
+                    AudioURLStage,
+                    _FinalStage {
         private String id;
 
-        private String resourceUrl;
+        private String resourceURL;
 
         private TranscriptStatus status;
 
         private OffsetDateTime created;
 
-        private String audioUrl;
+        private OffsetDateTime completed;
 
-        private Optional<OffsetDateTime> completed = Optional.empty();
+        private String audioURL;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -168,26 +172,26 @@ public final class TranscriptListItem {
 
         @Override
         public Builder from(TranscriptListItem other) {
-            id(other.getId());
-            resourceUrl(other.getResourceUrl());
+            id(other.getID());
+            resourceURL(other.getResourceURL());
             status(other.getStatus());
             created(other.getCreated());
             completed(other.getCompleted());
-            audioUrl(other.getAudioUrl());
+            audioURL(other.getAudioURL());
             return this;
         }
 
         @Override
         @JsonSetter("id")
-        public ResourceUrlStage id(String id) {
+        public ResourceURLStage id(String id) {
             this.id = id;
             return this;
         }
 
         @Override
         @JsonSetter("resource_url")
-        public StatusStage resourceUrl(String resourceUrl) {
-            this.resourceUrl = resourceUrl;
+        public StatusStage resourceURL(String resourceURL) {
+            this.resourceURL = resourceURL;
             return this;
         }
 
@@ -200,34 +204,28 @@ public final class TranscriptListItem {
 
         @Override
         @JsonSetter("created")
-        public AudioUrlStage created(OffsetDateTime created) {
+        public CompletedStage created(OffsetDateTime created) {
             this.created = created;
             return this;
         }
 
         @Override
-        @JsonSetter("audio_url")
-        public _FinalStage audioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
-            return this;
-        }
-
-        @Override
-        public _FinalStage completed(OffsetDateTime completed) {
-            this.completed = Optional.of(completed);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "completed", nulls = Nulls.SKIP)
-        public _FinalStage completed(Optional<OffsetDateTime> completed) {
+        @JsonSetter("completed")
+        public AudioURLStage completed(OffsetDateTime completed) {
             this.completed = completed;
             return this;
         }
 
         @Override
+        @JsonSetter("audio_url")
+        public _FinalStage audioURL(String audioURL) {
+            this.audioURL = audioURL;
+            return this;
+        }
+
+        @Override
         public TranscriptListItem build() {
-            return new TranscriptListItem(id, resourceUrl, status, created, completed, audioUrl, additionalProperties);
+            return new TranscriptListItem(id, resourceURL, status, created, completed, audioURL, additionalProperties);
         }
     }
 }

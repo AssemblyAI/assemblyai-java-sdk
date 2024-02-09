@@ -24,26 +24,26 @@ public final class PageDetails {
 
     private final int resultCount;
 
-    private final String currentUrl;
+    private final String currentURL;
 
-    private final String prevUrl;
+    private final String prevURL;
 
-    private final Optional<String> nextUrl;
+    private final Optional<String> nextURL;
 
     private final Map<String, Object> additionalProperties;
 
     private PageDetails(
             int limit,
             int resultCount,
-            String currentUrl,
-            String prevUrl,
-            Optional<String> nextUrl,
+            String currentURL,
+            String prevURL,
+            Optional<String> nextURL,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.resultCount = resultCount;
-        this.currentUrl = currentUrl;
-        this.prevUrl = prevUrl;
-        this.nextUrl = nextUrl;
+        this.currentURL = currentURL;
+        this.prevURL = prevURL;
+        this.nextURL = nextURL;
         this.additionalProperties = additionalProperties;
     }
 
@@ -58,18 +58,18 @@ public final class PageDetails {
     }
 
     @JsonProperty("current_url")
-    public String getCurrentUrl() {
-        return currentUrl;
+    public String getCurrentURL() {
+        return currentURL;
     }
 
     @JsonProperty("prev_url")
-    public String getPrevUrl() {
-        return prevUrl;
+    public String getPrevURL() {
+        return prevURL;
     }
 
     @JsonProperty("next_url")
-    public Optional<String> getNextUrl() {
-        return nextUrl;
+    public Optional<String> getNextURL() {
+        return nextURL;
     }
 
     @Override
@@ -86,14 +86,14 @@ public final class PageDetails {
     private boolean equalTo(PageDetails other) {
         return limit == other.limit
                 && resultCount == other.resultCount
-                && currentUrl.equals(other.currentUrl)
-                && prevUrl.equals(other.prevUrl)
-                && nextUrl.equals(other.nextUrl);
+                && currentURL.equals(other.currentURL)
+                && prevURL.equals(other.prevURL)
+                && nextURL.equals(other.nextURL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.limit, this.resultCount, this.currentUrl, this.prevUrl, this.nextUrl);
+        return Objects.hash(this.limit, this.resultCount, this.currentURL, this.prevURL, this.nextURL);
     }
 
     @Override
@@ -112,37 +112,37 @@ public final class PageDetails {
     }
 
     public interface ResultCountStage {
-        CurrentUrlStage resultCount(int resultCount);
+        CurrentURLStage resultCount(int resultCount);
     }
 
-    public interface CurrentUrlStage {
-        PrevUrlStage currentUrl(String currentUrl);
+    public interface CurrentURLStage {
+        PrevURLStage currentURL(String currentURL);
     }
 
-    public interface PrevUrlStage {
-        _FinalStage prevUrl(String prevUrl);
+    public interface PrevURLStage {
+        _FinalStage prevURL(String prevURL);
     }
 
     public interface _FinalStage {
         PageDetails build();
 
-        _FinalStage nextUrl(Optional<String> nextUrl);
+        _FinalStage nextURL(Optional<String> nextURL);
 
-        _FinalStage nextUrl(String nextUrl);
+        _FinalStage nextURL(String nextURL);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements LimitStage, ResultCountStage, CurrentUrlStage, PrevUrlStage, _FinalStage {
+            implements LimitStage, ResultCountStage, CurrentURLStage, PrevURLStage, _FinalStage {
         private int limit;
 
         private int resultCount;
 
-        private String currentUrl;
+        private String currentURL;
 
-        private String prevUrl;
+        private String prevURL;
 
-        private Optional<String> nextUrl = Optional.empty();
+        private Optional<String> nextURL = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -153,9 +153,9 @@ public final class PageDetails {
         public Builder from(PageDetails other) {
             limit(other.getLimit());
             resultCount(other.getResultCount());
-            currentUrl(other.getCurrentUrl());
-            prevUrl(other.getPrevUrl());
-            nextUrl(other.getNextUrl());
+            currentURL(other.getCurrentURL());
+            prevURL(other.getPrevURL());
+            nextURL(other.getNextURL());
             return this;
         }
 
@@ -168,41 +168,41 @@ public final class PageDetails {
 
         @Override
         @JsonSetter("result_count")
-        public CurrentUrlStage resultCount(int resultCount) {
+        public CurrentURLStage resultCount(int resultCount) {
             this.resultCount = resultCount;
             return this;
         }
 
         @Override
         @JsonSetter("current_url")
-        public PrevUrlStage currentUrl(String currentUrl) {
-            this.currentUrl = currentUrl;
+        public PrevURLStage currentURL(String currentURL) {
+            this.currentURL = currentURL;
             return this;
         }
 
         @Override
         @JsonSetter("prev_url")
-        public _FinalStage prevUrl(String prevUrl) {
-            this.prevUrl = prevUrl;
+        public _FinalStage prevURL(String prevURL) {
+            this.prevURL = prevURL;
             return this;
         }
 
         @Override
-        public _FinalStage nextUrl(String nextUrl) {
-            this.nextUrl = Optional.of(nextUrl);
+        public _FinalStage nextURL(String nextURL) {
+            this.nextURL = Optional.of(nextURL);
             return this;
         }
 
         @Override
         @JsonSetter(value = "next_url", nulls = Nulls.SKIP)
-        public _FinalStage nextUrl(Optional<String> nextUrl) {
-            this.nextUrl = nextUrl;
+        public _FinalStage nextURL(Optional<String> nextURL) {
+            this.nextURL = nextURL;
             return this;
         }
 
         @Override
         public PageDetails build() {
-            return new PageDetails(limit, resultCount, currentUrl, prevUrl, nextUrl, additionalProperties);
+            return new PageDetails(limit, resultCount, currentURL, prevURL, nextURL, additionalProperties);
         }
     }
 }

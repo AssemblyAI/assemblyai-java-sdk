@@ -24,7 +24,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurSummaryParams.Builder.class)
 public final class LemurSummaryParams implements ILemurBaseParams {
-    private final Optional<List<String>> transcriptIds;
+    private final Optional<List<String>> transcriptIDs;
 
     private final Optional<String> inputText;
 
@@ -41,7 +41,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
     private final Map<String, Object> additionalProperties;
 
     private LemurSummaryParams(
-            Optional<List<String>> transcriptIds,
+            Optional<List<String>> transcriptIDs,
             Optional<String> inputText,
             Optional<LemurBaseParamsContext> context,
             Optional<LemurModel> finalModel,
@@ -49,7 +49,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
             Optional<Double> temperature,
             Optional<String> answerFormat,
             Map<String, Object> additionalProperties) {
-        this.transcriptIds = transcriptIds;
+        this.transcriptIDs = transcriptIDs;
         this.inputText = inputText;
         this.context = context;
         this.finalModel = finalModel;
@@ -65,8 +65,8 @@ public final class LemurSummaryParams implements ILemurBaseParams {
      */
     @JsonProperty("transcript_ids")
     @Override
-    public Optional<List<String>> getTranscriptIds() {
-        return transcriptIds;
+    public Optional<List<String>> getTranscriptIDs() {
+        return transcriptIDs;
     }
 
     /**
@@ -138,7 +138,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
     }
 
     private boolean equalTo(LemurSummaryParams other) {
-        return transcriptIds.equals(other.transcriptIds)
+        return transcriptIDs.equals(other.transcriptIDs)
                 && inputText.equals(other.inputText)
                 && context.equals(other.context)
                 && finalModel.equals(other.finalModel)
@@ -150,7 +150,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.transcriptIds,
+                this.transcriptIDs,
                 this.inputText,
                 this.context,
                 this.finalModel,
@@ -170,7 +170,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<List<String>> transcriptIds = Optional.empty();
+        private Optional<List<String>> transcriptIDs = Optional.empty();
 
         private Optional<String> inputText = Optional.empty();
 
@@ -190,7 +190,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         private Builder() {}
 
         public Builder from(LemurSummaryParams other) {
-            transcriptIds(other.getTranscriptIds());
+            transcriptIDs(other.getTranscriptIDs());
             inputText(other.getInputText());
             context(other.getContext());
             finalModel(other.getFinalModel());
@@ -201,13 +201,13 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
-        public Builder transcriptIds(Optional<List<String>> transcriptIds) {
-            this.transcriptIds = transcriptIds;
+        public Builder transcriptIDs(Optional<List<String>> transcriptIDs) {
+            this.transcriptIDs = transcriptIDs;
             return this;
         }
 
-        public Builder transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds = Optional.of(transcriptIds);
+        public Builder transcriptIDs(List<String> transcriptIDs) {
+            this.transcriptIDs = Optional.of(transcriptIDs);
             return this;
         }
 
@@ -279,7 +279,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
 
         public LemurSummaryParams build() {
             return new LemurSummaryParams(
-                    transcriptIds,
+                    transcriptIDs,
                     inputText,
                     context,
                     finalModel,
