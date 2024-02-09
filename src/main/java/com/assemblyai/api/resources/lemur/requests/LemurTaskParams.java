@@ -24,7 +24,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurTaskParams.Builder.class)
 public final class LemurTaskParams implements ILemurBaseParams {
-    private final Optional<List<String>> transcriptIds;
+    private final Optional<List<String>> transcriptIDs;
 
     private final Optional<String> inputText;
 
@@ -41,7 +41,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
     private final Map<String, Object> additionalProperties;
 
     private LemurTaskParams(
-            Optional<List<String>> transcriptIds,
+            Optional<List<String>> transcriptIDs,
             Optional<String> inputText,
             Optional<LemurBaseParamsContext> context,
             Optional<LemurModel> finalModel,
@@ -49,7 +49,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
             Optional<Double> temperature,
             String prompt,
             Map<String, Object> additionalProperties) {
-        this.transcriptIds = transcriptIds;
+        this.transcriptIDs = transcriptIDs;
         this.inputText = inputText;
         this.context = context;
         this.finalModel = finalModel;
@@ -65,8 +65,8 @@ public final class LemurTaskParams implements ILemurBaseParams {
      */
     @JsonProperty("transcript_ids")
     @Override
-    public Optional<List<String>> getTranscriptIds() {
-        return transcriptIds;
+    public Optional<List<String>> getTranscriptIDs() {
+        return transcriptIDs;
     }
 
     /**
@@ -138,7 +138,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
     }
 
     private boolean equalTo(LemurTaskParams other) {
-        return transcriptIds.equals(other.transcriptIds)
+        return transcriptIDs.equals(other.transcriptIDs)
                 && inputText.equals(other.inputText)
                 && context.equals(other.context)
                 && finalModel.equals(other.finalModel)
@@ -150,7 +150,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.transcriptIds,
+                this.transcriptIDs,
                 this.inputText,
                 this.context,
                 this.finalModel,
@@ -177,9 +177,9 @@ public final class LemurTaskParams implements ILemurBaseParams {
     public interface _FinalStage {
         LemurTaskParams build();
 
-        _FinalStage transcriptIds(Optional<List<String>> transcriptIds);
+        _FinalStage transcriptIDs(Optional<List<String>> transcriptIDs);
 
-        _FinalStage transcriptIds(List<String> transcriptIds);
+        _FinalStage transcriptIDs(List<String> transcriptIDs);
 
         _FinalStage inputText(Optional<String> inputText);
 
@@ -216,7 +216,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
         private Optional<String> inputText = Optional.empty();
 
-        private Optional<List<String>> transcriptIds = Optional.empty();
+        private Optional<List<String>> transcriptIDs = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -225,7 +225,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
         @Override
         public Builder from(LemurTaskParams other) {
-            transcriptIds(other.getTranscriptIds());
+            transcriptIDs(other.getTranscriptIDs());
             inputText(other.getInputText());
             context(other.getContext());
             finalModel(other.getFinalModel());
@@ -341,22 +341,22 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds = Optional.of(transcriptIds);
+        public _FinalStage transcriptIDs(List<String> transcriptIDs) {
+            this.transcriptIDs = Optional.of(transcriptIDs);
             return this;
         }
 
         @Override
         @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
-        public _FinalStage transcriptIds(Optional<List<String>> transcriptIds) {
-            this.transcriptIds = transcriptIds;
+        public _FinalStage transcriptIDs(Optional<List<String>> transcriptIDs) {
+            this.transcriptIDs = transcriptIDs;
             return this;
         }
 
         @Override
         public LemurTaskParams build() {
             return new LemurTaskParams(
-                    transcriptIds,
+                    transcriptIDs,
                     inputText,
                     context,
                     finalModel,

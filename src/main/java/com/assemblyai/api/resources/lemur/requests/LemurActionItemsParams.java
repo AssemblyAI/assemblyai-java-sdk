@@ -7,7 +7,6 @@ import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.resources.lemur.types.ILemurBaseParams;
 import com.assemblyai.api.resources.lemur.types.LemurBaseParamsContext;
 import com.assemblyai.api.resources.lemur.types.LemurModel;
-import com.assemblyai.api.resources.lemur.types.LemurQuestion;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +22,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LemurQuestionAnswerParams.Builder.class)
-public final class LemurQuestionAnswerParams implements ILemurBaseParams {
+@JsonDeserialize(builder = LemurActionItemsParams.Builder.class)
+public final class LemurActionItemsParams implements ILemurBaseParams {
     private final Optional<List<String>> transcriptIDs;
 
     private final Optional<String> inputText;
@@ -38,18 +36,18 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
 
     private final Optional<Double> temperature;
 
-    private final List<LemurQuestion> questions;
+    private final Optional<String> answerFormat;
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurQuestionAnswerParams(
+    private LemurActionItemsParams(
             Optional<List<String>> transcriptIDs,
             Optional<String> inputText,
             Optional<LemurBaseParamsContext> context,
             Optional<LemurModel> finalModel,
             Optional<Integer> maxOutputSize,
             Optional<Double> temperature,
-            List<LemurQuestion> questions,
+            Optional<String> answerFormat,
             Map<String, Object> additionalProperties) {
         this.transcriptIDs = transcriptIDs;
         this.inputText = inputText;
@@ -57,7 +55,7 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
         this.finalModel = finalModel;
         this.maxOutputSize = maxOutputSize;
         this.temperature = temperature;
-        this.questions = questions;
+        this.answerFormat = answerFormat;
         this.additionalProperties = additionalProperties;
     }
 
@@ -121,17 +119,18 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
     }
 
     /**
-     * @return A list of questions to ask
+     * @return How you want the action items to be returned. This can be any text.
+     * Defaults to &quot;Bullet Points&quot;.
      */
-    @JsonProperty("questions")
-    public List<LemurQuestion> getQuestions() {
-        return questions;
+    @JsonProperty("answer_format")
+    public Optional<String> getAnswerFormat() {
+        return answerFormat;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurQuestionAnswerParams && equalTo((LemurQuestionAnswerParams) other);
+        return other instanceof LemurActionItemsParams && equalTo((LemurActionItemsParams) other);
     }
 
     @JsonAnyGetter
@@ -139,14 +138,14 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(LemurQuestionAnswerParams other) {
+    private boolean equalTo(LemurActionItemsParams other) {
         return transcriptIDs.equals(other.transcriptIDs)
                 && inputText.equals(other.inputText)
                 && context.equals(other.context)
                 && finalModel.equals(other.finalModel)
                 && maxOutputSize.equals(other.maxOutputSize)
                 && temperature.equals(other.temperature)
-                && questions.equals(other.questions);
+                && answerFormat.equals(other.answerFormat);
     }
 
     @Override
@@ -158,7 +157,7 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
                 this.finalModel,
                 this.maxOutputSize,
                 this.temperature,
-                this.questions);
+                this.answerFormat);
     }
 
     @Override
@@ -184,21 +183,21 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
 
         private Optional<Double> temperature = Optional.empty();
 
-        private List<LemurQuestion> questions = new ArrayList<>();
+        private Optional<String> answerFormat = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        public Builder from(LemurQuestionAnswerParams other) {
+        public Builder from(LemurActionItemsParams other) {
             transcriptIDs(other.getTranscriptIDs());
             inputText(other.getInputText());
             context(other.getContext());
             finalModel(other.getFinalModel());
             maxOutputSize(other.getMaxOutputSize());
             temperature(other.getTemperature());
-            questions(other.getQuestions());
+            answerFormat(other.getAnswerFormat());
             return this;
         }
 
@@ -268,32 +267,26 @@ public final class LemurQuestionAnswerParams implements ILemurBaseParams {
             return this;
         }
 
-        @JsonSetter(value = "questions", nulls = Nulls.SKIP)
-        public Builder questions(List<LemurQuestion> questions) {
-            this.questions.clear();
-            this.questions.addAll(questions);
+        @JsonSetter(value = "answer_format", nulls = Nulls.SKIP)
+        public Builder answerFormat(Optional<String> answerFormat) {
+            this.answerFormat = answerFormat;
             return this;
         }
 
-        public Builder addQuestions(LemurQuestion questions) {
-            this.questions.add(questions);
+        public Builder answerFormat(String answerFormat) {
+            this.answerFormat = Optional.of(answerFormat);
             return this;
         }
 
-        public Builder addAllQuestions(List<LemurQuestion> questions) {
-            this.questions.addAll(questions);
-            return this;
-        }
-
-        public LemurQuestionAnswerParams build() {
-            return new LemurQuestionAnswerParams(
+        public LemurActionItemsParams build() {
+            return new LemurActionItemsParams(
                     transcriptIDs,
                     inputText,
                     context,
                     finalModel,
                     maxOutputSize,
                     temperature,
-                    questions,
+                    answerFormat,
                     additionalProperties);
         }
     }

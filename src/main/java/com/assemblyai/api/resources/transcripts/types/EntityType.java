@@ -30,6 +30,8 @@ public final class EntityType {
 
     public static final EntityType LOCATION = new EntityType(Value.LOCATION, "location");
 
+    public static final EntityType URL = new EntityType(Value.URL, "url");
+
     public static final EntityType LANGUAGE = new EntityType(Value.LANGUAGE, "language");
 
     public static final EntityType BLOOD_TYPE = new EntityType(Value.BLOOD_TYPE, "blood_type");
@@ -64,8 +66,6 @@ public final class EntityType {
     public static final EntityType PASSWORD = new EntityType(Value.PASSWORD, "password");
 
     public static final EntityType CREDIT_CARD_NUMBER = new EntityType(Value.CREDIT_CARD_NUMBER, "credit_card_number");
-
-    public static final EntityType URL = new EntityType(Value.URL, "url");
 
     public static final EntityType DATE = new EntityType(Value.DATE, "date");
 
@@ -122,6 +122,8 @@ public final class EntityType {
                 return visitor.visitEvent();
             case LOCATION:
                 return visitor.visitLocation();
+            case URL:
+                return visitor.visitURL();
             case LANGUAGE:
                 return visitor.visitLanguage();
             case BLOOD_TYPE:
@@ -154,8 +156,6 @@ public final class EntityType {
                 return visitor.visitPassword();
             case CREDIT_CARD_NUMBER:
                 return visitor.visitCreditCardNumber();
-            case URL:
-                return visitor.visitUrl();
             case DATE:
                 return visitor.visitDate();
             case UNKNOWN:
@@ -189,6 +189,8 @@ public final class EntityType {
                 return EVENT;
             case "location":
                 return LOCATION;
+            case "url":
+                return URL;
             case "language":
                 return LANGUAGE;
             case "blood_type":
@@ -221,8 +223,6 @@ public final class EntityType {
                 return PASSWORD;
             case "credit_card_number":
                 return CREDIT_CARD_NUMBER;
-            case "url":
-                return URL;
             case "date":
                 return DATE;
             default:
@@ -347,7 +347,7 @@ public final class EntityType {
 
         T visitTime();
 
-        T visitUrl();
+        T visitURL();
 
         T visitUsSocialSecurityNumber();
 

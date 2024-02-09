@@ -18,12 +18,12 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = UploadedFile.Builder.class)
 public final class UploadedFile {
-    private final String uploadUrl;
+    private final String uploadURL;
 
     private final Map<String, Object> additionalProperties;
 
-    private UploadedFile(String uploadUrl, Map<String, Object> additionalProperties) {
-        this.uploadUrl = uploadUrl;
+    private UploadedFile(String uploadURL, Map<String, Object> additionalProperties) {
+        this.uploadURL = uploadURL;
         this.additionalProperties = additionalProperties;
     }
 
@@ -31,8 +31,8 @@ public final class UploadedFile {
      * @return A URL that points to your audio file, accessible only by AssemblyAI's servers
      */
     @JsonProperty("upload_url")
-    public String getUploadUrl() {
-        return uploadUrl;
+    public String getUploadURL() {
+        return uploadURL;
     }
 
     @Override
@@ -47,12 +47,12 @@ public final class UploadedFile {
     }
 
     private boolean equalTo(UploadedFile other) {
-        return uploadUrl.equals(other.uploadUrl);
+        return uploadURL.equals(other.uploadURL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.uploadUrl);
+        return Objects.hash(this.uploadURL);
     }
 
     @Override
@@ -60,12 +60,12 @@ public final class UploadedFile {
         return ObjectMappers.stringify(this);
     }
 
-    public static UploadUrlStage builder() {
+    public static UploadURLStage builder() {
         return new Builder();
     }
 
-    public interface UploadUrlStage {
-        _FinalStage uploadUrl(String uploadUrl);
+    public interface UploadURLStage {
+        _FinalStage uploadURL(String uploadURL);
 
         Builder from(UploadedFile other);
     }
@@ -75,8 +75,8 @@ public final class UploadedFile {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UploadUrlStage, _FinalStage {
-        private String uploadUrl;
+    public static final class Builder implements UploadURLStage, _FinalStage {
+        private String uploadURL;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -85,7 +85,7 @@ public final class UploadedFile {
 
         @Override
         public Builder from(UploadedFile other) {
-            uploadUrl(other.getUploadUrl());
+            uploadURL(other.getUploadURL());
             return this;
         }
 
@@ -95,14 +95,14 @@ public final class UploadedFile {
          */
         @Override
         @JsonSetter("upload_url")
-        public _FinalStage uploadUrl(String uploadUrl) {
-            this.uploadUrl = uploadUrl;
+        public _FinalStage uploadURL(String uploadURL) {
+            this.uploadURL = uploadURL;
             return this;
         }
 
         @Override
         public UploadedFile build() {
-            return new UploadedFile(uploadUrl, additionalProperties);
+            return new UploadedFile(uploadURL, additionalProperties);
         }
     }
 }

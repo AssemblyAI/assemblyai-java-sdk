@@ -18,14 +18,14 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LemurSummaryResponse.Builder.class)
 public final class LemurSummaryResponse implements ILemurBaseResponse {
-    private final String requestId;
+    private final String requestID;
 
     private final String response;
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurSummaryResponse(String requestId, String response, Map<String, Object> additionalProperties) {
-        this.requestId = requestId;
+    private LemurSummaryResponse(String requestID, String response, Map<String, Object> additionalProperties) {
+        this.requestID = requestID;
         this.response = response;
         this.additionalProperties = additionalProperties;
     }
@@ -35,8 +35,8 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
      */
     @JsonProperty("request_id")
     @Override
-    public String getRequestId() {
-        return requestId;
+    public String getRequestID() {
+        return requestID;
     }
 
     /**
@@ -59,12 +59,12 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
     }
 
     private boolean equalTo(LemurSummaryResponse other) {
-        return requestId.equals(other.requestId) && response.equals(other.response);
+        return requestID.equals(other.requestID) && response.equals(other.response);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.requestId, this.response);
+        return Objects.hash(this.requestID, this.response);
     }
 
     @Override
@@ -72,12 +72,12 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static RequestIdStage builder() {
+    public static RequestIDStage builder() {
         return new Builder();
     }
 
-    public interface RequestIdStage {
-        ResponseStage requestId(String requestId);
+    public interface RequestIDStage {
+        ResponseStage requestID(String requestID);
 
         Builder from(LemurSummaryResponse other);
     }
@@ -91,8 +91,8 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RequestIdStage, ResponseStage, _FinalStage {
-        private String requestId;
+    public static final class Builder implements RequestIDStage, ResponseStage, _FinalStage {
+        private String requestID;
 
         private String response;
 
@@ -103,7 +103,7 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
 
         @Override
         public Builder from(LemurSummaryResponse other) {
-            requestId(other.getRequestId());
+            requestID(other.getRequestID());
             response(other.getResponse());
             return this;
         }
@@ -114,8 +114,8 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
          */
         @Override
         @JsonSetter("request_id")
-        public ResponseStage requestId(String requestId) {
-            this.requestId = requestId;
+        public ResponseStage requestID(String requestID) {
+            this.requestID = requestID;
             return this;
         }
 
@@ -132,7 +132,7 @@ public final class LemurSummaryResponse implements ILemurBaseResponse {
 
         @Override
         public LemurSummaryResponse build() {
-            return new LemurSummaryResponse(requestId, response, additionalProperties);
+            return new LemurSummaryResponse(requestID, response, additionalProperties);
         }
     }
 }

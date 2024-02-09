@@ -41,7 +41,7 @@ public final class WordSearchResponse {
      * @return The ID of the transcript
      */
     @JsonProperty("id")
-    public String getId() {
+    public String getID() {
         return id;
     }
 
@@ -86,11 +86,11 @@ public final class WordSearchResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static IDStage builder() {
         return new Builder();
     }
 
-    public interface IdStage {
+    public interface IDStage {
         TotalCountStage id(String id);
 
         Builder from(WordSearchResponse other);
@@ -111,7 +111,7 @@ public final class WordSearchResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, TotalCountStage, _FinalStage {
+    public static final class Builder implements IDStage, TotalCountStage, _FinalStage {
         private String id;
 
         private int totalCount;
@@ -125,7 +125,7 @@ public final class WordSearchResponse {
 
         @Override
         public Builder from(WordSearchResponse other) {
-            id(other.getId());
+            id(other.getID());
             totalCount(other.getTotalCount());
             matches(other.getMatches());
             return this;

@@ -45,7 +45,7 @@ public final class ParagraphsResponse {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public String getID() {
         return id;
     }
 
@@ -92,11 +92,11 @@ public final class ParagraphsResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static IDStage builder() {
         return new Builder();
     }
 
-    public interface IdStage {
+    public interface IDStage {
         ConfidenceStage id(String id);
 
         Builder from(ParagraphsResponse other);
@@ -121,7 +121,7 @@ public final class ParagraphsResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, ConfidenceStage, AudioDurationStage, _FinalStage {
+    public static final class Builder implements IDStage, ConfidenceStage, AudioDurationStage, _FinalStage {
         private String id;
 
         private double confidence;
@@ -137,7 +137,7 @@ public final class ParagraphsResponse {
 
         @Override
         public Builder from(ParagraphsResponse other) {
-            id(other.getId());
+            id(other.getID());
             confidence(other.getConfidence());
             audioDuration(other.getAudioDuration());
             paragraphs(other.getParagraphs());

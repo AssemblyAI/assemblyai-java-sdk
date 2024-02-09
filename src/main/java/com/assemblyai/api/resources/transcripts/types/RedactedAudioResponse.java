@@ -20,13 +20,13 @@ import java.util.Objects;
 public final class RedactedAudioResponse {
     private final String status;
 
-    private final String redactedAudioUrl;
+    private final String redactedAudioURL;
 
     private final Map<String, Object> additionalProperties;
 
-    private RedactedAudioResponse(String status, String redactedAudioUrl, Map<String, Object> additionalProperties) {
+    private RedactedAudioResponse(String status, String redactedAudioURL, Map<String, Object> additionalProperties) {
         this.status = status;
-        this.redactedAudioUrl = redactedAudioUrl;
+        this.redactedAudioURL = redactedAudioURL;
         this.additionalProperties = additionalProperties;
     }
 
@@ -42,8 +42,8 @@ public final class RedactedAudioResponse {
      * @return The URL of the redacted audio file
      */
     @JsonProperty("redacted_audio_url")
-    public String getRedactedAudioUrl() {
-        return redactedAudioUrl;
+    public String getRedactedAudioURL() {
+        return redactedAudioURL;
     }
 
     @Override
@@ -58,12 +58,12 @@ public final class RedactedAudioResponse {
     }
 
     private boolean equalTo(RedactedAudioResponse other) {
-        return status.equals(other.status) && redactedAudioUrl.equals(other.redactedAudioUrl);
+        return status.equals(other.status) && redactedAudioURL.equals(other.redactedAudioURL);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.status, this.redactedAudioUrl);
+        return Objects.hash(this.status, this.redactedAudioURL);
     }
 
     @Override
@@ -76,13 +76,13 @@ public final class RedactedAudioResponse {
     }
 
     public interface StatusStage {
-        RedactedAudioUrlStage status(String status);
+        RedactedAudioURLStage status(String status);
 
         Builder from(RedactedAudioResponse other);
     }
 
-    public interface RedactedAudioUrlStage {
-        _FinalStage redactedAudioUrl(String redactedAudioUrl);
+    public interface RedactedAudioURLStage {
+        _FinalStage redactedAudioURL(String redactedAudioURL);
     }
 
     public interface _FinalStage {
@@ -90,10 +90,10 @@ public final class RedactedAudioResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StatusStage, RedactedAudioUrlStage, _FinalStage {
+    public static final class Builder implements StatusStage, RedactedAudioURLStage, _FinalStage {
         private String status;
 
-        private String redactedAudioUrl;
+        private String redactedAudioURL;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,7 +103,7 @@ public final class RedactedAudioResponse {
         @Override
         public Builder from(RedactedAudioResponse other) {
             status(other.getStatus());
-            redactedAudioUrl(other.getRedactedAudioUrl());
+            redactedAudioURL(other.getRedactedAudioURL());
             return this;
         }
 
@@ -113,7 +113,7 @@ public final class RedactedAudioResponse {
          */
         @Override
         @JsonSetter("status")
-        public RedactedAudioUrlStage status(String status) {
+        public RedactedAudioURLStage status(String status) {
             this.status = status;
             return this;
         }
@@ -124,14 +124,14 @@ public final class RedactedAudioResponse {
          */
         @Override
         @JsonSetter("redacted_audio_url")
-        public _FinalStage redactedAudioUrl(String redactedAudioUrl) {
-            this.redactedAudioUrl = redactedAudioUrl;
+        public _FinalStage redactedAudioURL(String redactedAudioURL) {
+            this.redactedAudioURL = redactedAudioURL;
             return this;
         }
 
         @Override
         public RedactedAudioResponse build() {
-            return new RedactedAudioResponse(status, redactedAudioUrl, additionalProperties);
+            return new RedactedAudioResponse(status, redactedAudioURL, additionalProperties);
         }
     }
 }

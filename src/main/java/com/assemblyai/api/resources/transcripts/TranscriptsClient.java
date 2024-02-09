@@ -56,11 +56,11 @@ public class TranscriptsClient {
         if (request.getCreatedOn().isPresent()) {
             httpUrl.addQueryParameter("created_on", request.getCreatedOn().get());
         }
-        if (request.getBeforeId().isPresent()) {
-            httpUrl.addQueryParameter("before_id", request.getBeforeId().get());
+        if (request.getBeforeID().isPresent()) {
+            httpUrl.addQueryParameter("before_id", request.getBeforeID().get());
         }
-        if (request.getAfterId().isPresent()) {
-            httpUrl.addQueryParameter("after_id", request.getAfterId().get());
+        if (request.getAfterID().isPresent()) {
+            httpUrl.addQueryParameter("after_id", request.getAfterID().get());
         }
         if (request.getThrottledOnly().isPresent()) {
             httpUrl.addQueryParameter(
@@ -138,11 +138,11 @@ public class TranscriptsClient {
     /**
      * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
      */
-    public Transcript get(String transcriptId, RequestOptions requestOptions) {
+    public Transcript get(String transcriptID, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -167,18 +167,18 @@ public class TranscriptsClient {
     /**
      * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
      */
-    public Transcript get(String transcriptId) {
-        return get(transcriptId, null);
+    public Transcript get(String transcriptID) {
+        return get(transcriptID, null);
     }
 
     /**
      * Delete the transcript
      */
-    public Transcript delete(String transcriptId, RequestOptions requestOptions) {
+    public Transcript delete(String transcriptID, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -203,30 +203,30 @@ public class TranscriptsClient {
     /**
      * Delete the transcript
      */
-    public Transcript delete(String transcriptId) {
-        return delete(transcriptId, null);
+    public Transcript delete(String transcriptID) {
+        return delete(transcriptID, null);
     }
 
     /**
      * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
+    public String getSubtitles(String transcriptID, SubtitleFormat subtitleFormat) {
         return getSubtitles(
-                transcriptId, subtitleFormat, GetSubtitlesParams.builder().build());
+                transcriptID, subtitleFormat, GetSubtitlesParams.builder().build());
     }
 
     /**
      * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
     public String getSubtitles(
-            String transcriptId,
+            String transcriptID,
             SubtitleFormat subtitleFormat,
             GetSubtitlesParams request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .addPathSegment(subtitleFormat.toString());
         if (request.getCharsPerCaption().isPresent()) {
             httpUrl.addQueryParameter(
@@ -255,18 +255,18 @@ public class TranscriptsClient {
     /**
      * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
-    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
-        return getSubtitles(transcriptId, subtitleFormat, request, null);
+    public String getSubtitles(String transcriptID, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
+        return getSubtitles(transcriptID, subtitleFormat, request, null);
     }
 
     /**
      * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public SentencesResponse getSentences(String transcriptId, RequestOptions requestOptions) {
+    public SentencesResponse getSentences(String transcriptID, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .addPathSegments("sentences")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -292,18 +292,18 @@ public class TranscriptsClient {
     /**
      * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public SentencesResponse getSentences(String transcriptId) {
-        return getSentences(transcriptId, null);
+    public SentencesResponse getSentences(String transcriptID) {
+        return getSentences(transcriptID, null);
     }
 
     /**
      * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
      */
-    public ParagraphsResponse getParagraphs(String transcriptId, RequestOptions requestOptions) {
+    public ParagraphsResponse getParagraphs(String transcriptID, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .addPathSegments("paragraphs")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -329,25 +329,25 @@ public class TranscriptsClient {
     /**
      * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
      */
-    public ParagraphsResponse getParagraphs(String transcriptId) {
-        return getParagraphs(transcriptId, null);
+    public ParagraphsResponse getParagraphs(String transcriptID) {
+        return getParagraphs(transcriptID, null);
     }
 
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(String transcriptId) {
-        return wordSearch(transcriptId, WordSearchParams.builder().build());
+    public WordSearchResponse wordSearch(String transcriptID) {
+        return wordSearch(transcriptID, WordSearchParams.builder().build());
     }
 
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request, RequestOptions requestOptions) {
+    public WordSearchResponse wordSearch(String transcriptID, WordSearchParams request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .addPathSegments("word-search");
         if (request.getWords().isPresent()) {
             httpUrl.addQueryParameter("words", request.getWords().get());
@@ -375,18 +375,18 @@ public class TranscriptsClient {
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request) {
-        return wordSearch(transcriptId, request, null);
+    public WordSearchResponse wordSearch(String transcriptID, WordSearchParams request) {
+        return wordSearch(transcriptID, request, null);
     }
 
     /**
      * Retrieve the redacted audio object containing the status and URL to the redacted audio.
      */
-    public RedactedAudioResponse getRedactedAudio(String transcriptId, RequestOptions requestOptions) {
+    public RedactedAudioResponse getRedactedAudio(String transcriptID, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
+                .addPathSegment(transcriptID)
                 .addPathSegments("redacted-audio")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -412,7 +412,7 @@ public class TranscriptsClient {
     /**
      * Retrieve the redacted audio object containing the status and URL to the redacted audio.
      */
-    public RedactedAudioResponse getRedactedAudio(String transcriptId) {
-        return getRedactedAudio(transcriptId, null);
+    public RedactedAudioResponse getRedactedAudio(String transcriptID) {
+        return getRedactedAudio(transcriptID, null);
     }
 }
