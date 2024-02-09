@@ -6,6 +6,7 @@ package com.assemblyai.api.resources.transcripts.requests;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.resources.transcripts.types.ITranscriptOptionalParams;
 import com.assemblyai.api.resources.transcripts.types.PiiPolicy;
+import com.assemblyai.api.resources.transcripts.types.RedactPiiAudioQuality;
 import com.assemblyai.api.resources.transcripts.types.SubstitutionPolicy;
 import com.assemblyai.api.resources.transcripts.types.SummaryModel;
 import com.assemblyai.api.resources.transcripts.types.SummaryType;
@@ -29,6 +30,8 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptParams.Builder.class)
 public final class TranscriptParams implements ITranscriptOptionalParams {
+    private final Optional<String> speechModel;
+
     private final Optional<TranscriptLanguageCode> languageCode;
 
     private final Optional<Boolean> punctuate;
@@ -59,7 +62,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
     private final Optional<Boolean> redactPiiAudio;
 
-    private final Optional<String> redactPiiAudioQuality;
+    private final Optional<RedactPiiAudioQuality> redactPiiAudioQuality;
 
     private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
@@ -104,6 +107,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     private final Map<String, Object> additionalProperties;
 
     private TranscriptParams(
+            Optional<String> speechModel,
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
@@ -119,7 +123,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
             Optional<Boolean> filterProfanity,
             Optional<Boolean> redactPii,
             Optional<Boolean> redactPiiAudio,
-            Optional<String> redactPiiAudioQuality,
+            Optional<RedactPiiAudioQuality> redactPiiAudioQuality,
             Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
@@ -141,6 +145,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
             Optional<List<String>> topics,
             String audioUrl,
             Map<String, Object> additionalProperties) {
+        this.speechModel = speechModel;
         this.languageCode = languageCode;
         this.punctuate = punctuate;
         this.formatText = formatText;
@@ -178,6 +183,12 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         this.topics = topics;
         this.audioUrl = audioUrl;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("speech_model")
+    @Override
+    public Optional<String> getSpeechModel() {
+        return speechModel;
     }
 
     @JsonProperty("language_code")
@@ -317,7 +328,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      */
     @JsonProperty("redact_pii_audio_quality")
     @Override
-    public Optional<String> getRedactPiiAudioQuality() {
+    public Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality() {
         return redactPiiAudioQuality;
     }
 
@@ -510,7 +521,8 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     private boolean equalTo(TranscriptParams other) {
-        return languageCode.equals(other.languageCode)
+        return speechModel.equals(other.speechModel)
+                && languageCode.equals(other.languageCode)
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && dualChannel.equals(other.dualChannel)
@@ -551,6 +563,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     @Override
     public int hashCode() {
         return Objects.hash(
+                this.speechModel,
                 this.languageCode,
                 this.punctuate,
                 this.formatText,
@@ -606,6 +619,10 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
     public interface _FinalStage {
         TranscriptParams build();
+
+        _FinalStage speechModel(Optional<String> speechModel);
+
+        _FinalStage speechModel(String speechModel);
 
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
@@ -667,9 +684,9 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
         _FinalStage redactPiiAudio(Boolean redactPiiAudio);
 
-        _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality);
 
-        _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality);
 
         _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies);
 
@@ -790,7 +807,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
         private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
-        private Optional<String> redactPiiAudioQuality = Optional.empty();
+        private Optional<RedactPiiAudioQuality> redactPiiAudioQuality = Optional.empty();
 
         private Optional<Boolean> redactPiiAudio = Optional.empty();
 
@@ -822,6 +839,8 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
+        private Optional<String> speechModel = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -829,6 +848,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
         @Override
         public Builder from(TranscriptParams other) {
+            speechModel(other.getSpeechModel());
             languageCode(other.getLanguageCode());
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
@@ -1204,14 +1224,14 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
 
         @Override
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
-        public _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
             return this;
         }
@@ -1468,8 +1488,22 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         }
 
         @Override
+        public _FinalStage speechModel(String speechModel) {
+            this.speechModel = Optional.of(speechModel);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public _FinalStage speechModel(Optional<String> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
+        @Override
         public TranscriptParams build() {
             return new TranscriptParams(
+                    speechModel,
                     languageCode,
                     punctuate,
                     formatText,
