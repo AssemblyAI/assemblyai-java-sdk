@@ -10,13 +10,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptListItem.Builder.class)
@@ -29,7 +27,7 @@ public final class TranscriptListItem {
 
     private final OffsetDateTime created;
 
-    private final Optional<OffsetDateTime> completed;
+    private final OffsetDateTime completed;
 
     private final String audioUrl;
 
@@ -40,7 +38,7 @@ public final class TranscriptListItem {
             String resourceUrl,
             TranscriptStatus status,
             OffsetDateTime created,
-            Optional<OffsetDateTime> completed,
+            OffsetDateTime completed,
             String audioUrl,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -73,7 +71,7 @@ public final class TranscriptListItem {
     }
 
     @JsonProperty("completed")
-    public Optional<OffsetDateTime> getCompleted() {
+    public OffsetDateTime getCompleted() {
         return completed;
     }
 
@@ -131,7 +129,11 @@ public final class TranscriptListItem {
     }
 
     public interface CreatedStage {
-        AudioUrlStage created(OffsetDateTime created);
+        CompletedStage created(OffsetDateTime created);
+    }
+
+    public interface CompletedStage {
+        AudioUrlStage completed(OffsetDateTime completed);
     }
 
     public interface AudioUrlStage {
@@ -140,15 +142,17 @@ public final class TranscriptListItem {
 
     public interface _FinalStage {
         TranscriptListItem build();
-
-        _FinalStage completed(Optional<OffsetDateTime> completed);
-
-        _FinalStage completed(OffsetDateTime completed);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, ResourceUrlStage, StatusStage, CreatedStage, AudioUrlStage, _FinalStage {
+            implements IdStage,
+                    ResourceUrlStage,
+                    StatusStage,
+                    CreatedStage,
+                    CompletedStage,
+                    AudioUrlStage,
+                    _FinalStage {
         private String id;
 
         private String resourceUrl;
@@ -157,9 +161,9 @@ public final class TranscriptListItem {
 
         private OffsetDateTime created;
 
-        private String audioUrl;
+        private OffsetDateTime completed;
 
-        private Optional<OffsetDateTime> completed = Optional.empty();
+        private String audioUrl;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -200,8 +204,15 @@ public final class TranscriptListItem {
 
         @Override
         @JsonSetter("created")
-        public AudioUrlStage created(OffsetDateTime created) {
+        public CompletedStage created(OffsetDateTime created) {
             this.created = created;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("completed")
+        public AudioUrlStage completed(OffsetDateTime completed) {
+            this.completed = completed;
             return this;
         }
 
@@ -209,19 +220,6 @@ public final class TranscriptListItem {
         @JsonSetter("audio_url")
         public _FinalStage audioUrl(String audioUrl) {
             this.audioUrl = audioUrl;
-            return this;
-        }
-
-        @Override
-        public _FinalStage completed(OffsetDateTime completed) {
-            this.completed = Optional.of(completed);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "completed", nulls = Nulls.SKIP)
-        public _FinalStage completed(Optional<OffsetDateTime> completed) {
-            this.completed = completed;
             return this;
         }
 
