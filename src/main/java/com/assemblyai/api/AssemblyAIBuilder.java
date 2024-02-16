@@ -7,12 +7,14 @@ import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.Environment;
 
 public final class AssemblyAIBuilder {
-    private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+    private final ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+    private final ClientOptions.Builder lemurClientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment = Environment.DEFAULT;
 
     public AssemblyAIBuilder apiKey(String apiKey) {
         this.clientOptionsBuilder.addHeader("Authorization", apiKey);
+        this.lemurClientOptionsBuilder.addHeader("Authorization", apiKey);
         return this;
     }
 
@@ -28,6 +30,9 @@ public final class AssemblyAIBuilder {
 
     public AssemblyAI build() {
         clientOptionsBuilder.environment(this.environment);
-        return new AssemblyAI(clientOptionsBuilder.build());
+        lemurClientOptionsBuilder
+                .environment(this.environment)
+                .disableTimeouts();
+        return new AssemblyAI(clientOptionsBuilder.build(), lemurClientOptionsBuilder.build());
     }
 }
