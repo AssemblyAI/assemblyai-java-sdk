@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class LemurModel {
-    public static final LemurModel ASSEMBLYAI_MISTRAL_7_B =
-            new LemurModel(Value.ASSEMBLYAI_MISTRAL_7_B, "assemblyai/mistral-7b");
-
     public static final LemurModel BASIC = new LemurModel(Value.BASIC, "basic");
 
-    public static final LemurModel ANTHROPIC_CLAUDE_21 =
-            new LemurModel(Value.ANTHROPIC_CLAUDE_21, "anthropic/claude-2-1");
+    public static final LemurModel ANTHROPIC_CLAUDE2_1 =
+            new LemurModel(Value.ANTHROPIC_CLAUDE2_1, "anthropic/claude-2-1");
 
     public static final LemurModel DEFAULT = new LemurModel(Value.DEFAULT, "default");
+
+    public static final LemurModel ASSEMBLYAI_MISTRAL7B =
+            new LemurModel(Value.ASSEMBLYAI_MISTRAL7B, "assemblyai/mistral-7b");
 
     private final Value value;
 
@@ -48,14 +48,14 @@ public final class LemurModel {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case ASSEMBLYAI_MISTRAL_7_B:
-                return visitor.visitAssemblyaiMistral7B();
             case BASIC:
                 return visitor.visitBasic();
-            case ANTHROPIC_CLAUDE_21:
-                return visitor.visitAnthropicClaude21();
+            case ANTHROPIC_CLAUDE2_1:
+                return visitor.visitAnthropicClaude2_1();
             case DEFAULT:
                 return visitor.visitDefault();
+            case ASSEMBLYAI_MISTRAL7B:
+                return visitor.visitAssemblyaiMistral7b();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -65,14 +65,14 @@ public final class LemurModel {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static LemurModel valueOf(String value) {
         switch (value) {
-            case "assemblyai/mistral-7b":
-                return ASSEMBLYAI_MISTRAL_7_B;
             case "basic":
                 return BASIC;
             case "anthropic/claude-2-1":
-                return ANTHROPIC_CLAUDE_21;
+                return ANTHROPIC_CLAUDE2_1;
             case "default":
                 return DEFAULT;
+            case "assemblyai/mistral-7b":
+                return ASSEMBLYAI_MISTRAL7B;
             default:
                 return new LemurModel(Value.UNKNOWN, value);
         }
@@ -83,9 +83,9 @@ public final class LemurModel {
 
         BASIC,
 
-        ASSEMBLYAI_MISTRAL_7_B,
+        ASSEMBLYAI_MISTRAL7B,
 
-        ANTHROPIC_CLAUDE_21,
+        ANTHROPIC_CLAUDE2_1,
 
         UNKNOWN
     }
@@ -95,9 +95,9 @@ public final class LemurModel {
 
         T visitBasic();
 
-        T visitAssemblyaiMistral7B();
+        T visitAssemblyaiMistral7b();
 
-        T visitAnthropicClaude21();
+        T visitAnthropicClaude2_1();
 
         T visitUnknown(String unknownType);
     }

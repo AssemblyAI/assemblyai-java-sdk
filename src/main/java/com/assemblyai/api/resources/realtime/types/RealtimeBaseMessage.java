@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RealtimeBaseMessage.Builder.class)
-public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
+public final class RealtimeBaseMessage {
     private final MessageType messageType;
 
     private final Map<String, Object> additionalProperties;
@@ -31,7 +31,6 @@ public final class RealtimeBaseMessage implements IRealtimeBaseMessage {
      * @return Describes the type of the message
      */
     @JsonProperty("message_type")
-    @Override
     public MessageType getMessageType() {
         return messageType;
     }

@@ -16,29 +16,29 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = AudioData.Builder.class)
-public final class AudioData {
-    private final String audioData;
+@JsonDeserialize(builder = ForceEndUtterance.Builder.class)
+public final class ForceEndUtterance {
+    private final boolean forceEndUtterance;
 
     private final Map<String, Object> additionalProperties;
 
-    private AudioData(String audioData, Map<String, Object> additionalProperties) {
-        this.audioData = audioData;
+    private ForceEndUtterance(boolean forceEndUtterance, Map<String, Object> additionalProperties) {
+        this.forceEndUtterance = forceEndUtterance;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Base64 encoded raw audio data
+     * @return A boolean value to communicate that you wish to force the end of the utterance
      */
-    @JsonProperty("audio_data")
-    public String getAudioData() {
-        return audioData;
+    @JsonProperty("force_end_utterance")
+    public boolean getForceEndUtterance() {
+        return forceEndUtterance;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof AudioData && equalTo((AudioData) other);
+        return other instanceof ForceEndUtterance && equalTo((ForceEndUtterance) other);
     }
 
     @JsonAnyGetter
@@ -46,13 +46,13 @@ public final class AudioData {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(AudioData other) {
-        return audioData.equals(other.audioData);
+    private boolean equalTo(ForceEndUtterance other) {
+        return forceEndUtterance == other.forceEndUtterance;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.audioData);
+        return Objects.hash(this.forceEndUtterance);
     }
 
     @Override
@@ -60,23 +60,23 @@ public final class AudioData {
         return ObjectMappers.stringify(this);
     }
 
-    public static AudioDataStage builder() {
+    public static ForceEndUtteranceStage builder() {
         return new Builder();
     }
 
-    public interface AudioDataStage {
-        _FinalStage audioData(String audioData);
+    public interface ForceEndUtteranceStage {
+        _FinalStage forceEndUtterance(boolean forceEndUtterance);
 
-        Builder from(AudioData other);
+        Builder from(ForceEndUtterance other);
     }
 
     public interface _FinalStage {
-        AudioData build();
+        ForceEndUtterance build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements AudioDataStage, _FinalStage {
-        private String audioData;
+    public static final class Builder implements ForceEndUtteranceStage, _FinalStage {
+        private boolean forceEndUtterance;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -84,25 +84,25 @@ public final class AudioData {
         private Builder() {}
 
         @Override
-        public Builder from(AudioData other) {
-            audioData(other.getAudioData());
+        public Builder from(ForceEndUtterance other) {
+            forceEndUtterance(other.getForceEndUtterance());
             return this;
         }
 
         /**
-         * <p>Base64 encoded raw audio data</p>
+         * <p>A boolean value to communicate that you wish to force the end of the utterance</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        @JsonSetter("audio_data")
-        public _FinalStage audioData(String audioData) {
-            this.audioData = audioData;
+        @JsonSetter("force_end_utterance")
+        public _FinalStage forceEndUtterance(boolean forceEndUtterance) {
+            this.forceEndUtterance = forceEndUtterance;
             return this;
         }
 
         @Override
-        public AudioData build() {
-            return new AudioData(audioData, additionalProperties);
+        public ForceEndUtterance build() {
+            return new ForceEndUtterance(forceEndUtterance, additionalProperties);
         }
     }
 }

@@ -8,11 +8,11 @@ import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.MediaTypes;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
+import com.assemblyai.api.resources.lemur.requests.LemurActionItemsParams;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParams;
 import com.assemblyai.api.resources.lemur.requests.LemurSummaryParams;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.LemurActionItemsResponse;
-import com.assemblyai.api.resources.lemur.types.LemurBaseParams;
 import com.assemblyai.api.resources.lemur.types.LemurQuestionAnswerResponse;
 import com.assemblyai.api.resources.lemur.types.LemurSummaryResponse;
 import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
@@ -169,13 +169,13 @@ public class LemurClient {
      * Use LeMUR to generate a list of action items from a transcript
      */
     public LemurActionItemsResponse actionItems() {
-        return actionItems(LemurBaseParams.builder().build());
+        return actionItems(LemurActionItemsParams.builder().build());
     }
 
     /**
      * Use LeMUR to generate a list of action items from a transcript
      */
-    public LemurActionItemsResponse actionItems(LemurBaseParams request, RequestOptions requestOptions) {
+    public LemurActionItemsResponse actionItems(LemurActionItemsParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("lemur/v3/generate/action-items")
@@ -210,7 +210,7 @@ public class LemurClient {
     /**
      * Use LeMUR to generate a list of action items from a transcript
      */
-    public LemurActionItemsResponse actionItems(LemurBaseParams request) {
+    public LemurActionItemsResponse actionItems(LemurActionItemsParams request) {
         return actionItems(request, null);
     }
 
