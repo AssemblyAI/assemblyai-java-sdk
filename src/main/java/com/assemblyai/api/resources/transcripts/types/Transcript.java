@@ -23,6 +23,8 @@ import java.util.Optional;
 public final class Transcript {
     private final String id;
 
+    private final Optional<String> speechModel;
+
     private final String languageModel;
 
     private final String acousticModel;
@@ -77,7 +79,7 @@ public final class Transcript {
 
     private final Optional<Boolean> redactPiiAudio;
 
-    private final Optional<String> redactPiiAudioQuality;
+    private final Optional<RedactPiiAudioQuality> redactPiiAudioQuality;
 
     private final Optional<List<PiiPolicy>> redactPiiPolicies;
 
@@ -135,6 +137,7 @@ public final class Transcript {
 
     private Transcript(
             String id,
+            Optional<String> speechModel,
             String languageModel,
             String acousticModel,
             TranscriptStatus status,
@@ -162,7 +165,7 @@ public final class Transcript {
             Optional<Boolean> filterProfanity,
             boolean redactPii,
             Optional<Boolean> redactPiiAudio,
-            Optional<String> redactPiiAudioQuality,
+            Optional<RedactPiiAudioQuality> redactPiiAudioQuality,
             Optional<List<PiiPolicy>> redactPiiPolicies,
             Optional<SubstitutionPolicy> redactPiiSub,
             Optional<Boolean> speakerLabels,
@@ -191,6 +194,7 @@ public final class Transcript {
             Optional<String> error,
             Map<String, Object> additionalProperties) {
         this.id = id;
+        this.speechModel = speechModel;
         this.languageModel = languageModel;
         this.acousticModel = acousticModel;
         this.status = status;
@@ -254,6 +258,11 @@ public final class Transcript {
     @JsonProperty("id")
     public String getId() {
         return id;
+    }
+
+    @JsonProperty("speech_model")
+    public Optional<String> getSpeechModel() {
+        return speechModel;
     }
 
     /**
@@ -474,12 +483,8 @@ public final class Transcript {
         return redactPiiAudio;
     }
 
-    /**
-     * @return The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
-     * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.
-     */
     @JsonProperty("redact_pii_audio_quality")
-    public Optional<String> getRedactPiiAudioQuality() {
+    public Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality() {
         return redactPiiAudioQuality;
     }
 
@@ -703,6 +708,7 @@ public final class Transcript {
 
     private boolean equalTo(Transcript other) {
         return id.equals(other.id)
+                && speechModel.equals(other.speechModel)
                 && languageModel.equals(other.languageModel)
                 && acousticModel.equals(other.acousticModel)
                 && status.equals(other.status)
@@ -763,6 +769,7 @@ public final class Transcript {
     public int hashCode() {
         return Objects.hash(
                 this.id,
+                this.speechModel,
                 this.languageModel,
                 this.acousticModel,
                 this.status,
@@ -869,6 +876,10 @@ public final class Transcript {
     public interface _FinalStage {
         Transcript build();
 
+        _FinalStage speechModel(Optional<String> speechModel);
+
+        _FinalStage speechModel(String speechModel);
+
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
         _FinalStage languageCode(TranscriptLanguageCode languageCode);
@@ -949,9 +960,9 @@ public final class Transcript {
 
         _FinalStage redactPiiAudio(Boolean redactPiiAudio);
 
-        _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality);
 
-        _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality);
+        _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality);
 
         _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies);
 
@@ -1134,7 +1145,7 @@ public final class Transcript {
 
         private Optional<List<PiiPolicy>> redactPiiPolicies = Optional.empty();
 
-        private Optional<String> redactPiiAudioQuality = Optional.empty();
+        private Optional<RedactPiiAudioQuality> redactPiiAudioQuality = Optional.empty();
 
         private Optional<Boolean> redactPiiAudio = Optional.empty();
 
@@ -1176,6 +1187,8 @@ public final class Transcript {
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
+        private Optional<String> speechModel = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -1184,6 +1197,7 @@ public final class Transcript {
         @Override
         public Builder from(Transcript other) {
             id(other.getId());
+            speechModel(other.getSpeechModel());
             languageModel(other.getLanguageModel());
             acousticModel(other.getAcousticModel());
             status(other.getStatus());
@@ -1762,20 +1776,15 @@ public final class Transcript {
             return this;
         }
 
-        /**
-         * <p>The audio quality of the PII-redacted audio file, if redact_pii_audio is enabled.
-         * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
-        public _FinalStage redactPiiAudioQuality(String redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
 
         @Override
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
-        public _FinalStage redactPiiAudioQuality(Optional<String> redactPiiAudioQuality) {
+        public _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
             return this;
         }
@@ -2122,9 +2131,23 @@ public final class Transcript {
         }
 
         @Override
+        public _FinalStage speechModel(String speechModel) {
+            this.speechModel = Optional.of(speechModel);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public _FinalStage speechModel(Optional<String> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
+        @Override
         public Transcript build() {
             return new Transcript(
                     id,
+                    speechModel,
                     languageModel,
                     acousticModel,
                     status,
