@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+
 import okhttp3.OkHttpClient;
 
 public final class ClientOptions {
@@ -26,16 +27,13 @@ public final class ClientOptions {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
-        this.headers.putAll(Map.of(
-                "X-Fern-SDK-Name",
-                "com.assemblyai.fern:api-sdk",
-                "X-Fern-SDK-Version",
-                "1.0.2",
-                "X-Fern-Language",
-                "JAVA"));
+        this.headers.putAll(new HashMap<String, String>() {{
+            put("X-Fern-SDK-Name", "com.assemblyai.fern:api-sdk");
+            put("X-Fern-SDK-Version", "1.0.2");
+            put("X-Fern-Language", "JAVA");
+        }});
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
-        ;
     }
 
     public Environment environment() {
@@ -67,6 +65,7 @@ public final class ClientOptions {
         private final Map<String, String> headers = new HashMap<>();
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
+        private boolean disableTimeouts = false;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -83,13 +82,32 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * This is a temporary measure ot disable timeouts for LeMUR client.
+         * Don't use this method.
+         *
+         * @return ClientOptionsBuilder
+         * @deprecated
+         */
+        public Builder disableTimeouts() {
+            this.disableTimeouts = true;
+            return this;
+        }
+
         public ClientOptions build() {
-            OkHttpClient okhttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3))
-                    // set longer timeout for LeMUR
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
+            OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder()
+                    .addInterceptor(new RetryInterceptor(3));
+            if (this.disableTimeouts) {
+                okhttpClientBuilder
+                        .readTimeout(0, TimeUnit.SECONDS)
+                        .callTimeout(0, TimeUnit.SECONDS);
+            }
+            return new ClientOptions(
+                    environment,
+                    headers,
+                    headerSuppliers,
+                    okhttpClientBuilder.build()
+            );
         }
     }
 }
