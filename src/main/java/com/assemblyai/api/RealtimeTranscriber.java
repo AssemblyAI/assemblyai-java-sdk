@@ -88,12 +88,10 @@ public final class RealtimeTranscriber implements AutoCloseable {
         this.webSocket = OK_HTTP_CLIENT.newWebSocket(request, new Listener(
                 (response) -> endUtteranceSilenceThreshold.ifPresent(this::configureEndUtteranceSilenceThreshold)
         ));
-
     }
 
     /**
      * Stream binary audio data
-     *
      * @param audio byte array audio data
      */
     public void sendAudio(byte[] audio) {
@@ -102,7 +100,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
     /**
      * Stream base64 encoded audio data
-     *
      * @param audio base64 audio data string
      */
     public void sendAudio(String audio) {
@@ -158,7 +155,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets api key
-         *
          * @param apiKey The AssemblyAI API Key
          * @return this
          */
@@ -169,7 +165,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets sample rate
-         *
          * @param sampleRate The audio sample rate. Defaults to 16_000
          * @return this
          */
@@ -180,7 +175,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets word boost
-         *
          * @param wordBoost An array of words to boost
          * @return this
          */
@@ -191,7 +185,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Configure the threshold for how long to wait before ending an utterance. Default is 700ms.
-         *
          * @param threshold The duration of the end utterance silence threshold in milliseconds
          * @return this
          */
@@ -203,7 +196,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onSessionStart
-         *
          * @param onSessionStart an event handler for the start event. Defaults to a noop.
          * @return this
          * @deprecated use {@link #onSessionBegins(Consumer)} instead.
@@ -215,7 +207,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onSessionBegins
-         *
          * @param onSessionBegins an event handler for the start event. Defaults to a noop.
          * @return this
          */
@@ -226,7 +217,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onPartialTranscript
-         *
          * @param onPartialTranscript an event handler for the partial transcript event. Defaults to a noop.
          * @return this
          */
@@ -237,7 +227,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onPartialTranscript
-         *
          * @param onFinalTranscript an event handler for the final transcript event. Defaults to a noop.
          * @return this
          */
@@ -248,7 +237,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onTranscript
-         *
          * @param onTranscript an event handler for any transcript event (partial or final). Defaults to a noop.
          * @return this
          */
@@ -259,7 +247,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onError
-         *
          * @param onError an event handler for an error event. Defaults to a noop.
          * @return this
          */
@@ -270,7 +257,6 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         /**
          * Sets onClose
-         *
          * @param onClose an event handler for the closing event. Defaults to a noop.
          * @return this
          */
