@@ -7,6 +7,7 @@ import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.resources.transcripts.types.ITranscriptOptionalParams;
 import com.assemblyai.api.resources.transcripts.types.PiiPolicy;
 import com.assemblyai.api.resources.transcripts.types.RedactPiiAudioQuality;
+import com.assemblyai.api.resources.transcripts.types.SpeechModel;
 import com.assemblyai.api.resources.transcripts.types.SubstitutionPolicy;
 import com.assemblyai.api.resources.transcripts.types.SummaryModel;
 import com.assemblyai.api.resources.transcripts.types.SummaryType;
@@ -30,7 +31,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptParams.Builder.class)
 public final class TranscriptParams implements ITranscriptOptionalParams {
-    private final Optional<String> speechModel;
+    private final Optional<SpeechModel> speechModel;
 
     private final Optional<TranscriptLanguageCode> languageCode;
 
@@ -107,7 +108,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     private final Map<String, Object> additionalProperties;
 
     private TranscriptParams(
-            Optional<String> speechModel,
+            Optional<SpeechModel> speechModel,
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
@@ -186,13 +187,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     @JsonProperty("speech_model")
-    @Override
-    public Optional<String> getSpeechModel() {
+    @java.lang.Override
+    public Optional<SpeechModel> getSpeechModel() {
         return speechModel;
     }
 
     @JsonProperty("language_code")
-    @Override
+    @java.lang.Override
     public Optional<TranscriptLanguageCode> getLanguageCode() {
         return languageCode;
     }
@@ -201,7 +202,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable Automatic Punctuation, can be true or false
      */
     @JsonProperty("punctuate")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getPunctuate() {
         return punctuate;
     }
@@ -210,7 +211,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable Text Formatting, can be true or false
      */
     @JsonProperty("format_text")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getFormatText() {
         return formatText;
     }
@@ -219,7 +220,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.
      */
     @JsonProperty("dual_channel")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getDualChannel() {
         return dualChannel;
     }
@@ -228,7 +229,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The URL to which AssemblyAI send webhooks upon trancription completion
      */
     @JsonProperty("webhook_url")
-    @Override
+    @java.lang.Override
     public Optional<String> getWebhookUrl() {
         return webhookUrl;
     }
@@ -237,7 +238,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The header name which should be sent back with webhook calls
      */
     @JsonProperty("webhook_auth_header_name")
-    @Override
+    @java.lang.Override
     public Optional<String> getWebhookAuthHeaderName() {
         return webhookAuthHeaderName;
     }
@@ -246,7 +247,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Specify a header name and value to send back with a webhook call for added security
      */
     @JsonProperty("webhook_auth_header_value")
-    @Override
+    @java.lang.Override
     public Optional<String> getWebhookAuthHeaderValue() {
         return webhookAuthHeaderValue;
     }
@@ -255,7 +256,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Whether Key Phrases is enabled, either true or false
      */
     @JsonProperty("auto_highlights")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAutoHighlights() {
         return autoHighlights;
     }
@@ -264,7 +265,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The point in time, in milliseconds, to begin transcribing in your media file
      */
     @JsonProperty("audio_start_from")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getAudioStartFrom() {
         return audioStartFrom;
     }
@@ -273,7 +274,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The point in time, in milliseconds, to stop transcribing in your media file
      */
     @JsonProperty("audio_end_at")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getAudioEndAt() {
         return audioEndAt;
     }
@@ -282,7 +283,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The list of custom vocabulary to boost transcription probability for
      */
     @JsonProperty("word_boost")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getWordBoost() {
         return wordBoost;
     }
@@ -291,7 +292,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The word boost parameter value
      */
     @JsonProperty("boost_param")
-    @Override
+    @java.lang.Override
     public Optional<TranscriptBoostParam> getBoostParam() {
         return boostParam;
     }
@@ -300,7 +301,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Filter profanity from the transcribed text, can be true or false
      */
     @JsonProperty("filter_profanity")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getFilterProfanity() {
         return filterProfanity;
     }
@@ -309,7 +310,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Redact PII from the transcribed text using the Redact PII model, can be true or false
      */
     @JsonProperty("redact_pii")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getRedactPii() {
         return redactPii;
     }
@@ -318,7 +319,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Generate a copy of the original media file with spoken PII &quot;beeped&quot; out, can be true or false. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.
      */
     @JsonProperty("redact_pii_audio")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getRedactPiiAudio() {
         return redactPiiAudio;
     }
@@ -327,7 +328,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.
      */
     @JsonProperty("redact_pii_audio_quality")
-    @Override
+    @java.lang.Override
     public Optional<RedactPiiAudioQuality> getRedactPiiAudioQuality() {
         return redactPiiAudioQuality;
     }
@@ -336,13 +337,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The list of PII Redaction policies to enable. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.
      */
     @JsonProperty("redact_pii_policies")
-    @Override
+    @java.lang.Override
     public Optional<List<PiiPolicy>> getRedactPiiPolicies() {
         return redactPiiPolicies;
     }
 
     @JsonProperty("redact_pii_sub")
-    @Override
+    @java.lang.Override
     public Optional<SubstitutionPolicy> getRedactPiiSub() {
         return redactPiiSub;
     }
@@ -351,7 +352,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a>, can be true or false
      */
     @JsonProperty("speaker_labels")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getSpeakerLabels() {
         return speakerLabels;
     }
@@ -360,7 +361,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more details.
      */
     @JsonProperty("speakers_expected")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getSpeakersExpected() {
         return speakersExpected;
     }
@@ -369,7 +370,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/content-moderation">Content Moderation</a>, can be true or false
      */
     @JsonProperty("content_safety")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getContentSafety() {
         return contentSafety;
     }
@@ -378,7 +379,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The confidence threshold for content moderation. Values must be between 25 and 100.
      */
     @JsonProperty("content_safety_confidence")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getContentSafetyConfidence() {
         return contentSafetyConfidence;
     }
@@ -387,7 +388,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/topic-detection">Topic Detection</a>, can be true or false
      */
     @JsonProperty("iab_categories")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getIabCategories() {
         return iabCategories;
     }
@@ -396,7 +397,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.
      */
     @JsonProperty("language_detection")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getLanguageDetection() {
         return languageDetection;
     }
@@ -405,7 +406,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Customize how words are spelled and formatted using to and from values
      */
     @JsonProperty("custom_spelling")
-    @Override
+    @java.lang.Override
     public Optional<List<TranscriptCustomSpelling>> getCustomSpelling() {
         return customSpelling;
     }
@@ -414,7 +415,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false
      */
     @JsonProperty("disfluencies")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getDisfluencies() {
         return disfluencies;
     }
@@ -423,7 +424,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a>, can be true or false
      */
     @JsonProperty("sentiment_analysis")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getSentimentAnalysis() {
         return sentimentAnalysis;
     }
@@ -432,7 +433,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/auto-chapters">Auto Chapters</a>, can be true or false
      */
     @JsonProperty("auto_chapters")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAutoChapters() {
         return autoChapters;
     }
@@ -441,7 +442,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/entity-detection">Entity Detection</a>, can be true or false
      */
     @JsonProperty("entity_detection")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getEntityDetection() {
         return entityDetection;
     }
@@ -451,7 +452,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * Valid values are in the range [0, 1] inclusive.
      */
     @JsonProperty("speech_threshold")
-    @Override
+    @java.lang.Override
     public Optional<Double> getSpeechThreshold() {
         return speechThreshold;
     }
@@ -460,7 +461,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Enable <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a>, can be true or false
      */
     @JsonProperty("summarization")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getSummarization() {
         return summarization;
     }
@@ -469,7 +470,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The model to summarize the transcript
      */
     @JsonProperty("summary_model")
-    @Override
+    @java.lang.Override
     public Optional<SummaryModel> getSummaryModel() {
         return summaryModel;
     }
@@ -478,7 +479,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The type of summary
      */
     @JsonProperty("summary_type")
-    @Override
+    @java.lang.Override
     public Optional<SummaryType> getSummaryType() {
         return summaryType;
     }
@@ -487,7 +488,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return Whether custom topics is enabled, either true or false
      */
     @JsonProperty("custom_topics")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getCustomTopics() {
         return customTopics;
     }
@@ -496,7 +497,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
      * @return The list of custom topics provided, if custom topics is enabled
      */
     @JsonProperty("topics")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getTopics() {
         return topics;
     }
@@ -509,7 +510,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         return audioUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptParams && equalTo((TranscriptParams) other);
@@ -560,7 +561,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
                 && audioUrl.equals(other.audioUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.speechModel,
@@ -602,7 +603,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
                 this.audioUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -620,9 +621,9 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     public interface _FinalStage {
         TranscriptParams build();
 
-        _FinalStage speechModel(Optional<String> speechModel);
+        _FinalStage speechModel(Optional<SpeechModel> speechModel);
 
-        _FinalStage speechModel(String speechModel);
+        _FinalStage speechModel(SpeechModel speechModel);
 
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
@@ -839,14 +840,14 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
-        private Optional<String> speechModel = Optional.empty();
+        private Optional<SpeechModel> speechModel = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TranscriptParams other) {
             speechModel(other.getSpeechModel());
             languageCode(other.getLanguageCode());
@@ -892,7 +893,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The URL of the audio or video file to transcribe.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_url")
         public _FinalStage audioUrl(String audioUrl) {
             this.audioUrl = audioUrl;
@@ -903,13 +904,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The list of custom topics provided, if custom topics is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage topics(List<String> topics) {
             this.topics = Optional.of(topics);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "topics", nulls = Nulls.SKIP)
         public _FinalStage topics(Optional<List<String>> topics) {
             this.topics = topics;
@@ -920,13 +921,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Whether custom topics is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage customTopics(Boolean customTopics) {
             this.customTopics = Optional.of(customTopics);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "custom_topics", nulls = Nulls.SKIP)
         public _FinalStage customTopics(Optional<Boolean> customTopics) {
             this.customTopics = customTopics;
@@ -937,13 +938,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The type of summary</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summaryType(SummaryType summaryType) {
             this.summaryType = Optional.of(summaryType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary_type", nulls = Nulls.SKIP)
         public _FinalStage summaryType(Optional<SummaryType> summaryType) {
             this.summaryType = summaryType;
@@ -954,13 +955,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The model to summarize the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summaryModel(SummaryModel summaryModel) {
             this.summaryModel = Optional.of(summaryModel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary_model", nulls = Nulls.SKIP)
         public _FinalStage summaryModel(Optional<SummaryModel> summaryModel) {
             this.summaryModel = summaryModel;
@@ -971,13 +972,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summarization(Boolean summarization) {
             this.summarization = Optional.of(summarization);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summarization", nulls = Nulls.SKIP)
         public _FinalStage summarization(Optional<Boolean> summarization) {
             this.summarization = summarization;
@@ -989,13 +990,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * Valid values are in the range [0, 1] inclusive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speechThreshold(Double speechThreshold) {
             this.speechThreshold = Optional.of(speechThreshold);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speech_threshold", nulls = Nulls.SKIP)
         public _FinalStage speechThreshold(Optional<Double> speechThreshold) {
             this.speechThreshold = speechThreshold;
@@ -1006,13 +1007,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/entity-detection">Entity Detection</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage entityDetection(Boolean entityDetection) {
             this.entityDetection = Optional.of(entityDetection);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "entity_detection", nulls = Nulls.SKIP)
         public _FinalStage entityDetection(Optional<Boolean> entityDetection) {
             this.entityDetection = entityDetection;
@@ -1023,13 +1024,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/auto-chapters">Auto Chapters</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage autoChapters(Boolean autoChapters) {
             this.autoChapters = Optional.of(autoChapters);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auto_chapters", nulls = Nulls.SKIP)
         public _FinalStage autoChapters(Optional<Boolean> autoChapters) {
             this.autoChapters = autoChapters;
@@ -1040,13 +1041,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage sentimentAnalysis(Boolean sentimentAnalysis) {
             this.sentimentAnalysis = Optional.of(sentimentAnalysis);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sentiment_analysis", nulls = Nulls.SKIP)
         public _FinalStage sentimentAnalysis(Optional<Boolean> sentimentAnalysis) {
             this.sentimentAnalysis = sentimentAnalysis;
@@ -1057,13 +1058,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage disfluencies(Boolean disfluencies) {
             this.disfluencies = Optional.of(disfluencies);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
         public _FinalStage disfluencies(Optional<Boolean> disfluencies) {
             this.disfluencies = disfluencies;
@@ -1074,13 +1075,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Customize how words are spelled and formatted using to and from values</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage customSpelling(List<TranscriptCustomSpelling> customSpelling) {
             this.customSpelling = Optional.of(customSpelling);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "custom_spelling", nulls = Nulls.SKIP)
         public _FinalStage customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling) {
             this.customSpelling = customSpelling;
@@ -1091,13 +1092,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage languageDetection(Boolean languageDetection) {
             this.languageDetection = Optional.of(languageDetection);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
         public _FinalStage languageDetection(Optional<Boolean> languageDetection) {
             this.languageDetection = languageDetection;
@@ -1108,13 +1109,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/topic-detection">Topic Detection</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage iabCategories(Boolean iabCategories) {
             this.iabCategories = Optional.of(iabCategories);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "iab_categories", nulls = Nulls.SKIP)
         public _FinalStage iabCategories(Optional<Boolean> iabCategories) {
             this.iabCategories = iabCategories;
@@ -1125,13 +1126,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The confidence threshold for content moderation. Values must be between 25 and 100.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage contentSafetyConfidence(Integer contentSafetyConfidence) {
             this.contentSafetyConfidence = Optional.of(contentSafetyConfidence);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "content_safety_confidence", nulls = Nulls.SKIP)
         public _FinalStage contentSafetyConfidence(Optional<Integer> contentSafetyConfidence) {
             this.contentSafetyConfidence = contentSafetyConfidence;
@@ -1142,13 +1143,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/content-moderation">Content Moderation</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage contentSafety(Boolean contentSafety) {
             this.contentSafety = Optional.of(contentSafety);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "content_safety", nulls = Nulls.SKIP)
         public _FinalStage contentSafety(Optional<Boolean> contentSafety) {
             this.contentSafety = contentSafety;
@@ -1159,13 +1160,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Tells the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speakersExpected(Integer speakersExpected) {
             this.speakersExpected = Optional.of(speakersExpected);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speakers_expected", nulls = Nulls.SKIP)
         public _FinalStage speakersExpected(Optional<Integer> speakersExpected) {
             this.speakersExpected = speakersExpected;
@@ -1176,26 +1177,26 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a>, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speakerLabels(Boolean speakerLabels) {
             this.speakerLabels = Optional.of(speakerLabels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speaker_labels", nulls = Nulls.SKIP)
         public _FinalStage speakerLabels(Optional<Boolean> speakerLabels) {
             this.speakerLabels = speakerLabels;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiSub(SubstitutionPolicy redactPiiSub) {
             this.redactPiiSub = Optional.of(redactPiiSub);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_sub", nulls = Nulls.SKIP)
         public _FinalStage redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub) {
             this.redactPiiSub = redactPiiSub;
@@ -1206,13 +1207,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The list of PII Redaction policies to enable. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
             this.redactPiiPolicies = Optional.of(redactPiiPolicies);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
         public _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies) {
             this.redactPiiPolicies = redactPiiPolicies;
@@ -1223,13 +1224,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
         public _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
@@ -1240,13 +1241,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Generate a copy of the original media file with spoken PII &quot;beeped&quot; out, can be true or false. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiAudio(Boolean redactPiiAudio) {
             this.redactPiiAudio = Optional.of(redactPiiAudio);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_audio", nulls = Nulls.SKIP)
         public _FinalStage redactPiiAudio(Optional<Boolean> redactPiiAudio) {
             this.redactPiiAudio = redactPiiAudio;
@@ -1257,13 +1258,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Redact PII from the transcribed text using the Redact PII model, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPii(Boolean redactPii) {
             this.redactPii = Optional.of(redactPii);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii", nulls = Nulls.SKIP)
         public _FinalStage redactPii(Optional<Boolean> redactPii) {
             this.redactPii = redactPii;
@@ -1274,13 +1275,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Filter profanity from the transcribed text, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage filterProfanity(Boolean filterProfanity) {
             this.filterProfanity = Optional.of(filterProfanity);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filter_profanity", nulls = Nulls.SKIP)
         public _FinalStage filterProfanity(Optional<Boolean> filterProfanity) {
             this.filterProfanity = filterProfanity;
@@ -1291,13 +1292,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The word boost parameter value</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage boostParam(TranscriptBoostParam boostParam) {
             this.boostParam = Optional.of(boostParam);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "boost_param", nulls = Nulls.SKIP)
         public _FinalStage boostParam(Optional<TranscriptBoostParam> boostParam) {
             this.boostParam = boostParam;
@@ -1308,13 +1309,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The list of custom vocabulary to boost transcription probability for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage wordBoost(List<String> wordBoost) {
             this.wordBoost = Optional.of(wordBoost);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "word_boost", nulls = Nulls.SKIP)
         public _FinalStage wordBoost(Optional<List<String>> wordBoost) {
             this.wordBoost = wordBoost;
@@ -1325,13 +1326,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The point in time, in milliseconds, to stop transcribing in your media file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage audioEndAt(Integer audioEndAt) {
             this.audioEndAt = Optional.of(audioEndAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "audio_end_at", nulls = Nulls.SKIP)
         public _FinalStage audioEndAt(Optional<Integer> audioEndAt) {
             this.audioEndAt = audioEndAt;
@@ -1342,13 +1343,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The point in time, in milliseconds, to begin transcribing in your media file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage audioStartFrom(Integer audioStartFrom) {
             this.audioStartFrom = Optional.of(audioStartFrom);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "audio_start_from", nulls = Nulls.SKIP)
         public _FinalStage audioStartFrom(Optional<Integer> audioStartFrom) {
             this.audioStartFrom = audioStartFrom;
@@ -1359,13 +1360,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Whether Key Phrases is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage autoHighlights(Boolean autoHighlights) {
             this.autoHighlights = Optional.of(autoHighlights);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auto_highlights", nulls = Nulls.SKIP)
         public _FinalStage autoHighlights(Optional<Boolean> autoHighlights) {
             this.autoHighlights = autoHighlights;
@@ -1376,13 +1377,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Specify a header name and value to send back with a webhook call for added security</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage webhookAuthHeaderValue(String webhookAuthHeaderValue) {
             this.webhookAuthHeaderValue = Optional.of(webhookAuthHeaderValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_auth_header_value", nulls = Nulls.SKIP)
         public _FinalStage webhookAuthHeaderValue(Optional<String> webhookAuthHeaderValue) {
             this.webhookAuthHeaderValue = webhookAuthHeaderValue;
@@ -1393,13 +1394,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The header name which should be sent back with webhook calls</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage webhookAuthHeaderName(String webhookAuthHeaderName) {
             this.webhookAuthHeaderName = Optional.of(webhookAuthHeaderName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_auth_header_name", nulls = Nulls.SKIP)
         public _FinalStage webhookAuthHeaderName(Optional<String> webhookAuthHeaderName) {
             this.webhookAuthHeaderName = webhookAuthHeaderName;
@@ -1410,13 +1411,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>The URL to which AssemblyAI send webhooks upon trancription completion</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage webhookUrl(String webhookUrl) {
             this.webhookUrl = Optional.of(webhookUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_url", nulls = Nulls.SKIP)
         public _FinalStage webhookUrl(Optional<String> webhookUrl) {
             this.webhookUrl = webhookUrl;
@@ -1427,13 +1428,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage dualChannel(Boolean dualChannel) {
             this.dualChannel = Optional.of(dualChannel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "dual_channel", nulls = Nulls.SKIP)
         public _FinalStage dualChannel(Optional<Boolean> dualChannel) {
             this.dualChannel = dualChannel;
@@ -1444,13 +1445,13 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable Text Formatting, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage formatText(Boolean formatText) {
             this.formatText = Optional.of(formatText);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "format_text", nulls = Nulls.SKIP)
         public _FinalStage formatText(Optional<Boolean> formatText) {
             this.formatText = formatText;
@@ -1461,46 +1462,46 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          * <p>Enable Automatic Punctuation, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage punctuate(Boolean punctuate) {
             this.punctuate = Optional.of(punctuate);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "punctuate", nulls = Nulls.SKIP)
         public _FinalStage punctuate(Optional<Boolean> punctuate) {
             this.punctuate = punctuate;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage languageCode(TranscriptLanguageCode languageCode) {
             this.languageCode = Optional.of(languageCode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "language_code", nulls = Nulls.SKIP)
         public _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode) {
             this.languageCode = languageCode;
             return this;
         }
 
-        @Override
-        public _FinalStage speechModel(String speechModel) {
+        @java.lang.Override
+        public _FinalStage speechModel(SpeechModel speechModel) {
             this.speechModel = Optional.of(speechModel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
-        public _FinalStage speechModel(Optional<String> speechModel) {
+        public _FinalStage speechModel(Optional<SpeechModel> speechModel) {
             this.speechModel = speechModel;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TranscriptParams build() {
             return new TranscriptParams(
                     speechModel,

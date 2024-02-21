@@ -76,7 +76,7 @@ public final class LemurQuestion {
         return answerOptions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurQuestion && equalTo((LemurQuestion) other);
@@ -94,12 +94,12 @@ public final class LemurQuestion {
                 && answerOptions.equals(other.answerOptions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.question, this.context, this.answerFormat, this.answerOptions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -145,7 +145,7 @@ public final class LemurQuestion {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LemurQuestion other) {
             question(other.getQuestion());
             context(other.getContext());
@@ -158,7 +158,7 @@ public final class LemurQuestion {
          * <p>The question you wish to ask. For more complex questions use default model.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("question")
         public _FinalStage question(String question) {
             this.question = question;
@@ -169,13 +169,13 @@ public final class LemurQuestion {
          * <p>What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: [&quot;Yes&quot;, &quot;No&quot;]</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage answerOptions(List<String> answerOptions) {
             this.answerOptions = Optional.of(answerOptions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "answer_options", nulls = Nulls.SKIP)
         public _FinalStage answerOptions(Optional<List<String>> answerOptions) {
             this.answerOptions = answerOptions;
@@ -186,13 +186,13 @@ public final class LemurQuestion {
          * <p>How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: &quot;short sentence&quot;, &quot;bullet points&quot;</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage answerFormat(String answerFormat) {
             this.answerFormat = Optional.of(answerFormat);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "answer_format", nulls = Nulls.SKIP)
         public _FinalStage answerFormat(Optional<String> answerFormat) {
             this.answerFormat = answerFormat;
@@ -203,20 +203,20 @@ public final class LemurQuestion {
          * <p>Any context about the transcripts you wish to provide. This can be a string or any object.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage context(LemurQuestionContext context) {
             this.context = Optional.of(context);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
         public _FinalStage context(Optional<LemurQuestionContext> context) {
             this.context = context;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LemurQuestion build() {
             return new LemurQuestion(question, context, answerFormat, answerOptions, additionalProperties);
         }

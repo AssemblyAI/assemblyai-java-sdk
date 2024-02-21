@@ -46,7 +46,7 @@ public final class TopicDetectionResultLabelsItem {
         return label;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TopicDetectionResultLabelsItem && equalTo((TopicDetectionResultLabelsItem) other);
@@ -61,12 +61,12 @@ public final class TopicDetectionResultLabelsItem {
         return relevance == other.relevance && label.equals(other.label);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.relevance, this.label);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,7 +100,7 @@ public final class TopicDetectionResultLabelsItem {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TopicDetectionResultLabelsItem other) {
             relevance(other.getRelevance());
             label(other.getLabel());
@@ -111,7 +111,7 @@ public final class TopicDetectionResultLabelsItem {
          * <p>How relevant the detected topic is of a detected topic</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("relevance")
         public LabelStage relevance(double relevance) {
             this.relevance = relevance;
@@ -122,14 +122,14 @@ public final class TopicDetectionResultLabelsItem {
          * <p>The IAB taxonomical label for the label of the detected topic, where &gt; denotes supertopic/subtopic relationship</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("label")
         public _FinalStage label(String label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TopicDetectionResultLabelsItem build() {
             return new TopicDetectionResultLabelsItem(relevance, label, additionalProperties);
         }

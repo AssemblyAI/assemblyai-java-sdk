@@ -100,7 +100,7 @@ public final class TranscriptUtterance {
         return speaker;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptUtterance && equalTo((TranscriptUtterance) other);
@@ -120,12 +120,12 @@ public final class TranscriptUtterance {
                 && speaker.equals(other.speaker);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.confidence, this.start, this.end, this.text, this.words, this.speaker);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -186,7 +186,7 @@ public final class TranscriptUtterance {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TranscriptUtterance other) {
             confidence(other.getConfidence());
             start(other.getStart());
@@ -201,7 +201,7 @@ public final class TranscriptUtterance {
          * <p>The confidence score for the transcript of this utterance</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public StartStage confidence(double confidence) {
             this.confidence = confidence;
@@ -212,7 +212,7 @@ public final class TranscriptUtterance {
          * <p>The starting time, in milliseconds, of the utterance in the audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
             this.start = start;
@@ -223,7 +223,7 @@ public final class TranscriptUtterance {
          * <p>The ending time, in milliseconds, of the utterance in the audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public TextStage end(int end) {
             this.end = end;
@@ -234,7 +234,7 @@ public final class TranscriptUtterance {
          * <p>The text for this utterance</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public SpeakerStage text(String text) {
             this.text = text;
@@ -245,7 +245,7 @@ public final class TranscriptUtterance {
          * <p>The speaker of this utterance, where each speaker is assigned a sequential capital letter - e.g. &quot;A&quot; for Speaker A, &quot;B&quot; for Speaker B, etc.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("speaker")
         public _FinalStage speaker(String speaker) {
             this.speaker = speaker;
@@ -256,7 +256,7 @@ public final class TranscriptUtterance {
          * <p>The words in the utterance.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllWords(List<TranscriptWord> words) {
             this.words.addAll(words);
             return this;
@@ -266,13 +266,13 @@ public final class TranscriptUtterance {
          * <p>The words in the utterance.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addWords(TranscriptWord words) {
             this.words.add(words);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "words", nulls = Nulls.SKIP)
         public _FinalStage words(List<TranscriptWord> words) {
             this.words.clear();
@@ -280,7 +280,7 @@ public final class TranscriptUtterance {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TranscriptUtterance build() {
             return new TranscriptUtterance(confidence, start, end, text, words, speaker, additionalProperties);
         }

@@ -46,7 +46,7 @@ public final class Timestamp {
         return end;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Timestamp && equalTo((Timestamp) other);
@@ -61,12 +61,12 @@ public final class Timestamp {
         return start == other.start && end == other.end;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.start, this.end);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,7 +100,7 @@ public final class Timestamp {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Timestamp other) {
             start(other.getStart());
             end(other.getEnd());
@@ -111,7 +111,7 @@ public final class Timestamp {
          * <p>The start time in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
             this.start = start;
@@ -122,14 +122,14 @@ public final class Timestamp {
          * <p>The end time in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public _FinalStage end(int end) {
             this.end = end;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Timestamp build() {
             return new Timestamp(start, end, additionalProperties);
         }

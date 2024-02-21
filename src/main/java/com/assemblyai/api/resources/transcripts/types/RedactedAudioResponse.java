@@ -46,7 +46,7 @@ public final class RedactedAudioResponse {
         return redactedAudioUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RedactedAudioResponse && equalTo((RedactedAudioResponse) other);
@@ -61,12 +61,12 @@ public final class RedactedAudioResponse {
         return status.equals(other.status) && redactedAudioUrl.equals(other.redactedAudioUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.status, this.redactedAudioUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,7 +100,7 @@ public final class RedactedAudioResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RedactedAudioResponse other) {
             status(other.getStatus());
             redactedAudioUrl(other.getRedactedAudioUrl());
@@ -111,7 +111,7 @@ public final class RedactedAudioResponse {
          * <p>The status of the redacted audio</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public RedactedAudioUrlStage status(String status) {
             this.status = status;
@@ -122,14 +122,14 @@ public final class RedactedAudioResponse {
          * <p>The URL of the redacted audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("redacted_audio_url")
         public _FinalStage redactedAudioUrl(String redactedAudioUrl) {
             this.redactedAudioUrl = redactedAudioUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RedactedAudioResponse build() {
             return new RedactedAudioResponse(status, redactedAudioUrl, additionalProperties);
         }

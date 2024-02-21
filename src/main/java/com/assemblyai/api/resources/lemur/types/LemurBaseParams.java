@@ -57,7 +57,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
      * Use either transcript_ids or input_text as input into LeMUR.
      */
     @JsonProperty("transcript_ids")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getTranscriptIds() {
         return transcriptIds;
     }
@@ -67,7 +67,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
      * Use either transcript_ids or input_text as input into LeMUR.
      */
     @JsonProperty("input_text")
-    @Override
+    @java.lang.Override
     public Optional<String> getInputText() {
         return inputText;
     }
@@ -76,7 +76,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
      * @return Context to provide the model. This can be a string or a free-form JSON value.
      */
     @JsonProperty("context")
-    @Override
+    @java.lang.Override
     public Optional<LemurBaseParamsContext> getContext() {
         return context;
     }
@@ -86,7 +86,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
      * Defaults to &quot;default&quot;.
      */
     @JsonProperty("final_model")
-    @Override
+    @java.lang.Override
     public Optional<LemurModel> getFinalModel() {
         return finalModel;
     }
@@ -95,7 +95,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
      * @return Max output size in tokens, up to 4000
      */
     @JsonProperty("max_output_size")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getMaxOutputSize() {
         return maxOutputSize;
     }
@@ -106,12 +106,12 @@ public final class LemurBaseParams implements ILemurBaseParams {
      * Can be any value between 0.0 and 1.0 inclusive.
      */
     @JsonProperty("temperature")
-    @Override
+    @java.lang.Override
     public Optional<Double> getTemperature() {
         return temperature;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurBaseParams && equalTo((LemurBaseParams) other);
@@ -131,7 +131,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
                 && temperature.equals(other.temperature);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.transcriptIds,
@@ -142,7 +142,7 @@ public final class LemurBaseParams implements ILemurBaseParams {
                 this.temperature);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

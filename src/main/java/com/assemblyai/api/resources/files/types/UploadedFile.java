@@ -35,7 +35,7 @@ public final class UploadedFile {
         return uploadUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UploadedFile && equalTo((UploadedFile) other);
@@ -50,12 +50,12 @@ public final class UploadedFile {
         return uploadUrl.equals(other.uploadUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.uploadUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class UploadedFile {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UploadedFile other) {
             uploadUrl(other.getUploadUrl());
             return this;
@@ -93,14 +93,14 @@ public final class UploadedFile {
          * <p>A URL that points to your audio file, accessible only by AssemblyAI's servers</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("upload_url")
         public _FinalStage uploadUrl(String uploadUrl) {
             this.uploadUrl = uploadUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UploadedFile build() {
             return new UploadedFile(uploadUrl, additionalProperties);
         }

@@ -22,6 +22,7 @@ import com.assemblyai.api.resources.transcripts.types.WordSearchResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -38,6 +39,13 @@ public class TranscriptsClient {
      */
     public TranscriptList list() {
         return list(ListTranscriptParams.builder().build());
+    }
+
+    /**
+     * Retrieve a list of transcripts you created
+     */
+    public TranscriptList list(ListTranscriptParams request) {
+        return list(request, null);
     }
 
     /**
@@ -73,8 +81,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), TranscriptList.class);
             }
@@ -87,10 +100,10 @@ public class TranscriptsClient {
     }
 
     /**
-     * Retrieve a list of transcripts you created
+     * Create a transcript from an audio or video file that is accessible via a URL.
      */
-    public TranscriptList list(ListTranscriptParams request) {
-        return list(request, null);
+    public Transcript submit(TranscriptParams request) {
+        return submit(request, null);
     }
 
     /**
@@ -115,44 +128,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
             }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Create a transcript from an audio or video file that is accessible via a URL.
-     */
-    public Transcript submit(TranscriptParams request) {
-        return submit(request, null);
-    }
-
-    /**
-     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
-     */
-    public Transcript get(String transcriptId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/transcript")
-                .addPathSegment(transcriptId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
             }
@@ -172,9 +154,9 @@ public class TranscriptsClient {
     }
 
     /**
-     * Delete the transcript
+     * Get the transcript resource. The transcript is ready when the &quot;status&quot; is &quot;completed&quot;.
      */
-    public Transcript delete(String transcriptId, RequestOptions requestOptions) {
+    public Transcript get(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/transcript")
@@ -182,13 +164,18 @@ public class TranscriptsClient {
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("DELETE", null)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
             }
@@ -208,11 +195,52 @@ public class TranscriptsClient {
     }
 
     /**
+     * Delete the transcript
+     */
+    public Transcript delete(String transcriptId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/transcript")
+                .addPathSegment(transcriptId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
      */
     public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
         return getSubtitles(
                 transcriptId, subtitleFormat, GetSubtitlesParams.builder().build());
+    }
+
+    /**
+     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
+     */
+    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
+        return getSubtitles(transcriptId, subtitleFormat, request, null);
     }
 
     /**
@@ -239,8 +267,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return response.body().string();
             }
@@ -253,10 +286,10 @@ public class TranscriptsClient {
     }
 
     /**
-     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
+     * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
      */
-    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
-        return getSubtitles(transcriptId, subtitleFormat, request, null);
+    public SentencesResponse getSentences(String transcriptId) {
+        return getSentences(transcriptId, null);
     }
 
     /**
@@ -276,8 +309,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SentencesResponse.class);
             }
@@ -290,10 +328,10 @@ public class TranscriptsClient {
     }
 
     /**
-     * Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.
+     * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
      */
-    public SentencesResponse getSentences(String transcriptId) {
-        return getSentences(transcriptId, null);
+    public ParagraphsResponse getParagraphs(String transcriptId) {
+        return getParagraphs(transcriptId, null);
     }
 
     /**
@@ -313,8 +351,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ParagraphsResponse.class);
             }
@@ -327,17 +370,17 @@ public class TranscriptsClient {
     }
 
     /**
-     * Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.
+     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public ParagraphsResponse getParagraphs(String transcriptId) {
-        return getParagraphs(transcriptId, null);
+    public WordSearchResponse wordSearch(String transcriptId) {
+        return wordSearch(transcriptId, WordSearchParams.builder().build());
     }
 
     /**
      * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
-    public WordSearchResponse wordSearch(String transcriptId) {
-        return wordSearch(transcriptId, WordSearchParams.builder().build());
+    public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request) {
+        return wordSearch(transcriptId, request, null);
     }
 
     /**
@@ -359,8 +402,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), WordSearchResponse.class);
             }
@@ -373,10 +421,10 @@ public class TranscriptsClient {
     }
 
     /**
-     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
+     * Retrieve the redacted audio object containing the status and URL to the redacted audio.
      */
-    public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request) {
-        return wordSearch(transcriptId, request, null);
+    public RedactedAudioResponse getRedactedAudio(String transcriptId) {
+        return getRedactedAudio(transcriptId, null);
     }
 
     /**
@@ -396,8 +444,13 @@ public class TranscriptsClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RedactedAudioResponse.class);
             }
@@ -407,12 +460,5 @@ public class TranscriptsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Retrieve the redacted audio object containing the status and URL to the redacted audio.
-     */
-    public RedactedAudioResponse getRedactedAudio(String transcriptId) {
-        return getRedactedAudio(transcriptId, null);
     }
 }

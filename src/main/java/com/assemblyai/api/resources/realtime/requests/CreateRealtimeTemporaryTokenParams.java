@@ -35,7 +35,7 @@ public final class CreateRealtimeTemporaryTokenParams {
         return expiresIn;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateRealtimeTemporaryTokenParams
@@ -51,12 +51,12 @@ public final class CreateRealtimeTemporaryTokenParams {
         return expiresIn == other.expiresIn;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.expiresIn);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -84,7 +84,7 @@ public final class CreateRealtimeTemporaryTokenParams {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateRealtimeTemporaryTokenParams other) {
             expiresIn(other.getExpiresIn());
             return this;
@@ -94,14 +94,14 @@ public final class CreateRealtimeTemporaryTokenParams {
          * <p>The amount of time until the token expires in seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("expires_in")
         public _FinalStage expiresIn(int expiresIn) {
             this.expiresIn = expiresIn;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateRealtimeTemporaryTokenParams build() {
             return new CreateRealtimeTemporaryTokenParams(expiresIn, additionalProperties);
         }

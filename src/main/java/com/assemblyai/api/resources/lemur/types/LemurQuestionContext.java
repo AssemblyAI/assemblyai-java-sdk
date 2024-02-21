@@ -40,7 +40,7 @@ public final class LemurQuestionContext {
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurQuestionContext && equalTo((LemurQuestionContext) other);
@@ -50,12 +50,12 @@ public final class LemurQuestionContext {
         return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return this.value.toString();
     }
@@ -79,7 +79,7 @@ public final class LemurQuestionContext {
             super(LemurQuestionContext.class);
         }
 
-        @Override
+        @java.lang.Override
         public LemurQuestionContext deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {

@@ -23,7 +23,7 @@ import java.util.Optional;
 public final class Transcript {
     private final String id;
 
-    private final Optional<String> speechModel;
+    private final Optional<SpeechModel> speechModel;
 
     private final String languageModel;
 
@@ -137,7 +137,7 @@ public final class Transcript {
 
     private Transcript(
             String id,
-            Optional<String> speechModel,
+            Optional<SpeechModel> speechModel,
             String languageModel,
             String acousticModel,
             TranscriptStatus status,
@@ -261,7 +261,7 @@ public final class Transcript {
     }
 
     @JsonProperty("speech_model")
-    public Optional<String> getSpeechModel() {
+    public Optional<SpeechModel> getSpeechModel() {
         return speechModel;
     }
 
@@ -695,7 +695,7 @@ public final class Transcript {
         return error;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Transcript && equalTo((Transcript) other);
@@ -765,7 +765,7 @@ public final class Transcript {
                 && error.equals(other.error);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -826,7 +826,7 @@ public final class Transcript {
                 this.error);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -876,9 +876,9 @@ public final class Transcript {
     public interface _FinalStage {
         Transcript build();
 
-        _FinalStage speechModel(Optional<String> speechModel);
+        _FinalStage speechModel(Optional<SpeechModel> speechModel);
 
-        _FinalStage speechModel(String speechModel);
+        _FinalStage speechModel(SpeechModel speechModel);
 
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
@@ -1187,14 +1187,14 @@ public final class Transcript {
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
-        private Optional<String> speechModel = Optional.empty();
+        private Optional<SpeechModel> speechModel = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Transcript other) {
             id(other.getId());
             speechModel(other.getSpeechModel());
@@ -1259,7 +1259,7 @@ public final class Transcript {
          * <p>The unique identifier of your transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public LanguageModelStage id(String id) {
             this.id = id;
@@ -1270,7 +1270,7 @@ public final class Transcript {
          * <p>The language model that was used for the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("language_model")
         public AcousticModelStage languageModel(String languageModel) {
             this.languageModel = languageModel;
@@ -1281,7 +1281,7 @@ public final class Transcript {
          * <p>The acoustic model that was used for the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("acoustic_model")
         public StatusStage acousticModel(String acousticModel) {
             this.acousticModel = acousticModel;
@@ -1292,7 +1292,7 @@ public final class Transcript {
          * <p>The status of your transcript. Possible values are queued, processing, completed, or error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public AudioUrlStage status(TranscriptStatus status) {
             this.status = status;
@@ -1303,7 +1303,7 @@ public final class Transcript {
          * <p>The URL of the media that was transcribed</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_url")
         public WebhookAuthStage audioUrl(String audioUrl) {
             this.audioUrl = audioUrl;
@@ -1314,7 +1314,7 @@ public final class Transcript {
          * <p>Whether webhook authentication details were provided</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("webhook_auth")
         public AutoHighlightsStage webhookAuth(boolean webhookAuth) {
             this.webhookAuth = webhookAuth;
@@ -1325,7 +1325,7 @@ public final class Transcript {
          * <p>Whether Key Phrases is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("auto_highlights")
         public RedactPiiStage autoHighlights(boolean autoHighlights) {
             this.autoHighlights = autoHighlights;
@@ -1336,7 +1336,7 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII Redaction</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("redact_pii")
         public SummarizationStage redactPii(boolean redactPii) {
             this.redactPii = redactPii;
@@ -1347,7 +1347,7 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("summarization")
         public _FinalStage summarization(boolean summarization) {
             this.summarization = summarization;
@@ -1358,13 +1358,13 @@ public final class Transcript {
          * <p>Error message of why the transcript failed</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage error(String error) {
             this.error = Optional.of(error);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "error", nulls = Nulls.SKIP)
         public _FinalStage error(Optional<String> error) {
             this.error = error;
@@ -1375,13 +1375,13 @@ public final class Transcript {
          * <p>True while a request is throttled and false when a request is no longer throttled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage throttled(Boolean throttled) {
             this.throttled = Optional.of(throttled);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "throttled", nulls = Nulls.SKIP)
         public _FinalStage throttled(Optional<Boolean> throttled) {
             this.throttled = throttled;
@@ -1393,13 +1393,13 @@ public final class Transcript {
          * Valid values are in the range [0, 1] inclusive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speechThreshold(Double speechThreshold) {
             this.speechThreshold = Optional.of(speechThreshold);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speech_threshold", nulls = Nulls.SKIP)
         public _FinalStage speechThreshold(Optional<Double> speechThreshold) {
             this.speechThreshold = speechThreshold;
@@ -1411,13 +1411,13 @@ public final class Transcript {
          * See <a href="https://www.assemblyai.com/docs/models/entity-detection">Entity detection</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage entities(List<Entity> entities) {
             this.entities = Optional.of(entities);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "entities", nulls = Nulls.SKIP)
         public _FinalStage entities(Optional<List<Entity>> entities) {
             this.entities = entities;
@@ -1428,13 +1428,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/entity-detection">Entity Detection</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage entityDetection(Boolean entityDetection) {
             this.entityDetection = Optional.of(entityDetection);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "entity_detection", nulls = Nulls.SKIP)
         public _FinalStage entityDetection(Optional<Boolean> entityDetection) {
             this.entityDetection = entityDetection;
@@ -1446,13 +1446,13 @@ public final class Transcript {
          * See <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment analysis</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage sentimentAnalysisResults(List<SentimentAnalysisResult> sentimentAnalysisResults) {
             this.sentimentAnalysisResults = Optional.of(sentimentAnalysisResults);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sentiment_analysis_results", nulls = Nulls.SKIP)
         public _FinalStage sentimentAnalysisResults(Optional<List<SentimentAnalysisResult>> sentimentAnalysisResults) {
             this.sentimentAnalysisResults = sentimentAnalysisResults;
@@ -1463,13 +1463,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage sentimentAnalysis(Boolean sentimentAnalysis) {
             this.sentimentAnalysis = Optional.of(sentimentAnalysis);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sentiment_analysis", nulls = Nulls.SKIP)
         public _FinalStage sentimentAnalysis(Optional<Boolean> sentimentAnalysis) {
             this.sentimentAnalysis = sentimentAnalysis;
@@ -1480,13 +1480,13 @@ public final class Transcript {
          * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage disfluencies(Boolean disfluencies) {
             this.disfluencies = Optional.of(disfluencies);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
         public _FinalStage disfluencies(Optional<Boolean> disfluencies) {
             this.disfluencies = disfluencies;
@@ -1497,13 +1497,13 @@ public final class Transcript {
          * <p>The list of custom topics provided if custom topics is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage topics(List<String> topics) {
             this.topics = Optional.of(topics);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "topics", nulls = Nulls.SKIP)
         public _FinalStage topics(Optional<List<String>> topics) {
             this.topics = topics;
@@ -1514,13 +1514,13 @@ public final class Transcript {
          * <p>Whether custom topics is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage customTopics(Boolean customTopics) {
             this.customTopics = Optional.of(customTopics);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "custom_topics", nulls = Nulls.SKIP)
         public _FinalStage customTopics(Optional<Boolean> customTopics) {
             this.customTopics = customTopics;
@@ -1531,13 +1531,13 @@ public final class Transcript {
          * <p>The generated summary of the media file, if <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a> is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summary(String summary) {
             this.summary = Optional.of(summary);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary", nulls = Nulls.SKIP)
         public _FinalStage summary(Optional<String> summary) {
             this.summary = summary;
@@ -1549,13 +1549,13 @@ public final class Transcript {
          * if <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a> is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summaryModel(String summaryModel) {
             this.summaryModel = Optional.of(summaryModel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary_model", nulls = Nulls.SKIP)
         public _FinalStage summaryModel(Optional<String> summaryModel) {
             this.summaryModel = summaryModel;
@@ -1566,13 +1566,13 @@ public final class Transcript {
          * <p>The type of summary generated, if <a href="https://www.assemblyai.com/docs/models/summarization">Summarization</a> is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summaryType(String summaryType) {
             this.summaryType = Optional.of(summaryType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary_type", nulls = Nulls.SKIP)
         public _FinalStage summaryType(Optional<String> summaryType) {
             this.summaryType = summaryType;
@@ -1583,13 +1583,13 @@ public final class Transcript {
          * <p>An array of temporally sequential chapters for the audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage chapters(List<Chapter> chapters) {
             this.chapters = Optional.of(chapters);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "chapters", nulls = Nulls.SKIP)
         public _FinalStage chapters(Optional<List<Chapter>> chapters) {
             this.chapters = chapters;
@@ -1600,13 +1600,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/auto-chapters">Auto Chapters</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage autoChapters(Boolean autoChapters) {
             this.autoChapters = Optional.of(autoChapters);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auto_chapters", nulls = Nulls.SKIP)
         public _FinalStage autoChapters(Optional<Boolean> autoChapters) {
             this.autoChapters = autoChapters;
@@ -1617,13 +1617,13 @@ public final class Transcript {
          * <p>Customize how words are spelled and formatted using to and from values</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage customSpelling(List<TranscriptCustomSpelling> customSpelling) {
             this.customSpelling = Optional.of(customSpelling);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "custom_spelling", nulls = Nulls.SKIP)
         public _FinalStage customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling) {
             this.customSpelling = customSpelling;
@@ -1634,26 +1634,26 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage languageDetection(Boolean languageDetection) {
             this.languageDetection = Optional.of(languageDetection);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
         public _FinalStage languageDetection(Optional<Boolean> languageDetection) {
             this.languageDetection = languageDetection;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage iabCategoriesResult(TopicDetectionModelResult iabCategoriesResult) {
             this.iabCategoriesResult = Optional.of(iabCategoriesResult);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "iab_categories_result", nulls = Nulls.SKIP)
         public _FinalStage iabCategoriesResult(Optional<TopicDetectionModelResult> iabCategoriesResult) {
             this.iabCategoriesResult = iabCategoriesResult;
@@ -1664,26 +1664,26 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/topic-detection">Topic Detection</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage iabCategories(Boolean iabCategories) {
             this.iabCategories = Optional.of(iabCategories);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "iab_categories", nulls = Nulls.SKIP)
         public _FinalStage iabCategories(Optional<Boolean> iabCategories) {
             this.iabCategories = iabCategories;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage contentSafetyLabels(ContentSafetyLabelsResult contentSafetyLabels) {
             this.contentSafetyLabels = Optional.of(contentSafetyLabels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "content_safety_labels", nulls = Nulls.SKIP)
         public _FinalStage contentSafetyLabels(Optional<ContentSafetyLabelsResult> contentSafetyLabels) {
             this.contentSafetyLabels = contentSafetyLabels;
@@ -1694,13 +1694,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/content-moderation">Content Moderation</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage contentSafety(Boolean contentSafety) {
             this.contentSafety = Optional.of(contentSafety);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "content_safety", nulls = Nulls.SKIP)
         public _FinalStage contentSafety(Optional<Boolean> contentSafety) {
             this.contentSafety = contentSafety;
@@ -1711,13 +1711,13 @@ public final class Transcript {
          * <p>Tell the speaker label model how many speakers it should attempt to identify, up to 10. See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speakersExpected(Integer speakersExpected) {
             this.speakersExpected = Optional.of(speakersExpected);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speakers_expected", nulls = Nulls.SKIP)
         public _FinalStage speakersExpected(Optional<Integer> speakersExpected) {
             this.speakersExpected = speakersExpected;
@@ -1728,13 +1728,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> is enabled, can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speakerLabels(Boolean speakerLabels) {
             this.speakerLabels = Optional.of(speakerLabels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speaker_labels", nulls = Nulls.SKIP)
         public _FinalStage speakerLabels(Optional<Boolean> speakerLabels) {
             this.speakerLabels = speakerLabels;
@@ -1745,13 +1745,13 @@ public final class Transcript {
          * <p>The replacement logic for detected PII, can be &quot;entity_type&quot; or &quot;hash&quot;. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more details.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiSub(SubstitutionPolicy redactPiiSub) {
             this.redactPiiSub = Optional.of(redactPiiSub);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_sub", nulls = Nulls.SKIP)
         public _FinalStage redactPiiSub(Optional<SubstitutionPolicy> redactPiiSub) {
             this.redactPiiSub = redactPiiSub;
@@ -1763,26 +1763,26 @@ public final class Transcript {
          * See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
             this.redactPiiPolicies = Optional.of(redactPiiPolicies);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_policies", nulls = Nulls.SKIP)
         public _FinalStage redactPiiPolicies(Optional<List<PiiPolicy>> redactPiiPolicies) {
             this.redactPiiPolicies = redactPiiPolicies;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
             this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_audio_quality", nulls = Nulls.SKIP)
         public _FinalStage redactPiiAudioQuality(Optional<RedactPiiAudioQuality> redactPiiAudioQuality) {
             this.redactPiiAudioQuality = redactPiiAudioQuality;
@@ -1794,13 +1794,13 @@ public final class Transcript {
          * either true or false. See <a href="https://www.assemblyai.com/docs/models/pii-redaction">PII redaction</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage redactPiiAudio(Boolean redactPiiAudio) {
             this.redactPiiAudio = Optional.of(redactPiiAudio);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redact_pii_audio", nulls = Nulls.SKIP)
         public _FinalStage redactPiiAudio(Optional<Boolean> redactPiiAudio) {
             this.redactPiiAudio = redactPiiAudio;
@@ -1811,13 +1811,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#profanity-filtering">Profanity Filtering</a> is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage filterProfanity(Boolean filterProfanity) {
             this.filterProfanity = Optional.of(filterProfanity);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filter_profanity", nulls = Nulls.SKIP)
         public _FinalStage filterProfanity(Optional<Boolean> filterProfanity) {
             this.filterProfanity = filterProfanity;
@@ -1828,13 +1828,13 @@ public final class Transcript {
          * <p>The word boost parameter value</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage boostParam(String boostParam) {
             this.boostParam = Optional.of(boostParam);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "boost_param", nulls = Nulls.SKIP)
         public _FinalStage boostParam(Optional<String> boostParam) {
             this.boostParam = boostParam;
@@ -1845,13 +1845,13 @@ public final class Transcript {
          * <p>The list of custom vocabulary to boost transcription probability for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage wordBoost(List<String> wordBoost) {
             this.wordBoost = Optional.of(wordBoost);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "word_boost", nulls = Nulls.SKIP)
         public _FinalStage wordBoost(Optional<List<String>> wordBoost) {
             this.wordBoost = wordBoost;
@@ -1862,13 +1862,13 @@ public final class Transcript {
          * <p>The point in time, in milliseconds, in the file at which the transcription was terminated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage audioEndAt(Integer audioEndAt) {
             this.audioEndAt = Optional.of(audioEndAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "audio_end_at", nulls = Nulls.SKIP)
         public _FinalStage audioEndAt(Optional<Integer> audioEndAt) {
             this.audioEndAt = audioEndAt;
@@ -1879,26 +1879,26 @@ public final class Transcript {
          * <p>The point in time, in milliseconds, in the file at which the transcription was started</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage audioStartFrom(Integer audioStartFrom) {
             this.audioStartFrom = Optional.of(audioStartFrom);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "audio_start_from", nulls = Nulls.SKIP)
         public _FinalStage audioStartFrom(Optional<Integer> audioStartFrom) {
             this.audioStartFrom = audioStartFrom;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage autoHighlightsResult(AutoHighlightsResult autoHighlightsResult) {
             this.autoHighlightsResult = Optional.of(autoHighlightsResult);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auto_highlights_result", nulls = Nulls.SKIP)
         public _FinalStage autoHighlightsResult(Optional<AutoHighlightsResult> autoHighlightsResult) {
             this.autoHighlightsResult = autoHighlightsResult;
@@ -1909,13 +1909,13 @@ public final class Transcript {
          * <p>Whether speed boost is enabled</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speedBoost(Boolean speedBoost) {
             this.speedBoost = Optional.of(speedBoost);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speed_boost", nulls = Nulls.SKIP)
         public _FinalStage speedBoost(Optional<Boolean> speedBoost) {
             this.speedBoost = speedBoost;
@@ -1926,13 +1926,13 @@ public final class Transcript {
          * <p>The header name which should be sent back with webhook calls</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage webhookAuthHeaderName(String webhookAuthHeaderName) {
             this.webhookAuthHeaderName = Optional.of(webhookAuthHeaderName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_auth_header_name", nulls = Nulls.SKIP)
         public _FinalStage webhookAuthHeaderName(Optional<String> webhookAuthHeaderName) {
             this.webhookAuthHeaderName = webhookAuthHeaderName;
@@ -1943,13 +1943,13 @@ public final class Transcript {
          * <p>The status code we received from your server when delivering your webhook, if a webhook URL was provided</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage webhookStatusCode(Integer webhookStatusCode) {
             this.webhookStatusCode = Optional.of(webhookStatusCode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_status_code", nulls = Nulls.SKIP)
         public _FinalStage webhookStatusCode(Optional<Integer> webhookStatusCode) {
             this.webhookStatusCode = webhookStatusCode;
@@ -1960,13 +1960,13 @@ public final class Transcript {
          * <p>The URL to which we send webhooks upon trancription completion</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage webhookUrl(String webhookUrl) {
             this.webhookUrl = Optional.of(webhookUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_url", nulls = Nulls.SKIP)
         public _FinalStage webhookUrl(Optional<String> webhookUrl) {
             this.webhookUrl = webhookUrl;
@@ -1977,13 +1977,13 @@ public final class Transcript {
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual channel transcription</a> was enabled in the transcription request, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage dualChannel(Boolean dualChannel) {
             this.dualChannel = Optional.of(dualChannel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "dual_channel", nulls = Nulls.SKIP)
         public _FinalStage dualChannel(Optional<Boolean> dualChannel) {
             this.dualChannel = dualChannel;
@@ -1994,13 +1994,13 @@ public final class Transcript {
          * <p>Whether Text Formatting is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage formatText(Boolean formatText) {
             this.formatText = Optional.of(formatText);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "format_text", nulls = Nulls.SKIP)
         public _FinalStage formatText(Optional<Boolean> formatText) {
             this.formatText = formatText;
@@ -2011,13 +2011,13 @@ public final class Transcript {
          * <p>Whether Automatic Punctuation is enabled, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage punctuate(Boolean punctuate) {
             this.punctuate = Optional.of(punctuate);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "punctuate", nulls = Nulls.SKIP)
         public _FinalStage punctuate(Optional<Boolean> punctuate) {
             this.punctuate = punctuate;
@@ -2028,13 +2028,13 @@ public final class Transcript {
          * <p>The duration of this transcript object's media file, in seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage audioDuration(Double audioDuration) {
             this.audioDuration = Optional.of(audioDuration);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "audio_duration", nulls = Nulls.SKIP)
         public _FinalStage audioDuration(Optional<Double> audioDuration) {
             this.audioDuration = audioDuration;
@@ -2045,13 +2045,13 @@ public final class Transcript {
          * <p>The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage confidence(Double confidence) {
             this.confidence = Optional.of(confidence);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "confidence", nulls = Nulls.SKIP)
         public _FinalStage confidence(Optional<Double> confidence) {
             this.confidence = confidence;
@@ -2063,13 +2063,13 @@ public final class Transcript {
          * See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage utterances(List<TranscriptUtterance> utterances) {
             this.utterances = Optional.of(utterances);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "utterances", nulls = Nulls.SKIP)
         public _FinalStage utterances(Optional<List<TranscriptUtterance>> utterances) {
             this.utterances = utterances;
@@ -2081,13 +2081,13 @@ public final class Transcript {
          * See <a href="https://www.assemblyai.com/docs/models/speech-recognition">Speech recognition</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage words(List<TranscriptWord> words) {
             this.words = Optional.of(words);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "words", nulls = Nulls.SKIP)
         public _FinalStage words(Optional<List<TranscriptWord>> words) {
             this.words = words;
@@ -2098,13 +2098,13 @@ public final class Transcript {
          * <p>The textual transcript of your media file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage text(String text) {
             this.text = Optional.of(text);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "text", nulls = Nulls.SKIP)
         public _FinalStage text(Optional<String> text) {
             this.text = text;
@@ -2117,33 +2117,33 @@ public final class Transcript {
          * The default value is 'en_us'.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage languageCode(TranscriptLanguageCode languageCode) {
             this.languageCode = Optional.of(languageCode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "language_code", nulls = Nulls.SKIP)
         public _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode) {
             this.languageCode = languageCode;
             return this;
         }
 
-        @Override
-        public _FinalStage speechModel(String speechModel) {
+        @java.lang.Override
+        public _FinalStage speechModel(SpeechModel speechModel) {
             this.speechModel = Optional.of(speechModel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
-        public _FinalStage speechModel(Optional<String> speechModel) {
+        public _FinalStage speechModel(Optional<SpeechModel> speechModel) {
             this.speechModel = speechModel;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Transcript build() {
             return new Transcript(
                     id,

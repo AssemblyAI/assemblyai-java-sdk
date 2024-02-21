@@ -72,7 +72,7 @@ public final class PageDetails {
         return nextUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PageDetails && equalTo((PageDetails) other);
@@ -91,12 +91,12 @@ public final class PageDetails {
                 && nextUrl.equals(other.nextUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.limit, this.resultCount, this.currentUrl, this.prevUrl, this.nextUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -149,7 +149,7 @@ public final class PageDetails {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PageDetails other) {
             limit(other.getLimit());
             resultCount(other.getResultCount());
@@ -159,48 +159,48 @@ public final class PageDetails {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("limit")
         public ResultCountStage limit(int limit) {
             this.limit = limit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("result_count")
         public CurrentUrlStage resultCount(int resultCount) {
             this.resultCount = resultCount;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("current_url")
         public PrevUrlStage currentUrl(String currentUrl) {
             this.currentUrl = currentUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("prev_url")
         public _FinalStage prevUrl(String prevUrl) {
             this.prevUrl = prevUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage nextUrl(String nextUrl) {
             this.nextUrl = Optional.of(nextUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "next_url", nulls = Nulls.SKIP)
         public _FinalStage nextUrl(Optional<String> nextUrl) {
             this.nextUrl = nextUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PageDetails build() {
             return new PageDetails(limit, resultCount, currentUrl, prevUrl, nextUrl, additionalProperties);
         }

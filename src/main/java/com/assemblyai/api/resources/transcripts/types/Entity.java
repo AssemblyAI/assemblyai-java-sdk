@@ -68,7 +68,7 @@ public final class Entity {
         return end;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Entity && equalTo((Entity) other);
@@ -86,12 +86,12 @@ public final class Entity {
                 && end == other.end;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.entityType, this.text, this.start, this.end);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -137,7 +137,7 @@ public final class Entity {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Entity other) {
             entityType(other.getEntityType());
             text(other.getText());
@@ -150,7 +150,7 @@ public final class Entity {
          * <p>The type of entity for the detected entity</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("entity_type")
         public TextStage entityType(EntityType entityType) {
             this.entityType = entityType;
@@ -161,7 +161,7 @@ public final class Entity {
          * <p>The text for the detected entity</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public StartStage text(String text) {
             this.text = text;
@@ -172,7 +172,7 @@ public final class Entity {
          * <p>The starting time, in milliseconds, at which the detected entity appears in the audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
             this.start = start;
@@ -183,14 +183,14 @@ public final class Entity {
          * <p>The ending time, in milliseconds, for the detected entity in the audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public _FinalStage end(int end) {
             this.end = end;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Entity build() {
             return new Entity(entityType, text, start, end, additionalProperties);
         }

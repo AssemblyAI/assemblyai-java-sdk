@@ -100,7 +100,7 @@ public final class ListTranscriptParams {
         return throttledOnly;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListTranscriptParams && equalTo((ListTranscriptParams) other);
@@ -120,12 +120,12 @@ public final class ListTranscriptParams {
                 && throttledOnly.equals(other.throttledOnly);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.limit, this.status, this.createdOn, this.beforeId, this.afterId, this.throttledOnly);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

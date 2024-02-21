@@ -76,7 +76,7 @@ public final class WordSearchMatch {
         return indexes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WordSearchMatch && equalTo((WordSearchMatch) other);
@@ -94,12 +94,12 @@ public final class WordSearchMatch {
                 && indexes.equals(other.indexes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.text, this.count, this.timestamps, this.indexes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -149,7 +149,7 @@ public final class WordSearchMatch {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WordSearchMatch other) {
             text(other.getText());
             count(other.getCount());
@@ -162,7 +162,7 @@ public final class WordSearchMatch {
          * <p>The matched word</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public CountStage text(String text) {
             this.text = text;
@@ -173,7 +173,7 @@ public final class WordSearchMatch {
          * <p>The total amount of times the word is in the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("count")
         public _FinalStage count(int count) {
             this.count = count;
@@ -184,7 +184,7 @@ public final class WordSearchMatch {
          * <p>An array of all index locations for that word within the <code>words</code> array of the completed transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllIndexes(List<Integer> indexes) {
             this.indexes.addAll(indexes);
             return this;
@@ -194,13 +194,13 @@ public final class WordSearchMatch {
          * <p>An array of all index locations for that word within the <code>words</code> array of the completed transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addIndexes(Integer indexes) {
             this.indexes.add(indexes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "indexes", nulls = Nulls.SKIP)
         public _FinalStage indexes(List<Integer> indexes) {
             this.indexes.clear();
@@ -212,7 +212,7 @@ public final class WordSearchMatch {
          * <p>An array of timestamps</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllTimestamps(List<List<Integer>> timestamps) {
             this.timestamps.addAll(timestamps);
             return this;
@@ -222,13 +222,13 @@ public final class WordSearchMatch {
          * <p>An array of timestamps</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addTimestamps(List<Integer> timestamps) {
             this.timestamps.add(timestamps);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timestamps", nulls = Nulls.SKIP)
         public _FinalStage timestamps(List<List<Integer>> timestamps) {
             this.timestamps.clear();
@@ -236,7 +236,7 @@ public final class WordSearchMatch {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WordSearchMatch build() {
             return new WordSearchMatch(text, count, timestamps, indexes, additionalProperties);
         }

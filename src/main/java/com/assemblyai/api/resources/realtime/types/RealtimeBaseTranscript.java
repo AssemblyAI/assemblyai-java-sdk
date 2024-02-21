@@ -57,7 +57,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
      * @return Start time of audio sample relative to session start, in milliseconds
      */
     @JsonProperty("audio_start")
-    @Override
+    @java.lang.Override
     public int getAudioStart() {
         return audioStart;
     }
@@ -66,7 +66,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
      * @return End time of audio sample relative to session start, in milliseconds
      */
     @JsonProperty("audio_end")
-    @Override
+    @java.lang.Override
     public int getAudioEnd() {
         return audioEnd;
     }
@@ -75,7 +75,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
      * @return The confidence score of the entire transcription, between 0 and 1
      */
     @JsonProperty("confidence")
-    @Override
+    @java.lang.Override
     public double getConfidence() {
         return confidence;
     }
@@ -84,7 +84,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
      * @return The partial transcript for your audio
      */
     @JsonProperty("text")
-    @Override
+    @java.lang.Override
     public String getText() {
         return text;
     }
@@ -94,7 +94,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
      * Includes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself.
      */
     @JsonProperty("words")
-    @Override
+    @java.lang.Override
     public List<Word> getWords() {
         return words;
     }
@@ -103,12 +103,12 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
      * @return The timestamp for the partial transcript
      */
     @JsonProperty("created")
-    @Override
+    @java.lang.Override
     public OffsetDateTime getCreated() {
         return created;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeBaseTranscript && equalTo((RealtimeBaseTranscript) other);
@@ -128,12 +128,12 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
                 && created.equals(other.created);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.audioStart, this.audioEnd, this.confidence, this.text, this.words, this.created);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -194,7 +194,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RealtimeBaseTranscript other) {
             audioStart(other.getAudioStart());
             audioEnd(other.getAudioEnd());
@@ -209,7 +209,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * <p>Start time of audio sample relative to session start, in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_start")
         public AudioEndStage audioStart(int audioStart) {
             this.audioStart = audioStart;
@@ -220,7 +220,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * <p>End time of audio sample relative to session start, in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_end")
         public ConfidenceStage audioEnd(int audioEnd) {
             this.audioEnd = audioEnd;
@@ -231,7 +231,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * <p>The confidence score of the entire transcription, between 0 and 1</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public TextStage confidence(double confidence) {
             this.confidence = confidence;
@@ -242,7 +242,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * <p>The partial transcript for your audio</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public CreatedStage text(String text) {
             this.text = text;
@@ -253,7 +253,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * <p>The timestamp for the partial transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("created")
         public _FinalStage created(OffsetDateTime created) {
             this.created = created;
@@ -265,7 +265,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * Includes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllWords(List<Word> words) {
             this.words.addAll(words);
             return this;
@@ -276,13 +276,13 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          * Includes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addWords(Word words) {
             this.words.add(words);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "words", nulls = Nulls.SKIP)
         public _FinalStage words(List<Word> words) {
             this.words.clear();
@@ -290,7 +290,7 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RealtimeBaseTranscript build() {
             return new RealtimeBaseTranscript(
                     audioStart, audioEnd, confidence, text, words, created, additionalProperties);

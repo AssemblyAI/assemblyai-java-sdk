@@ -35,7 +35,7 @@ public final class RealtimeTemporaryTokenResponse {
         return token;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeTemporaryTokenResponse && equalTo((RealtimeTemporaryTokenResponse) other);
@@ -50,12 +50,12 @@ public final class RealtimeTemporaryTokenResponse {
         return token.equals(other.token);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.token);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class RealtimeTemporaryTokenResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RealtimeTemporaryTokenResponse other) {
             token(other.getToken());
             return this;
@@ -93,14 +93,14 @@ public final class RealtimeTemporaryTokenResponse {
          * <p>The temporary authentication token for real-time transcription</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("token")
         public _FinalStage token(String token) {
             this.token = token;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RealtimeTemporaryTokenResponse build() {
             return new RealtimeTemporaryTokenResponse(token, additionalProperties);
         }

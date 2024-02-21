@@ -99,7 +99,7 @@ public final class SentimentAnalysisResult {
         return speaker;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SentimentAnalysisResult && equalTo((SentimentAnalysisResult) other);
@@ -119,12 +119,12 @@ public final class SentimentAnalysisResult {
                 && speaker.equals(other.speaker);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.text, this.start, this.end, this.sentiment, this.confidence, this.speaker);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -183,7 +183,7 @@ public final class SentimentAnalysisResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SentimentAnalysisResult other) {
             text(other.getText());
             start(other.getStart());
@@ -198,7 +198,7 @@ public final class SentimentAnalysisResult {
          * <p>The transcript of the sentence</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public StartStage text(String text) {
             this.text = text;
@@ -209,7 +209,7 @@ public final class SentimentAnalysisResult {
          * <p>The starting time, in milliseconds, of the sentence</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
             this.start = start;
@@ -220,7 +220,7 @@ public final class SentimentAnalysisResult {
          * <p>The ending time, in milliseconds, of the sentence</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public SentimentStage end(int end) {
             this.end = end;
@@ -231,7 +231,7 @@ public final class SentimentAnalysisResult {
          * <p>The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sentiment")
         public ConfidenceStage sentiment(Sentiment sentiment) {
             this.sentiment = sentiment;
@@ -242,7 +242,7 @@ public final class SentimentAnalysisResult {
          * <p>The confidence score for the detected sentiment of the sentence, from 0 to 1</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public _FinalStage confidence(double confidence) {
             this.confidence = confidence;
@@ -253,20 +253,20 @@ public final class SentimentAnalysisResult {
          * <p>The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speaker(String speaker) {
             this.speaker = Optional.of(speaker);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speaker", nulls = Nulls.SKIP)
         public _FinalStage speaker(Optional<String> speaker) {
             this.speaker = speaker;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SentimentAnalysisResult build() {
             return new SentimentAnalysisResult(text, start, end, sentiment, confidence, speaker, additionalProperties);
         }

@@ -35,7 +35,7 @@ public final class ForceEndUtterance {
         return forceEndUtterance;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ForceEndUtterance && equalTo((ForceEndUtterance) other);
@@ -50,12 +50,12 @@ public final class ForceEndUtterance {
         return forceEndUtterance == other.forceEndUtterance;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.forceEndUtterance);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class ForceEndUtterance {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ForceEndUtterance other) {
             forceEndUtterance(other.getForceEndUtterance());
             return this;
@@ -93,14 +93,14 @@ public final class ForceEndUtterance {
          * <p>A boolean value to communicate that you wish to force the end of the utterance</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("force_end_utterance")
         public _FinalStage forceEndUtterance(boolean forceEndUtterance) {
             this.forceEndUtterance = forceEndUtterance;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ForceEndUtterance build() {
             return new ForceEndUtterance(forceEndUtterance, additionalProperties);
         }

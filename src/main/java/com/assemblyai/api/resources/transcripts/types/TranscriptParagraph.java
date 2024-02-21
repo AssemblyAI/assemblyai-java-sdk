@@ -86,7 +86,7 @@ public final class TranscriptParagraph {
         return speaker;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptParagraph && equalTo((TranscriptParagraph) other);
@@ -106,12 +106,12 @@ public final class TranscriptParagraph {
                 && speaker.equals(other.speaker);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.text, this.start, this.end, this.confidence, this.words, this.speaker);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -171,7 +171,7 @@ public final class TranscriptParagraph {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TranscriptParagraph other) {
             text(other.getText());
             start(other.getStart());
@@ -182,28 +182,28 @@ public final class TranscriptParagraph {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public StartStage text(String text) {
             this.text = text;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
             this.start = start;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public ConfidenceStage end(int end) {
             this.end = end;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public _FinalStage confidence(double confidence) {
             this.confidence = confidence;
@@ -214,32 +214,32 @@ public final class TranscriptParagraph {
          * <p>The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage speaker(String speaker) {
             this.speaker = Optional.of(speaker);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "speaker", nulls = Nulls.SKIP)
         public _FinalStage speaker(Optional<String> speaker) {
             this.speaker = speaker;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllWords(List<TranscriptWord> words) {
             this.words.addAll(words);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addWords(TranscriptWord words) {
             this.words.add(words);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "words", nulls = Nulls.SKIP)
         public _FinalStage words(List<TranscriptWord> words) {
             this.words.clear();
@@ -247,7 +247,7 @@ public final class TranscriptParagraph {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TranscriptParagraph build() {
             return new TranscriptParagraph(text, start, end, confidence, words, speaker, additionalProperties);
         }

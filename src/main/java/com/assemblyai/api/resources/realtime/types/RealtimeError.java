@@ -32,7 +32,7 @@ public final class RealtimeError {
         return error;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeError && equalTo((RealtimeError) other);
@@ -47,12 +47,12 @@ public final class RealtimeError {
         return error.equals(other.error);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.error);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class RealtimeError {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RealtimeError other) {
             error(other.getError());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("error")
         public _FinalStage error(String error) {
             this.error = error;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RealtimeError build() {
             return new RealtimeError(error, additionalProperties);
         }
