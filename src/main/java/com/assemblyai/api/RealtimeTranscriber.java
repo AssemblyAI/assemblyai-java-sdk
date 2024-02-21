@@ -1,6 +1,7 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.assemblyai.api.resources.realtime.types.AudioData;
 import com.assemblyai.api.resources.realtime.types.FinalTranscript;
 import com.assemblyai.api.resources.realtime.types.PartialTranscript;
 import com.assemblyai.api.resources.realtime.types.RealtimeError;
@@ -9,6 +10,7 @@ import com.assemblyai.api.resources.realtime.types.RealtimeTranscript;
 import com.assemblyai.api.resources.realtime.types.SessionBegins;
 import com.assemblyai.api.resources.realtime.types.SessionTerminated;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Optional;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,6 +35,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private final String apiKey;
     private final int sampleRate;
     private final Optional<List<String>> wordBoost;
+    private final Optional<Integer> endUtteranceSilenceThreshold;
     private final Consumer<SessionBegins> onSessionBegins;
     private final Consumer<PartialTranscript> onPartialTranscript;
     private final Consumer<FinalTranscript> onFinalTranscript;
@@ -45,6 +49,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             String apiKey,
             int sampleRate,
             Optional<List<String>> wordBoost,
+            Optional<Integer> endUtteranceSilenceThreshold,
             Consumer<SessionBegins> onSessionBegins,
             Consumer<PartialTranscript> onPartialTranscript,
             Consumer<FinalTranscript> onFinalTranscript,
@@ -53,11 +58,12 @@ public final class RealtimeTranscriber implements AutoCloseable {
             BiConsumer<Integer, String> onClose) {
         this.apiKey = apiKey;
         this.sampleRate = sampleRate;
+        this.wordBoost = wordBoost;
+        this.endUtteranceSilenceThreshold = endUtteranceSilenceThreshold;
         this.onSessionBegins = onSessionBegins;
         this.onPartialTranscript = onPartialTranscript;
         this.onFinalTranscript = onFinalTranscript;
         this.onTranscript = onTranscript;
-        this.wordBoost = wordBoost;
         this.onError = onError;
         this.onClose = onClose;
         this.realtimeMessageVisitor = new RealtimeMessageVisitor();
@@ -79,7 +85,9 @@ public final class RealtimeTranscriber implements AutoCloseable {
                 .url(url)
                 .addHeader("Authorization", apiKey)
                 .build();
-        this.webSocket = OK_HTTP_CLIENT.newWebSocket(request, new Listener());
+        this.webSocket = OK_HTTP_CLIENT.newWebSocket(request, new Listener(
+                (response) -> endUtteranceSilenceThreshold.ifPresent(this::configureEndUtteranceSilenceThreshold)
+        ));
     }
 
     /**
@@ -96,6 +104,25 @@ public final class RealtimeTranscriber implements AutoCloseable {
      */
     public void sendAudio(String audio) {
         sendAudio(Base64.getDecoder().decode(audio));
+    }
+
+    /**
+     * Manually end an utterance
+     */
+    public void forceEndUtterance() {
+        this.webSocket.send("{\"force_end_utterance\":true}");
+    }
+
+    /**
+     * Configure the threshold for how long to wait before ending an utterance. Default is 700ms.
+     *
+     * @param threshold The duration of the end utterance silence threshold in milliseconds
+     */
+    public void configureEndUtteranceSilenceThreshold(int threshold) {
+        this.webSocket.send(String.format(
+                "{\"end_utterance_silence_threshold\":%d}",
+                threshold
+        ));
     }
 
     /**
@@ -118,6 +145,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private String apiKey;
         private Integer sampleRate;
         private List<String> wordBoost;
+        private Optional<Integer> endUtteranceSilenceThreshold;
         private Consumer<SessionBegins> onSessionBegins;
         private Consumer<PartialTranscript> onPartialTranscript;
         private Consumer<FinalTranscript> onFinalTranscript;
@@ -156,6 +184,17 @@ public final class RealtimeTranscriber implements AutoCloseable {
         }
 
         /**
+         * Configure the threshold for how long to wait before ending an utterance. Default is 700ms.
+         * @param threshold The duration of the end utterance silence threshold in milliseconds
+         * @return this
+         */
+        public RealtimeTranscriber.Builder endUtteranceSilenceThreshold(int threshold) {
+            this.endUtteranceSilenceThreshold = Optional.of(threshold);
+            return this;
+        }
+
+
+        /**
          * Sets onSessionStart
          * @param onSessionStart an event handler for the start event. Defaults to a noop.
          * @return this
@@ -166,10 +205,8 @@ public final class RealtimeTranscriber implements AutoCloseable {
             return this;
         }
 
-
         /**
          * Sets onSessionBegins
-         *
          * @param onSessionBegins an event handler for the start event. Defaults to a noop.
          * @return this
          */
@@ -236,6 +273,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
                     apiKey,
                     sampleRate == null ? DEFAULT_SAMPLE_RATE : sampleRate,
                     Optional.ofNullable(wordBoost),
+                    endUtteranceSilenceThreshold,
                     onSessionBegins,
                     onPartialTranscript,
                     onFinalTranscript,
@@ -246,9 +284,18 @@ public final class RealtimeTranscriber implements AutoCloseable {
     }
 
     private final class Listener extends WebSocketListener {
+        private final Consumer<Response> onOpen;
+
+        public Listener(Consumer<Response> onOpen) {
+            this.onOpen = onOpen;
+        }
 
         @Override
-        public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {}
+        public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
+            if (onOpen != null) {
+                onOpen.accept(response);
+            }
+        }
 
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
@@ -307,12 +354,11 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         @Override
         public Void visit(RealtimeError value) {
-            if(onError == null) return null;
+            if (onError == null) return null;
             onError.accept(new Exception(value.getError()));
             return null;
         }
     }
-
 
     private final HashMap<Integer, String> closeCodeErrorMessages = new HashMap<Integer, String>() {{
         put(4000, "Sample rate must be a positive integer");
