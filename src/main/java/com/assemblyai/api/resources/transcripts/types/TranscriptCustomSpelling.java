@@ -49,7 +49,7 @@ public final class TranscriptCustomSpelling {
         return to;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptCustomSpelling && equalTo((TranscriptCustomSpelling) other);
@@ -64,12 +64,12 @@ public final class TranscriptCustomSpelling {
         return from.equals(other.from) && to.equals(other.to);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.from, this.to);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -105,7 +105,7 @@ public final class TranscriptCustomSpelling {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TranscriptCustomSpelling other) {
             from(other.getFrom());
             to(other.getTo());
@@ -116,7 +116,7 @@ public final class TranscriptCustomSpelling {
          * <p>Word or phrase to replace with</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("to")
         public _FinalStage to(String to) {
             this.to = to;
@@ -127,7 +127,7 @@ public final class TranscriptCustomSpelling {
          * <p>Words or phrases to replace</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllFrom(List<String> from) {
             this.from.addAll(from);
             return this;
@@ -137,13 +137,13 @@ public final class TranscriptCustomSpelling {
          * <p>Words or phrases to replace</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addFrom(String from) {
             this.from.add(from);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "from", nulls = Nulls.SKIP)
         public _FinalStage from(List<String> from) {
             this.from.clear();
@@ -151,7 +151,7 @@ public final class TranscriptCustomSpelling {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TranscriptCustomSpelling build() {
             return new TranscriptCustomSpelling(from, to, additionalProperties);
         }

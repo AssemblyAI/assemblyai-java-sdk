@@ -45,7 +45,7 @@ public final class Error {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Error && equalTo((Error) other);
@@ -60,12 +60,12 @@ public final class Error {
         return error.equals(other.error) && status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.error, this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -99,7 +99,7 @@ public final class Error {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Error other) {
             error(other.getError());
             status(other.getStatus());
@@ -110,27 +110,27 @@ public final class Error {
          * <p>Error message</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("error")
         public _FinalStage error(String error) {
             this.error = error;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage status(String status) {
             this.status = Optional.of(status);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
         public _FinalStage status(Optional<String> status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Error build() {
             return new Error(error, status, additionalProperties);
         }

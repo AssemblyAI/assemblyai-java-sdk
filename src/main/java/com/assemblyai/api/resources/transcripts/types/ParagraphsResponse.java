@@ -64,7 +64,7 @@ public final class ParagraphsResponse {
         return paragraphs;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ParagraphsResponse && equalTo((ParagraphsResponse) other);
@@ -82,12 +82,12 @@ public final class ParagraphsResponse {
                 && paragraphs.equals(other.paragraphs);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.confidence, this.audioDuration, this.paragraphs);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -135,7 +135,7 @@ public final class ParagraphsResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ParagraphsResponse other) {
             id(other.getId());
             confidence(other.getConfidence());
@@ -144,40 +144,40 @@ public final class ParagraphsResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public ConfidenceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public AudioDurationStage confidence(double confidence) {
             this.confidence = confidence;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_duration")
         public _FinalStage audioDuration(double audioDuration) {
             this.audioDuration = audioDuration;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllParagraphs(List<TranscriptParagraph> paragraphs) {
             this.paragraphs.addAll(paragraphs);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addParagraphs(TranscriptParagraph paragraphs) {
             this.paragraphs.add(paragraphs);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "paragraphs", nulls = Nulls.SKIP)
         public _FinalStage paragraphs(List<TranscriptParagraph> paragraphs) {
             this.paragraphs.clear();
@@ -185,7 +185,7 @@ public final class ParagraphsResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ParagraphsResponse build() {
             return new ParagraphsResponse(id, confidence, audioDuration, paragraphs, additionalProperties);
         }

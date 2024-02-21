@@ -58,7 +58,7 @@ public final class TopicDetectionResult {
         return timestamp;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TopicDetectionResult && equalTo((TopicDetectionResult) other);
@@ -73,12 +73,12 @@ public final class TopicDetectionResult {
         return text.equals(other.text) && labels.equals(other.labels) && timestamp.equals(other.timestamp);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.text, this.labels, this.timestamp);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -118,7 +118,7 @@ public final class TopicDetectionResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TopicDetectionResult other) {
             text(other.getText());
             labels(other.getLabels());
@@ -130,40 +130,40 @@ public final class TopicDetectionResult {
          * <p>The text in the transcript in which a detected topic occurs</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public _FinalStage text(String text) {
             this.text = text;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage timestamp(Timestamp timestamp) {
             this.timestamp = Optional.of(timestamp);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timestamp", nulls = Nulls.SKIP)
         public _FinalStage timestamp(Optional<Timestamp> timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage labels(List<TopicDetectionResultLabelsItem> labels) {
             this.labels = Optional.of(labels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
         public _FinalStage labels(Optional<List<TopicDetectionResultLabelsItem>> labels) {
             this.labels = labels;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TopicDetectionResult build() {
             return new TopicDetectionResult(text, labels, timestamp, additionalProperties);
         }

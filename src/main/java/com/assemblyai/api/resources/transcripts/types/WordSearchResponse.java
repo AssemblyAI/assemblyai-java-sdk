@@ -61,7 +61,7 @@ public final class WordSearchResponse {
         return matches;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WordSearchResponse && equalTo((WordSearchResponse) other);
@@ -76,12 +76,12 @@ public final class WordSearchResponse {
         return id.equals(other.id) && totalCount == other.totalCount && matches.equals(other.matches);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.totalCount, this.matches);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -123,7 +123,7 @@ public final class WordSearchResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WordSearchResponse other) {
             id(other.getId());
             totalCount(other.getTotalCount());
@@ -135,7 +135,7 @@ public final class WordSearchResponse {
          * <p>The ID of the transcript</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public TotalCountStage id(String id) {
             this.id = id;
@@ -146,7 +146,7 @@ public final class WordSearchResponse {
          * <p>The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, <code>total_count</code> will equal 5.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("total_count")
         public _FinalStage totalCount(int totalCount) {
             this.totalCount = totalCount;
@@ -157,7 +157,7 @@ public final class WordSearchResponse {
          * <p>The matches of the search</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllMatches(List<WordSearchMatch> matches) {
             this.matches.addAll(matches);
             return this;
@@ -167,13 +167,13 @@ public final class WordSearchResponse {
          * <p>The matches of the search</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addMatches(WordSearchMatch matches) {
             this.matches.add(matches);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "matches", nulls = Nulls.SKIP)
         public _FinalStage matches(List<WordSearchMatch> matches) {
             this.matches.clear();
@@ -181,7 +181,7 @@ public final class WordSearchResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WordSearchResponse build() {
             return new WordSearchResponse(id, totalCount, matches, additionalProperties);
         }

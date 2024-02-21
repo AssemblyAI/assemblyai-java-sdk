@@ -74,7 +74,7 @@ public final class ContentSafetyLabelsResult {
         return severityScoreSummary;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ContentSafetyLabelsResult && equalTo((ContentSafetyLabelsResult) other);
@@ -92,12 +92,12 @@ public final class ContentSafetyLabelsResult {
                 && severityScoreSummary.equals(other.severityScoreSummary);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.status, this.results, this.summary, this.severityScoreSummary);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -149,7 +149,7 @@ public final class ContentSafetyLabelsResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ContentSafetyLabelsResult other) {
             status(other.getStatus());
             results(other.getResults());
@@ -162,7 +162,7 @@ public final class ContentSafetyLabelsResult {
          * <p>The status of the Content Moderation model. Either success, or unavailable in the rare case that the model failed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(AudioIntelligenceModelStatus status) {
             this.status = status;
@@ -173,7 +173,7 @@ public final class ContentSafetyLabelsResult {
          * <p>A summary of the Content Moderation severity results for the entire audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage severityScoreSummary(String key, SeverityScoreSummary value) {
             this.severityScoreSummary.put(key, value);
             return this;
@@ -183,13 +183,13 @@ public final class ContentSafetyLabelsResult {
          * <p>A summary of the Content Moderation severity results for the entire audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage putAllSeverityScoreSummary(Map<String, SeverityScoreSummary> severityScoreSummary) {
             this.severityScoreSummary.putAll(severityScoreSummary);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "severity_score_summary", nulls = Nulls.SKIP)
         public _FinalStage severityScoreSummary(Map<String, SeverityScoreSummary> severityScoreSummary) {
             this.severityScoreSummary.clear();
@@ -201,7 +201,7 @@ public final class ContentSafetyLabelsResult {
          * <p>A summary of the Content Moderation confidence results for the entire audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summary(String key, Double value) {
             this.summary.put(key, value);
             return this;
@@ -211,13 +211,13 @@ public final class ContentSafetyLabelsResult {
          * <p>A summary of the Content Moderation confidence results for the entire audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage putAllSummary(Map<String, Double> summary) {
             this.summary.putAll(summary);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary", nulls = Nulls.SKIP)
         public _FinalStage summary(Map<String, Double> summary) {
             this.summary.clear();
@@ -225,19 +225,19 @@ public final class ContentSafetyLabelsResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllResults(List<ContentSafetyLabelResult> results) {
             this.results.addAll(results);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addResults(ContentSafetyLabelResult results) {
             this.results.add(results);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
         public _FinalStage results(List<ContentSafetyLabelResult> results) {
             this.results.clear();
@@ -245,7 +245,7 @@ public final class ContentSafetyLabelsResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ContentSafetyLabelsResult build() {
             return new ContentSafetyLabelsResult(status, results, summary, severityScoreSummary, additionalProperties);
         }

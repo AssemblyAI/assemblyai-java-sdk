@@ -36,7 +36,7 @@ public final class ConfigureEndUtteranceSilenceThreshold {
         return endUtteranceSilenceThreshold;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ConfigureEndUtteranceSilenceThreshold
@@ -52,12 +52,12 @@ public final class ConfigureEndUtteranceSilenceThreshold {
         return endUtteranceSilenceThreshold == other.endUtteranceSilenceThreshold;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.endUtteranceSilenceThreshold);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -85,7 +85,7 @@ public final class ConfigureEndUtteranceSilenceThreshold {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ConfigureEndUtteranceSilenceThreshold other) {
             endUtteranceSilenceThreshold(other.getEndUtteranceSilenceThreshold());
             return this;
@@ -95,14 +95,14 @@ public final class ConfigureEndUtteranceSilenceThreshold {
          * <p>The duration threshold in milliseconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end_utterance_silence_threshold")
         public _FinalStage endUtteranceSilenceThreshold(int endUtteranceSilenceThreshold) {
             this.endUtteranceSilenceThreshold = endUtteranceSilenceThreshold;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ConfigureEndUtteranceSilenceThreshold build() {
             return new ConfigureEndUtteranceSilenceThreshold(endUtteranceSilenceThreshold, additionalProperties);
         }

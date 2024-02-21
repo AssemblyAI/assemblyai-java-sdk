@@ -35,7 +35,7 @@ public final class RealtimeBaseMessage {
         return messageType;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RealtimeBaseMessage && equalTo((RealtimeBaseMessage) other);
@@ -50,12 +50,12 @@ public final class RealtimeBaseMessage {
         return messageType.equals(other.messageType);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.messageType);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class RealtimeBaseMessage {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RealtimeBaseMessage other) {
             messageType(other.getMessageType());
             return this;
@@ -93,14 +93,14 @@ public final class RealtimeBaseMessage {
          * <p>Describes the type of the message</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("message_type")
         public _FinalStage messageType(MessageType messageType) {
             this.messageType = messageType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RealtimeBaseMessage build() {
             return new RealtimeBaseMessage(messageType, additionalProperties);
         }

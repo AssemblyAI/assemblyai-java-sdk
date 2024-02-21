@@ -48,7 +48,7 @@ public final class SeverityScoreSummary {
         return high;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SeverityScoreSummary && equalTo((SeverityScoreSummary) other);
@@ -63,12 +63,12 @@ public final class SeverityScoreSummary {
         return low == other.low && medium == other.medium && high == other.high;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.low, this.medium, this.high);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -108,7 +108,7 @@ public final class SeverityScoreSummary {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SeverityScoreSummary other) {
             low(other.getLow());
             medium(other.getMedium());
@@ -116,28 +116,28 @@ public final class SeverityScoreSummary {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("low")
         public MediumStage low(double low) {
             this.low = low;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("medium")
         public HighStage medium(double medium) {
             this.medium = medium;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("high")
         public _FinalStage high(double high) {
             this.high = high;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SeverityScoreSummary build() {
             return new SeverityScoreSummary(low, medium, high, additionalProperties);
         }

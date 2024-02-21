@@ -64,7 +64,7 @@ public final class SentencesResponse {
         return sentences;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SentencesResponse && equalTo((SentencesResponse) other);
@@ -82,12 +82,12 @@ public final class SentencesResponse {
                 && sentences.equals(other.sentences);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.confidence, this.audioDuration, this.sentences);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -135,7 +135,7 @@ public final class SentencesResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SentencesResponse other) {
             id(other.getId());
             confidence(other.getConfidence());
@@ -144,40 +144,40 @@ public final class SentencesResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public ConfidenceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public AudioDurationStage confidence(double confidence) {
             this.confidence = confidence;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_duration")
         public _FinalStage audioDuration(double audioDuration) {
             this.audioDuration = audioDuration;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSentences(List<TranscriptSentence> sentences) {
             this.sentences.addAll(sentences);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSentences(TranscriptSentence sentences) {
             this.sentences.add(sentences);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sentences", nulls = Nulls.SKIP)
         public _FinalStage sentences(List<TranscriptSentence> sentences) {
             this.sentences.clear();
@@ -185,7 +185,7 @@ public final class SentencesResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SentencesResponse build() {
             return new SentencesResponse(id, confidence, audioDuration, sentences, additionalProperties);
         }

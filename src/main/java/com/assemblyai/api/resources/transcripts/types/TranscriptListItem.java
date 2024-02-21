@@ -80,7 +80,7 @@ public final class TranscriptListItem {
         return audioUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptListItem && equalTo((TranscriptListItem) other);
@@ -100,12 +100,12 @@ public final class TranscriptListItem {
                 && audioUrl.equals(other.audioUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.resourceUrl, this.status, this.created, this.completed, this.audioUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -170,7 +170,7 @@ public final class TranscriptListItem {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TranscriptListItem other) {
             id(other.getId());
             resourceUrl(other.getResourceUrl());
@@ -181,49 +181,49 @@ public final class TranscriptListItem {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public ResourceUrlStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("resource_url")
         public StatusStage resourceUrl(String resourceUrl) {
             this.resourceUrl = resourceUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public CreatedStage status(TranscriptStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created")
         public CompletedStage created(OffsetDateTime created) {
             this.created = created;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("completed")
         public AudioUrlStage completed(OffsetDateTime completed) {
             this.completed = completed;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("audio_url")
         public _FinalStage audioUrl(String audioUrl) {
             this.audioUrl = audioUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TranscriptListItem build() {
             return new TranscriptListItem(id, resourceUrl, status, created, completed, audioUrl, additionalProperties);
         }

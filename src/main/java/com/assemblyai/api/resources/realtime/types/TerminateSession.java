@@ -35,7 +35,7 @@ public final class TerminateSession {
         return terminateSession;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TerminateSession && equalTo((TerminateSession) other);
@@ -50,12 +50,12 @@ public final class TerminateSession {
         return terminateSession == other.terminateSession;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.terminateSession);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class TerminateSession {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TerminateSession other) {
             terminateSession(other.getTerminateSession());
             return this;
@@ -93,14 +93,14 @@ public final class TerminateSession {
          * <p>Set to true to end your real-time session forever</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("terminate_session")
         public _FinalStage terminateSession(boolean terminateSession) {
             this.terminateSession = terminateSession;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TerminateSession build() {
             return new TerminateSession(terminateSession, additionalProperties);
         }

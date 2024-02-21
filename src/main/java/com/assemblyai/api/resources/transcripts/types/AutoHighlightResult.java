@@ -72,7 +72,7 @@ public final class AutoHighlightResult {
         return timestamps;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AutoHighlightResult && equalTo((AutoHighlightResult) other);
@@ -90,12 +90,12 @@ public final class AutoHighlightResult {
                 && timestamps.equals(other.timestamps);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.count, this.rank, this.text, this.timestamps);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -143,7 +143,7 @@ public final class AutoHighlightResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AutoHighlightResult other) {
             count(other.getCount());
             rank(other.getRank());
@@ -156,7 +156,7 @@ public final class AutoHighlightResult {
          * <p>The total number of times the key phrase appears in the audio file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("count")
         public RankStage count(int count) {
             this.count = count;
@@ -167,7 +167,7 @@ public final class AutoHighlightResult {
          * <p>The total relevancy to the overall audio file of this key phrase - a greater number means more relevant</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("rank")
         public TextStage rank(double rank) {
             this.rank = rank;
@@ -178,7 +178,7 @@ public final class AutoHighlightResult {
          * <p>The text itself of the key phrase</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public _FinalStage text(String text) {
             this.text = text;
@@ -189,7 +189,7 @@ public final class AutoHighlightResult {
          * <p>The timestamp of the of the key phrase</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllTimestamps(List<Timestamp> timestamps) {
             this.timestamps.addAll(timestamps);
             return this;
@@ -199,13 +199,13 @@ public final class AutoHighlightResult {
          * <p>The timestamp of the of the key phrase</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addTimestamps(Timestamp timestamps) {
             this.timestamps.add(timestamps);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timestamps", nulls = Nulls.SKIP)
         public _FinalStage timestamps(List<Timestamp> timestamps) {
             this.timestamps.clear();
@@ -213,7 +213,7 @@ public final class AutoHighlightResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AutoHighlightResult build() {
             return new AutoHighlightResult(count, rank, text, timestamps, additionalProperties);
         }

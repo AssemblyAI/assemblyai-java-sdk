@@ -20,6 +20,7 @@ import com.assemblyai.api.resources.lemur.types.PurgeLemurRequestDataResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -29,6 +30,13 @@ public class LemurClient {
 
     public LemurClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Use the LeMUR task endpoint to input your own LLM prompt.
+     */
+    public LemurTaskResponse task(LemurTaskParams request) {
+        return task(request, null);
     }
 
     /**
@@ -53,8 +61,13 @@ public class LemurClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurTaskResponse.class);
             }
@@ -67,17 +80,17 @@ public class LemurClient {
     }
 
     /**
-     * Use the LeMUR task endpoint to input your own LLM prompt.
+     * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
-    public LemurTaskResponse task(LemurTaskParams request) {
-        return task(request, null);
+    public LemurSummaryResponse summary() {
+        return summary(LemurSummaryParams.builder().build());
     }
 
     /**
      * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
      */
-    public LemurSummaryResponse summary() {
-        return summary(LemurSummaryParams.builder().build());
+    public LemurSummaryResponse summary(LemurSummaryParams request) {
+        return summary(request, null);
     }
 
     /**
@@ -102,8 +115,13 @@ public class LemurClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurSummaryResponse.class);
             }
@@ -116,10 +134,10 @@ public class LemurClient {
     }
 
     /**
-     * Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.
+     * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
      */
-    public LemurSummaryResponse summary(LemurSummaryParams request) {
-        return summary(request, null);
+    public LemurQuestionAnswerResponse questionAnswer(LemurQuestionAnswerParams request) {
+        return questionAnswer(request, null);
     }
 
     /**
@@ -145,8 +163,13 @@ public class LemurClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurQuestionAnswerResponse.class);
             }
@@ -159,17 +182,17 @@ public class LemurClient {
     }
 
     /**
-     * Question &amp; Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.
+     * Use LeMUR to generate a list of action items from a transcript
      */
-    public LemurQuestionAnswerResponse questionAnswer(LemurQuestionAnswerParams request) {
-        return questionAnswer(request, null);
+    public LemurActionItemsResponse actionItems() {
+        return actionItems(LemurActionItemsParams.builder().build());
     }
 
     /**
      * Use LeMUR to generate a list of action items from a transcript
      */
-    public LemurActionItemsResponse actionItems() {
-        return actionItems(LemurActionItemsParams.builder().build());
+    public LemurActionItemsResponse actionItems(LemurActionItemsParams request) {
+        return actionItems(request, null);
     }
 
     /**
@@ -194,8 +217,13 @@ public class LemurClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LemurActionItemsResponse.class);
             }
@@ -208,10 +236,11 @@ public class LemurClient {
     }
 
     /**
-     * Use LeMUR to generate a list of action items from a transcript
+     * Delete the data for a previously submitted LeMUR request.
+     * The LLM response data, as well as any context provided in the original request will be removed.
      */
-    public LemurActionItemsResponse actionItems(LemurActionItemsParams request) {
-        return actionItems(request, null);
+    public PurgeLemurRequestDataResponse purgeRequestData(String requestId) {
+        return purgeRequestData(requestId, null);
     }
 
     /**
@@ -231,8 +260,13 @@ public class LemurClient {
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions.getTimeout().isPresent()) {
+                client = client.newBuilder()
+                        .readTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
+                        .build();
+            }
+            Response response = client.newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
                         response.body().string(), PurgeLemurRequestDataResponse.class);
@@ -243,13 +277,5 @@ public class LemurClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Delete the data for a previously submitted LeMUR request.
-     * The LLM response data, as well as any context provided in the original request will be removed.
-     */
-    public PurgeLemurRequestDataResponse purgeRequestData(String requestId) {
-        return purgeRequestData(requestId, null);
     }
 }

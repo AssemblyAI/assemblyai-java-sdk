@@ -64,7 +64,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
      * Use either transcript_ids or input_text as input into LeMUR.
      */
     @JsonProperty("transcript_ids")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getTranscriptIds() {
         return transcriptIds;
     }
@@ -74,7 +74,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
      * Use either transcript_ids or input_text as input into LeMUR.
      */
     @JsonProperty("input_text")
-    @Override
+    @java.lang.Override
     public Optional<String> getInputText() {
         return inputText;
     }
@@ -83,7 +83,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
      * @return Context to provide the model. This can be a string or a free-form JSON value.
      */
     @JsonProperty("context")
-    @Override
+    @java.lang.Override
     public Optional<LemurBaseParamsContext> getContext() {
         return context;
     }
@@ -93,7 +93,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
      * Defaults to &quot;default&quot;.
      */
     @JsonProperty("final_model")
-    @Override
+    @java.lang.Override
     public Optional<LemurModel> getFinalModel() {
         return finalModel;
     }
@@ -102,7 +102,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
      * @return Max output size in tokens, up to 4000
      */
     @JsonProperty("max_output_size")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getMaxOutputSize() {
         return maxOutputSize;
     }
@@ -113,7 +113,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
      * Can be any value between 0.0 and 1.0 inclusive.
      */
     @JsonProperty("temperature")
-    @Override
+    @java.lang.Override
     public Optional<Double> getTemperature() {
         return temperature;
     }
@@ -126,7 +126,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
         return prompt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurTaskParams && equalTo((LemurTaskParams) other);
@@ -147,7 +147,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
                 && prompt.equals(other.prompt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.transcriptIds,
@@ -159,7 +159,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
                 this.prompt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -223,7 +223,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LemurTaskParams other) {
             transcriptIds(other.getTranscriptIds());
             inputText(other.getInputText());
@@ -239,7 +239,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * <p>Your text to prompt the model to produce a desired output, including any context you want to pass into the model.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("prompt")
         public _FinalStage prompt(String prompt) {
             this.prompt = prompt;
@@ -252,13 +252,13 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * Can be any value between 0.0 and 1.0 inclusive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage temperature(Double temperature) {
             this.temperature = Optional.of(temperature);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "temperature", nulls = Nulls.SKIP)
         public _FinalStage temperature(Optional<Double> temperature) {
             this.temperature = temperature;
@@ -269,13 +269,13 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * <p>Max output size in tokens, up to 4000</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage maxOutputSize(Integer maxOutputSize) {
             this.maxOutputSize = Optional.of(maxOutputSize);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "max_output_size", nulls = Nulls.SKIP)
         public _FinalStage maxOutputSize(Optional<Integer> maxOutputSize) {
             this.maxOutputSize = maxOutputSize;
@@ -287,13 +287,13 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * Defaults to &quot;default&quot;.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage finalModel(LemurModel finalModel) {
             this.finalModel = Optional.of(finalModel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "final_model", nulls = Nulls.SKIP)
         public _FinalStage finalModel(Optional<LemurModel> finalModel) {
             this.finalModel = finalModel;
@@ -304,13 +304,13 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * <p>Context to provide the model. This can be a string or a free-form JSON value.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage context(LemurBaseParamsContext context) {
             this.context = Optional.of(context);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
         public _FinalStage context(Optional<LemurBaseParamsContext> context) {
             this.context = context;
@@ -322,13 +322,13 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * Use either transcript_ids or input_text as input into LeMUR.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage inputText(String inputText) {
             this.inputText = Optional.of(inputText);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "input_text", nulls = Nulls.SKIP)
         public _FinalStage inputText(Optional<String> inputText) {
             this.inputText = inputText;
@@ -340,20 +340,20 @@ public final class LemurTaskParams implements ILemurBaseParams {
          * Use either transcript_ids or input_text as input into LeMUR.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage transcriptIds(List<String> transcriptIds) {
             this.transcriptIds = Optional.of(transcriptIds);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "transcript_ids", nulls = Nulls.SKIP)
         public _FinalStage transcriptIds(Optional<List<String>> transcriptIds) {
             this.transcriptIds = transcriptIds;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LemurTaskParams build() {
             return new LemurTaskParams(
                     transcriptIds,

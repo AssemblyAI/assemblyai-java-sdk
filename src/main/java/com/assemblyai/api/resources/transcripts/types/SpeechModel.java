@@ -6,16 +6,14 @@ package com.assemblyai.api.resources.transcripts.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class SubtitleFormat {
-    public static final SubtitleFormat VTT = new SubtitleFormat(Value.VTT, "vtt");
-
-    public static final SubtitleFormat SRT = new SubtitleFormat(Value.SRT, "srt");
+public final class SpeechModel {
+    public static final SpeechModel NANO = new SpeechModel(Value.NANO, "nano");
 
     private final Value value;
 
     private final String string;
 
-    SubtitleFormat(Value value, String string) {
+    SpeechModel(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -32,8 +30,7 @@ public final class SubtitleFormat {
 
     @java.lang.Override
     public boolean equals(Object other) {
-        return (this == other)
-                || (other instanceof SubtitleFormat && this.string.equals(((SubtitleFormat) other).string));
+        return (this == other) || (other instanceof SpeechModel && this.string.equals(((SpeechModel) other).string));
     }
 
     @java.lang.Override
@@ -43,10 +40,8 @@ public final class SubtitleFormat {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case VTT:
-                return visitor.visitVtt();
-            case SRT:
-                return visitor.visitSrt();
+            case NANO:
+                return visitor.visitNano();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -54,29 +49,23 @@ public final class SubtitleFormat {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static SubtitleFormat valueOf(String value) {
+    public static SpeechModel valueOf(String value) {
         switch (value) {
-            case "vtt":
-                return VTT;
-            case "srt":
-                return SRT;
+            case "nano":
+                return NANO;
             default:
-                return new SubtitleFormat(Value.UNKNOWN, value);
+                return new SpeechModel(Value.UNKNOWN, value);
         }
     }
 
     public enum Value {
-        SRT,
-
-        VTT,
+        NANO,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
-        T visitSrt();
-
-        T visitVtt();
+        T visitNano();
 
         T visitUnknown(String unknownType);
     }

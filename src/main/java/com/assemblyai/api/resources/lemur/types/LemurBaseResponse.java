@@ -31,12 +31,12 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
      * @return The ID of the LeMUR request
      */
     @JsonProperty("request_id")
-    @Override
+    @java.lang.Override
     public String getRequestId() {
         return requestId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LemurBaseResponse && equalTo((LemurBaseResponse) other);
@@ -51,12 +51,12 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
         return requestId.equals(other.requestId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.requestId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -84,7 +84,7 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LemurBaseResponse other) {
             requestId(other.getRequestId());
             return this;
@@ -94,14 +94,14 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
          * <p>The ID of the LeMUR request</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("request_id")
         public _FinalStage requestId(String requestId) {
             this.requestId = requestId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LemurBaseResponse build() {
             return new LemurBaseResponse(requestId, additionalProperties);
         }

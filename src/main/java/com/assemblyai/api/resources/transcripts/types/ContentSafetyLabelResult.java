@@ -88,7 +88,7 @@ public final class ContentSafetyLabelResult {
         return timestamp;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ContentSafetyLabelResult && equalTo((ContentSafetyLabelResult) other);
@@ -107,12 +107,12 @@ public final class ContentSafetyLabelResult {
                 && timestamp.equals(other.timestamp);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.text, this.labels, this.sentencesIdxStart, this.sentencesIdxEnd, this.timestamp);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -167,7 +167,7 @@ public final class ContentSafetyLabelResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ContentSafetyLabelResult other) {
             text(other.getText());
             labels(other.getLabels());
@@ -181,7 +181,7 @@ public final class ContentSafetyLabelResult {
          * <p>The transcript of the section flagged by the Content Moderation model</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("text")
         public SentencesIdxStartStage text(String text) {
             this.text = text;
@@ -192,7 +192,7 @@ public final class ContentSafetyLabelResult {
          * <p>The sentence index at which the section begins</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sentences_idx_start")
         public SentencesIdxEndStage sentencesIdxStart(int sentencesIdxStart) {
             this.sentencesIdxStart = sentencesIdxStart;
@@ -203,7 +203,7 @@ public final class ContentSafetyLabelResult {
          * <p>The sentence index at which the section ends</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sentences_idx_end")
         public TimestampStage sentencesIdxEnd(int sentencesIdxEnd) {
             this.sentencesIdxEnd = sentencesIdxEnd;
@@ -214,7 +214,7 @@ public final class ContentSafetyLabelResult {
          * <p>Timestamp information for the section</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public _FinalStage timestamp(Timestamp timestamp) {
             this.timestamp = timestamp;
@@ -225,7 +225,7 @@ public final class ContentSafetyLabelResult {
          * <p>An array of safety labels, one per sensitive topic that was detected in the section</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllLabels(List<ContentSafetyLabel> labels) {
             this.labels.addAll(labels);
             return this;
@@ -235,13 +235,13 @@ public final class ContentSafetyLabelResult {
          * <p>An array of safety labels, one per sensitive topic that was detected in the section</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addLabels(ContentSafetyLabel labels) {
             this.labels.add(labels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
         public _FinalStage labels(List<ContentSafetyLabel> labels) {
             this.labels.clear();
@@ -249,7 +249,7 @@ public final class ContentSafetyLabelResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ContentSafetyLabelResult build() {
             return new ContentSafetyLabelResult(
                     text, labels, sentencesIdxStart, sentencesIdxEnd, timestamp, additionalProperties);

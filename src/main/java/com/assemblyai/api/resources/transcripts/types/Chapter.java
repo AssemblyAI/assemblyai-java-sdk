@@ -85,7 +85,7 @@ public final class Chapter {
         return end;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Chapter && equalTo((Chapter) other);
@@ -104,12 +104,12 @@ public final class Chapter {
                 && end == other.end;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.gist, this.headline, this.summary, this.start, this.end);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -162,7 +162,7 @@ public final class Chapter {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Chapter other) {
             gist(other.getGist());
             headline(other.getHeadline());
@@ -176,7 +176,7 @@ public final class Chapter {
          * <p>An ultra-short summary (just a few words) of the content spoken in the chapter</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("gist")
         public HeadlineStage gist(String gist) {
             this.gist = gist;
@@ -187,7 +187,7 @@ public final class Chapter {
          * <p>A single sentence summary of the content spoken during the chapter</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("headline")
         public SummaryStage headline(String headline) {
             this.headline = headline;
@@ -198,7 +198,7 @@ public final class Chapter {
          * <p>A one paragraph summary of the content spoken during the chapter</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("summary")
         public StartStage summary(String summary) {
             this.summary = summary;
@@ -209,7 +209,7 @@ public final class Chapter {
          * <p>The starting time, in milliseconds, for the chapter</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
             this.start = start;
@@ -220,14 +220,14 @@ public final class Chapter {
          * <p>The starting time, in milliseconds, for the chapter</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public _FinalStage end(int end) {
             this.end = end;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Chapter build() {
             return new Chapter(gist, headline, summary, start, end, additionalProperties);
         }

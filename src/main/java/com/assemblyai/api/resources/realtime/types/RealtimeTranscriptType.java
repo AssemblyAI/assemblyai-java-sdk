@@ -26,20 +26,20 @@ public final class RealtimeTranscriptType {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     @JsonValue
     public String toString() {
         return this.string;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return (this == other)
                 || (other instanceof RealtimeTranscriptType
                         && this.string.equals(((RealtimeTranscriptType) other).string));
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return this.string.hashCode();
     }

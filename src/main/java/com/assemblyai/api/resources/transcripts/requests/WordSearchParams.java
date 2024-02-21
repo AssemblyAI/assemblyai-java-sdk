@@ -37,7 +37,7 @@ public final class WordSearchParams {
         return words;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WordSearchParams && equalTo((WordSearchParams) other);
@@ -52,12 +52,12 @@ public final class WordSearchParams {
         return words.equals(other.words);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.words);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

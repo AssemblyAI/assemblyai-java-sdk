@@ -44,7 +44,7 @@ public final class TranscriptList {
         return transcripts;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TranscriptList && equalTo((TranscriptList) other);
@@ -59,12 +59,12 @@ public final class TranscriptList {
         return pageDetails.equals(other.pageDetails) && transcripts.equals(other.transcripts);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.pageDetails, this.transcripts);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,33 +100,33 @@ public final class TranscriptList {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TranscriptList other) {
             pageDetails(other.getPageDetails());
             transcripts(other.getTranscripts());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("page_details")
         public _FinalStage pageDetails(PageDetails pageDetails) {
             this.pageDetails = pageDetails;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllTranscripts(List<TranscriptListItem> transcripts) {
             this.transcripts.addAll(transcripts);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addTranscripts(TranscriptListItem transcripts) {
             this.transcripts.add(transcripts);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "transcripts", nulls = Nulls.SKIP)
         public _FinalStage transcripts(List<TranscriptListItem> transcripts) {
             this.transcripts.clear();
@@ -134,7 +134,7 @@ public final class TranscriptList {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TranscriptList build() {
             return new TranscriptList(pageDetails, transcripts, additionalProperties);
         }

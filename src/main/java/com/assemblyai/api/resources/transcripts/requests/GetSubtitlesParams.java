@@ -37,7 +37,7 @@ public final class GetSubtitlesParams {
         return charsPerCaption;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetSubtitlesParams && equalTo((GetSubtitlesParams) other);
@@ -52,12 +52,12 @@ public final class GetSubtitlesParams {
         return charsPerCaption.equals(other.charsPerCaption);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.charsPerCaption);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

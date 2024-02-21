@@ -58,7 +58,7 @@ public final class PurgeLemurRequestDataResponse {
         return deleted;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PurgeLemurRequestDataResponse && equalTo((PurgeLemurRequestDataResponse) other);
@@ -75,12 +75,12 @@ public final class PurgeLemurRequestDataResponse {
                 && deleted == other.deleted;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.requestId, this.requestIdToPurge, this.deleted);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -120,7 +120,7 @@ public final class PurgeLemurRequestDataResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PurgeLemurRequestDataResponse other) {
             requestId(other.getRequestId());
             requestIdToPurge(other.getRequestIdToPurge());
@@ -132,7 +132,7 @@ public final class PurgeLemurRequestDataResponse {
          * <p>The ID of the deletion request of the LeMUR request</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("request_id")
         public RequestIdToPurgeStage requestId(String requestId) {
             this.requestId = requestId;
@@ -143,7 +143,7 @@ public final class PurgeLemurRequestDataResponse {
          * <p>The ID of the LeMUR request to purge the data for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("request_id_to_purge")
         public DeletedStage requestIdToPurge(String requestIdToPurge) {
             this.requestIdToPurge = requestIdToPurge;
@@ -154,14 +154,14 @@ public final class PurgeLemurRequestDataResponse {
          * <p>Whether the request data was deleted</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("deleted")
         public _FinalStage deleted(boolean deleted) {
             this.deleted = deleted;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PurgeLemurRequestDataResponse build() {
             return new PurgeLemurRequestDataResponse(requestId, requestIdToPurge, deleted, additionalProperties);
         }

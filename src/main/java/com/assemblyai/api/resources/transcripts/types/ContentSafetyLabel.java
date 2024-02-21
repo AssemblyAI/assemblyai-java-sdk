@@ -58,7 +58,7 @@ public final class ContentSafetyLabel {
         return severity;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ContentSafetyLabel && equalTo((ContentSafetyLabel) other);
@@ -73,12 +73,12 @@ public final class ContentSafetyLabel {
         return label.equals(other.label) && confidence == other.confidence && severity == other.severity;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.label, this.confidence, this.severity);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -118,7 +118,7 @@ public final class ContentSafetyLabel {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ContentSafetyLabel other) {
             label(other.getLabel());
             confidence(other.getConfidence());
@@ -130,7 +130,7 @@ public final class ContentSafetyLabel {
          * <p>The label of the sensitive topic</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("label")
         public ConfidenceStage label(String label) {
             this.label = label;
@@ -141,7 +141,7 @@ public final class ContentSafetyLabel {
          * <p>The confidence score for the topic being discussed, from 0 to 1</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("confidence")
         public SeverityStage confidence(double confidence) {
             this.confidence = confidence;
@@ -152,14 +152,14 @@ public final class ContentSafetyLabel {
          * <p>How severely the topic is discussed in the section, from 0 to 1</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("severity")
         public _FinalStage severity(double severity) {
             this.severity = severity;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ContentSafetyLabel build() {
             return new ContentSafetyLabel(label, confidence, severity, additionalProperties);
         }
