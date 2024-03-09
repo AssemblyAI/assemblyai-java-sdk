@@ -26,24 +26,23 @@ public class FilesClient {
     /**
      * Upload your media file directly to the AssemblyAI API if it isn't accessible via a URL already.
      */
-    public UploadedFile upload(byte[] request) {
-        return upload(request, null);
+    public UploadedFile upload() {
+        return upload(null);
     }
 
     /**
      * Upload your media file directly to the AssemblyAI API if it isn't accessible via a URL already.
      */
-    public UploadedFile upload(byte[] request, RequestOptions requestOptions) {
+    public UploadedFile upload(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/upload")
                 .build();
-        RequestBody body = RequestBody.create(request);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body)
+                .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/octet-stream")
+                .addHeader("Content-Type", "application/json")
                 .build();
         try {
             OkHttpClient client = clientOptions.httpClient();
