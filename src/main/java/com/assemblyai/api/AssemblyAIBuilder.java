@@ -7,14 +7,18 @@ import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.Environment;
 
 public final class AssemblyAIBuilder {
-    private final ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
-    private final ClientOptions.Builder lemurClientOptionsBuilder = ClientOptions.builder();
+    private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+    private ClientOptions.Builder lemurClientOptionsBuilder = ClientOptions.builder();
+
+    private String apiKey = null;
 
     private Environment environment = Environment.DEFAULT;
 
+    /**
+     * Sets apiKey
+     */
     public AssemblyAIBuilder apiKey(String apiKey) {
-        this.clientOptionsBuilder.addHeader("Authorization", apiKey);
-        this.lemurClientOptionsBuilder.addHeader("Authorization", apiKey);
+        this.apiKey = apiKey;
         return this;
     }
 
@@ -29,10 +33,13 @@ public final class AssemblyAIBuilder {
     }
 
     public AssemblyAI build() {
+        if (apiKey == null) {
+            throw new RuntimeException("Please provide apiKey");
+        }
+        this.clientOptionsBuilder.addHeader("Authorization", this.apiKey);
         clientOptionsBuilder.environment(this.environment);
-        lemurClientOptionsBuilder
-                .environment(this.environment)
-                .disableTimeouts();
+        this.lemurClientOptionsBuilder.addHeader("Authorization", this.apiKey);
+        lemurClientOptionsBuilder.environment(this.environment);
         return new AssemblyAI(clientOptionsBuilder.build(), lemurClientOptionsBuilder.build());
     }
 }
