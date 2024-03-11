@@ -12,11 +12,6 @@ src/main/java/com/assemblyai/api/resources/realtime/types/RealtimeMessage.java
 src/main/java/com/assemblyai/api/resources/realtime/types/SessionBegins.java
 src/main/java/com/assemblyai/api/resources/realtime/types/SessionTerminated.java
 
-# Ignore ClientOptions until support for timeout configuration is added.
-src/main/java/com/assemblyai/api/AssemblyAIBuilder.java
-src/main/java/com/assemblyai/api/core/ClientOptions.java
-
-
 sample-app/src/main/java/sample/App.java
 sample-app/src/main/resources/
 
