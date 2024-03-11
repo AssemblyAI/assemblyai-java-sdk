@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
 
 public final class ClientOptions {
+    private boolean disableTimeouts;
+
     private final Environment environment;
 
     private final Map<String, String> headers;
@@ -22,7 +24,8 @@ public final class ClientOptions {
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
-            OkHttpClient httpClient) {
+            OkHttpClient httpClient,
+            boolean disableTimeouts) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -35,7 +38,7 @@ public final class ClientOptions {
                 "JAVA"));
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
-        ;
+        this.disableTimeouts = disableTimeouts;
     }
 
     public Environment environment() {
@@ -58,9 +61,18 @@ public final class ClientOptions {
     }
 
     public OkHttpClient httpClientWithTimeout(RequestOptions requestOptions) {
+        if (this.disableTimeouts) {
+            return this.httpClient
+                    .newBuilder()
+                    .callTimeout(0, TimeUnit.SECONDS)
+                    .readTimeout(0, TimeUnit.SECONDS)
+                    .build();
+        }
+
         if (requestOptions == null) {
             return this.httpClient;
         }
+
         return this.httpClient
                 .newBuilder()
                 .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit())
@@ -81,6 +93,8 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
+        private boolean disableTimeouts = false;
+
         public Builder environment(Environment environment) {
             this.environment = environment;
             return this;
@@ -96,11 +110,23 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * This is a temporary measure ot disable timeouts for LeMUR client.
+         * Don't use this method.
+         *
+         * @return ClientOptionsBuilder
+         * @deprecated
+         */
+        public Builder disableTimeouts() {
+            this.disableTimeouts = true;
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient okhttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new RetryInterceptor(3))
                     .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
+            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.disableTimeouts);
         }
     }
 }
