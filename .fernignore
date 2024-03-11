@@ -12,6 +12,10 @@ src/main/java/com/assemblyai/api/resources/realtime/types/RealtimeMessage.java
 src/main/java/com/assemblyai/api/resources/realtime/types/SessionBegins.java
 src/main/java/com/assemblyai/api/resources/realtime/types/SessionTerminated.java
 
+# Ignore ClientOptions to support custom timeouts for LeMUR.
+src/main/java/com/assemblyai/api/AssemblyAIBuilder.java
+src/main/java/com/assemblyai/api/core/ClientOptions.java
+
 sample-app/src/main/java/sample/App.java
 sample-app/src/main/resources/
 
