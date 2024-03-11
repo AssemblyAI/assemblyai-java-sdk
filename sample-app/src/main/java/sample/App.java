@@ -15,17 +15,24 @@ import java.util.List;
 
 public final class App {
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException, InterruptedException {
         AssemblyAI client = AssemblyAI.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
                 .build();
 
         Transcript transcript = client.transcripts().transcribe(
-                "https://storage.googleapis.com/client-docs-samples/nbc.mp3",
+                "https://storage.googleapis.com/aai-docs-samples/nbc.mp3",
                 TranscriptOptionalParams.builder()
                         .sentimentAnalysis(true)
                         .build()
         );
+
+        if(transcript.getStatus() == TranscriptStatus.ERROR)
+        {
+            System.out.println("Transcript error: " + transcript.getError().get());
+            System.exit(1);
+            return;
+        }
 
         for(SentimentAnalysisResult result: transcript.getSentimentAnalysisResults().get())
         {
@@ -52,6 +59,14 @@ public final class App {
                 .build());
         System.out.println("Search transcript. " + search);
 
+
+        LemurTaskResponse response = client.lemur().task(LemurTaskParams.builder()
+                .prompt("Summarize this transcript.")
+                .transcriptIds(List.of(transcript.getId()))
+                .build());
+
+        System.out.println("Summary: " + response.getResponse());
+
         transcript = client.transcripts().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);
 
@@ -69,13 +84,6 @@ public final class App {
 
         TranscriptList transcripts = client.transcripts().list();
         System.out.println("List transcript. " + transcripts);
-
-        LemurTaskResponse response = client.lemur().task(LemurTaskParams.builder()
-                .prompt("Summarize this transcript.")
-                .transcriptIds(List.of(transcript.getId()))
-                .build());
-
-        System.out.println("Summary: " + response.getResponse());
 
         RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))

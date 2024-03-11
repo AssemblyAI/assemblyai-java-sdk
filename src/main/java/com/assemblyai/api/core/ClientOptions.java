@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+
 import okhttp3.OkHttpClient;
 
 public final class ClientOptions {
-    private boolean disableTimeouts;
-
     private final Environment environment;
 
     private final Map<String, String> headers;
@@ -24,8 +23,7 @@ public final class ClientOptions {
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
-            OkHttpClient httpClient,
-            boolean disableTimeouts) {
+            OkHttpClient httpClient) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -38,7 +36,6 @@ public final class ClientOptions {
                 "JAVA"));
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
-        this.disableTimeouts = disableTimeouts;
     }
 
     public Environment environment() {
@@ -61,14 +58,6 @@ public final class ClientOptions {
     }
 
     public OkHttpClient httpClientWithTimeout(RequestOptions requestOptions) {
-        if (this.disableTimeouts) {
-            return this.httpClient
-                    .newBuilder()
-                    .callTimeout(0, TimeUnit.SECONDS)
-                    .readTimeout(0, TimeUnit.SECONDS)
-                    .build();
-        }
-
         if (requestOptions == null) {
             return this.httpClient;
         }
@@ -123,10 +112,16 @@ public final class ClientOptions {
         }
 
         public ClientOptions build() {
-            OkHttpClient okhttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3))
-                    .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient, this.disableTimeouts);
+            OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder()
+                    .addInterceptor(new RetryInterceptor(3));
+            if (this.disableTimeouts) {
+                okhttpClientBuilder
+                        .callTimeout(0, TimeUnit.SECONDS)
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS);
+            }
+            return new ClientOptions(environment, headers, headerSuppliers, okhttpClientBuilder.build());
         }
     }
 }

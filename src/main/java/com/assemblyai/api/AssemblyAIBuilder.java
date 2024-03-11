@@ -39,7 +39,7 @@ public final class AssemblyAIBuilder {
         this.clientOptionsBuilder.addHeader("Authorization", this.apiKey);
         clientOptionsBuilder.environment(this.environment);
         this.lemurClientOptionsBuilder.addHeader("Authorization", this.apiKey);
-        lemurClientOptionsBuilder.environment(this.environment);
+        lemurClientOptionsBuilder.environment(this.environment).disableTimeouts();
         return new AssemblyAI(clientOptionsBuilder.build(), lemurClientOptionsBuilder.build());
     }
 }
