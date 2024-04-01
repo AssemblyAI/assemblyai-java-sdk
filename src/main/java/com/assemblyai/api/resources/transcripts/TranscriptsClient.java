@@ -35,21 +35,24 @@ public class TranscriptsClient {
     }
 
     /**
-     * Retrieve a list of transcripts you created
+     * Retrieve a list of transcripts you created.
+     * Transcripts are sorted from newest to oldest. The previous URL always points to a page with older transcripts.
      */
     public TranscriptList list() {
         return list(ListTranscriptParams.builder().build());
     }
 
     /**
-     * Retrieve a list of transcripts you created
+     * Retrieve a list of transcripts you created.
+     * Transcripts are sorted from newest to oldest. The previous URL always points to a page with older transcripts.
      */
     public TranscriptList list(ListTranscriptParams request) {
         return list(request, null);
     }
 
     /**
-     * Retrieve a list of transcripts you created
+     * Retrieve a list of transcripts you created.
+     * Transcripts are sorted from newest to oldest. The previous URL always points to a page with older transcripts.
      */
     public TranscriptList list(ListTranscriptParams request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

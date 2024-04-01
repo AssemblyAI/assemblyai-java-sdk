@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class SubstitutionPolicy {
-    public static final SubstitutionPolicy ENTITY_TYPE = new SubstitutionPolicy(Value.ENTITY_TYPE, "entity_type");
+    public static final SubstitutionPolicy ENTITY_NAME = new SubstitutionPolicy(Value.ENTITY_NAME, "entity_name");
 
     public static final SubstitutionPolicy HASH = new SubstitutionPolicy(Value.HASH, "hash");
 
@@ -43,8 +43,8 @@ public final class SubstitutionPolicy {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case ENTITY_TYPE:
-                return visitor.visitEntityType();
+            case ENTITY_NAME:
+                return visitor.visitEntityName();
             case HASH:
                 return visitor.visitHash();
             case UNKNOWN:
@@ -56,8 +56,8 @@ public final class SubstitutionPolicy {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SubstitutionPolicy valueOf(String value) {
         switch (value) {
-            case "entity_type":
-                return ENTITY_TYPE;
+            case "entity_name":
+                return ENTITY_NAME;
             case "hash":
                 return HASH;
             default:
@@ -66,7 +66,7 @@ public final class SubstitutionPolicy {
     }
 
     public enum Value {
-        ENTITY_TYPE,
+        ENTITY_NAME,
 
         HASH,
 
@@ -74,7 +74,7 @@ public final class SubstitutionPolicy {
     }
 
     public interface Visitor<T> {
-        T visitEntityType();
+        T visitEntityName();
 
         T visitHash();
 
