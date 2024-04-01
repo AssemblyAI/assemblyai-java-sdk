@@ -26,7 +26,7 @@ public final class PageDetails {
 
     private final String currentUrl;
 
-    private final String prevUrl;
+    private final Optional<String> prevUrl;
 
     private final Optional<String> nextUrl;
 
@@ -36,7 +36,7 @@ public final class PageDetails {
             int limit,
             int resultCount,
             String currentUrl,
-            String prevUrl,
+            Optional<String> prevUrl,
             Optional<String> nextUrl,
             Map<String, Object> additionalProperties) {
         this.limit = limit;
@@ -62,11 +62,17 @@ public final class PageDetails {
         return currentUrl;
     }
 
+    /**
+     * @return The URL to the next page of transcripts. The previous URL always points to a page with older transcripts.
+     */
     @JsonProperty("prev_url")
-    public String getPrevUrl() {
+    public Optional<String> getPrevUrl() {
         return prevUrl;
     }
 
+    /**
+     * @return The URL to the next page of transcripts. The next URL always points to a page with newer transcripts.
+     */
     @JsonProperty("next_url")
     public Optional<String> getNextUrl() {
         return nextUrl;
@@ -116,15 +122,15 @@ public final class PageDetails {
     }
 
     public interface CurrentUrlStage {
-        PrevUrlStage currentUrl(String currentUrl);
-    }
-
-    public interface PrevUrlStage {
-        _FinalStage prevUrl(String prevUrl);
+        _FinalStage currentUrl(String currentUrl);
     }
 
     public interface _FinalStage {
         PageDetails build();
+
+        _FinalStage prevUrl(Optional<String> prevUrl);
+
+        _FinalStage prevUrl(String prevUrl);
 
         _FinalStage nextUrl(Optional<String> nextUrl);
 
@@ -132,17 +138,16 @@ public final class PageDetails {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements LimitStage, ResultCountStage, CurrentUrlStage, PrevUrlStage, _FinalStage {
+    public static final class Builder implements LimitStage, ResultCountStage, CurrentUrlStage, _FinalStage {
         private int limit;
 
         private int resultCount;
 
         private String currentUrl;
 
-        private String prevUrl;
-
         private Optional<String> nextUrl = Optional.empty();
+
+        private Optional<String> prevUrl = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -175,18 +180,15 @@ public final class PageDetails {
 
         @java.lang.Override
         @JsonSetter("current_url")
-        public PrevUrlStage currentUrl(String currentUrl) {
+        public _FinalStage currentUrl(String currentUrl) {
             this.currentUrl = currentUrl;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("prev_url")
-        public _FinalStage prevUrl(String prevUrl) {
-            this.prevUrl = prevUrl;
-            return this;
-        }
-
+        /**
+         * <p>The URL to the next page of transcripts. The next URL always points to a page with newer transcripts.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage nextUrl(String nextUrl) {
             this.nextUrl = Optional.of(nextUrl);
@@ -197,6 +199,23 @@ public final class PageDetails {
         @JsonSetter(value = "next_url", nulls = Nulls.SKIP)
         public _FinalStage nextUrl(Optional<String> nextUrl) {
             this.nextUrl = nextUrl;
+            return this;
+        }
+
+        /**
+         * <p>The URL to the next page of transcripts. The previous URL always points to a page with older transcripts.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage prevUrl(String prevUrl) {
+            this.prevUrl = Optional.of(prevUrl);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "prev_url", nulls = Nulls.SKIP)
+        public _FinalStage prevUrl(Optional<String> prevUrl) {
+            this.prevUrl = prevUrl;
             return this;
         }
 

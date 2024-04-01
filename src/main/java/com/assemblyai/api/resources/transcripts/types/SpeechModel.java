@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class SpeechModel {
-    public static final SpeechModel CONFORMER2 = new SpeechModel(Value.CONFORMER2, "conformer-2");
-
     public static final SpeechModel NANO = new SpeechModel(Value.NANO, "nano");
+
+    public static final SpeechModel BEST = new SpeechModel(Value.BEST, "best");
+
+    public static final SpeechModel CONFORMER2 = new SpeechModel(Value.CONFORMER2, "conformer-2");
 
     private final Value value;
 
@@ -42,10 +44,12 @@ public final class SpeechModel {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case CONFORMER2:
-                return visitor.visitConformer2();
             case NANO:
                 return visitor.visitNano();
+            case BEST:
+                return visitor.visitBest();
+            case CONFORMER2:
+                return visitor.visitConformer2();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -55,16 +59,20 @@ public final class SpeechModel {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SpeechModel valueOf(String value) {
         switch (value) {
-            case "conformer-2":
-                return CONFORMER2;
             case "nano":
                 return NANO;
+            case "best":
+                return BEST;
+            case "conformer-2":
+                return CONFORMER2;
             default:
                 return new SpeechModel(Value.UNKNOWN, value);
         }
     }
 
     public enum Value {
+        BEST,
+
         NANO,
 
         CONFORMER2,
@@ -73,6 +81,8 @@ public final class SpeechModel {
     }
 
     public interface Visitor<T> {
+        T visitBest();
+
         T visitNano();
 
         T visitConformer2();

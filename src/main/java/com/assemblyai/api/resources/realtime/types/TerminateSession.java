@@ -28,7 +28,7 @@ public final class TerminateSession {
     }
 
     /**
-     * @return Set to true to end your real-time session forever
+     * @return Set to true to end your streaming session forever
      */
     @JsonProperty("terminate_session")
     public boolean getTerminateSession() {
@@ -90,7 +90,7 @@ public final class TerminateSession {
         }
 
         /**
-         * <p>Set to true to end your real-time session forever</p>
+         * <p>Set to true to end your streaming session forever</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

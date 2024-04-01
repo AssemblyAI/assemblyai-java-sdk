@@ -26,14 +26,14 @@ public class RealtimeClient {
     }
 
     /**
-     * Create a temporary authentication token for real-time transcription
+     * Create a temporary authentication token for Streaming Speech-to-Text
      */
     public RealtimeTemporaryTokenResponse createTemporaryToken(CreateRealtimeTemporaryTokenParams request) {
         return createTemporaryToken(request, null);
     }
 
     /**
-     * Create a temporary authentication token for real-time transcription
+     * Create a temporary authentication token for Streaming Speech-to-Text
      */
     public RealtimeTemporaryTokenResponse createTemporaryToken(
             CreateRealtimeTemporaryTokenParams request, RequestOptions requestOptions) {

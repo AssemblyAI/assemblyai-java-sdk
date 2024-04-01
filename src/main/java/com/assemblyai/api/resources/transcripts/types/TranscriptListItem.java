@@ -10,11 +10,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptListItem.Builder.class)
@@ -31,6 +33,8 @@ public final class TranscriptListItem {
 
     private final String audioUrl;
 
+    private final Optional<String> error;
+
     private final Map<String, Object> additionalProperties;
 
     private TranscriptListItem(
@@ -40,6 +44,7 @@ public final class TranscriptListItem {
             OffsetDateTime created,
             OffsetDateTime completed,
             String audioUrl,
+            Optional<String> error,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.resourceUrl = resourceUrl;
@@ -47,6 +52,7 @@ public final class TranscriptListItem {
         this.created = created;
         this.completed = completed;
         this.audioUrl = audioUrl;
+        this.error = error;
         this.additionalProperties = additionalProperties;
     }
 
@@ -80,6 +86,14 @@ public final class TranscriptListItem {
         return audioUrl;
     }
 
+    /**
+     * @return Error message of why the transcript failed
+     */
+    @JsonProperty("error")
+    public Optional<String> getError() {
+        return error;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -97,12 +111,14 @@ public final class TranscriptListItem {
                 && status.equals(other.status)
                 && created.equals(other.created)
                 && completed.equals(other.completed)
-                && audioUrl.equals(other.audioUrl);
+                && audioUrl.equals(other.audioUrl)
+                && error.equals(other.error);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.resourceUrl, this.status, this.created, this.completed, this.audioUrl);
+        return Objects.hash(
+                this.id, this.resourceUrl, this.status, this.created, this.completed, this.audioUrl, this.error);
     }
 
     @java.lang.Override
@@ -142,6 +158,10 @@ public final class TranscriptListItem {
 
     public interface _FinalStage {
         TranscriptListItem build();
+
+        _FinalStage error(Optional<String> error);
+
+        _FinalStage error(String error);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -165,6 +185,8 @@ public final class TranscriptListItem {
 
         private String audioUrl;
 
+        private Optional<String> error = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -178,6 +200,7 @@ public final class TranscriptListItem {
             created(other.getCreated());
             completed(other.getCompleted());
             audioUrl(other.getAudioUrl());
+            error(other.getError());
             return this;
         }
 
@@ -223,9 +246,27 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>Error message of why the transcript failed</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage error(String error) {
+            this.error = Optional.of(error);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "error", nulls = Nulls.SKIP)
+        public _FinalStage error(Optional<String> error) {
+            this.error = error;
+            return this;
+        }
+
         @java.lang.Override
         public TranscriptListItem build() {
-            return new TranscriptListItem(id, resourceUrl, status, created, completed, audioUrl, additionalProperties);
+            return new TranscriptListItem(
+                    id, resourceUrl, status, created, completed, audioUrl, error, additionalProperties);
         }
     }
 }

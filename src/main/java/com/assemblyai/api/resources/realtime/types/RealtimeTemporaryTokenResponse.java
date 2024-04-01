@@ -28,7 +28,7 @@ public final class RealtimeTemporaryTokenResponse {
     }
 
     /**
-     * @return The temporary authentication token for real-time transcription
+     * @return The temporary authentication token for Streaming Speech-to-Text
      */
     @JsonProperty("token")
     public String getToken() {
@@ -90,7 +90,7 @@ public final class RealtimeTemporaryTokenResponse {
         }
 
         /**
-         * <p>The temporary authentication token for real-time transcription</p>
+         * <p>The temporary authentication token for Streaming Speech-to-Text</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
