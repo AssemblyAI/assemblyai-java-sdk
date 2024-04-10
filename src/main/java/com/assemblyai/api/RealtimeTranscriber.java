@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -33,6 +34,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder().build();
     private final String apiKey;
     private final int sampleRate;
+    private final Optional<Boolean> disablePartialTranscripts;
     private final Optional<List<String>> wordBoost;
     private final Optional<Integer> endUtteranceSilenceThreshold;
     private final Consumer<SessionBegins> onSessionBegins;
@@ -47,6 +49,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private RealtimeTranscriber(
             String apiKey,
             int sampleRate,
+            Optional<Boolean> disablePartialTranscripts,
             Optional<List<String>> wordBoost,
             Optional<Integer> endUtteranceSilenceThreshold,
             Consumer<SessionBegins> onSessionBegins,
@@ -57,6 +60,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             BiConsumer<Integer, String> onClose) {
         this.apiKey = apiKey;
         this.sampleRate = sampleRate;
+        this.disablePartialTranscripts = disablePartialTranscripts;
         this.wordBoost = wordBoost;
         this.endUtteranceSilenceThreshold = endUtteranceSilenceThreshold;
         this.onSessionBegins = onSessionBegins;
@@ -73,6 +77,9 @@ public final class RealtimeTranscriber implements AutoCloseable {
      */
     public void connect() {
         String url = BASE_URL + "/v2/realtime/ws?sample_rate=" + sampleRate;
+        if(disablePartialTranscripts.isPresent() && disablePartialTranscripts.get()){
+            url += "&disable_partial_transcripts=true";
+        }
         if (wordBoost.isPresent() && !wordBoost.get().isEmpty()) {
             try {
                 url += "&word_boost=" + ObjectMappers.JSON_MAPPER.writeValueAsString(wordBoost.get());
@@ -145,6 +152,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private static final int DEFAULT_SAMPLE_RATE = 16_000;
         private String apiKey;
         private Integer sampleRate;
+        private Optional<Boolean> disablePartialTranscripts;
         private List<String> wordBoost;
         private Optional<Integer> endUtteranceSilenceThreshold = Optional.empty();
         private Consumer<SessionBegins> onSessionBegins;
@@ -173,6 +181,16 @@ public final class RealtimeTranscriber implements AutoCloseable {
          */
         public RealtimeTranscriber.Builder sampleRate(int sampleRate) {
             this.sampleRate = sampleRate;
+            return this;
+        }
+
+        /**
+         * Disable partial transcripts.
+         *
+         * @return this
+         */
+        public RealtimeTranscriber.Builder disablePartialTranscripts() {
+            this.disablePartialTranscripts = Optional.of(true);
             return this;
         }
 
@@ -284,6 +302,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             return new RealtimeTranscriber(
                     apiKey,
                     sampleRate == null ? DEFAULT_SAMPLE_RATE : sampleRate,
+                    disablePartialTranscripts,
                     Optional.ofNullable(wordBoost),
                     endUtteranceSilenceThreshold,
                     onSessionBegins,
