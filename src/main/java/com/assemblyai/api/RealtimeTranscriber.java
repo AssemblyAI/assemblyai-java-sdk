@@ -1,13 +1,7 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ObjectMappers;
-import com.assemblyai.api.resources.realtime.types.FinalTranscript;
-import com.assemblyai.api.resources.realtime.types.PartialTranscript;
-import com.assemblyai.api.resources.realtime.types.RealtimeError;
-import com.assemblyai.api.resources.realtime.types.RealtimeMessage;
-import com.assemblyai.api.resources.realtime.types.RealtimeTranscript;
-import com.assemblyai.api.resources.realtime.types.SessionBegins;
-import com.assemblyai.api.resources.realtime.types.SessionTerminated;
+import com.assemblyai.api.resources.realtime.types.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.IOException;
@@ -33,6 +27,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder().build();
     private final String apiKey;
     private final int sampleRate;
+    private final AudioEncoding encoding;
     private final Optional<List<String>> wordBoost;
     private final Optional<Integer> endUtteranceSilenceThreshold;
     private final Consumer<SessionBegins> onSessionBegins;
@@ -47,6 +42,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private RealtimeTranscriber(
             String apiKey,
             int sampleRate,
+            AudioEncoding encoding,
             Optional<List<String>> wordBoost,
             Optional<Integer> endUtteranceSilenceThreshold,
             Consumer<SessionBegins> onSessionBegins,
@@ -57,6 +53,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             BiConsumer<Integer, String> onClose) {
         this.apiKey = apiKey;
         this.sampleRate = sampleRate;
+        this.encoding = encoding;
         this.wordBoost = wordBoost;
         this.endUtteranceSilenceThreshold = endUtteranceSilenceThreshold;
         this.onSessionBegins = onSessionBegins;
@@ -73,6 +70,9 @@ public final class RealtimeTranscriber implements AutoCloseable {
      */
     public void connect() {
         String url = BASE_URL + "/v2/realtime/ws?sample_rate=" + sampleRate;
+        if (encoding != null) {
+            url += "&encoding=" + encoding;
+        }
         if (wordBoost.isPresent() && !wordBoost.get().isEmpty()) {
             try {
                 url += "&word_boost=" + ObjectMappers.JSON_MAPPER.writeValueAsString(wordBoost.get());
@@ -145,6 +145,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private static final int DEFAULT_SAMPLE_RATE = 16_000;
         private String apiKey;
         private Integer sampleRate;
+        private AudioEncoding encoding;
         private List<String> wordBoost;
         private Optional<Integer> endUtteranceSilenceThreshold = Optional.empty();
         private Consumer<SessionBegins> onSessionBegins;
@@ -173,6 +174,17 @@ public final class RealtimeTranscriber implements AutoCloseable {
          */
         public RealtimeTranscriber.Builder sampleRate(int sampleRate) {
             this.sampleRate = sampleRate;
+            return this;
+        }
+
+        /**
+         * Sets audio encoding
+         *
+         * @param encoding The encoding of the audio data
+         * @return this
+         */
+        public RealtimeTranscriber.Builder encoding(AudioEncoding encoding) {
+            this.encoding = encoding;
             return this;
         }
 
@@ -284,6 +296,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             return new RealtimeTranscriber(
                     apiKey,
                     sampleRate == null ? DEFAULT_SAMPLE_RATE : sampleRate,
+                    encoding,
                     Optional.ofNullable(wordBoost),
                     endUtteranceSilenceThreshold,
                     onSessionBegins,
