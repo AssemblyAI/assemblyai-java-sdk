@@ -34,7 +34,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder().build();
     private final String apiKey;
     private final int sampleRate;
-    private final Optional<Boolean> disablePartialTranscripts;
+    private final boolean disablePartialTranscripts;
     private final Optional<List<String>> wordBoost;
     private final Optional<Integer> endUtteranceSilenceThreshold;
     private final Consumer<SessionBegins> onSessionBegins;
@@ -49,7 +49,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private RealtimeTranscriber(
             String apiKey,
             int sampleRate,
-            Optional<Boolean> disablePartialTranscripts,
+            boolean disablePartialTranscripts,
             Optional<List<String>> wordBoost,
             Optional<Integer> endUtteranceSilenceThreshold,
             Consumer<SessionBegins> onSessionBegins,
@@ -77,7 +77,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
      */
     public void connect() {
         String url = BASE_URL + "/v2/realtime/ws?sample_rate=" + sampleRate;
-        if(disablePartialTranscripts.isPresent() && disablePartialTranscripts.get()){
+        if (disablePartialTranscripts) {
             url += "&disable_partial_transcripts=true";
         }
         if (wordBoost.isPresent() && !wordBoost.get().isEmpty()) {
@@ -152,7 +152,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private static final int DEFAULT_SAMPLE_RATE = 16_000;
         private String apiKey;
         private Integer sampleRate;
-        private Optional<Boolean> disablePartialTranscripts;
+        private boolean disablePartialTranscripts;
         private List<String> wordBoost;
         private Optional<Integer> endUtteranceSilenceThreshold = Optional.empty();
         private Consumer<SessionBegins> onSessionBegins;
@@ -190,7 +190,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
          * @return this
          */
         public RealtimeTranscriber.Builder disablePartialTranscripts() {
-            this.disablePartialTranscripts = Optional.of(true);
+            this.disablePartialTranscripts = true;
             return this;
         }
 
