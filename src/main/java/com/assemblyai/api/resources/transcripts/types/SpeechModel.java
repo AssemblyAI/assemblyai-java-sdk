@@ -11,6 +11,11 @@ public final class SpeechModel {
 
     public static final SpeechModel BEST = new SpeechModel(Value.BEST, "best");
 
+    /**
+     * @deprecated The Conformer-2 option is deprecated and will stop working in the near future.
+     * Use {@link #BEST} or {@link #NANO} instead.
+     */
+    @Deprecated
     public static final SpeechModel CONFORMER2 = new SpeechModel(Value.CONFORMER2, "conformer-2");
 
     private final Value value;
@@ -75,6 +80,11 @@ public final class SpeechModel {
 
         NANO,
 
+        /**
+         * @deprecated The Conformer-2 option is deprecated and will stop working in the near future.
+         * Use {@link #BEST} or {@link #NANO} instead.
+         */
+        @Deprecated
         CONFORMER2,
 
         UNKNOWN
