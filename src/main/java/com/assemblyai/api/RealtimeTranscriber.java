@@ -344,7 +344,11 @@ public final class RealtimeTranscriber implements AutoCloseable {
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
             try {
                 RealtimeMessage realtimeMessage = ObjectMappers.JSON_MAPPER.readValue(text, RealtimeMessage.class);
-                realtimeMessage.visit(realtimeMessageVisitor);
+                try {
+                    realtimeMessage.visit(realtimeMessageVisitor);
+                } catch (IllegalStateException ignored) {
+                    // when a new message is added to the API, this should not throw an exception
+                }
             } catch (JsonProcessingException e) {
                 if (onError == null) return;
                 onError.accept(e);
