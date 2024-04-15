@@ -21,8 +21,6 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TranscriptOptionalParams.Builder.class)
 public final class TranscriptOptionalParams implements ITranscriptOptionalParams {
-    private final Optional<SpeechModel> speechModel;
-
     private final Optional<TranscriptLanguageCode> languageCode;
 
     private final Optional<Boolean> punctuate;
@@ -30,6 +28,8 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     private final Optional<Boolean> formatText;
 
     private final Optional<Boolean> dualChannel;
+
+    private final Optional<SpeechModel> speechModel;
 
     private final Optional<String> webhookUrl;
 
@@ -96,11 +96,11 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     private final Map<String, Object> additionalProperties;
 
     private TranscriptOptionalParams(
-            Optional<SpeechModel> speechModel,
             Optional<TranscriptLanguageCode> languageCode,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> dualChannel,
+            Optional<SpeechModel> speechModel,
             Optional<String> webhookUrl,
             Optional<String> webhookAuthHeaderName,
             Optional<String> webhookAuthHeaderValue,
@@ -133,11 +133,11 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             Optional<Boolean> customTopics,
             Optional<List<String>> topics,
             Map<String, Object> additionalProperties) {
-        this.speechModel = speechModel;
         this.languageCode = languageCode;
         this.punctuate = punctuate;
         this.formatText = formatText;
         this.dualChannel = dualChannel;
+        this.speechModel = speechModel;
         this.webhookUrl = webhookUrl;
         this.webhookAuthHeaderName = webhookAuthHeaderName;
         this.webhookAuthHeaderValue = webhookAuthHeaderValue;
@@ -172,12 +172,6 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("speech_model")
-    @java.lang.Override
-    public Optional<SpeechModel> getSpeechModel() {
-        return speechModel;
-    }
-
     @JsonProperty("language_code")
     @java.lang.Override
     public Optional<TranscriptLanguageCode> getLanguageCode() {
@@ -209,6 +203,12 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     @java.lang.Override
     public Optional<Boolean> getDualChannel() {
         return dualChannel;
+    }
+
+    @JsonProperty("speech_model")
+    @java.lang.Override
+    public Optional<SpeechModel> getSpeechModel() {
+        return speechModel;
     }
 
     /**
@@ -500,11 +500,11 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     private boolean equalTo(TranscriptOptionalParams other) {
-        return speechModel.equals(other.speechModel)
-                && languageCode.equals(other.languageCode)
+        return languageCode.equals(other.languageCode)
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && dualChannel.equals(other.dualChannel)
+                && speechModel.equals(other.speechModel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookAuthHeaderName.equals(other.webhookAuthHeaderName)
                 && webhookAuthHeaderValue.equals(other.webhookAuthHeaderValue)
@@ -541,11 +541,11 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.speechModel,
                 this.languageCode,
                 this.punctuate,
                 this.formatText,
                 this.dualChannel,
+                this.speechModel,
                 this.webhookUrl,
                 this.webhookAuthHeaderName,
                 this.webhookAuthHeaderValue,
@@ -590,8 +590,6 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<SpeechModel> speechModel = Optional.empty();
-
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
         private Optional<Boolean> punctuate = Optional.empty();
@@ -599,6 +597,8 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         private Optional<Boolean> formatText = Optional.empty();
 
         private Optional<Boolean> dualChannel = Optional.empty();
+
+        private Optional<SpeechModel> speechModel = Optional.empty();
 
         private Optional<String> webhookUrl = Optional.empty();
 
@@ -668,11 +668,11 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         private Builder() {}
 
         public Builder from(TranscriptOptionalParams other) {
-            speechModel(other.getSpeechModel());
             languageCode(other.getLanguageCode());
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
             dualChannel(other.getDualChannel());
+            speechModel(other.getSpeechModel());
             webhookUrl(other.getWebhookUrl());
             webhookAuthHeaderName(other.getWebhookAuthHeaderName());
             webhookAuthHeaderValue(other.getWebhookAuthHeaderValue());
@@ -704,17 +704,6 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             summaryType(other.getSummaryType());
             customTopics(other.getCustomTopics());
             topics(other.getTopics());
-            return this;
-        }
-
-        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
-        public Builder speechModel(Optional<SpeechModel> speechModel) {
-            this.speechModel = speechModel;
-            return this;
-        }
-
-        public Builder speechModel(SpeechModel speechModel) {
-            this.speechModel = Optional.of(speechModel);
             return this;
         }
 
@@ -759,6 +748,17 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public Builder dualChannel(Boolean dualChannel) {
             this.dualChannel = Optional.of(dualChannel);
+            return this;
+        }
+
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public Builder speechModel(Optional<SpeechModel> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
+        public Builder speechModel(SpeechModel speechModel) {
+            this.speechModel = Optional.of(speechModel);
             return this;
         }
 
@@ -1105,11 +1105,11 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public TranscriptOptionalParams build() {
             return new TranscriptOptionalParams(
-                    speechModel,
                     languageCode,
                     punctuate,
                     formatText,
                     dualChannel,
+                    speechModel,
                     webhookUrl,
                     webhookAuthHeaderName,
                     webhookAuthHeaderValue,

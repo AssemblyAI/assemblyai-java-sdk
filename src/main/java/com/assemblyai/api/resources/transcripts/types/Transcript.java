@@ -23,8 +23,6 @@ import java.util.Optional;
 public final class Transcript {
     private final String id;
 
-    private final Optional<SpeechModel> speechModel;
-
     private final String languageModel;
 
     private final String acousticModel;
@@ -50,6 +48,8 @@ public final class Transcript {
     private final Optional<Boolean> formatText;
 
     private final Optional<Boolean> dualChannel;
+
+    private final Optional<SpeechModel> speechModel;
 
     private final Optional<String> webhookUrl;
 
@@ -137,7 +137,6 @@ public final class Transcript {
 
     private Transcript(
             String id,
-            Optional<SpeechModel> speechModel,
             String languageModel,
             String acousticModel,
             TranscriptStatus status,
@@ -151,6 +150,7 @@ public final class Transcript {
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> dualChannel,
+            Optional<SpeechModel> speechModel,
             Optional<String> webhookUrl,
             Optional<Integer> webhookStatusCode,
             boolean webhookAuth,
@@ -194,7 +194,6 @@ public final class Transcript {
             Optional<String> error,
             Map<String, Object> additionalProperties) {
         this.id = id;
-        this.speechModel = speechModel;
         this.languageModel = languageModel;
         this.acousticModel = acousticModel;
         this.status = status;
@@ -208,6 +207,7 @@ public final class Transcript {
         this.punctuate = punctuate;
         this.formatText = formatText;
         this.dualChannel = dualChannel;
+        this.speechModel = speechModel;
         this.webhookUrl = webhookUrl;
         this.webhookStatusCode = webhookStatusCode;
         this.webhookAuth = webhookAuth;
@@ -258,11 +258,6 @@ public final class Transcript {
     @JsonProperty("id")
     public String getId() {
         return id;
-    }
-
-    @JsonProperty("speech_model")
-    public Optional<SpeechModel> getSpeechModel() {
-        return speechModel;
     }
 
     /**
@@ -371,6 +366,11 @@ public final class Transcript {
     @JsonProperty("dual_channel")
     public Optional<Boolean> getDualChannel() {
         return dualChannel;
+    }
+
+    @JsonProperty("speech_model")
+    public Optional<SpeechModel> getSpeechModel() {
+        return speechModel;
     }
 
     /**
@@ -708,7 +708,6 @@ public final class Transcript {
 
     private boolean equalTo(Transcript other) {
         return id.equals(other.id)
-                && speechModel.equals(other.speechModel)
                 && languageModel.equals(other.languageModel)
                 && acousticModel.equals(other.acousticModel)
                 && status.equals(other.status)
@@ -722,6 +721,7 @@ public final class Transcript {
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && dualChannel.equals(other.dualChannel)
+                && speechModel.equals(other.speechModel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookStatusCode.equals(other.webhookStatusCode)
                 && webhookAuth == other.webhookAuth
@@ -769,7 +769,6 @@ public final class Transcript {
     public int hashCode() {
         return Objects.hash(
                 this.id,
-                this.speechModel,
                 this.languageModel,
                 this.acousticModel,
                 this.status,
@@ -783,6 +782,7 @@ public final class Transcript {
                 this.punctuate,
                 this.formatText,
                 this.dualChannel,
+                this.speechModel,
                 this.webhookUrl,
                 this.webhookStatusCode,
                 this.webhookAuth,
@@ -876,10 +876,6 @@ public final class Transcript {
     public interface _FinalStage {
         Transcript build();
 
-        _FinalStage speechModel(Optional<SpeechModel> speechModel);
-
-        _FinalStage speechModel(SpeechModel speechModel);
-
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
         _FinalStage languageCode(TranscriptLanguageCode languageCode);
@@ -915,6 +911,10 @@ public final class Transcript {
         _FinalStage dualChannel(Optional<Boolean> dualChannel);
 
         _FinalStage dualChannel(Boolean dualChannel);
+
+        _FinalStage speechModel(Optional<SpeechModel> speechModel);
+
+        _FinalStage speechModel(SpeechModel speechModel);
 
         _FinalStage webhookUrl(Optional<String> webhookUrl);
 
@@ -1169,6 +1169,8 @@ public final class Transcript {
 
         private Optional<String> webhookUrl = Optional.empty();
 
+        private Optional<SpeechModel> speechModel = Optional.empty();
+
         private Optional<Boolean> dualChannel = Optional.empty();
 
         private Optional<Boolean> formatText = Optional.empty();
@@ -1187,8 +1189,6 @@ public final class Transcript {
 
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
-        private Optional<SpeechModel> speechModel = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -1197,7 +1197,6 @@ public final class Transcript {
         @java.lang.Override
         public Builder from(Transcript other) {
             id(other.getId());
-            speechModel(other.getSpeechModel());
             languageModel(other.getLanguageModel());
             acousticModel(other.getAcousticModel());
             status(other.getStatus());
@@ -1211,6 +1210,7 @@ public final class Transcript {
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
             dualChannel(other.getDualChannel());
+            speechModel(other.getSpeechModel());
             webhookUrl(other.getWebhookUrl());
             webhookStatusCode(other.getWebhookStatusCode());
             webhookAuth(other.getWebhookAuth());
@@ -1973,6 +1973,19 @@ public final class Transcript {
             return this;
         }
 
+        @java.lang.Override
+        public _FinalStage speechModel(SpeechModel speechModel) {
+            this.speechModel = Optional.of(speechModel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public _FinalStage speechModel(Optional<SpeechModel> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
         /**
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual channel transcription</a> was enabled in the transcription request, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -2131,23 +2144,9 @@ public final class Transcript {
         }
 
         @java.lang.Override
-        public _FinalStage speechModel(SpeechModel speechModel) {
-            this.speechModel = Optional.of(speechModel);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
-        public _FinalStage speechModel(Optional<SpeechModel> speechModel) {
-            this.speechModel = speechModel;
-            return this;
-        }
-
-        @java.lang.Override
         public Transcript build() {
             return new Transcript(
                     id,
-                    speechModel,
                     languageModel,
                     acousticModel,
                     status,
@@ -2161,6 +2160,7 @@ public final class Transcript {
                     punctuate,
                     formatText,
                     dualChannel,
+                    speechModel,
                     webhookUrl,
                     webhookStatusCode,
                     webhookAuth,

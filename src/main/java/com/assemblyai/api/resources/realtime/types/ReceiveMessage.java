@@ -37,8 +37,10 @@ public final class ReceiveMessage {
         } else if (this.type == 2) {
             return visitor.visit((FinalTranscript) this.value);
         } else if (this.type == 3) {
-            return visitor.visit((SessionTerminated) this.value);
+            return visitor.visit((SessionInformation) this.value);
         } else if (this.type == 4) {
+            return visitor.visit((SessionTerminated) this.value);
+        } else if (this.type == 5) {
             return visitor.visit((RealtimeError) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -76,12 +78,16 @@ public final class ReceiveMessage {
         return new ReceiveMessage(value, 2);
     }
 
-    public static ReceiveMessage of(SessionTerminated value) {
+    public static ReceiveMessage of(SessionInformation value) {
         return new ReceiveMessage(value, 3);
     }
 
-    public static ReceiveMessage of(RealtimeError value) {
+    public static ReceiveMessage of(SessionTerminated value) {
         return new ReceiveMessage(value, 4);
+    }
+
+    public static ReceiveMessage of(RealtimeError value) {
+        return new ReceiveMessage(value, 5);
     }
 
     public interface Visitor<T> {
@@ -90,6 +96,8 @@ public final class ReceiveMessage {
         T visit(PartialTranscript value);
 
         T visit(FinalTranscript value);
+
+        T visit(SessionInformation value);
 
         T visit(SessionTerminated value);
 
@@ -114,6 +122,10 @@ public final class ReceiveMessage {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, FinalTranscript.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SessionInformation.class));
             } catch (IllegalArgumentException e) {
             }
             try {

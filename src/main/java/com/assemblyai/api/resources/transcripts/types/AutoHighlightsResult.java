@@ -21,13 +21,27 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = AutoHighlightsResult.Builder.class)
 public final class AutoHighlightsResult {
+    private final AudioIntelligenceModelStatus status;
+
     private final List<AutoHighlightResult> results;
 
     private final Map<String, Object> additionalProperties;
 
-    private AutoHighlightsResult(List<AutoHighlightResult> results, Map<String, Object> additionalProperties) {
+    private AutoHighlightsResult(
+            AudioIntelligenceModelStatus status,
+            List<AutoHighlightResult> results,
+            Map<String, Object> additionalProperties) {
+        this.status = status;
         this.results = results;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return The status of the Key Phrases model. Either success, or unavailable in the rare case that the model failed.
+     */
+    @JsonProperty("status")
+    public AudioIntelligenceModelStatus getStatus() {
+        return status;
     }
 
     /**
@@ -50,12 +64,12 @@ public final class AutoHighlightsResult {
     }
 
     private boolean equalTo(AutoHighlightsResult other) {
-        return results.equals(other.results);
+        return status.equals(other.status) && results.equals(other.results);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.results);
+        return Objects.hash(this.status, this.results);
     }
 
     @java.lang.Override
@@ -63,12 +77,30 @@ public final class AutoHighlightsResult {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static StatusStage builder() {
         return new Builder();
     }
 
+    public interface StatusStage {
+        _FinalStage status(AudioIntelligenceModelStatus status);
+
+        Builder from(AutoHighlightsResult other);
+    }
+
+    public interface _FinalStage {
+        AutoHighlightsResult build();
+
+        _FinalStage results(List<AutoHighlightResult> results);
+
+        _FinalStage addResults(AutoHighlightResult results);
+
+        _FinalStage addAllResults(List<AutoHighlightResult> results);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
+    public static final class Builder implements StatusStage, _FinalStage {
+        private AudioIntelligenceModelStatus status;
+
         private List<AutoHighlightResult> results = new ArrayList<>();
 
         @JsonAnySetter
@@ -76,30 +108,55 @@ public final class AutoHighlightsResult {
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(AutoHighlightsResult other) {
+            status(other.getStatus());
             results(other.getResults());
             return this;
         }
 
+        /**
+         * <p>The status of the Key Phrases model. Either success, or unavailable in the rare case that the model failed.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("status")
+        public _FinalStage status(AudioIntelligenceModelStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        /**
+         * <p>A temporally-sequential array of Key Phrases</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addAllResults(List<AutoHighlightResult> results) {
+            this.results.addAll(results);
+            return this;
+        }
+
+        /**
+         * <p>A temporally-sequential array of Key Phrases</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addResults(AutoHighlightResult results) {
+            this.results.add(results);
+            return this;
+        }
+
+        @java.lang.Override
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
-        public Builder results(List<AutoHighlightResult> results) {
+        public _FinalStage results(List<AutoHighlightResult> results) {
             this.results.clear();
             this.results.addAll(results);
             return this;
         }
 
-        public Builder addResults(AutoHighlightResult results) {
-            this.results.add(results);
-            return this;
-        }
-
-        public Builder addAllResults(List<AutoHighlightResult> results) {
-            this.results.addAll(results);
-            return this;
-        }
-
+        @java.lang.Override
         public AutoHighlightsResult build() {
-            return new AutoHighlightsResult(results, additionalProperties);
+            return new AutoHighlightsResult(status, results, additionalProperties);
         }
     }
 }
