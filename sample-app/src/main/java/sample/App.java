@@ -5,6 +5,7 @@ import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
+import com.assemblyai.api.resources.realtime.types.AudioEncoding;
 import com.assemblyai.api.resources.transcripts.requests.*;
 import com.assemblyai.api.resources.transcripts.types.*;
 import java.io.File;
@@ -87,6 +88,7 @@ public final class App {
 
         RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
+                .encoding(AudioEncoding.PCM_S16LE)
                 .onSessionBegins(System.out::println)
                 .onPartialTranscript(System.out::println)
                 .onFinalTranscript(System.out::println)
