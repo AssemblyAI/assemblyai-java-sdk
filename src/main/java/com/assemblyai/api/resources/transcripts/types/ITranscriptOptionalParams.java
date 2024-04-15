@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ITranscriptOptionalParams {
-    Optional<SpeechModel> getSpeechModel();
-
     Optional<TranscriptLanguageCode> getLanguageCode();
 
     Optional<Boolean> getPunctuate();
@@ -16,6 +14,8 @@ public interface ITranscriptOptionalParams {
     Optional<Boolean> getFormatText();
 
     Optional<Boolean> getDualChannel();
+
+    Optional<SpeechModel> getSpeechModel();
 
     Optional<String> getWebhookUrl();
 

@@ -13,6 +13,9 @@ public final class MessageType {
 
     public static final MessageType PARTIAL_TRANSCRIPT = new MessageType(Value.PARTIAL_TRANSCRIPT, "PartialTranscript");
 
+    public static final MessageType SESSION_INFORMATION =
+            new MessageType(Value.SESSION_INFORMATION, "SessionInformation");
+
     public static final MessageType FINAL_TRANSCRIPT = new MessageType(Value.FINAL_TRANSCRIPT, "FinalTranscript");
 
     private final Value value;
@@ -52,6 +55,8 @@ public final class MessageType {
                 return visitor.visitSessionTerminated();
             case PARTIAL_TRANSCRIPT:
                 return visitor.visitPartialTranscript();
+            case SESSION_INFORMATION:
+                return visitor.visitSessionInformation();
             case FINAL_TRANSCRIPT:
                 return visitor.visitFinalTranscript();
             case UNKNOWN:
@@ -69,6 +74,8 @@ public final class MessageType {
                 return SESSION_TERMINATED;
             case "PartialTranscript":
                 return PARTIAL_TRANSCRIPT;
+            case "SessionInformation":
+                return SESSION_INFORMATION;
             case "FinalTranscript":
                 return FINAL_TRANSCRIPT;
             default:
@@ -83,6 +90,8 @@ public final class MessageType {
 
         FINAL_TRANSCRIPT,
 
+        SESSION_INFORMATION,
+
         SESSION_TERMINATED,
 
         UNKNOWN
@@ -94,6 +103,8 @@ public final class MessageType {
         T visitPartialTranscript();
 
         T visitFinalTranscript();
+
+        T visitSessionInformation();
 
         T visitSessionTerminated();
 
