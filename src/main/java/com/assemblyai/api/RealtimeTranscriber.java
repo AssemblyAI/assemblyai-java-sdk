@@ -28,6 +28,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private final String apiKey;
     private final int sampleRate;
     private final AudioEncoding encoding;
+    private final boolean disablePartialTranscripts;
     private final Optional<List<String>> wordBoost;
     private final Optional<Integer> endUtteranceSilenceThreshold;
     private final Consumer<SessionBegins> onSessionBegins;
@@ -43,6 +44,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             String apiKey,
             int sampleRate,
             AudioEncoding encoding,
+            boolean disablePartialTranscripts,
             Optional<List<String>> wordBoost,
             Optional<Integer> endUtteranceSilenceThreshold,
             Consumer<SessionBegins> onSessionBegins,
@@ -54,6 +56,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         this.apiKey = apiKey;
         this.sampleRate = sampleRate;
         this.encoding = encoding;
+        this.disablePartialTranscripts = disablePartialTranscripts;
         this.wordBoost = wordBoost;
         this.endUtteranceSilenceThreshold = endUtteranceSilenceThreshold;
         this.onSessionBegins = onSessionBegins;
@@ -72,6 +75,9 @@ public final class RealtimeTranscriber implements AutoCloseable {
         String url = BASE_URL + "/v2/realtime/ws?sample_rate=" + sampleRate;
         if (encoding != null) {
             url += "&encoding=" + encoding;
+        }
+        if (disablePartialTranscripts) {
+            url += "&disable_partial_transcripts=true";
         }
         if (wordBoost.isPresent() && !wordBoost.get().isEmpty()) {
             try {
@@ -146,6 +152,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private String apiKey;
         private Integer sampleRate;
         private AudioEncoding encoding;
+        private boolean disablePartialTranscripts;
         private List<String> wordBoost;
         private Optional<Integer> endUtteranceSilenceThreshold = Optional.empty();
         private Consumer<SessionBegins> onSessionBegins;
@@ -185,6 +192,16 @@ public final class RealtimeTranscriber implements AutoCloseable {
          */
         public RealtimeTranscriber.Builder encoding(AudioEncoding encoding) {
             this.encoding = encoding;
+            return this;
+        }
+
+        /**
+         * Disable partial transcripts.
+         *
+         * @return this
+         */
+        public RealtimeTranscriber.Builder disablePartialTranscripts() {
+            this.disablePartialTranscripts = true;
             return this;
         }
 
@@ -297,6 +314,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
                     apiKey,
                     sampleRate == null ? DEFAULT_SAMPLE_RATE : sampleRate,
                     encoding,
+                    disablePartialTranscripts,
                     Optional.ofNullable(wordBoost),
                     endUtteranceSilenceThreshold,
                     onSessionBegins,
