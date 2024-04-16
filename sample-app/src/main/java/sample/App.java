@@ -6,6 +6,7 @@ import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
 import com.assemblyai.api.resources.realtime.types.AudioEncoding;
+import com.assemblyai.api.resources.realtime.types.SessionInformation;
 import com.assemblyai.api.resources.transcripts.requests.*;
 import com.assemblyai.api.resources.transcripts.types.*;
 import java.io.File;
@@ -13,10 +14,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public final class App {
 
-    public static void main(String... args) throws IOException, InterruptedException {
+    public static void main(String... args) throws IOException, InterruptedException, ExecutionException {
         AssemblyAI client = AssemblyAI.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
                 .build();
@@ -86,7 +89,7 @@ public final class App {
         TranscriptList transcripts = client.transcripts().list();
         System.out.println("List transcript. " + transcripts);
 
-        RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
+        try (RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
                 .encoding(AudioEncoding.PCM_S16LE)
                 .onSessionBegins(System.out::println)
@@ -94,10 +97,16 @@ public final class App {
                 .onFinalTranscript(System.out::println)
                 .onError((err) -> System.out.println(err.getMessage()))
                 .onClose((code, reason) -> System.out.printf("%s: %s", code, reason))
-                .build();
-        realtimeTranscriber.connect();
-        streamFile("sample-app/src/main/resources/gore-short.wav", realtimeTranscriber);
-        realtimeTranscriber.close();
+                .onSessionInformation(System.out::println)
+                .build()) {
+            realtimeTranscriber.connect();
+            streamFile("sample-app/src/main/resources/gore-short.wav", realtimeTranscriber);
+            Future<SessionInformation> closeFuture = realtimeTranscriber.closeWithSessionTermination();
+            SessionInformation info = closeFuture.get();
+            // Force exit is necessary for some reason.
+            // The program will end after a while, but not immediately as it should.
+            System.exit(0);
+        }
     }
 
     public static void streamFile(String filePath, RealtimeTranscriber realtimeTranscriber) {
