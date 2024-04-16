@@ -1,6 +1,7 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ObjectMappers;
+import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParams;
 import com.assemblyai.api.resources.realtime.types.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -26,6 +27,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private static final String BASE_URL = "wss://api.assemblyai.com";
     private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder().build();
     private final String apiKey;
+    private final String token;
     private final int sampleRate;
     private final AudioEncoding encoding;
     private final boolean disablePartialTranscripts;
@@ -42,6 +44,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
     private RealtimeTranscriber(
             String apiKey,
+            String token,
             int sampleRate,
             AudioEncoding encoding,
             boolean disablePartialTranscripts,
@@ -54,6 +57,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             Consumer<Throwable> onError,
             BiConsumer<Integer, String> onClose) {
         this.apiKey = apiKey;
+        this.token = token;
         this.sampleRate = sampleRate;
         this.encoding = encoding;
         this.disablePartialTranscripts = disablePartialTranscripts;
@@ -86,10 +90,18 @@ public final class RealtimeTranscriber implements AutoCloseable {
                 throw new RuntimeException("Failed to serialize word boosts");
             }
         }
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Authorization", apiKey)
-                .build();
+        Request.Builder requestBuilder = new Request.Builder();
+
+        if (token != null) {
+            url += "&token=" + token;
+        } else if (apiKey != null) {
+            requestBuilder.addHeader("Authorization", apiKey);
+        } else {
+            throw new RuntimeException("API key or Token is required to authenticate.");
+        }
+
+        Request request = requestBuilder.url(url).build();
+
         this.webSocket = OK_HTTP_CLIENT.newWebSocket(request, new Listener(
                 (response) -> endUtteranceSilenceThreshold.ifPresent(this::configureEndUtteranceSilenceThreshold)
         ));
@@ -154,6 +166,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private AudioEncoding encoding;
         private boolean disablePartialTranscripts;
         private List<String> wordBoost;
+        private String token;
         private Optional<Integer> endUtteranceSilenceThreshold = Optional.empty();
         private Consumer<SessionBegins> onSessionBegins;
         private Consumer<PartialTranscript> onPartialTranscript;
@@ -163,10 +176,11 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private BiConsumer<Integer, String> onClose;
 
         /**
-         * Sets api key
+         * Sets the AssemblyAI API key used to authenticate the RealtimeTranscriber
          *
-         * @param apiKey The AssemblyAI API Key
+         * @param apiKey The AssemblyAI API key
          * @return this
+         * @see #token(String) Or authenticate using a temporary token.
          */
         public RealtimeTranscriber.Builder apiKey(String apiKey) {
             this.apiKey = apiKey;
@@ -213,6 +227,20 @@ public final class RealtimeTranscriber implements AutoCloseable {
          */
         public RealtimeTranscriber.Builder wordBoost(List<String> wordBoost) {
             this.wordBoost = wordBoost;
+            return this;
+        }
+
+        /**
+         * Sets the temporary token used to authenticate the RealtimeTranscriber
+         *
+         * @param token The temporary token used to authenticate the RealtimeTranscriber
+         * @return this
+         * @see com.assemblyai.api.resources.realtime.RealtimeClient#createTemporaryToken(CreateRealtimeTemporaryTokenParams)
+         * Generate a temporary auth token using AssemblyAI.realtime().createTemporaryToken()
+         * @see #apiKey(String) Or authenticate using your AssemblyAI API key
+         */
+        public RealtimeTranscriber.Builder token(String token) {
+            this.token = token;
             return this;
         }
 
@@ -307,11 +335,12 @@ public final class RealtimeTranscriber implements AutoCloseable {
         }
 
         public RealtimeTranscriber build() {
-            if (apiKey == null) {
-                throw new RuntimeException("apiKey must be specified to construct RealtimeTranscriber");
+            if (apiKey == null && token == null) {
+                throw new RuntimeException("API key or Token must be specified to construct RealtimeTranscriber");
             }
             return new RealtimeTranscriber(
                     apiKey,
+                    token,
                     sampleRate == null ? DEFAULT_SAMPLE_RATE : sampleRate,
                     encoding,
                     disablePartialTranscripts,
