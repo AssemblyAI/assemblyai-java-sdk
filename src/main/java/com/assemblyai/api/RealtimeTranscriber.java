@@ -10,6 +10,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -40,7 +42,11 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private final Consumer<Throwable> onError;
     private final BiConsumer<Integer, String> onClose;
     private final RealtimeMessageVisitor realtimeMessageVisitor;
+    private final Consumer<SessionInformation> onSessionInformation;
     private WebSocket webSocket;
+    private SessionInformation sessionInformation;
+    private CompletableFuture<SessionInformation> sessionTerminatedFuture;
+    private boolean isConnected;
 
     private RealtimeTranscriber(
             String apiKey,
@@ -55,6 +61,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
             Consumer<FinalTranscript> onFinalTranscript,
             Consumer<RealtimeTranscript> onTranscript,
             Consumer<Throwable> onError,
+            Consumer<SessionInformation> onSessionInformation,
             BiConsumer<Integer, String> onClose) {
         this.apiKey = apiKey;
         this.token = token;
@@ -68,6 +75,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         this.onFinalTranscript = onFinalTranscript;
         this.onTranscript = onTranscript;
         this.onError = onError;
+        this.onSessionInformation = onSessionInformation;
         this.onClose = onClose;
         this.realtimeMessageVisitor = new RealtimeMessageVisitor();
     }
@@ -83,6 +91,10 @@ public final class RealtimeTranscriber implements AutoCloseable {
         if (disablePartialTranscripts) {
             url += "&disable_partial_transcripts=true";
         }
+
+        // always set so it can be return from closeWithSessionTermination
+        url += "&enable_extra_session_information=true";
+
         if (wordBoost.isPresent() && !wordBoost.get().isEmpty()) {
             try {
                 url += "&word_boost=" + ObjectMappers.JSON_MAPPER.writeValueAsString(wordBoost.get());
@@ -144,15 +156,33 @@ public final class RealtimeTranscriber implements AutoCloseable {
         ));
     }
 
+    public Future<SessionInformation> closeWithSessionTermination() {
+        this.sessionTerminatedFuture = new CompletableFuture<SessionInformation>();
+        this.webSocket.send("{\"terminate_session\":true}");
+        sessionTerminatedFuture.whenComplete((sessionInformation1, throwable) -> this.closeSocket());
+        return this.sessionTerminatedFuture;
+    }
+
     /**
-     * Closes the websocket connection.
+     * Closes the websocket connection immediately, without waiting for session termination.
+     * Use closeWithSessionTermination() if possible.
+     *
+     * @see #closeWithSessionTermination
+     * Terminate the session, wait for session termination, and then close the connection.
      */
     @Override
     public void close() {
-        boolean closed = this.webSocket.close(1000, "Shutting down");
-        if (!closed) {
-            this.webSocket.cancel();
+        if (isConnected) {
+            this.webSocket.send("{\"terminate_session\":true}");
         }
+        this.closeSocket();
+    }
+
+    private void closeSocket() {
+        if(webSocket == null) return;
+        this.webSocket.close(1000, "Shutting down");
+        this.webSocket.cancel();
+        this.webSocket = null;
     }
 
     public static RealtimeTranscriber.Builder builder() {
@@ -174,6 +204,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
         private Consumer<RealtimeTranscript> onTranscript;
         private Consumer<Throwable> onError;
         private BiConsumer<Integer, String> onClose;
+        private Consumer<SessionInformation> onSessionInformation;
 
         /**
          * Sets the AssemblyAI API key used to authenticate the RealtimeTranscriber
@@ -324,6 +355,19 @@ public final class RealtimeTranscriber implements AutoCloseable {
         }
 
         /**
+         * Sets onSessionInformation
+         *
+         * @param onSessionInformation an event handler for the session information event.
+         *                             This message is sent at the end of the session, before the SessionTerminated message.
+         *                             Defaults to a noop.
+         * @return this
+         */
+        public RealtimeTranscriber.Builder onSessionInformation(Consumer<SessionInformation> onSessionInformation) {
+            this.onSessionInformation = onSessionInformation;
+            return this;
+        }
+
+        /**
          * Sets onClose
          *
          * @param onClose an event handler for the closing event. Defaults to a noop.
@@ -351,6 +395,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
                     onFinalTranscript,
                     onTranscript,
                     onError,
+                    onSessionInformation,
                     onClose);
         }
     }
@@ -364,6 +409,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         @Override
         public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
+            isConnected = true;
             if (onOpen != null) {
                 onOpen.accept(response);
             }
@@ -372,12 +418,29 @@ public final class RealtimeTranscriber implements AutoCloseable {
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
             try {
-                RealtimeMessage realtimeMessage = ObjectMappers.JSON_MAPPER.readValue(text, RealtimeMessage.class);
-                try {
-                    realtimeMessage.visit(realtimeMessageVisitor);
-                } catch (IllegalStateException ignored) {
-                    // when a new message is added to the API, this should not throw an exception
+                RealtimeBaseMessage baseMessage = ObjectMappers.parseOrThrow(text, RealtimeBaseMessage.class);
+                MessageType messageType = baseMessage.getMessageType();
+                if (messageType == MessageType.SESSION_BEGINS) {
+                    realtimeMessageVisitor.visit(
+                            ObjectMappers.JSON_MAPPER.readValue(text, SessionBegins.class)
+                    );
+                } else if (messageType == MessageType.PARTIAL_TRANSCRIPT) {
+                    realtimeMessageVisitor.visit(
+                            ObjectMappers.JSON_MAPPER.readValue(text, PartialTranscript.class)
+                    );
+                } else if (messageType == MessageType.FINAL_TRANSCRIPT) {
+                    realtimeMessageVisitor.visit(
+                            ObjectMappers.JSON_MAPPER.readValue(text, FinalTranscript.class)
+                    );
+                } else if (messageType == MessageType.SESSION_INFORMATION) {
+                    realtimeMessageVisitor.visit(
+                            ObjectMappers.JSON_MAPPER.readValue(text, SessionInformation.class)
+                    );
+                } else if (messageType == MessageType.SESSION_TERMINATED) {
+                    realtimeMessageVisitor.visit((SessionTerminated) null);
                 }
+                // Intentionally don't throw an exception for unknown message type.
+                // New message types shouldn't cause this to break.
             } catch (JsonProcessingException e) {
                 if (onError == null) return;
                 onError.accept(e);
@@ -386,6 +449,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
 
         @Override
         public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, @Nullable Response response) {
+            isConnected = false;
             if (onError == null) return;
             onError.accept(t);
         }
@@ -398,6 +462,12 @@ public final class RealtimeTranscriber implements AutoCloseable {
             }
             onClose.accept(code, reason);
             super.onClosing(webSocket, code, reason);
+        }
+
+        @Override
+        public void onClosed(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
+            isConnected = false;
+            super.onClosed(webSocket, code, reason);
         }
     }
 
@@ -424,7 +494,19 @@ public final class RealtimeTranscriber implements AutoCloseable {
         }
 
         @Override
+        public Void visit(SessionInformation value) {
+            sessionInformation = value;
+            if (onSessionInformation == null) return null;
+            onSessionInformation.accept(value);
+            return null;
+        }
+
+
+        @Override
         public Void visit(SessionTerminated value) {
+            if (sessionTerminatedFuture != null) {
+                sessionTerminatedFuture.complete(sessionInformation);
+            }
             return null;
         }
 

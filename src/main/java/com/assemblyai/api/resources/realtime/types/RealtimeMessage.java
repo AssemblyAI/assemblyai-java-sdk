@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,6 +42,8 @@ public final class RealtimeMessage {
             return visitor.visit((SessionTerminated) this.value);
         } else if (this.type == 4) {
             return visitor.visit((RealtimeError) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((SessionInformation) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -85,6 +88,10 @@ public final class RealtimeMessage {
         return new RealtimeMessage(value, 4);
     }
 
+    public static RealtimeMessage of(SessionInformation value) {
+        return new RealtimeMessage(value, 5);
+    }
+
     public interface Visitor<T> {
         T visit(SessionBegins value);
 
@@ -95,6 +102,8 @@ public final class RealtimeMessage {
         T visit(SessionTerminated value);
 
         T visit(RealtimeError value);
+
+        T visit(SessionInformation value);
     }
 
     static final class Deserializer extends StdDeserializer<RealtimeMessage> {
