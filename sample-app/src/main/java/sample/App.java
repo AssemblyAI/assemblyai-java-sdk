@@ -94,7 +94,9 @@ public final class App {
         );
 
         try (RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
-                .token(tokenResponse.getToken())
+                .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
+                // alternatively, use token
+                // .token(tokenResponse.getToken())
                 .encoding(AudioEncoding.PCM_S16LE)
                 .onSessionBegins(System.out::println)
                 .onPartialTranscript(System.out::println)
