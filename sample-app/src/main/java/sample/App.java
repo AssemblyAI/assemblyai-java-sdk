@@ -5,7 +5,9 @@ import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
+import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParams;
 import com.assemblyai.api.resources.realtime.types.AudioEncoding;
+import com.assemblyai.api.resources.realtime.types.RealtimeTemporaryTokenResponse;
 import com.assemblyai.api.resources.realtime.types.SessionInformation;
 import com.assemblyai.api.resources.transcripts.requests.*;
 import com.assemblyai.api.resources.transcripts.types.*;
@@ -58,11 +60,8 @@ public final class App {
         String vtt = client.transcripts().getSubtitles(transcript.getId(), SubtitleFormat.VTT);
         System.out.println("Get transcript vtt. " + vtt);
 
-        WordSearchResponse search = client.transcripts().wordSearch(transcript.getId(), WordSearchParams.builder()
-                .words("NBC")
-                .build());
+        WordSearchResponse search = client.transcripts().wordSearch(transcript.getId(), List.of("NBC", "President"));
         System.out.println("Search transcript. " + search);
-
 
         LemurTaskResponse response = client.lemur().task(LemurTaskParams.builder()
                 .prompt("Summarize this transcript.")
@@ -89,15 +88,22 @@ public final class App {
         TranscriptList transcripts = client.transcripts().list();
         System.out.println("List transcript. " + transcripts);
 
+        RealtimeTemporaryTokenResponse tokenResponse = client.realtime().createTemporaryToken(CreateRealtimeTemporaryTokenParams.builder()
+                .expiresIn(60)
+                .build()
+        );
+
         try (RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
+                // alternatively, use token
+                // .token(tokenResponse.getToken())
                 .encoding(AudioEncoding.PCM_S16LE)
                 .onSessionBegins(System.out::println)
                 .onPartialTranscript(System.out::println)
                 .onFinalTranscript(System.out::println)
                 .onError((err) -> System.out.println(err.getMessage()))
+                .onSessionInformation((info) -> System.out.println(info.getAudioDurationSeconds()))
                 .onClose((code, reason) -> System.out.printf("%s: %s", code, reason))
-                .onSessionInformation(System.out::println)
                 .build()) {
             realtimeTranscriber.connect();
             streamFile("sample-app/src/main/resources/gore-short.wav", realtimeTranscriber);
