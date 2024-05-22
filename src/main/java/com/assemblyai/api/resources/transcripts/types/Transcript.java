@@ -374,7 +374,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The URL to which we send webhooks upon trancription completion
+     * @return The URL to which we send webhooks upon transcription completion
      */
     @JsonProperty("webhook_url")
     public Optional<String> getWebhookUrl() {
@@ -646,7 +646,7 @@ public final class Transcript {
 
     /**
      * @return An array of results for the Sentiment Analysis model, if it is enabled.
-     * See <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment analysis</a> for more information.
+     * See <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a> for more information.
      */
     @JsonProperty("sentiment_analysis_results")
     public Optional<List<SentimentAnalysisResult>> getSentimentAnalysisResults() {
@@ -1443,7 +1443,7 @@ public final class Transcript {
 
         /**
          * <p>An array of results for the Sentiment Analysis model, if it is enabled.
-         * See <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment analysis</a> for more information.</p>
+         * See <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1957,7 +1957,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The URL to which we send webhooks upon trancription completion</p>
+         * <p>The URL to which we send webhooks upon transcription completion</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

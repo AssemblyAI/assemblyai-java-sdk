@@ -7,45 +7,209 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class TranscriptLanguageCode {
-    public static final TranscriptLanguageCode NL = new TranscriptLanguageCode(Value.NL, "nl");
-
-    public static final TranscriptLanguageCode HI = new TranscriptLanguageCode(Value.HI, "hi");
-
-    public static final TranscriptLanguageCode VI = new TranscriptLanguageCode(Value.VI, "vi");
-
-    public static final TranscriptLanguageCode EN = new TranscriptLanguageCode(Value.EN, "en");
-
-    public static final TranscriptLanguageCode EN_US = new TranscriptLanguageCode(Value.EN_US, "en_us");
+    public static final TranscriptLanguageCode AZ = new TranscriptLanguageCode(Value.AZ, "az");
 
     public static final TranscriptLanguageCode ZH = new TranscriptLanguageCode(Value.ZH, "zh");
 
-    public static final TranscriptLanguageCode FR = new TranscriptLanguageCode(Value.FR, "fr");
+    public static final TranscriptLanguageCode ML = new TranscriptLanguageCode(Value.ML, "ml");
+
+    public static final TranscriptLanguageCode SD = new TranscriptLanguageCode(Value.SD, "sd");
 
     public static final TranscriptLanguageCode TR = new TranscriptLanguageCode(Value.TR, "tr");
 
-    public static final TranscriptLanguageCode PT = new TranscriptLanguageCode(Value.PT, "pt");
+    public static final TranscriptLanguageCode MN = new TranscriptLanguageCode(Value.MN, "mn");
+
+    public static final TranscriptLanguageCode TT = new TranscriptLanguageCode(Value.TT, "tt");
+
+    public static final TranscriptLanguageCode LB = new TranscriptLanguageCode(Value.LB, "lb");
+
+    public static final TranscriptLanguageCode BA = new TranscriptLanguageCode(Value.BA, "ba");
+
+    public static final TranscriptLanguageCode HAW = new TranscriptLanguageCode(Value.HAW, "haw");
+
+    public static final TranscriptLanguageCode MR = new TranscriptLanguageCode(Value.MR, "mr");
+
+    public static final TranscriptLanguageCode JW = new TranscriptLanguageCode(Value.JW, "jw");
+
+    public static final TranscriptLanguageCode BE = new TranscriptLanguageCode(Value.BE, "be");
+
+    public static final TranscriptLanguageCode MT = new TranscriptLanguageCode(Value.MT, "mt");
+
+    public static final TranscriptLanguageCode SL = new TranscriptLanguageCode(Value.SL, "sl");
+
+    public static final TranscriptLanguageCode CS = new TranscriptLanguageCode(Value.CS, "cs");
+
+    public static final TranscriptLanguageCode OC = new TranscriptLanguageCode(Value.OC, "oc");
+
+    public static final TranscriptLanguageCode UR = new TranscriptLanguageCode(Value.UR, "ur");
+
+    public static final TranscriptLanguageCode FR = new TranscriptLanguageCode(Value.FR, "fr");
+
+    public static final TranscriptLanguageCode AR = new TranscriptLanguageCode(Value.AR, "ar");
+
+    public static final TranscriptLanguageCode GL = new TranscriptLanguageCode(Value.GL, "gl");
+
+    public static final TranscriptLanguageCode CY = new TranscriptLanguageCode(Value.CY, "cy");
+
+    public static final TranscriptLanguageCode PA = new TranscriptLanguageCode(Value.PA, "pa");
+
+    public static final TranscriptLanguageCode LN = new TranscriptLanguageCode(Value.LN, "ln");
+
+    public static final TranscriptLanguageCode IS = new TranscriptLanguageCode(Value.IS, "is");
+
+    public static final TranscriptLanguageCode UZ = new TranscriptLanguageCode(Value.UZ, "uz");
+
+    public static final TranscriptLanguageCode DA = new TranscriptLanguageCode(Value.DA, "da");
+
+    public static final TranscriptLanguageCode LT = new TranscriptLanguageCode(Value.LT, "lt");
+
+    public static final TranscriptLanguageCode AF = new TranscriptLanguageCode(Value.AF, "af");
 
     public static final TranscriptLanguageCode EN_UK = new TranscriptLanguageCode(Value.EN_UK, "en_uk");
 
-    public static final TranscriptLanguageCode UK = new TranscriptLanguageCode(Value.UK, "uk");
+    public static final TranscriptLanguageCode NE = new TranscriptLanguageCode(Value.NE, "ne");
 
-    public static final TranscriptLanguageCode FI = new TranscriptLanguageCode(Value.FI, "fi");
+    public static final TranscriptLanguageCode RO = new TranscriptLanguageCode(Value.RO, "ro");
 
     public static final TranscriptLanguageCode DE = new TranscriptLanguageCode(Value.DE, "de");
 
-    public static final TranscriptLanguageCode EN_AU = new TranscriptLanguageCode(Value.EN_AU, "en_au");
-
     public static final TranscriptLanguageCode ES = new TranscriptLanguageCode(Value.ES, "es");
+
+    public static final TranscriptLanguageCode ET = new TranscriptLanguageCode(Value.ET, "et");
+
+    public static final TranscriptLanguageCode KM = new TranscriptLanguageCode(Value.KM, "km");
+
+    public static final TranscriptLanguageCode HR = new TranscriptLanguageCode(Value.HR, "hr");
+
+    public static final TranscriptLanguageCode KN = new TranscriptLanguageCode(Value.KN, "kn");
+
+    public static final TranscriptLanguageCode AM = new TranscriptLanguageCode(Value.AM, "am");
+
+    public static final TranscriptLanguageCode NL = new TranscriptLanguageCode(Value.NL, "nl");
+
+    public static final TranscriptLanguageCode VI = new TranscriptLanguageCode(Value.VI, "vi");
+
+    public static final TranscriptLanguageCode EN_US = new TranscriptLanguageCode(Value.EN_US, "en_us");
+
+    public static final TranscriptLanguageCode SN = new TranscriptLanguageCode(Value.SN, "sn");
+
+    public static final TranscriptLanguageCode PS = new TranscriptLanguageCode(Value.PS, "ps");
+
+    public static final TranscriptLanguageCode CA = new TranscriptLanguageCode(Value.CA, "ca");
+
+    public static final TranscriptLanguageCode SR = new TranscriptLanguageCode(Value.SR, "sr");
+
+    public static final TranscriptLanguageCode SV = new TranscriptLanguageCode(Value.SV, "sv");
+
+    public static final TranscriptLanguageCode EL = new TranscriptLanguageCode(Value.EL, "el");
+
+    public static final TranscriptLanguageCode MI = new TranscriptLanguageCode(Value.MI, "mi");
+
+    public static final TranscriptLanguageCode MK = new TranscriptLanguageCode(Value.MK, "mk");
+
+    public static final TranscriptLanguageCode GU = new TranscriptLanguageCode(Value.GU, "gu");
+
+    public static final TranscriptLanguageCode ID = new TranscriptLanguageCode(Value.ID, "id");
+
+    public static final TranscriptLanguageCode FI = new TranscriptLanguageCode(Value.FI, "fi");
+
+    public static final TranscriptLanguageCode LA = new TranscriptLanguageCode(Value.LA, "la");
 
     public static final TranscriptLanguageCode PL = new TranscriptLanguageCode(Value.PL, "pl");
 
-    public static final TranscriptLanguageCode IT = new TranscriptLanguageCode(Value.IT, "it");
+    public static final TranscriptLanguageCode SI = new TranscriptLanguageCode(Value.SI, "si");
+
+    public static final TranscriptLanguageCode MS = new TranscriptLanguageCode(Value.MS, "ms");
+
+    public static final TranscriptLanguageCode SK = new TranscriptLanguageCode(Value.SK, "sk");
+
+    public static final TranscriptLanguageCode FO = new TranscriptLanguageCode(Value.FO, "fo");
+
+    public static final TranscriptLanguageCode HU = new TranscriptLanguageCode(Value.HU, "hu");
+
+    public static final TranscriptLanguageCode TE = new TranscriptLanguageCode(Value.TE, "te");
+
+    public static final TranscriptLanguageCode SO = new TranscriptLanguageCode(Value.SO, "so");
+
+    public static final TranscriptLanguageCode NO = new TranscriptLanguageCode(Value.NO, "no");
+
+    public static final TranscriptLanguageCode TG = new TranscriptLanguageCode(Value.TG, "tg");
+
+    public static final TranscriptLanguageCode PT = new TranscriptLanguageCode(Value.PT, "pt");
+
+    public static final TranscriptLanguageCode SQ = new TranscriptLanguageCode(Value.SQ, "sq");
+
+    public static final TranscriptLanguageCode MY = new TranscriptLanguageCode(Value.MY, "my");
+
+    public static final TranscriptLanguageCode YI = new TranscriptLanguageCode(Value.YI, "yi");
+
+    public static final TranscriptLanguageCode HY = new TranscriptLanguageCode(Value.HY, "hy");
+
+    public static final TranscriptLanguageCode TK = new TranscriptLanguageCode(Value.TK, "tk");
+
+    public static final TranscriptLanguageCode KA = new TranscriptLanguageCode(Value.KA, "ka");
+
+    public static final TranscriptLanguageCode FA = new TranscriptLanguageCode(Value.FA, "fa");
+
+    public static final TranscriptLanguageCode BN = new TranscriptLanguageCode(Value.BN, "bn");
+
+    public static final TranscriptLanguageCode SU = new TranscriptLanguageCode(Value.SU, "su");
+
+    public static final TranscriptLanguageCode SW = new TranscriptLanguageCode(Value.SW, "sw");
+
+    public static final TranscriptLanguageCode YO = new TranscriptLanguageCode(Value.YO, "yo");
+
+    public static final TranscriptLanguageCode HI = new TranscriptLanguageCode(Value.HI, "hi");
+
+    public static final TranscriptLanguageCode EN = new TranscriptLanguageCode(Value.EN, "en");
+
+    public static final TranscriptLanguageCode BR = new TranscriptLanguageCode(Value.BR, "br");
+
+    public static final TranscriptLanguageCode BS = new TranscriptLanguageCode(Value.BS, "bs");
+
+    public static final TranscriptLanguageCode LV = new TranscriptLanguageCode(Value.LV, "lv");
+
+    public static final TranscriptLanguageCode UK = new TranscriptLanguageCode(Value.UK, "uk");
+
+    public static final TranscriptLanguageCode KK = new TranscriptLanguageCode(Value.KK, "kk");
+
+    public static final TranscriptLanguageCode EU = new TranscriptLanguageCode(Value.EU, "eu");
+
+    public static final TranscriptLanguageCode TA = new TranscriptLanguageCode(Value.TA, "ta");
 
     public static final TranscriptLanguageCode JA = new TranscriptLanguageCode(Value.JA, "ja");
 
     public static final TranscriptLanguageCode KO = new TranscriptLanguageCode(Value.KO, "ko");
 
     public static final TranscriptLanguageCode RU = new TranscriptLanguageCode(Value.RU, "ru");
+
+    public static final TranscriptLanguageCode HT = new TranscriptLanguageCode(Value.HT, "ht");
+
+    public static final TranscriptLanguageCode BG = new TranscriptLanguageCode(Value.BG, "bg");
+
+    public static final TranscriptLanguageCode NN = new TranscriptLanguageCode(Value.NN, "nn");
+
+    public static final TranscriptLanguageCode HA = new TranscriptLanguageCode(Value.HA, "ha");
+
+    public static final TranscriptLanguageCode TH = new TranscriptLanguageCode(Value.TH, "th");
+
+    public static final TranscriptLanguageCode AS = new TranscriptLanguageCode(Value.AS, "as");
+
+    public static final TranscriptLanguageCode EN_AU = new TranscriptLanguageCode(Value.EN_AU, "en_au");
+
+    public static final TranscriptLanguageCode HE = new TranscriptLanguageCode(Value.HE, "he");
+
+    public static final TranscriptLanguageCode LO = new TranscriptLanguageCode(Value.LO, "lo");
+
+    public static final TranscriptLanguageCode TL = new TranscriptLanguageCode(Value.TL, "tl");
+
+    public static final TranscriptLanguageCode IT = new TranscriptLanguageCode(Value.IT, "it");
+
+    public static final TranscriptLanguageCode MG = new TranscriptLanguageCode(Value.MG, "mg");
+
+    public static final TranscriptLanguageCode BO = new TranscriptLanguageCode(Value.BO, "bo");
+
+    public static final TranscriptLanguageCode SA = new TranscriptLanguageCode(Value.SA, "sa");
 
     private final Value value;
 
@@ -80,46 +244,210 @@ public final class TranscriptLanguageCode {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case NL:
-                return visitor.visitNl();
-            case HI:
-                return visitor.visitHi();
-            case VI:
-                return visitor.visitVi();
-            case EN:
-                return visitor.visitEn();
-            case EN_US:
-                return visitor.visitEnUs();
+            case AZ:
+                return visitor.visitAz();
             case ZH:
                 return visitor.visitZh();
-            case FR:
-                return visitor.visitFr();
+            case ML:
+                return visitor.visitMl();
+            case SD:
+                return visitor.visitSd();
             case TR:
                 return visitor.visitTr();
-            case PT:
-                return visitor.visitPt();
+            case MN:
+                return visitor.visitMn();
+            case TT:
+                return visitor.visitTt();
+            case LB:
+                return visitor.visitLb();
+            case BA:
+                return visitor.visitBa();
+            case HAW:
+                return visitor.visitHaw();
+            case MR:
+                return visitor.visitMr();
+            case JW:
+                return visitor.visitJw();
+            case BE:
+                return visitor.visitBe();
+            case MT:
+                return visitor.visitMt();
+            case SL:
+                return visitor.visitSl();
+            case CS:
+                return visitor.visitCs();
+            case OC:
+                return visitor.visitOc();
+            case UR:
+                return visitor.visitUr();
+            case FR:
+                return visitor.visitFr();
+            case AR:
+                return visitor.visitAr();
+            case GL:
+                return visitor.visitGl();
+            case CY:
+                return visitor.visitCy();
+            case PA:
+                return visitor.visitPa();
+            case LN:
+                return visitor.visitLn();
+            case IS:
+                return visitor.visitIs();
+            case UZ:
+                return visitor.visitUz();
+            case DA:
+                return visitor.visitDa();
+            case LT:
+                return visitor.visitLt();
+            case AF:
+                return visitor.visitAf();
             case EN_UK:
                 return visitor.visitEnUk();
-            case UK:
-                return visitor.visitUk();
-            case FI:
-                return visitor.visitFi();
+            case NE:
+                return visitor.visitNe();
+            case RO:
+                return visitor.visitRo();
             case DE:
                 return visitor.visitDe();
-            case EN_AU:
-                return visitor.visitEnAu();
             case ES:
                 return visitor.visitEs();
+            case ET:
+                return visitor.visitEt();
+            case KM:
+                return visitor.visitKm();
+            case HR:
+                return visitor.visitHr();
+            case KN:
+                return visitor.visitKn();
+            case AM:
+                return visitor.visitAm();
+            case NL:
+                return visitor.visitNl();
+            case VI:
+                return visitor.visitVi();
+            case EN_US:
+                return visitor.visitEnUs();
+            case SN:
+                return visitor.visitSn();
+            case PS:
+                return visitor.visitPs();
+            case CA:
+                return visitor.visitCa();
+            case SR:
+                return visitor.visitSr();
+            case SV:
+                return visitor.visitSv();
+            case EL:
+                return visitor.visitEl();
+            case MI:
+                return visitor.visitMi();
+            case MK:
+                return visitor.visitMk();
+            case GU:
+                return visitor.visitGu();
+            case ID:
+                return visitor.visitId();
+            case FI:
+                return visitor.visitFi();
+            case LA:
+                return visitor.visitLa();
             case PL:
                 return visitor.visitPl();
-            case IT:
-                return visitor.visitIt();
+            case SI:
+                return visitor.visitSi();
+            case MS:
+                return visitor.visitMs();
+            case SK:
+                return visitor.visitSk();
+            case FO:
+                return visitor.visitFo();
+            case HU:
+                return visitor.visitHu();
+            case TE:
+                return visitor.visitTe();
+            case SO:
+                return visitor.visitSo();
+            case NO:
+                return visitor.visitNo();
+            case TG:
+                return visitor.visitTg();
+            case PT:
+                return visitor.visitPt();
+            case SQ:
+                return visitor.visitSq();
+            case MY:
+                return visitor.visitMy();
+            case YI:
+                return visitor.visitYi();
+            case HY:
+                return visitor.visitHy();
+            case TK:
+                return visitor.visitTk();
+            case KA:
+                return visitor.visitKa();
+            case FA:
+                return visitor.visitFa();
+            case BN:
+                return visitor.visitBn();
+            case SU:
+                return visitor.visitSu();
+            case SW:
+                return visitor.visitSw();
+            case YO:
+                return visitor.visitYo();
+            case HI:
+                return visitor.visitHi();
+            case EN:
+                return visitor.visitEn();
+            case BR:
+                return visitor.visitBr();
+            case BS:
+                return visitor.visitBs();
+            case LV:
+                return visitor.visitLv();
+            case UK:
+                return visitor.visitUk();
+            case KK:
+                return visitor.visitKk();
+            case EU:
+                return visitor.visitEu();
+            case TA:
+                return visitor.visitTa();
             case JA:
                 return visitor.visitJa();
             case KO:
                 return visitor.visitKo();
             case RU:
                 return visitor.visitRu();
+            case HT:
+                return visitor.visitHt();
+            case BG:
+                return visitor.visitBg();
+            case NN:
+                return visitor.visitNn();
+            case HA:
+                return visitor.visitHa();
+            case TH:
+                return visitor.visitTh();
+            case AS:
+                return visitor.visitAs();
+            case EN_AU:
+                return visitor.visitEnAu();
+            case HE:
+                return visitor.visitHe();
+            case LO:
+                return visitor.visitLo();
+            case TL:
+                return visitor.visitTl();
+            case IT:
+                return visitor.visitIt();
+            case MG:
+                return visitor.visitMg();
+            case BO:
+                return visitor.visitBo();
+            case SA:
+                return visitor.visitSa();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -129,46 +457,210 @@ public final class TranscriptLanguageCode {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static TranscriptLanguageCode valueOf(String value) {
         switch (value) {
-            case "nl":
-                return NL;
-            case "hi":
-                return HI;
-            case "vi":
-                return VI;
-            case "en":
-                return EN;
-            case "en_us":
-                return EN_US;
+            case "az":
+                return AZ;
             case "zh":
                 return ZH;
-            case "fr":
-                return FR;
+            case "ml":
+                return ML;
+            case "sd":
+                return SD;
             case "tr":
                 return TR;
-            case "pt":
-                return PT;
+            case "mn":
+                return MN;
+            case "tt":
+                return TT;
+            case "lb":
+                return LB;
+            case "ba":
+                return BA;
+            case "haw":
+                return HAW;
+            case "mr":
+                return MR;
+            case "jw":
+                return JW;
+            case "be":
+                return BE;
+            case "mt":
+                return MT;
+            case "sl":
+                return SL;
+            case "cs":
+                return CS;
+            case "oc":
+                return OC;
+            case "ur":
+                return UR;
+            case "fr":
+                return FR;
+            case "ar":
+                return AR;
+            case "gl":
+                return GL;
+            case "cy":
+                return CY;
+            case "pa":
+                return PA;
+            case "ln":
+                return LN;
+            case "is":
+                return IS;
+            case "uz":
+                return UZ;
+            case "da":
+                return DA;
+            case "lt":
+                return LT;
+            case "af":
+                return AF;
             case "en_uk":
                 return EN_UK;
-            case "uk":
-                return UK;
-            case "fi":
-                return FI;
+            case "ne":
+                return NE;
+            case "ro":
+                return RO;
             case "de":
                 return DE;
-            case "en_au":
-                return EN_AU;
             case "es":
                 return ES;
+            case "et":
+                return ET;
+            case "km":
+                return KM;
+            case "hr":
+                return HR;
+            case "kn":
+                return KN;
+            case "am":
+                return AM;
+            case "nl":
+                return NL;
+            case "vi":
+                return VI;
+            case "en_us":
+                return EN_US;
+            case "sn":
+                return SN;
+            case "ps":
+                return PS;
+            case "ca":
+                return CA;
+            case "sr":
+                return SR;
+            case "sv":
+                return SV;
+            case "el":
+                return EL;
+            case "mi":
+                return MI;
+            case "mk":
+                return MK;
+            case "gu":
+                return GU;
+            case "id":
+                return ID;
+            case "fi":
+                return FI;
+            case "la":
+                return LA;
             case "pl":
                 return PL;
-            case "it":
-                return IT;
+            case "si":
+                return SI;
+            case "ms":
+                return MS;
+            case "sk":
+                return SK;
+            case "fo":
+                return FO;
+            case "hu":
+                return HU;
+            case "te":
+                return TE;
+            case "so":
+                return SO;
+            case "no":
+                return NO;
+            case "tg":
+                return TG;
+            case "pt":
+                return PT;
+            case "sq":
+                return SQ;
+            case "my":
+                return MY;
+            case "yi":
+                return YI;
+            case "hy":
+                return HY;
+            case "tk":
+                return TK;
+            case "ka":
+                return KA;
+            case "fa":
+                return FA;
+            case "bn":
+                return BN;
+            case "su":
+                return SU;
+            case "sw":
+                return SW;
+            case "yo":
+                return YO;
+            case "hi":
+                return HI;
+            case "en":
+                return EN;
+            case "br":
+                return BR;
+            case "bs":
+                return BS;
+            case "lv":
+                return LV;
+            case "uk":
+                return UK;
+            case "kk":
+                return KK;
+            case "eu":
+                return EU;
+            case "ta":
+                return TA;
             case "ja":
                 return JA;
             case "ko":
                 return KO;
             case "ru":
                 return RU;
+            case "ht":
+                return HT;
+            case "bg":
+                return BG;
+            case "nn":
+                return NN;
+            case "ha":
+                return HA;
+            case "th":
+                return TH;
+            case "as":
+                return AS;
+            case "en_au":
+                return EN_AU;
+            case "he":
+                return HE;
+            case "lo":
+                return LO;
+            case "tl":
+                return TL;
+            case "it":
+                return IT;
+            case "mg":
+                return MG;
+            case "bo":
+                return BO;
+            case "sa":
+                return SA;
             default:
                 return new TranscriptLanguageCode(Value.UNKNOWN, value);
         }
@@ -195,25 +687,189 @@ public final class TranscriptLanguageCode {
 
         NL,
 
-        HI,
+        AF,
 
-        JA,
+        SQ,
+
+        AM,
+
+        AR,
+
+        HY,
+
+        AS,
+
+        AZ,
+
+        BA,
+
+        EU,
+
+        BE,
+
+        BN,
+
+        BS,
+
+        BR,
+
+        BG,
+
+        MY,
+
+        CA,
 
         ZH,
 
+        HR,
+
+        CS,
+
+        DA,
+
+        ET,
+
+        FO,
+
         FI,
+
+        GL,
+
+        KA,
+
+        EL,
+
+        GU,
+
+        HT,
+
+        HA,
+
+        HAW,
+
+        HE,
+
+        HI,
+
+        HU,
+
+        IS,
+
+        ID,
+
+        JA,
+
+        JW,
+
+        KN,
+
+        KK,
+
+        KM,
 
         KO,
 
+        LO,
+
+        LA,
+
+        LV,
+
+        LN,
+
+        LT,
+
+        LB,
+
+        MK,
+
+        MG,
+
+        MS,
+
+        ML,
+
+        MT,
+
+        MI,
+
+        MR,
+
+        MN,
+
+        NE,
+
+        NO,
+
+        NN,
+
+        OC,
+
+        PA,
+
+        PS,
+
+        FA,
+
         PL,
+
+        RO,
 
         RU,
 
+        SA,
+
+        SR,
+
+        SN,
+
+        SD,
+
+        SI,
+
+        SK,
+
+        SL,
+
+        SO,
+
+        SU,
+
+        SW,
+
+        SV,
+
+        TL,
+
+        TG,
+
+        TA,
+
+        TT,
+
+        TE,
+
+        TH,
+
+        BO,
+
         TR,
+
+        TK,
 
         UK,
 
+        UR,
+
+        UZ,
+
         VI,
+
+        CY,
+
+        YI,
+
+        YO,
 
         UNKNOWN
     }
@@ -239,25 +895,189 @@ public final class TranscriptLanguageCode {
 
         T visitNl();
 
-        T visitHi();
+        T visitAf();
 
-        T visitJa();
+        T visitSq();
+
+        T visitAm();
+
+        T visitAr();
+
+        T visitHy();
+
+        T visitAs();
+
+        T visitAz();
+
+        T visitBa();
+
+        T visitEu();
+
+        T visitBe();
+
+        T visitBn();
+
+        T visitBs();
+
+        T visitBr();
+
+        T visitBg();
+
+        T visitMy();
+
+        T visitCa();
 
         T visitZh();
 
+        T visitHr();
+
+        T visitCs();
+
+        T visitDa();
+
+        T visitEt();
+
+        T visitFo();
+
         T visitFi();
+
+        T visitGl();
+
+        T visitKa();
+
+        T visitEl();
+
+        T visitGu();
+
+        T visitHt();
+
+        T visitHa();
+
+        T visitHaw();
+
+        T visitHe();
+
+        T visitHi();
+
+        T visitHu();
+
+        T visitIs();
+
+        T visitId();
+
+        T visitJa();
+
+        T visitJw();
+
+        T visitKn();
+
+        T visitKk();
+
+        T visitKm();
 
         T visitKo();
 
+        T visitLo();
+
+        T visitLa();
+
+        T visitLv();
+
+        T visitLn();
+
+        T visitLt();
+
+        T visitLb();
+
+        T visitMk();
+
+        T visitMg();
+
+        T visitMs();
+
+        T visitMl();
+
+        T visitMt();
+
+        T visitMi();
+
+        T visitMr();
+
+        T visitMn();
+
+        T visitNe();
+
+        T visitNo();
+
+        T visitNn();
+
+        T visitOc();
+
+        T visitPa();
+
+        T visitPs();
+
+        T visitFa();
+
         T visitPl();
+
+        T visitRo();
 
         T visitRu();
 
+        T visitSa();
+
+        T visitSr();
+
+        T visitSn();
+
+        T visitSd();
+
+        T visitSi();
+
+        T visitSk();
+
+        T visitSl();
+
+        T visitSo();
+
+        T visitSu();
+
+        T visitSw();
+
+        T visitSv();
+
+        T visitTl();
+
+        T visitTg();
+
+        T visitTa();
+
+        T visitTt();
+
+        T visitTe();
+
+        T visitTh();
+
+        T visitBo();
+
         T visitTr();
+
+        T visitTk();
 
         T visitUk();
 
+        T visitUr();
+
+        T visitUz();
+
         T visitVi();
+
+        T visitCy();
+
+        T visitYi();
+
+        T visitYo();
 
         T visitUnknown(String unknownType);
     }
