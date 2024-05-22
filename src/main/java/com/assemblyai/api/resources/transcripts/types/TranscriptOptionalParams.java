@@ -212,7 +212,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return The URL to which AssemblyAI send webhooks upon trancription completion
+     * @return The URL to which AssemblyAI send webhooks upon transcription completion
      */
     @JsonProperty("webhook_url")
     @java.lang.Override
@@ -239,7 +239,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return Whether Key Phrases is enabled, either true or false
+     * @return Enable Key Phrases, either true or false
      */
     @JsonProperty("auto_highlights")
     @java.lang.Override
@@ -362,7 +362,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return The confidence threshold for content moderation. Values must be between 25 and 100.
+     * @return The confidence threshold for the Content Moderation model. Values must be between 25 and 100.
      */
     @JsonProperty("content_safety_confidence")
     @java.lang.Override
@@ -380,7 +380,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> was enabled in the transcription request, either true or false.
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a>, either true or false.
      */
     @JsonProperty("language_detection")
     @java.lang.Override
@@ -471,7 +471,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return Whether custom topics is enabled, either true or false
+     * @return Enable custom topics, either true or false
      */
     @JsonProperty("custom_topics")
     @java.lang.Override
@@ -480,7 +480,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return The list of custom topics provided, if custom topics is enabled
+     * @return The list of custom topics
      */
     @JsonProperty("topics")
     @java.lang.Override

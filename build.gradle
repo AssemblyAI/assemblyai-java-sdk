@@ -47,8 +47,15 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.assemblyai'
             artifactId = 'assemblyai-java'
-            version = '1.1.1'
+            version = '1.1.2'
             from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/AssemblyAI/assemblyai-java-sdk.git'
+                    developerConnection = 'scm:git:git://github.com/AssemblyAI/assemblyai-java-sdk.git'
+                    url = 'https://github.com/AssemblyAI/assemblyai-java-sdk'
+                }
+            }
         }
     }
     repositories {

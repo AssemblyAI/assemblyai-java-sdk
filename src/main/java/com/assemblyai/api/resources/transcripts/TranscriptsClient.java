@@ -26,6 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class TranscriptsClient {
     protected final ClientOptions clientOptions;
@@ -89,26 +90,28 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), TranscriptList.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TranscriptList.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Create a transcript from an audio or video file that is accessible via a URL.
+     * Create a transcript from a media file that is accessible via a URL.
      */
     public Transcript submit(TranscriptParams request) {
         return submit(request, null);
     }
 
     /**
-     * Create a transcript from an audio or video file that is accessible via a URL.
+     * Create a transcript from a media file that is accessible via a URL.
      */
     public Transcript submit(TranscriptParams request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -134,12 +137,14 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Transcript.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -173,12 +178,14 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Transcript.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -214,19 +221,21 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Transcript.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Transcript.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
+     * Export your transcript in SRT or VTT format to use with a video player for subtitles and closed captions.
      */
     public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
         return getSubtitles(
@@ -234,14 +243,14 @@ public class TranscriptsClient {
     }
 
     /**
-     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
+     * Export your transcript in SRT or VTT format to use with a video player for subtitles and closed captions.
      */
     public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
         return getSubtitles(transcriptId, subtitleFormat, request, null);
     }
 
     /**
-     * Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.
+     * Export your transcript in SRT or VTT format to use with a video player for subtitles and closed captions.
      */
     public String getSubtitles(
             String transcriptId,
@@ -269,12 +278,14 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return response.body().string();
+                return responseBody.string();
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -309,12 +320,14 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SentencesResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SentencesResponse.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -349,33 +362,35 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ParagraphsResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ParagraphsResponse.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
+     * Search through the transcript for keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
     public WordSearchResponse wordSearch(String transcriptId) {
         return wordSearch(transcriptId, WordSearchParams.builder().build());
     }
 
     /**
-     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
+     * Search through the transcript for keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
     public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request) {
         return wordSearch(transcriptId, request, null);
     }
 
     /**
-     * Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
+     * Search through the transcript for keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
      */
     public WordSearchResponse wordSearch(String transcriptId, WordSearchParams request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -398,12 +413,14 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), WordSearchResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WordSearchResponse.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -438,12 +455,14 @@ public class TranscriptsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RedactedAudioResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RedactedAudioResponse.class);
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

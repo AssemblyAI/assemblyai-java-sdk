@@ -47,16 +47,25 @@ public final class PageDetails {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The number of results this page is limited to
+     */
     @JsonProperty("limit")
     public int getLimit() {
         return limit;
     }
 
+    /**
+     * @return The actual number of results in the page
+     */
     @JsonProperty("result_count")
     public int getResultCount() {
         return resultCount;
     }
 
+    /**
+     * @return The URL used to retrieve the current page of transcripts
+     */
     @JsonProperty("current_url")
     public String getCurrentUrl() {
         return currentUrl;
@@ -164,6 +173,10 @@ public final class PageDetails {
             return this;
         }
 
+        /**
+         * <p>The number of results this page is limited to</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("limit")
         public ResultCountStage limit(int limit) {
@@ -171,6 +184,10 @@ public final class PageDetails {
             return this;
         }
 
+        /**
+         * <p>The actual number of results in the page</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("result_count")
         public CurrentUrlStage resultCount(int resultCount) {
@@ -178,6 +195,10 @@ public final class PageDetails {
             return this;
         }
 
+        /**
+         * <p>The URL used to retrieve the current page of transcripts</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("current_url")
         public _FinalStage currentUrl(String currentUrl) {
