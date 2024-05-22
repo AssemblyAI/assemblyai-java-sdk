@@ -12,6 +12,10 @@
 
 API reference documentation is available [here](https://www.assemblyai.com/docs/).
 
+## Requirements
+
+Java 8+
+
 ## Installation
 
 ### Gradle
