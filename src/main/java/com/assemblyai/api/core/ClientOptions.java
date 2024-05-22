@@ -27,13 +27,13 @@ public final class ClientOptions {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
-        this.headers.putAll(Map.of(
-                "X-Fern-SDK-Name",
-                "com.assemblyai.fern:api-sdk",
-                "X-Fern-SDK-Version",
-                "1.0.9",
-                "X-Fern-Language",
-                "JAVA"));
+        this.headers.putAll(new HashMap<String, String>() {
+            {
+                put("X-Fern-SDK-Name", "com.assemblyai.fern:api-sdk");
+                put("X-Fern-SDK-Version", "1.0.9");
+                put("X-Fern-Language", "JAVA");
+            }
+        });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
     }
