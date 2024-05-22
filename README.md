@@ -53,10 +53,9 @@ AssemblyAI aai = AssemblyAI.builder()
   .apiKey("YOUR_API_KEY")
   .build();
 
-TranscriptResponse transcriptResponse =
-    aai.transcript().get("transcript-id");
+Transcript transcript = aai.transcripts().get("transcript-id");
 
-System.out.printlin("Received response!" + transcriptResponse);
+System.out.printlin("Received response!" + transcript);
 ```
 
 ### Handling Errors
