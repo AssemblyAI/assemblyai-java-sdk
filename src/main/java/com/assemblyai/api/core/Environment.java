@@ -3,10 +3,13 @@
  */
 package com.assemblyai.api.core;
 
+import java.util.Optional;
+
 public final class Environment {
     public static final Environment DEFAULT = new Environment("https://api.assemblyai.com");
 
     private final String url;
+    private UserAgent userAgent = UserAgent.getDefault();
 
     private Environment(String url) {
         this.url = url;
@@ -16,7 +19,27 @@ public final class Environment {
         return this.url;
     }
 
+
     public static Environment custom(String url) {
         return new Environment(url);
+    }
+
+    public void updateUserAgent(UserAgent userAgent) {
+        // if incoming user agent is null, set to null
+        if (userAgent == null) {
+            this.userAgent = null;
+            return;
+        }
+        // if stored user agent is null, set new user agent
+        if (this.userAgent == null) {
+            this.userAgent = userAgent;
+            return;
+        }
+        // else, merge existing user agent with incoming user agent
+        this.userAgent = new UserAgent(this.userAgent, userAgent);
+    }
+
+    public Optional<UserAgent> getUserAgent() {
+        return Optional.ofNullable(this.userAgent);
     }
 }

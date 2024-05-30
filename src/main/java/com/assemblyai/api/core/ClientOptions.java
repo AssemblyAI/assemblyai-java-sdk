@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 
 import okhttp3.OkHttpClient;
 
+import static com.assemblyai.api.core.Constants.SDK_VERSION;
+
 public final class ClientOptions {
     private final Environment environment;
 
@@ -30,7 +32,7 @@ public final class ClientOptions {
         this.headers.putAll(new HashMap<String, String>() {
             {
                 put("X-Fern-SDK-Name", "com.assemblyai.fern:api-sdk");
-                put("X-Fern-SDK-Version", "1.0.9");
+                put("X-Fern-SDK-Version", SDK_VERSION);
                 put("X-Fern-Language", "JAVA");
             }
         });
@@ -113,6 +115,7 @@ public final class ClientOptions {
 
         public ClientOptions build() {
             OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder()
+                    .addInterceptor(new UserAgentInterceptor(environment))
                     .addInterceptor(new RetryInterceptor(3));
             if (this.disableTimeouts) {
                 okhttpClientBuilder
@@ -124,4 +127,6 @@ public final class ClientOptions {
             return new ClientOptions(environment, headers, headerSuppliers, okhttpClientBuilder.build());
         }
     }
+
+
 }

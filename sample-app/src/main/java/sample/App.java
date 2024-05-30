@@ -2,6 +2,9 @@ package sample;
 
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
+import com.assemblyai.api.core.Environment;
+import com.assemblyai.api.core.UserAgent;
+import com.assemblyai.api.core.UserAgentItem;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
@@ -15,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
