@@ -115,7 +115,6 @@ public final class ClientOptions {
 
         public ClientOptions build() {
             OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder()
-                    .addInterceptor(new UserAgentInterceptor(environment))
                     .addInterceptor(new RetryInterceptor(3));
             if (this.disableTimeouts) {
                 okhttpClientBuilder
@@ -127,6 +126,4 @@ public final class ClientOptions {
             return new ClientOptions(environment, headers, headerSuppliers, okhttpClientBuilder.build());
         }
     }
-
-
 }
