@@ -30,7 +30,7 @@ public final class ClientOptions {
         this.headers.putAll(new HashMap<String, String>() {
             {
                 put("X-Fern-SDK-Name", "com.assemblyai.fern:api-sdk");
-                put("X-Fern-SDK-Version", "1.0.9");
+                put("X-Fern-SDK-Version", "1.1.3");
                 put("X-Fern-Language", "JAVA");
             }
         });
