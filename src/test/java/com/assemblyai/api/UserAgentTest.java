@@ -3,6 +3,7 @@ package com.assemblyai.api;
 import com.assemblyai.api.core.Environment;
 import com.assemblyai.api.core.UserAgent;
 import com.assemblyai.api.core.UserAgentItem;
+import jdk.javadoc.internal.doclint.Env;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public final class UserAgentTest {
 
     @Test
     public void ShouldUpdateUserAgentSdk() {
-        Environment env = Environment.DEFAULT;
+        Environment env = Environment.custom(Environment.DEFAULT.getUrl());
         env.updateUserAgent(new UserAgent(new HashMap<String, UserAgentItem>() {{
             put("sdk", new UserAgentItem("Kotlin", "0.0"));
         }}));
@@ -44,7 +45,7 @@ public final class UserAgentTest {
 
     @Test
     public void ShouldAddUserAgentIntegration() {
-        Environment env = Environment.DEFAULT;
+        Environment env = Environment.custom(Environment.DEFAULT.getUrl());
         env.updateUserAgent(new UserAgent(new HashMap<String, UserAgentItem>() {{
             put("integration", new UserAgentItem("Foo", "Bar"));
         }}));
@@ -63,7 +64,7 @@ public final class UserAgentTest {
 
     @Test
     public void ShouldRemoveUserAgent() {
-        Environment env = Environment.DEFAULT;
+        Environment env = Environment.custom(Environment.DEFAULT.getUrl());
         env.updateUserAgent(null);
 
         Optional<UserAgent> userAgent = env.getUserAgent();
@@ -72,7 +73,7 @@ public final class UserAgentTest {
 
     @Test
     public void ShouldReplaceUserAgent() {
-        Environment env = Environment.DEFAULT;
+        Environment env = Environment.custom(Environment.DEFAULT.getUrl());
         env.updateUserAgent(null);
         env.updateUserAgent(new UserAgent(new HashMap<String, UserAgentItem>() {{
             put("custom", new UserAgentItem("Foo", "Bar"));
@@ -92,7 +93,7 @@ public final class UserAgentTest {
 
     @Test
     public void ShouldRemoveUserAgentItem() {
-        Environment env = Environment.DEFAULT;
+        Environment env = Environment.custom(Environment.DEFAULT.getUrl());
         env.updateUserAgent(new UserAgent(new HashMap<String, UserAgentItem>() {{
             put("runtime_env", null);
         }}));
