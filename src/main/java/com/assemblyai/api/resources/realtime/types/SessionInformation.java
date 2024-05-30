@@ -27,6 +27,9 @@ public final class SessionInformation {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Describes the type of the message
+     */
     @JsonProperty("message_type")
     public String getMessageType() {
         return "SessionInformation";
