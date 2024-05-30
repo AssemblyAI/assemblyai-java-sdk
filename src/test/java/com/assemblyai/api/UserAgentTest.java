@@ -3,7 +3,6 @@ package com.assemblyai.api;
 import com.assemblyai.api.core.Environment;
 import com.assemblyai.api.core.UserAgent;
 import com.assemblyai.api.core.UserAgentItem;
-import jdk.javadoc.internal.doclint.Env;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
