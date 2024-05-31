@@ -6,20 +6,18 @@ import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class UserAgentInterceptor implements Interceptor {
-    private final Environment environment;
+    private final UserAgent userAgent;
 
-    public UserAgentInterceptor(Environment environment) {
-        this.environment = environment;
+    public UserAgentInterceptor(UserAgent userAgent) {
+        this.userAgent = userAgent;
     }
 
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
-        Optional<UserAgent> userAgent = this.environment.getUserAgent();
-        if (!userAgent.isPresent()) {
+        if (userAgent == null) {
             return chain.proceed(chain.request());
         }
 
@@ -34,7 +32,7 @@ public class UserAgentInterceptor implements Interceptor {
             userAgentString = "";
         }
 
-        String assemblyAIUserAgentString = userAgent.get().toAssemblyAIUserAgentString();
+        String assemblyAIUserAgentString = userAgent.toAssemblyAIUserAgentString();
         // if AAI UA null or empty, skip
         if (assemblyAIUserAgentString == null || assemblyAIUserAgentString.isEmpty()) {
             return chain.proceed(chain.request());

@@ -5,17 +5,19 @@ package com.assemblyai.api;
 
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.Environment;
+import com.assemblyai.api.core.UserAgent;
 
 public final class AssemblyAIBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
     private ClientOptions.Builder lemurClientOptionsBuilder = ClientOptions.builder();
 
     private String apiKey = null;
+    private UserAgent userAgent = UserAgent.getDefault();
 
     private Environment environment = Environment.DEFAULT;
 
     /**
-     * Sets apiKey
+     * Sets API key
      */
     public AssemblyAIBuilder apiKey(String apiKey) {
         this.apiKey = apiKey;
@@ -24,6 +26,18 @@ public final class AssemblyAIBuilder {
 
     public AssemblyAIBuilder environment(Environment environment) {
         this.environment = environment;
+        return this;
+    }
+
+    /**
+     * Merges AssemblyAI user agent with the default AssemblyAI user agent.
+     * If null, sets the AssemblyAI user agent to null.
+     *
+     * @param userAgent The AssemblyAI user agent
+     * @return AssemblyAIBuilder
+     */
+    public AssemblyAIBuilder userAgent(UserAgent userAgent) {
+        this.userAgent = userAgent;
         return this;
     }
 
@@ -36,10 +50,18 @@ public final class AssemblyAIBuilder {
         if (apiKey == null) {
             throw new RuntimeException("Please provide apiKey");
         }
+
         this.clientOptionsBuilder.addHeader("Authorization", this.apiKey);
-        clientOptionsBuilder.environment(this.environment);
+        clientOptionsBuilder
+                .environment(this.environment)
+                .userAgent(userAgent);
+
         this.lemurClientOptionsBuilder.addHeader("Authorization", this.apiKey);
-        lemurClientOptionsBuilder.environment(this.environment).disableTimeouts();
+        lemurClientOptionsBuilder
+                .environment(this.environment)
+                .userAgent(userAgent)
+                .disableTimeouts();
+
         return new AssemblyAI(clientOptionsBuilder.build(), lemurClientOptionsBuilder.build());
     }
 }

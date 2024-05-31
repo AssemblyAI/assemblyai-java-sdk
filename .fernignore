@@ -17,7 +17,6 @@ src/main/java/com/assemblyai/api/resources/realtime/types/SessionTerminated.java
 
 # Ignore ClientOptions to support custom timeouts for LeMUR.
 src/main/java/com/assemblyai/api/AssemblyAIBuilder.java
-src/main/java/com/assemblyai/api/core/Environment.java
 src/main/java/com/assemblyai/api/core/ClientOptions.java
 src/main/java/com/assemblyai/api/core/UserAgent.java
 src/main/java/com/assemblyai/api/core/UserAgentInterceptor.java
