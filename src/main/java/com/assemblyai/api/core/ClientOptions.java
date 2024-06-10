@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 
 import okhttp3.OkHttpClient;
 
+import static com.assemblyai.api.core.Constants.SDK_VERSION;
+
 public final class ClientOptions {
     private final Environment environment;
 
@@ -30,7 +32,7 @@ public final class ClientOptions {
         this.headers.putAll(new HashMap<String, String>() {
             {
                 put("X-Fern-SDK-Name", "com.assemblyai.fern:api-sdk");
-                put("X-Fern-SDK-Version", "1.1.3");
+                put("X-Fern-SDK-Version", SDK_VERSION);
                 put("X-Fern-Language", "JAVA");
             }
         });
@@ -77,6 +79,7 @@ public final class ClientOptions {
 
     public static final class Builder {
         private Environment environment;
+        private UserAgent userAgent = UserAgent.getDefault();
 
         private final Map<String, String> headers = new HashMap<>();
 
@@ -100,7 +103,30 @@ public final class ClientOptions {
         }
 
         /**
-         * This is a temporary measure ot disable timeouts for LeMUR client.
+         * Merges AssemblyAI user agent with the default AssemblyAI user agent.
+         * If null, sets the AssemblyAI user agent to null.
+         *
+         * @param userAgent The AssemblyAI user agent
+         * @return ClientOptionsBuilder
+         */
+        public Builder userAgent(UserAgent userAgent) {
+            if (userAgent == null) {
+                this.userAgent = null;
+                return this;
+            }
+
+            // if current and incoming user agent is default user agent, no-op
+            if(userAgent == UserAgent.getDefault() && this.userAgent == UserAgent.getDefault()) {
+                return this;
+            }
+
+            // create a new user agent that merges existing and incoming user agent
+            this.userAgent = new UserAgent(this.userAgent, userAgent);
+            return this;
+        }
+
+        /**
+         * This is a temporary measure to disable timeouts for LeMUR client.
          * Don't use this method.
          *
          * @return ClientOptionsBuilder
@@ -113,7 +139,8 @@ public final class ClientOptions {
 
         public ClientOptions build() {
             OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3));
+                    .addInterceptor(new RetryInterceptor(3))
+                    .addInterceptor(new UserAgentInterceptor(this.userAgent));
             if (this.disableTimeouts) {
                 okhttpClientBuilder
                         .callTimeout(0, TimeUnit.SECONDS)
@@ -121,7 +148,12 @@ public final class ClientOptions {
                         .writeTimeout(0, TimeUnit.SECONDS)
                         .readTimeout(0, TimeUnit.SECONDS);
             }
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClientBuilder.build());
+            return new ClientOptions(
+                    environment,
+                    headers,
+                    headerSuppliers,
+                    okhttpClientBuilder.build()
+            );
         }
     }
 }

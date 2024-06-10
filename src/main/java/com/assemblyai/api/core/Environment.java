@@ -16,6 +16,7 @@ public final class Environment {
         return this.url;
     }
 
+
     public static Environment custom(String url) {
         return new Environment(url);
     }

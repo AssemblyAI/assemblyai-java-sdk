@@ -3,6 +3,7 @@ src/main/java/com/assemblyai/api/AssemblyAI.java
 src/main/java/com/assemblyai/api/PollingTranscriptsClient.java
 src/main/java/com/assemblyai/api/Transcriber.java
 src/main/java/com/assemblyai/api/RealtimeTranscriber.java
+src/main/java/com/assemblyai/api/core/Constants.java
 
 # Ignore SpeechModel to manually mark conformer-2 as deprecated
 src/main/java/com/assemblyai/api/resources/transcripts/types/SpeechModel.java
@@ -19,8 +20,16 @@ src/main/java/com/assemblyai/api/resources/realtime/types/SessionTerminated.java
 src/main/java/com/assemblyai/api/AssemblyAIBuilder.java
 src/main/java/com/assemblyai/api/core/ClientOptions.java
 
+# Ignore UserAgent
+src/main/java/com/assemblyai/api/core/UserAgent.java
+src/main/java/com/assemblyai/api/core/UserAgentInterceptor.java
+src/main/java/com/assemblyai/api/core/UserAgentItem.java
+
 sample-app/src/main/java/sample/App.java
 sample-app/src/main/resources/
+
+# Ignore tests
+src/test
 
 LICENSE
 README.md
