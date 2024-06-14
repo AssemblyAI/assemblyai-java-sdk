@@ -20,12 +20,16 @@ import java.util.Objects;
 public final class LemurActionItemsResponse implements ILemurBaseResponse {
     private final String requestId;
 
+    private final LemurUsage usage;
+
     private final String response;
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurActionItemsResponse(String requestId, String response, Map<String, Object> additionalProperties) {
+    private LemurActionItemsResponse(
+            String requestId, LemurUsage usage, String response, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
+        this.usage = usage;
         this.response = response;
         this.additionalProperties = additionalProperties;
     }
@@ -37,6 +41,15 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
     @java.lang.Override
     public String getRequestId() {
         return requestId;
+    }
+
+    /**
+     * @return The usage numbers for the LeMUR request
+     */
+    @JsonProperty("usage")
+    @java.lang.Override
+    public LemurUsage getUsage() {
+        return usage;
     }
 
     /**
@@ -59,12 +72,12 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
     }
 
     private boolean equalTo(LemurActionItemsResponse other) {
-        return requestId.equals(other.requestId) && response.equals(other.response);
+        return requestId.equals(other.requestId) && usage.equals(other.usage) && response.equals(other.response);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.requestId, this.response);
+        return Objects.hash(this.requestId, this.usage, this.response);
     }
 
     @java.lang.Override
@@ -77,9 +90,13 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
     }
 
     public interface RequestIdStage {
-        ResponseStage requestId(String requestId);
+        UsageStage requestId(String requestId);
 
         Builder from(LemurActionItemsResponse other);
+    }
+
+    public interface UsageStage {
+        ResponseStage usage(LemurUsage usage);
     }
 
     public interface ResponseStage {
@@ -91,8 +108,10 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RequestIdStage, ResponseStage, _FinalStage {
+    public static final class Builder implements RequestIdStage, UsageStage, ResponseStage, _FinalStage {
         private String requestId;
+
+        private LemurUsage usage;
 
         private String response;
 
@@ -104,6 +123,7 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
         @java.lang.Override
         public Builder from(LemurActionItemsResponse other) {
             requestId(other.getRequestId());
+            usage(other.getUsage());
             response(other.getResponse());
             return this;
         }
@@ -114,8 +134,19 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
          */
         @java.lang.Override
         @JsonSetter("request_id")
-        public ResponseStage requestId(String requestId) {
+        public UsageStage requestId(String requestId) {
             this.requestId = requestId;
+            return this;
+        }
+
+        /**
+         * <p>The usage numbers for the LeMUR request</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("usage")
+        public ResponseStage usage(LemurUsage usage) {
+            this.usage = usage;
             return this;
         }
 
@@ -132,7 +163,7 @@ public final class LemurActionItemsResponse implements ILemurBaseResponse {
 
         @java.lang.Override
         public LemurActionItemsResponse build() {
-            return new LemurActionItemsResponse(requestId, response, additionalProperties);
+            return new LemurActionItemsResponse(requestId, usage, response, additionalProperties);
         }
     }
 }

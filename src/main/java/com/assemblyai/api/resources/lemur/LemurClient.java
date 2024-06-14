@@ -14,6 +14,7 @@ import com.assemblyai.api.resources.lemur.requests.LemurSummaryParams;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.LemurActionItemsResponse;
 import com.assemblyai.api.resources.lemur.types.LemurQuestionAnswerResponse;
+import com.assemblyai.api.resources.lemur.types.LemurResponse;
 import com.assemblyai.api.resources.lemur.types.LemurSummaryResponse;
 import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
 import com.assemblyai.api.resources.lemur.types.PurgeLemurRequestDataResponse;
@@ -231,6 +232,47 @@ public class LemurClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), LemurActionItemsResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Retrieve a LeMUR response that was previously generated.
+     */
+    public LemurResponse getResponse(String requestId) {
+        return getResponse(requestId, null);
+    }
+
+    /**
+     * Retrieve a LeMUR response that was previously generated.
+     */
+    public LemurResponse getResponse(String requestId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("lemur/v3")
+                .addPathSegment(requestId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            OkHttpClient client = clientOptions.httpClient();
+            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                client = clientOptions.httpClientWithTimeout(requestOptions);
+            }
+            Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), LemurResponse.class);
             }
             throw new ApiError(
                     response.code(),

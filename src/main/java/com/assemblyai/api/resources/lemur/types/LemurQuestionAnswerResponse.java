@@ -23,13 +23,19 @@ import java.util.Objects;
 public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     private final String requestId;
 
+    private final LemurUsage usage;
+
     private final List<LemurQuestionAnswer> response;
 
     private final Map<String, Object> additionalProperties;
 
     private LemurQuestionAnswerResponse(
-            String requestId, List<LemurQuestionAnswer> response, Map<String, Object> additionalProperties) {
+            String requestId,
+            LemurUsage usage,
+            List<LemurQuestionAnswer> response,
+            Map<String, Object> additionalProperties) {
         this.requestId = requestId;
+        this.usage = usage;
         this.response = response;
         this.additionalProperties = additionalProperties;
     }
@@ -41,6 +47,15 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     @java.lang.Override
     public String getRequestId() {
         return requestId;
+    }
+
+    /**
+     * @return The usage numbers for the LeMUR request
+     */
+    @JsonProperty("usage")
+    @java.lang.Override
+    public LemurUsage getUsage() {
+        return usage;
     }
 
     /**
@@ -63,12 +78,12 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     }
 
     private boolean equalTo(LemurQuestionAnswerResponse other) {
-        return requestId.equals(other.requestId) && response.equals(other.response);
+        return requestId.equals(other.requestId) && usage.equals(other.usage) && response.equals(other.response);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.requestId, this.response);
+        return Objects.hash(this.requestId, this.usage, this.response);
     }
 
     @java.lang.Override
@@ -81,9 +96,13 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     }
 
     public interface RequestIdStage {
-        _FinalStage requestId(String requestId);
+        UsageStage requestId(String requestId);
 
         Builder from(LemurQuestionAnswerResponse other);
+    }
+
+    public interface UsageStage {
+        _FinalStage usage(LemurUsage usage);
     }
 
     public interface _FinalStage {
@@ -97,8 +116,10 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RequestIdStage, _FinalStage {
+    public static final class Builder implements RequestIdStage, UsageStage, _FinalStage {
         private String requestId;
+
+        private LemurUsage usage;
 
         private List<LemurQuestionAnswer> response = new ArrayList<>();
 
@@ -110,6 +131,7 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
         @java.lang.Override
         public Builder from(LemurQuestionAnswerResponse other) {
             requestId(other.getRequestId());
+            usage(other.getUsage());
             response(other.getResponse());
             return this;
         }
@@ -120,8 +142,19 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
          */
         @java.lang.Override
         @JsonSetter("request_id")
-        public _FinalStage requestId(String requestId) {
+        public UsageStage requestId(String requestId) {
             this.requestId = requestId;
+            return this;
+        }
+
+        /**
+         * <p>The usage numbers for the LeMUR request</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("usage")
+        public _FinalStage usage(LemurUsage usage) {
+            this.usage = usage;
             return this;
         }
 
@@ -155,7 +188,7 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
 
         @java.lang.Override
         public LemurQuestionAnswerResponse build() {
-            return new LemurQuestionAnswerResponse(requestId, response, additionalProperties);
+            return new LemurQuestionAnswerResponse(requestId, usage, response, additionalProperties);
         }
     }
 }
