@@ -4,7 +4,7 @@ import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
-import com.assemblyai.api.resources.lemur.types.LemurTaskResponse;
+import com.assemblyai.api.resources.lemur.types.*;
 import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParams;
 import com.assemblyai.api.resources.realtime.types.AudioEncoding;
 import com.assemblyai.api.resources.realtime.types.RealtimeTemporaryTokenResponse;
@@ -69,6 +69,10 @@ public final class App {
                 .build());
 
         System.out.println("Summary: " + response.getResponse());
+
+        LemurResponse response2 = client.lemur().getResponse(response.getRequestId());
+
+        System.out.println("Summary 2: " + ((LemurTaskResponse)response2.get()).getResponse());
 
         transcript = client.transcripts().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);

@@ -20,10 +20,13 @@ import java.util.Objects;
 public final class LemurBaseResponse implements ILemurBaseResponse {
     private final String requestId;
 
+    private final LemurUsage usage;
+
     private final Map<String, Object> additionalProperties;
 
-    private LemurBaseResponse(String requestId, Map<String, Object> additionalProperties) {
+    private LemurBaseResponse(String requestId, LemurUsage usage, Map<String, Object> additionalProperties) {
         this.requestId = requestId;
+        this.usage = usage;
         this.additionalProperties = additionalProperties;
     }
 
@@ -34,6 +37,15 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
     @java.lang.Override
     public String getRequestId() {
         return requestId;
+    }
+
+    /**
+     * @return The usage numbers for the LeMUR request
+     */
+    @JsonProperty("usage")
+    @java.lang.Override
+    public LemurUsage getUsage() {
+        return usage;
     }
 
     @java.lang.Override
@@ -48,12 +60,12 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
     }
 
     private boolean equalTo(LemurBaseResponse other) {
-        return requestId.equals(other.requestId);
+        return requestId.equals(other.requestId) && usage.equals(other.usage);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.requestId);
+        return Objects.hash(this.requestId, this.usage);
     }
 
     @java.lang.Override
@@ -66,9 +78,13 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
     }
 
     public interface RequestIdStage {
-        _FinalStage requestId(String requestId);
+        UsageStage requestId(String requestId);
 
         Builder from(LemurBaseResponse other);
+    }
+
+    public interface UsageStage {
+        _FinalStage usage(LemurUsage usage);
     }
 
     public interface _FinalStage {
@@ -76,8 +92,10 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RequestIdStage, _FinalStage {
+    public static final class Builder implements RequestIdStage, UsageStage, _FinalStage {
         private String requestId;
+
+        private LemurUsage usage;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -87,6 +105,7 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
         @java.lang.Override
         public Builder from(LemurBaseResponse other) {
             requestId(other.getRequestId());
+            usage(other.getUsage());
             return this;
         }
 
@@ -96,14 +115,25 @@ public final class LemurBaseResponse implements ILemurBaseResponse {
          */
         @java.lang.Override
         @JsonSetter("request_id")
-        public _FinalStage requestId(String requestId) {
+        public UsageStage requestId(String requestId) {
             this.requestId = requestId;
+            return this;
+        }
+
+        /**
+         * <p>The usage numbers for the LeMUR request</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("usage")
+        public _FinalStage usage(LemurUsage usage) {
+            this.usage = usage;
             return this;
         }
 
         @java.lang.Override
         public LemurBaseResponse build() {
-            return new LemurBaseResponse(requestId, additionalProperties);
+            return new LemurBaseResponse(requestId, usage, additionalProperties);
         }
     }
 }

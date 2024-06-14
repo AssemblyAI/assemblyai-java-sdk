@@ -7,62 +7,96 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class PiiPolicy {
-    public static final PiiPolicy MEDICAL_CONDITION = new PiiPolicy(Value.MEDICAL_CONDITION, "medical_condition");
+    public static final PiiPolicy ACCOUNT_NUMBER = new PiiPolicy(Value.ACCOUNT_NUMBER, "account_number");
 
-    public static final PiiPolicy BLOOD_TYPE = new PiiPolicy(Value.BLOOD_TYPE, "blood_type");
+    public static final PiiPolicy CREDIT_CARD_CVV = new PiiPolicy(Value.CREDIT_CARD_CVV, "credit_card_cvv");
 
-    public static final PiiPolicy CREDIT_CARD_NUMBER = new PiiPolicy(Value.CREDIT_CARD_NUMBER, "credit_card_number");
+    public static final PiiPolicy DRUG = new PiiPolicy(Value.DRUG, "drug");
 
-    public static final PiiPolicy RELIGION = new PiiPolicy(Value.RELIGION, "religion");
+    public static final PiiPolicy FILENAME = new PiiPolicy(Value.FILENAME, "filename");
 
-    public static final PiiPolicy US_SOCIAL_SECURITY_NUMBER =
-            new PiiPolicy(Value.US_SOCIAL_SECURITY_NUMBER, "us_social_security_number");
+    public static final PiiPolicy PERSON_AGE = new PiiPolicy(Value.PERSON_AGE, "person_age");
 
-    public static final PiiPolicy LOCATION = new PiiPolicy(Value.LOCATION, "location");
+    public static final PiiPolicy MONEY_AMOUNT = new PiiPolicy(Value.MONEY_AMOUNT, "money_amount");
 
-    public static final PiiPolicy EVENT = new PiiPolicy(Value.EVENT, "event");
+    public static final PiiPolicy TIME = new PiiPolicy(Value.TIME, "time");
+
+    public static final PiiPolicy PHONE_NUMBER = new PiiPolicy(Value.PHONE_NUMBER, "phone_number");
+
+    public static final PiiPolicy DATE_INTERVAL = new PiiPolicy(Value.DATE_INTERVAL, "date_interval");
+
+    public static final PiiPolicy PHYSICAL_ATTRIBUTE = new PiiPolicy(Value.PHYSICAL_ATTRIBUTE, "physical_attribute");
+
+    public static final PiiPolicy IP_ADDRESS = new PiiPolicy(Value.IP_ADDRESS, "ip_address");
 
     public static final PiiPolicy PERSON_NAME = new PiiPolicy(Value.PERSON_NAME, "person_name");
-
-    public static final PiiPolicy ORGANIZATION = new PiiPolicy(Value.ORGANIZATION, "organization");
-
-    public static final PiiPolicy DRIVERS_LICENSE = new PiiPolicy(Value.DRIVERS_LICENSE, "drivers_license");
-
-    public static final PiiPolicy LANGUAGE = new PiiPolicy(Value.LANGUAGE, "language");
 
     public static final PiiPolicy CREDIT_CARD_EXPIRATION =
             new PiiPolicy(Value.CREDIT_CARD_EXPIRATION, "credit_card_expiration");
 
-    public static final PiiPolicy MONEY_AMOUNT = new PiiPolicy(Value.MONEY_AMOUNT, "money_amount");
+    public static final PiiPolicy VEHICLE_ID = new PiiPolicy(Value.VEHICLE_ID, "vehicle_id");
 
-    public static final PiiPolicy PHONE_NUMBER = new PiiPolicy(Value.PHONE_NUMBER, "phone_number");
+    public static final PiiPolicy GENDER_SEXUALITY = new PiiPolicy(Value.GENDER_SEXUALITY, "gender_sexuality");
 
-    public static final PiiPolicy DRUG = new PiiPolicy(Value.DRUG, "drug");
+    public static final PiiPolicy OCCUPATION = new PiiPolicy(Value.OCCUPATION, "occupation");
+
+    public static final PiiPolicy EVENT = new PiiPolicy(Value.EVENT, "event");
+
+    public static final PiiPolicy HEALTHCARE_NUMBER = new PiiPolicy(Value.HEALTHCARE_NUMBER, "healthcare_number");
+
+    public static final PiiPolicy ORGANIZATION = new PiiPolicy(Value.ORGANIZATION, "organization");
+
+    public static final PiiPolicy LANGUAGE = new PiiPolicy(Value.LANGUAGE, "language");
+
+    public static final PiiPolicy BLOOD_TYPE = new PiiPolicy(Value.BLOOD_TYPE, "blood_type");
+
+    public static final PiiPolicy DURATION = new PiiPolicy(Value.DURATION, "duration");
+
+    public static final PiiPolicy DRIVERS_LICENSE = new PiiPolicy(Value.DRIVERS_LICENSE, "drivers_license");
+
+    public static final PiiPolicy USERNAME = new PiiPolicy(Value.USERNAME, "username");
+
+    public static final PiiPolicy MEDICAL_PROCESS = new PiiPolicy(Value.MEDICAL_PROCESS, "medical_process");
+
+    public static final PiiPolicy EMAIL_ADDRESS = new PiiPolicy(Value.EMAIL_ADDRESS, "email_address");
+
+    public static final PiiPolicy ZODIAC_SIGN = new PiiPolicy(Value.ZODIAC_SIGN, "zodiac_sign");
+
+    public static final PiiPolicy BANKING_INFORMATION = new PiiPolicy(Value.BANKING_INFORMATION, "banking_information");
+
+    public static final PiiPolicy DATE_OF_BIRTH = new PiiPolicy(Value.DATE_OF_BIRTH, "date_of_birth");
+
+    public static final PiiPolicy NATIONALITY = new PiiPolicy(Value.NATIONALITY, "nationality");
+
+    public static final PiiPolicy US_SOCIAL_SECURITY_NUMBER =
+            new PiiPolicy(Value.US_SOCIAL_SECURITY_NUMBER, "us_social_security_number");
 
     public static final PiiPolicy INJURY = new PiiPolicy(Value.INJURY, "injury");
+
+    public static final PiiPolicy PASSPORT_NUMBER = new PiiPolicy(Value.PASSPORT_NUMBER, "passport_number");
 
     public static final PiiPolicy NUMBER_SEQUENCE = new PiiPolicy(Value.NUMBER_SEQUENCE, "number_sequence");
 
     public static final PiiPolicy POLITICAL_AFFILIATION =
             new PiiPolicy(Value.POLITICAL_AFFILIATION, "political_affiliation");
 
-    public static final PiiPolicy DATE_OF_BIRTH = new PiiPolicy(Value.DATE_OF_BIRTH, "date_of_birth");
+    public static final PiiPolicy RELIGION = new PiiPolicy(Value.RELIGION, "religion");
 
-    public static final PiiPolicy EMAIL_ADDRESS = new PiiPolicy(Value.EMAIL_ADDRESS, "email_address");
+    public static final PiiPolicy STATISTICS = new PiiPolicy(Value.STATISTICS, "statistics");
 
-    public static final PiiPolicy NATIONALITY = new PiiPolicy(Value.NATIONALITY, "nationality");
+    public static final PiiPolicy MEDICAL_CONDITION = new PiiPolicy(Value.MEDICAL_CONDITION, "medical_condition");
 
-    public static final PiiPolicy MEDICAL_PROCESS = new PiiPolicy(Value.MEDICAL_PROCESS, "medical_process");
+    public static final PiiPolicy PASSWORD = new PiiPolicy(Value.PASSWORD, "password");
+
+    public static final PiiPolicy URL = new PiiPolicy(Value.URL, "url");
+
+    public static final PiiPolicy CREDIT_CARD_NUMBER = new PiiPolicy(Value.CREDIT_CARD_NUMBER, "credit_card_number");
+
+    public static final PiiPolicy MARITAL_STATUS = new PiiPolicy(Value.MARITAL_STATUS, "marital_status");
+
+    public static final PiiPolicy LOCATION = new PiiPolicy(Value.LOCATION, "location");
 
     public static final PiiPolicy DATE = new PiiPolicy(Value.DATE, "date");
-
-    public static final PiiPolicy PERSON_AGE = new PiiPolicy(Value.PERSON_AGE, "person_age");
-
-    public static final PiiPolicy BANKING_INFORMATION = new PiiPolicy(Value.BANKING_INFORMATION, "banking_information");
-
-    public static final PiiPolicy CREDIT_CARD_CVV = new PiiPolicy(Value.CREDIT_CARD_CVV, "credit_card_cvv");
-
-    public static final PiiPolicy OCCUPATION = new PiiPolicy(Value.OCCUPATION, "occupation");
 
     private final Value value;
 
@@ -95,60 +129,94 @@ public final class PiiPolicy {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case MEDICAL_CONDITION:
-                return visitor.visitMedicalCondition();
-            case BLOOD_TYPE:
-                return visitor.visitBloodType();
-            case CREDIT_CARD_NUMBER:
-                return visitor.visitCreditCardNumber();
-            case RELIGION:
-                return visitor.visitReligion();
-            case US_SOCIAL_SECURITY_NUMBER:
-                return visitor.visitUsSocialSecurityNumber();
-            case LOCATION:
-                return visitor.visitLocation();
-            case EVENT:
-                return visitor.visitEvent();
-            case PERSON_NAME:
-                return visitor.visitPersonName();
-            case ORGANIZATION:
-                return visitor.visitOrganization();
-            case DRIVERS_LICENSE:
-                return visitor.visitDriversLicense();
-            case LANGUAGE:
-                return visitor.visitLanguage();
-            case CREDIT_CARD_EXPIRATION:
-                return visitor.visitCreditCardExpiration();
-            case MONEY_AMOUNT:
-                return visitor.visitMoneyAmount();
-            case PHONE_NUMBER:
-                return visitor.visitPhoneNumber();
+            case ACCOUNT_NUMBER:
+                return visitor.visitAccountNumber();
+            case CREDIT_CARD_CVV:
+                return visitor.visitCreditCardCvv();
             case DRUG:
                 return visitor.visitDrug();
+            case FILENAME:
+                return visitor.visitFilename();
+            case PERSON_AGE:
+                return visitor.visitPersonAge();
+            case MONEY_AMOUNT:
+                return visitor.visitMoneyAmount();
+            case TIME:
+                return visitor.visitTime();
+            case PHONE_NUMBER:
+                return visitor.visitPhoneNumber();
+            case DATE_INTERVAL:
+                return visitor.visitDateInterval();
+            case PHYSICAL_ATTRIBUTE:
+                return visitor.visitPhysicalAttribute();
+            case IP_ADDRESS:
+                return visitor.visitIpAddress();
+            case PERSON_NAME:
+                return visitor.visitPersonName();
+            case CREDIT_CARD_EXPIRATION:
+                return visitor.visitCreditCardExpiration();
+            case VEHICLE_ID:
+                return visitor.visitVehicleId();
+            case GENDER_SEXUALITY:
+                return visitor.visitGenderSexuality();
+            case OCCUPATION:
+                return visitor.visitOccupation();
+            case EVENT:
+                return visitor.visitEvent();
+            case HEALTHCARE_NUMBER:
+                return visitor.visitHealthcareNumber();
+            case ORGANIZATION:
+                return visitor.visitOrganization();
+            case LANGUAGE:
+                return visitor.visitLanguage();
+            case BLOOD_TYPE:
+                return visitor.visitBloodType();
+            case DURATION:
+                return visitor.visitDuration();
+            case DRIVERS_LICENSE:
+                return visitor.visitDriversLicense();
+            case USERNAME:
+                return visitor.visitUsername();
+            case MEDICAL_PROCESS:
+                return visitor.visitMedicalProcess();
+            case EMAIL_ADDRESS:
+                return visitor.visitEmailAddress();
+            case ZODIAC_SIGN:
+                return visitor.visitZodiacSign();
+            case BANKING_INFORMATION:
+                return visitor.visitBankingInformation();
+            case DATE_OF_BIRTH:
+                return visitor.visitDateOfBirth();
+            case NATIONALITY:
+                return visitor.visitNationality();
+            case US_SOCIAL_SECURITY_NUMBER:
+                return visitor.visitUsSocialSecurityNumber();
             case INJURY:
                 return visitor.visitInjury();
+            case PASSPORT_NUMBER:
+                return visitor.visitPassportNumber();
             case NUMBER_SEQUENCE:
                 return visitor.visitNumberSequence();
             case POLITICAL_AFFILIATION:
                 return visitor.visitPoliticalAffiliation();
-            case DATE_OF_BIRTH:
-                return visitor.visitDateOfBirth();
-            case EMAIL_ADDRESS:
-                return visitor.visitEmailAddress();
-            case NATIONALITY:
-                return visitor.visitNationality();
-            case MEDICAL_PROCESS:
-                return visitor.visitMedicalProcess();
+            case RELIGION:
+                return visitor.visitReligion();
+            case STATISTICS:
+                return visitor.visitStatistics();
+            case MEDICAL_CONDITION:
+                return visitor.visitMedicalCondition();
+            case PASSWORD:
+                return visitor.visitPassword();
+            case URL:
+                return visitor.visitUrl();
+            case CREDIT_CARD_NUMBER:
+                return visitor.visitCreditCardNumber();
+            case MARITAL_STATUS:
+                return visitor.visitMaritalStatus();
+            case LOCATION:
+                return visitor.visitLocation();
             case DATE:
                 return visitor.visitDate();
-            case PERSON_AGE:
-                return visitor.visitPersonAge();
-            case BANKING_INFORMATION:
-                return visitor.visitBankingInformation();
-            case CREDIT_CARD_CVV:
-                return visitor.visitCreditCardCvv();
-            case OCCUPATION:
-                return visitor.visitOccupation();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -158,177 +226,279 @@ public final class PiiPolicy {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static PiiPolicy valueOf(String value) {
         switch (value) {
-            case "medical_condition":
-                return MEDICAL_CONDITION;
-            case "blood_type":
-                return BLOOD_TYPE;
-            case "credit_card_number":
-                return CREDIT_CARD_NUMBER;
-            case "religion":
-                return RELIGION;
-            case "us_social_security_number":
-                return US_SOCIAL_SECURITY_NUMBER;
-            case "location":
-                return LOCATION;
-            case "event":
-                return EVENT;
-            case "person_name":
-                return PERSON_NAME;
-            case "organization":
-                return ORGANIZATION;
-            case "drivers_license":
-                return DRIVERS_LICENSE;
-            case "language":
-                return LANGUAGE;
-            case "credit_card_expiration":
-                return CREDIT_CARD_EXPIRATION;
-            case "money_amount":
-                return MONEY_AMOUNT;
-            case "phone_number":
-                return PHONE_NUMBER;
+            case "account_number":
+                return ACCOUNT_NUMBER;
+            case "credit_card_cvv":
+                return CREDIT_CARD_CVV;
             case "drug":
                 return DRUG;
+            case "filename":
+                return FILENAME;
+            case "person_age":
+                return PERSON_AGE;
+            case "money_amount":
+                return MONEY_AMOUNT;
+            case "time":
+                return TIME;
+            case "phone_number":
+                return PHONE_NUMBER;
+            case "date_interval":
+                return DATE_INTERVAL;
+            case "physical_attribute":
+                return PHYSICAL_ATTRIBUTE;
+            case "ip_address":
+                return IP_ADDRESS;
+            case "person_name":
+                return PERSON_NAME;
+            case "credit_card_expiration":
+                return CREDIT_CARD_EXPIRATION;
+            case "vehicle_id":
+                return VEHICLE_ID;
+            case "gender_sexuality":
+                return GENDER_SEXUALITY;
+            case "occupation":
+                return OCCUPATION;
+            case "event":
+                return EVENT;
+            case "healthcare_number":
+                return HEALTHCARE_NUMBER;
+            case "organization":
+                return ORGANIZATION;
+            case "language":
+                return LANGUAGE;
+            case "blood_type":
+                return BLOOD_TYPE;
+            case "duration":
+                return DURATION;
+            case "drivers_license":
+                return DRIVERS_LICENSE;
+            case "username":
+                return USERNAME;
+            case "medical_process":
+                return MEDICAL_PROCESS;
+            case "email_address":
+                return EMAIL_ADDRESS;
+            case "zodiac_sign":
+                return ZODIAC_SIGN;
+            case "banking_information":
+                return BANKING_INFORMATION;
+            case "date_of_birth":
+                return DATE_OF_BIRTH;
+            case "nationality":
+                return NATIONALITY;
+            case "us_social_security_number":
+                return US_SOCIAL_SECURITY_NUMBER;
             case "injury":
                 return INJURY;
+            case "passport_number":
+                return PASSPORT_NUMBER;
             case "number_sequence":
                 return NUMBER_SEQUENCE;
             case "political_affiliation":
                 return POLITICAL_AFFILIATION;
-            case "date_of_birth":
-                return DATE_OF_BIRTH;
-            case "email_address":
-                return EMAIL_ADDRESS;
-            case "nationality":
-                return NATIONALITY;
-            case "medical_process":
-                return MEDICAL_PROCESS;
+            case "religion":
+                return RELIGION;
+            case "statistics":
+                return STATISTICS;
+            case "medical_condition":
+                return MEDICAL_CONDITION;
+            case "password":
+                return PASSWORD;
+            case "url":
+                return URL;
+            case "credit_card_number":
+                return CREDIT_CARD_NUMBER;
+            case "marital_status":
+                return MARITAL_STATUS;
+            case "location":
+                return LOCATION;
             case "date":
                 return DATE;
-            case "person_age":
-                return PERSON_AGE;
-            case "banking_information":
-                return BANKING_INFORMATION;
-            case "credit_card_cvv":
-                return CREDIT_CARD_CVV;
-            case "occupation":
-                return OCCUPATION;
             default:
                 return new PiiPolicy(Value.UNKNOWN, value);
         }
     }
 
     public enum Value {
-        MEDICAL_PROCESS,
+        ACCOUNT_NUMBER,
 
-        MEDICAL_CONDITION,
+        BANKING_INFORMATION,
 
         BLOOD_TYPE,
 
-        DRUG,
-
-        INJURY,
-
-        NUMBER_SEQUENCE,
-
-        EMAIL_ADDRESS,
-
-        DATE_OF_BIRTH,
-
-        PHONE_NUMBER,
-
-        US_SOCIAL_SECURITY_NUMBER,
-
-        CREDIT_CARD_NUMBER,
+        CREDIT_CARD_CVV,
 
         CREDIT_CARD_EXPIRATION,
 
-        CREDIT_CARD_CVV,
+        CREDIT_CARD_NUMBER,
 
         DATE,
 
-        NATIONALITY,
+        DATE_INTERVAL,
+
+        DATE_OF_BIRTH,
+
+        DRIVERS_LICENSE,
+
+        DRUG,
+
+        DURATION,
+
+        EMAIL_ADDRESS,
 
         EVENT,
+
+        FILENAME,
+
+        GENDER_SEXUALITY,
+
+        HEALTHCARE_NUMBER,
+
+        INJURY,
+
+        IP_ADDRESS,
 
         LANGUAGE,
 
         LOCATION,
 
+        MARITAL_STATUS,
+
+        MEDICAL_CONDITION,
+
+        MEDICAL_PROCESS,
+
         MONEY_AMOUNT,
 
-        PERSON_NAME,
+        NATIONALITY,
 
-        PERSON_AGE,
-
-        ORGANIZATION,
-
-        POLITICAL_AFFILIATION,
+        NUMBER_SEQUENCE,
 
         OCCUPATION,
 
+        ORGANIZATION,
+
+        PASSPORT_NUMBER,
+
+        PASSWORD,
+
+        PERSON_AGE,
+
+        PERSON_NAME,
+
+        PHONE_NUMBER,
+
+        PHYSICAL_ATTRIBUTE,
+
+        POLITICAL_AFFILIATION,
+
         RELIGION,
 
-        DRIVERS_LICENSE,
+        STATISTICS,
 
-        BANKING_INFORMATION,
+        TIME,
+
+        URL,
+
+        US_SOCIAL_SECURITY_NUMBER,
+
+        USERNAME,
+
+        VEHICLE_ID,
+
+        ZODIAC_SIGN,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
-        T visitMedicalProcess();
+        T visitAccountNumber();
 
-        T visitMedicalCondition();
+        T visitBankingInformation();
 
         T visitBloodType();
 
-        T visitDrug();
-
-        T visitInjury();
-
-        T visitNumberSequence();
-
-        T visitEmailAddress();
-
-        T visitDateOfBirth();
-
-        T visitPhoneNumber();
-
-        T visitUsSocialSecurityNumber();
-
-        T visitCreditCardNumber();
+        T visitCreditCardCvv();
 
         T visitCreditCardExpiration();
 
-        T visitCreditCardCvv();
+        T visitCreditCardNumber();
 
         T visitDate();
 
-        T visitNationality();
+        T visitDateInterval();
+
+        T visitDateOfBirth();
+
+        T visitDriversLicense();
+
+        T visitDrug();
+
+        T visitDuration();
+
+        T visitEmailAddress();
 
         T visitEvent();
+
+        T visitFilename();
+
+        T visitGenderSexuality();
+
+        T visitHealthcareNumber();
+
+        T visitInjury();
+
+        T visitIpAddress();
 
         T visitLanguage();
 
         T visitLocation();
 
+        T visitMaritalStatus();
+
+        T visitMedicalCondition();
+
+        T visitMedicalProcess();
+
         T visitMoneyAmount();
 
-        T visitPersonName();
+        T visitNationality();
 
-        T visitPersonAge();
-
-        T visitOrganization();
-
-        T visitPoliticalAffiliation();
+        T visitNumberSequence();
 
         T visitOccupation();
 
+        T visitOrganization();
+
+        T visitPassportNumber();
+
+        T visitPassword();
+
+        T visitPersonAge();
+
+        T visitPersonName();
+
+        T visitPhoneNumber();
+
+        T visitPhysicalAttribute();
+
+        T visitPoliticalAffiliation();
+
         T visitReligion();
 
-        T visitDriversLicense();
+        T visitStatistics();
 
-        T visitBankingInformation();
+        T visitTime();
+
+        T visitUrl();
+
+        T visitUsSocialSecurityNumber();
+
+        T visitUsername();
+
+        T visitVehicleId();
+
+        T visitZodiacSign();
 
         T visitUnknown(String unknownType);
     }

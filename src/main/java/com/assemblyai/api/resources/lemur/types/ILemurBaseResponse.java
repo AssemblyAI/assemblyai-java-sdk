@@ -5,4 +5,6 @@ package com.assemblyai.api.resources.lemur.types;
 
 public interface ILemurBaseResponse {
     String getRequestId();
+
+    LemurUsage getUsage();
 }

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class EntityType {
+    public static final EntityType ACCOUNT_NUMBER = new EntityType(Value.ACCOUNT_NUMBER, "account_number");
+
     public static final EntityType CREDIT_CARD_CVV = new EntityType(Value.CREDIT_CARD_CVV, "credit_card_cvv");
 
     public static final EntityType DRUG = new EntityType(Value.DRUG, "drug");
@@ -17,6 +19,8 @@ public final class EntityType {
 
     public static final EntityType MONEY_AMOUNT = new EntityType(Value.MONEY_AMOUNT, "money_amount");
 
+    public static final EntityType TIME = new EntityType(Value.TIME, "time");
+
     public static final EntityType PHONE_NUMBER = new EntityType(Value.PHONE_NUMBER, "phone_number");
 
     public static final EntityType DATE_INTERVAL = new EntityType(Value.DATE_INTERVAL, "date_interval");
@@ -25,12 +29,14 @@ public final class EntityType {
 
     public static final EntityType IP_ADDRESS = new EntityType(Value.IP_ADDRESS, "ip_address");
 
-    public static final EntityType DURATION = new EntityType(Value.DURATION, "duration");
-
     public static final EntityType PERSON_NAME = new EntityType(Value.PERSON_NAME, "person_name");
 
     public static final EntityType CREDIT_CARD_EXPIRATION =
             new EntityType(Value.CREDIT_CARD_EXPIRATION, "credit_card_expiration");
+
+    public static final EntityType VEHICLE_ID = new EntityType(Value.VEHICLE_ID, "vehicle_id");
+
+    public static final EntityType GENDER_SEXUALITY = new EntityType(Value.GENDER_SEXUALITY, "gender_sexuality");
 
     public static final EntityType OCCUPATION = new EntityType(Value.OCCUPATION, "occupation");
 
@@ -42,19 +48,15 @@ public final class EntityType {
 
     public static final EntityType LANGUAGE = new EntityType(Value.LANGUAGE, "language");
 
-    public static final EntityType TIME = new EntityType(Value.TIME, "time");
-
     public static final EntityType BLOOD_TYPE = new EntityType(Value.BLOOD_TYPE, "blood_type");
+
+    public static final EntityType DURATION = new EntityType(Value.DURATION, "duration");
 
     public static final EntityType DRIVERS_LICENSE = new EntityType(Value.DRIVERS_LICENSE, "drivers_license");
 
     public static final EntityType USERNAME = new EntityType(Value.USERNAME, "username");
 
-    public static final EntityType MARITAL_STATUS = new EntityType(Value.MARITAL_STATUS, "marital_status");
-
     public static final EntityType MEDICAL_PROCESS = new EntityType(Value.MEDICAL_PROCESS, "medical_process");
-
-    public static final EntityType VEHICLE_ID = new EntityType(Value.VEHICLE_ID, "vehicle_id");
 
     public static final EntityType EMAIL_ADDRESS = new EntityType(Value.EMAIL_ADDRESS, "email_address");
 
@@ -67,16 +69,14 @@ public final class EntityType {
 
     public static final EntityType NATIONALITY = new EntityType(Value.NATIONALITY, "nationality");
 
-    public static final EntityType ACCOUNT_NUMBER = new EntityType(Value.ACCOUNT_NUMBER, "account_number");
-
     public static final EntityType US_SOCIAL_SECURITY_NUMBER =
             new EntityType(Value.US_SOCIAL_SECURITY_NUMBER, "us_social_security_number");
 
     public static final EntityType INJURY = new EntityType(Value.INJURY, "injury");
 
-    public static final EntityType NUMBER_SEQUENCE = new EntityType(Value.NUMBER_SEQUENCE, "number_sequence");
-
     public static final EntityType PASSPORT_NUMBER = new EntityType(Value.PASSPORT_NUMBER, "passport_number");
+
+    public static final EntityType NUMBER_SEQUENCE = new EntityType(Value.NUMBER_SEQUENCE, "number_sequence");
 
     public static final EntityType POLITICAL_AFFILIATION =
             new EntityType(Value.POLITICAL_AFFILIATION, "political_affiliation");
@@ -85,8 +85,6 @@ public final class EntityType {
 
     public static final EntityType STATISTICS = new EntityType(Value.STATISTICS, "statistics");
 
-    public static final EntityType GENDER_SEXUALITY = new EntityType(Value.GENDER_SEXUALITY, "gender_sexuality");
-
     public static final EntityType MEDICAL_CONDITION = new EntityType(Value.MEDICAL_CONDITION, "medical_condition");
 
     public static final EntityType PASSWORD = new EntityType(Value.PASSWORD, "password");
@@ -94,6 +92,8 @@ public final class EntityType {
     public static final EntityType URL = new EntityType(Value.URL, "url");
 
     public static final EntityType CREDIT_CARD_NUMBER = new EntityType(Value.CREDIT_CARD_NUMBER, "credit_card_number");
+
+    public static final EntityType MARITAL_STATUS = new EntityType(Value.MARITAL_STATUS, "marital_status");
 
     public static final EntityType LOCATION = new EntityType(Value.LOCATION, "location");
 
@@ -130,6 +130,8 @@ public final class EntityType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case ACCOUNT_NUMBER:
+                return visitor.visitAccountNumber();
             case CREDIT_CARD_CVV:
                 return visitor.visitCreditCardCvv();
             case DRUG:
@@ -140,6 +142,8 @@ public final class EntityType {
                 return visitor.visitPersonAge();
             case MONEY_AMOUNT:
                 return visitor.visitMoneyAmount();
+            case TIME:
+                return visitor.visitTime();
             case PHONE_NUMBER:
                 return visitor.visitPhoneNumber();
             case DATE_INTERVAL:
@@ -148,12 +152,14 @@ public final class EntityType {
                 return visitor.visitPhysicalAttribute();
             case IP_ADDRESS:
                 return visitor.visitIpAddress();
-            case DURATION:
-                return visitor.visitDuration();
             case PERSON_NAME:
                 return visitor.visitPersonName();
             case CREDIT_CARD_EXPIRATION:
                 return visitor.visitCreditCardExpiration();
+            case VEHICLE_ID:
+                return visitor.visitVehicleId();
+            case GENDER_SEXUALITY:
+                return visitor.visitGenderSexuality();
             case OCCUPATION:
                 return visitor.visitOccupation();
             case EVENT:
@@ -164,20 +170,16 @@ public final class EntityType {
                 return visitor.visitOrganization();
             case LANGUAGE:
                 return visitor.visitLanguage();
-            case TIME:
-                return visitor.visitTime();
             case BLOOD_TYPE:
                 return visitor.visitBloodType();
+            case DURATION:
+                return visitor.visitDuration();
             case DRIVERS_LICENSE:
                 return visitor.visitDriversLicense();
             case USERNAME:
                 return visitor.visitUsername();
-            case MARITAL_STATUS:
-                return visitor.visitMaritalStatus();
             case MEDICAL_PROCESS:
                 return visitor.visitMedicalProcess();
-            case VEHICLE_ID:
-                return visitor.visitVehicleId();
             case EMAIL_ADDRESS:
                 return visitor.visitEmailAddress();
             case ZODIAC_SIGN:
@@ -188,24 +190,20 @@ public final class EntityType {
                 return visitor.visitDateOfBirth();
             case NATIONALITY:
                 return visitor.visitNationality();
-            case ACCOUNT_NUMBER:
-                return visitor.visitAccountNumber();
             case US_SOCIAL_SECURITY_NUMBER:
                 return visitor.visitUsSocialSecurityNumber();
             case INJURY:
                 return visitor.visitInjury();
-            case NUMBER_SEQUENCE:
-                return visitor.visitNumberSequence();
             case PASSPORT_NUMBER:
                 return visitor.visitPassportNumber();
+            case NUMBER_SEQUENCE:
+                return visitor.visitNumberSequence();
             case POLITICAL_AFFILIATION:
                 return visitor.visitPoliticalAffiliation();
             case RELIGION:
                 return visitor.visitReligion();
             case STATISTICS:
                 return visitor.visitStatistics();
-            case GENDER_SEXUALITY:
-                return visitor.visitGenderSexuality();
             case MEDICAL_CONDITION:
                 return visitor.visitMedicalCondition();
             case PASSWORD:
@@ -214,6 +212,8 @@ public final class EntityType {
                 return visitor.visitUrl();
             case CREDIT_CARD_NUMBER:
                 return visitor.visitCreditCardNumber();
+            case MARITAL_STATUS:
+                return visitor.visitMaritalStatus();
             case LOCATION:
                 return visitor.visitLocation();
             case DATE:
@@ -227,6 +227,8 @@ public final class EntityType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static EntityType valueOf(String value) {
         switch (value) {
+            case "account_number":
+                return ACCOUNT_NUMBER;
             case "credit_card_cvv":
                 return CREDIT_CARD_CVV;
             case "drug":
@@ -237,6 +239,8 @@ public final class EntityType {
                 return PERSON_AGE;
             case "money_amount":
                 return MONEY_AMOUNT;
+            case "time":
+                return TIME;
             case "phone_number":
                 return PHONE_NUMBER;
             case "date_interval":
@@ -245,12 +249,14 @@ public final class EntityType {
                 return PHYSICAL_ATTRIBUTE;
             case "ip_address":
                 return IP_ADDRESS;
-            case "duration":
-                return DURATION;
             case "person_name":
                 return PERSON_NAME;
             case "credit_card_expiration":
                 return CREDIT_CARD_EXPIRATION;
+            case "vehicle_id":
+                return VEHICLE_ID;
+            case "gender_sexuality":
+                return GENDER_SEXUALITY;
             case "occupation":
                 return OCCUPATION;
             case "event":
@@ -261,20 +267,16 @@ public final class EntityType {
                 return ORGANIZATION;
             case "language":
                 return LANGUAGE;
-            case "time":
-                return TIME;
             case "blood_type":
                 return BLOOD_TYPE;
+            case "duration":
+                return DURATION;
             case "drivers_license":
                 return DRIVERS_LICENSE;
             case "username":
                 return USERNAME;
-            case "marital_status":
-                return MARITAL_STATUS;
             case "medical_process":
                 return MEDICAL_PROCESS;
-            case "vehicle_id":
-                return VEHICLE_ID;
             case "email_address":
                 return EMAIL_ADDRESS;
             case "zodiac_sign":
@@ -285,24 +287,20 @@ public final class EntityType {
                 return DATE_OF_BIRTH;
             case "nationality":
                 return NATIONALITY;
-            case "account_number":
-                return ACCOUNT_NUMBER;
             case "us_social_security_number":
                 return US_SOCIAL_SECURITY_NUMBER;
             case "injury":
                 return INJURY;
-            case "number_sequence":
-                return NUMBER_SEQUENCE;
             case "passport_number":
                 return PASSPORT_NUMBER;
+            case "number_sequence":
+                return NUMBER_SEQUENCE;
             case "political_affiliation":
                 return POLITICAL_AFFILIATION;
             case "religion":
                 return RELIGION;
             case "statistics":
                 return STATISTICS;
-            case "gender_sexuality":
-                return GENDER_SEXUALITY;
             case "medical_condition":
                 return MEDICAL_CONDITION;
             case "password":
@@ -311,6 +309,8 @@ public final class EntityType {
                 return URL;
             case "credit_card_number":
                 return CREDIT_CARD_NUMBER;
+            case "marital_status":
+                return MARITAL_STATUS;
             case "location":
                 return LOCATION;
             case "date":
