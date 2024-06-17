@@ -20,14 +20,10 @@ public class AssemblyAI {
 
     protected final Supplier<RealtimeClient> realtimeClient;
 
-    protected final Supplier<LemurClient> lemurClient;
+    protected final Supplier<EnhancedLemurClient> lemurClient;
 
     public AssemblyAI(ClientOptions clientOptions) {
-        this.clientOptions = clientOptions;
-        this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
-        this.transcriptClient = Suppliers.memoize(() -> new PollingTranscriptsClient(clientOptions, this));
-        this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
-        this.lemurClient = Suppliers.memoize(() -> new LemurClient(clientOptions));
+        this(clientOptions, clientOptions);
     }
 
     public AssemblyAI(ClientOptions clientOptions, ClientOptions lemurClientOptions) {
@@ -35,7 +31,7 @@ public class AssemblyAI {
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
         this.transcriptClient = Suppliers.memoize(() -> new PollingTranscriptsClient(clientOptions, this));
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
-        this.lemurClient = Suppliers.memoize(() -> new LemurClient(lemurClientOptions));
+        this.lemurClient = Suppliers.memoize(() -> new EnhancedLemurClient(lemurClientOptions));
     }
 
     public FilesClient files() {
@@ -50,7 +46,7 @@ public class AssemblyAI {
         return this.realtimeClient.get();
     }
 
-    public LemurClient lemur() {
+    public EnhancedLemurClient lemur() {
         return this.lemurClient.get();
     }
 

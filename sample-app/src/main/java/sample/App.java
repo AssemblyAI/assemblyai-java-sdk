@@ -70,9 +70,9 @@ public final class App {
 
         System.out.println("Summary: " + response.getResponse());
 
-        LemurResponse response2 = client.lemur().getResponse(response.getRequestId());
+        LemurTaskResponse response2 = client.lemur().getResponse(response.getRequestId(), LemurTaskResponse.class);
 
-        System.out.println("Summary 2: " + ((LemurTaskResponse)response2.get()).getResponse());
+        System.out.println("Summary 2: " + response2.getResponse());
 
         transcript = client.transcripts().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);
