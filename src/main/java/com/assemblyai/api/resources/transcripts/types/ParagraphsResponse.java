@@ -25,7 +25,7 @@ public final class ParagraphsResponse {
 
     private final double confidence;
 
-    private final double audioDuration;
+    private final int audioDuration;
 
     private final List<TranscriptParagraph> paragraphs;
 
@@ -34,7 +34,7 @@ public final class ParagraphsResponse {
     private ParagraphsResponse(
             String id,
             double confidence,
-            double audioDuration,
+            int audioDuration,
             List<TranscriptParagraph> paragraphs,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -55,7 +55,7 @@ public final class ParagraphsResponse {
     }
 
     @JsonProperty("audio_duration")
-    public double getAudioDuration() {
+    public int getAudioDuration() {
         return audioDuration;
     }
 
@@ -107,7 +107,7 @@ public final class ParagraphsResponse {
     }
 
     public interface AudioDurationStage {
-        _FinalStage audioDuration(double audioDuration);
+        _FinalStage audioDuration(int audioDuration);
     }
 
     public interface _FinalStage {
@@ -126,7 +126,7 @@ public final class ParagraphsResponse {
 
         private double confidence;
 
-        private double audioDuration;
+        private int audioDuration;
 
         private List<TranscriptParagraph> paragraphs = new ArrayList<>();
 
@@ -160,7 +160,7 @@ public final class ParagraphsResponse {
 
         @java.lang.Override
         @JsonSetter("audio_duration")
-        public _FinalStage audioDuration(double audioDuration) {
+        public _FinalStage audioDuration(int audioDuration) {
             this.audioDuration = audioDuration;
             return this;
         }
