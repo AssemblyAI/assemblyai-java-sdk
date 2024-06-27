@@ -225,6 +225,9 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         return speechModel;
     }
 
+    /**
+     * @return The URL to which we send webhook requests. We sends two different types of webhook requests. One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.
+     */
     @JsonProperty("webhook_url")
     @java.lang.Override
     public Optional<String> getWebhookUrl() {
@@ -1404,6 +1407,10 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
             return this;
         }
 
+        /**
+         * <p>The URL to which we send webhook requests. We sends two different types of webhook requests. One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage webhookUrl(String webhookUrl) {
             this.webhookUrl = Optional.of(webhookUrl);

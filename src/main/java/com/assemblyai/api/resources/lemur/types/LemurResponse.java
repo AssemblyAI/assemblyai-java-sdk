@@ -31,13 +31,9 @@ public final class LemurResponse {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((LemurTaskResponse) this.value);
+            return visitor.visit((LemurStringResponse) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((LemurSummaryResponse) this.value);
-        } else if (this.type == 2) {
             return visitor.visit((LemurQuestionAnswerResponse) this.value);
-        } else if (this.type == 3) {
-            return visitor.visit((LemurActionItemsResponse) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -62,30 +58,18 @@ public final class LemurResponse {
         return this.value.toString();
     }
 
-    public static LemurResponse of(LemurTaskResponse value) {
+    public static LemurResponse of(LemurStringResponse value) {
         return new LemurResponse(value, 0);
     }
 
-    public static LemurResponse of(LemurSummaryResponse value) {
+    public static LemurResponse of(LemurQuestionAnswerResponse value) {
         return new LemurResponse(value, 1);
     }
 
-    public static LemurResponse of(LemurQuestionAnswerResponse value) {
-        return new LemurResponse(value, 2);
-    }
-
-    public static LemurResponse of(LemurActionItemsResponse value) {
-        return new LemurResponse(value, 3);
-    }
-
     public interface Visitor<T> {
-        T visit(LemurTaskResponse value);
-
-        T visit(LemurSummaryResponse value);
+        T visit(LemurStringResponse value);
 
         T visit(LemurQuestionAnswerResponse value);
-
-        T visit(LemurActionItemsResponse value);
     }
 
     static final class Deserializer extends StdDeserializer<LemurResponse> {
@@ -97,19 +81,11 @@ public final class LemurResponse {
         public LemurResponse deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, LemurTaskResponse.class));
-            } catch (IllegalArgumentException e) {
-            }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, LemurSummaryResponse.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, LemurStringResponse.class));
             } catch (IllegalArgumentException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, LemurQuestionAnswerResponse.class));
-            } catch (IllegalArgumentException e) {
-            }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, LemurActionItemsResponse.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
