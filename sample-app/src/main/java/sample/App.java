@@ -3,6 +3,7 @@ package sample;
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.resources.files.types.UploadedFile;
+import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParams;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
 import com.assemblyai.api.resources.lemur.types.*;
 import com.assemblyai.api.resources.realtime.requests.CreateRealtimeTemporaryTokenParams;
@@ -11,6 +12,7 @@ import com.assemblyai.api.resources.realtime.types.RealtimeTemporaryTokenRespons
 import com.assemblyai.api.resources.realtime.types.SessionInformation;
 import com.assemblyai.api.resources.transcripts.requests.*;
 import com.assemblyai.api.resources.transcripts.types.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,15 +35,13 @@ public final class App {
                         .build()
         );
 
-        if(transcript.getStatus() == TranscriptStatus.ERROR)
-        {
+        if (transcript.getStatus() == TranscriptStatus.ERROR) {
             System.out.println("Transcript error: " + transcript.getError().get());
             System.exit(1);
             return;
         }
 
-        for(SentimentAnalysisResult result: transcript.getSentimentAnalysisResults().get())
-        {
+        for (SentimentAnalysisResult result : transcript.getSentimentAnalysisResults().get()) {
             System.out.println("Text: " + result.getText());
             System.out.println("Sentiment: " + result.getSentiment());
             System.out.println("Confidence: " + result.getConfidence());
@@ -63,16 +63,34 @@ public final class App {
         WordSearchResponse search = client.transcripts().wordSearch(transcript.getId(), List.of("NBC", "President"));
         System.out.println("Search transcript. " + search);
 
-        LemurTaskResponse response = client.lemur().task(LemurTaskParams.builder()
+        LemurTaskResponse lemurTaskResponse = client.lemur().task(LemurTaskParams.builder()
                 .prompt("Summarize this transcript.")
                 .transcriptIds(List.of(transcript.getId()))
                 .build());
 
-        System.out.println("Summary: " + response.getResponse());
+        System.out.println("Summary: " + lemurTaskResponse.getResponse());
 
-        LemurResponse response2 = client.lemur().getResponse(response.getRequestId());
+        LemurResponse lemurResponse = client.lemur().getResponse(lemurTaskResponse.getRequestId());
+        LemurStringResponse lemurStringResponse = (LemurStringResponse) lemurResponse.get();
 
-        System.out.println("Summary 2: " + ((LemurTaskResponse)response2.get()).getResponse());
+        System.out.println("Summary 2: " + lemurStringResponse.getResponse());
+
+        LemurQuestionAnswerResponse lemurQuestionAnswerResponse = client.lemur().questionAnswer(
+                LemurQuestionAnswerParams.builder()
+                        .addQuestions(LemurQuestion.builder()
+                                .question("Which president is mentioned?")
+                                .build())
+                        .transcriptIds(List.of(transcript.getId()))
+                        .build());
+
+        LemurQuestionAnswer qa = lemurQuestionAnswerResponse.getResponse().get(0);
+        System.out.println("Q&A: " + qa.getQuestion() + ": " + qa.getAnswer());
+
+        LemurResponse lemurResponse2 = client.lemur().getResponse(lemurQuestionAnswerResponse.getRequestId());
+        LemurQuestionAnswerResponse lemurQuestionAnswerResponse2 = (LemurQuestionAnswerResponse) lemurResponse2.get();
+
+        LemurQuestionAnswer qa2 = lemurQuestionAnswerResponse2.getResponse().get(0);
+        System.out.println("Q&A: " + qa2.getQuestion() + ": " + qa2.getAnswer());
 
         transcript = client.transcripts().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);
