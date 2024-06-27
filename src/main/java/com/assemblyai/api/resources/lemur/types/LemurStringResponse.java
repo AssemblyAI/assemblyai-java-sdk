@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LemurActionItemsResponse.Builder.class)
-public final class LemurActionItemsResponse implements ILemurStringResponse {
+@JsonDeserialize(builder = LemurStringResponse.Builder.class)
+public final class LemurStringResponse implements ILemurStringResponse, ILemurBaseResponse {
     private final String response;
 
     private final String requestId;
@@ -26,7 +26,7 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
 
     private final Map<String, Object> additionalProperties;
 
-    private LemurActionItemsResponse(
+    private LemurStringResponse(
             String response, String requestId, LemurUsage usage, Map<String, Object> additionalProperties) {
         this.response = response;
         this.requestId = requestId;
@@ -64,7 +64,7 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LemurActionItemsResponse && equalTo((LemurActionItemsResponse) other);
+        return other instanceof LemurStringResponse && equalTo((LemurStringResponse) other);
     }
 
     @JsonAnyGetter
@@ -72,7 +72,7 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(LemurActionItemsResponse other) {
+    private boolean equalTo(LemurStringResponse other) {
         return response.equals(other.response) && requestId.equals(other.requestId) && usage.equals(other.usage);
     }
 
@@ -93,7 +93,7 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
     public interface ResponseStage {
         RequestIdStage response(String response);
 
-        Builder from(LemurActionItemsResponse other);
+        Builder from(LemurStringResponse other);
     }
 
     public interface RequestIdStage {
@@ -105,7 +105,7 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
     }
 
     public interface _FinalStage {
-        LemurActionItemsResponse build();
+        LemurStringResponse build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -122,7 +122,7 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(LemurActionItemsResponse other) {
+        public Builder from(LemurStringResponse other) {
             response(other.getResponse());
             requestId(other.getRequestId());
             usage(other.getUsage());
@@ -163,8 +163,8 @@ public final class LemurActionItemsResponse implements ILemurStringResponse {
         }
 
         @java.lang.Override
-        public LemurActionItemsResponse build() {
-            return new LemurActionItemsResponse(response, requestId, usage, additionalProperties);
+        public LemurStringResponse build() {
+            return new LemurStringResponse(response, requestId, usage, additionalProperties);
         }
     }
 }
