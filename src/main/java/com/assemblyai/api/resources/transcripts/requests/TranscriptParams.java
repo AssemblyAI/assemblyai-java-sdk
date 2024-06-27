@@ -225,9 +225,6 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         return speechModel;
     }
 
-    /**
-     * @return The URL to which AssemblyAI send webhooks upon transcription completion
-     */
     @JsonProperty("webhook_url")
     @java.lang.Override
     public Optional<String> getWebhookUrl() {
@@ -235,7 +232,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     /**
-     * @return The header name which should be sent back with webhook calls
+     * @return The header name to be sent with the transcript completed or failed webhook requests
      */
     @JsonProperty("webhook_auth_header_name")
     @java.lang.Override
@@ -244,7 +241,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     /**
-     * @return Specify a header name and value to send back with a webhook call for added security
+     * @return The header value to send back with the transcript completed or failed webhook requests for added security
      */
     @JsonProperty("webhook_auth_header_value")
     @java.lang.Override
@@ -1374,7 +1371,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         }
 
         /**
-         * <p>Specify a header name and value to send back with a webhook call for added security</p>
+         * <p>The header value to send back with the transcript completed or failed webhook requests for added security</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1391,7 +1388,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         }
 
         /**
-         * <p>The header name which should be sent back with webhook calls</p>
+         * <p>The header name to be sent with the transcript completed or failed webhook requests</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1407,10 +1404,6 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
             return this;
         }
 
-        /**
-         * <p>The URL to which AssemblyAI send webhooks upon transcription completion</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @java.lang.Override
         public _FinalStage webhookUrl(String webhookUrl) {
             this.webhookUrl = Optional.of(webhookUrl);

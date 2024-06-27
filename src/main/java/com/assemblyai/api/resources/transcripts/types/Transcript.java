@@ -41,7 +41,7 @@ public final class Transcript {
 
     private final Optional<Double> confidence;
 
-    private final Optional<Double> audioDuration;
+    private final Optional<Integer> audioDuration;
 
     private final Optional<Boolean> punctuate;
 
@@ -146,7 +146,7 @@ public final class Transcript {
             Optional<List<TranscriptWord>> words,
             Optional<List<TranscriptUtterance>> utterances,
             Optional<Double> confidence,
-            Optional<Double> audioDuration,
+            Optional<Integer> audioDuration,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> dualChannel,
@@ -340,7 +340,7 @@ public final class Transcript {
      * @return The duration of this transcript object's media file, in seconds
      */
     @JsonProperty("audio_duration")
-    public Optional<Double> getAudioDuration() {
+    public Optional<Integer> getAudioDuration() {
         return audioDuration;
     }
 
@@ -374,7 +374,9 @@ public final class Transcript {
     }
 
     /**
-     * @return The URL to which we send webhooks upon transcription completion
+     * @return The URL to which we send webhook requests.
+     * We sends two different types of webhook requests.
+     * One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.
      */
     @JsonProperty("webhook_url")
     public Optional<String> getWebhookUrl() {
@@ -382,7 +384,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The status code we received from your server when delivering your webhook, if a webhook URL was provided
+     * @return The status code we received from your server when delivering the transcript completed or failed webhook request, if a webhook URL was provided
      */
     @JsonProperty("webhook_status_code")
     public Optional<Integer> getWebhookStatusCode() {
@@ -398,7 +400,7 @@ public final class Transcript {
     }
 
     /**
-     * @return The header name which should be sent back with webhook calls
+     * @return The header name to be sent with the transcript completed or failed webhook requests
      */
     @JsonProperty("webhook_auth_header_name")
     public Optional<String> getWebhookAuthHeaderName() {
@@ -896,9 +898,9 @@ public final class Transcript {
 
         _FinalStage confidence(Double confidence);
 
-        _FinalStage audioDuration(Optional<Double> audioDuration);
+        _FinalStage audioDuration(Optional<Integer> audioDuration);
 
-        _FinalStage audioDuration(Double audioDuration);
+        _FinalStage audioDuration(Integer audioDuration);
 
         _FinalStage punctuate(Optional<Boolean> punctuate);
 
@@ -1177,7 +1179,7 @@ public final class Transcript {
 
         private Optional<Boolean> punctuate = Optional.empty();
 
-        private Optional<Double> audioDuration = Optional.empty();
+        private Optional<Integer> audioDuration = Optional.empty();
 
         private Optional<Double> confidence = Optional.empty();
 
@@ -1923,7 +1925,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The header name which should be sent back with webhook calls</p>
+         * <p>The header name to be sent with the transcript completed or failed webhook requests</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1940,7 +1942,7 @@ public final class Transcript {
         }
 
         /**
-         * <p>The status code we received from your server when delivering your webhook, if a webhook URL was provided</p>
+         * <p>The status code we received from your server when delivering the transcript completed or failed webhook request, if a webhook URL was provided</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1957,7 +1959,9 @@ public final class Transcript {
         }
 
         /**
-         * <p>The URL to which we send webhooks upon transcription completion</p>
+         * <p>The URL to which we send webhook requests.
+         * We sends two different types of webhook requests.
+         * One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -2042,14 +2046,14 @@ public final class Transcript {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage audioDuration(Double audioDuration) {
+        public _FinalStage audioDuration(Integer audioDuration) {
             this.audioDuration = Optional.of(audioDuration);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "audio_duration", nulls = Nulls.SKIP)
-        public _FinalStage audioDuration(Optional<Double> audioDuration) {
+        public _FinalStage audioDuration(Optional<Integer> audioDuration) {
             this.audioDuration = audioDuration;
             return this;
         }
