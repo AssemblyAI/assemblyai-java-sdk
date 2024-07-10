@@ -90,7 +90,6 @@ public final class LemurTaskParams implements ILemurBaseParams {
 
     /**
      * @return The model that is used for the final prompt after compression is performed.
-     * Defaults to &quot;default&quot;.
      */
     @JsonProperty("final_model")
     @java.lang.Override
@@ -283,8 +282,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
         }
 
         /**
-         * <p>The model that is used for the final prompt after compression is performed.
-         * Defaults to &quot;default&quot;.</p>
+         * <p>The model that is used for the final prompt after compression is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
