@@ -96,6 +96,7 @@ public class PollingTranscriptsClient extends TranscriptsClient {
                 .sentimentAnalysis(transcriptParams.getSentimentAnalysis())
                 .autoChapters(transcriptParams.getAutoChapters())
                 .entityDetection(transcriptParams.getEntityDetection())
+                .speechModel(transcriptParams.getSpeechModel())
                 .speechThreshold(transcriptParams.getSpeechThreshold())
                 .summarization(transcriptParams.getSummarization())
                 .summaryModel(transcriptParams.getSummaryModel())
