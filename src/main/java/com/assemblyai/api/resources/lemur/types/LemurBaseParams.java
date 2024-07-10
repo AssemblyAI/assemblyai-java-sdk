@@ -83,7 +83,6 @@ public final class LemurBaseParams implements ILemurBaseParams {
 
     /**
      * @return The model that is used for the final prompt after compression is performed.
-     * Defaults to &quot;default&quot;.
      */
     @JsonProperty("final_model")
     @java.lang.Override
