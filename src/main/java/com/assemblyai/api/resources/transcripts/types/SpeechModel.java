@@ -11,13 +11,6 @@ public final class SpeechModel {
 
     public static final SpeechModel BEST = new SpeechModel(Value.BEST, "best");
 
-    /**
-     * @deprecated The Conformer-2 option is deprecated and will stop working in the near future.
-     * Use {@link #BEST} or {@link #NANO} instead.
-     */
-    @Deprecated
-    public static final SpeechModel CONFORMER2 = new SpeechModel(Value.CONFORMER2, "conformer-2");
-
     private final Value value;
 
     private final String string;
@@ -53,8 +46,6 @@ public final class SpeechModel {
                 return visitor.visitNano();
             case BEST:
                 return visitor.visitBest();
-            case CONFORMER2:
-                return visitor.visitConformer2();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -68,8 +59,6 @@ public final class SpeechModel {
                 return NANO;
             case "best":
                 return BEST;
-            case "conformer-2":
-                return CONFORMER2;
             default:
                 return new SpeechModel(Value.UNKNOWN, value);
         }
@@ -80,13 +69,6 @@ public final class SpeechModel {
 
         NANO,
 
-        /**
-         * @deprecated The Conformer-2 option is deprecated and will stop working in the near future.
-         * Use {@link #BEST} or {@link #NANO} instead.
-         */
-        @Deprecated
-        CONFORMER2,
-
         UNKNOWN
     }
 
@@ -94,8 +76,6 @@ public final class SpeechModel {
         T visitBest();
 
         T visitNano();
-
-        T visitConformer2();
 
         T visitUnknown(String unknownType);
     }
