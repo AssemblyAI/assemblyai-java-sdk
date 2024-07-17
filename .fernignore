@@ -5,9 +5,6 @@ src/main/java/com/assemblyai/api/Transcriber.java
 src/main/java/com/assemblyai/api/RealtimeTranscriber.java
 src/main/java/com/assemblyai/api/core/Constants.java
 
-# Ignore SpeechModel to manually mark conformer-2 as deprecated
-src/main/java/com/assemblyai/api/resources/transcripts/types/SpeechModel.java
-
 # Temporarily update deserialization logic
 src/main/java/com/assemblyai/api/core/ObjectMappers.java
 src/main/java/com/assemblyai/api/resources/realtime/types/FinalTranscript.java
