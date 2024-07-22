@@ -146,10 +146,15 @@ public class PollingTranscriptsClient extends TranscriptsClient {
      */
     public Transcript transcribe(String url, TranscriptOptionalParams transcriptParams) {
         Transcript transcriptResponse = submit(url, transcriptParams);
-        return awaitCompletion(transcriptResponse.getId());
+        return waitUntilReady(transcriptResponse.getId());
     }
 
-    private Transcript awaitCompletion(String transcriptId) {
+    /**
+     * Wait until an existing transcript has the status "completed" or "error".
+     * @param transcriptId The ID of the transcript
+     * @return The transcript with status "completed" or "error"
+     */
+    public Transcript waitUntilReady(String transcriptId) {
         try {
             while (true) {
                 Transcript transcript = this.client.transcripts().get(transcriptId);
