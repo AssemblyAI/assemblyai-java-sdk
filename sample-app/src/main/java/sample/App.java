@@ -41,6 +41,8 @@ public final class App {
             return;
         }
 
+        transcript = client.transcripts().waitUntilReady(transcript.getId());
+
         for (SentimentAnalysisResult result : transcript.getSentimentAnalysisResults().get()) {
             System.out.println("Text: " + result.getText());
             System.out.println("Sentiment: " + result.getSentiment());
