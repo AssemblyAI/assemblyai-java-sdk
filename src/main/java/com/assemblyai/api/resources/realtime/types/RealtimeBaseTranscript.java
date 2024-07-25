@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RealtimeBaseTranscript.Builder.class)
 public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
     private final int audioStart;

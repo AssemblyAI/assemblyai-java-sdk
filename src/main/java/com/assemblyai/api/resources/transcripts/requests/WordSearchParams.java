@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WordSearchParams.Builder.class)
 public final class WordSearchParams {
     private final Optional<String> words;
@@ -87,7 +87,7 @@ public final class WordSearchParams {
         }
 
         public Builder words(String words) {
-            this.words = Optional.of(words);
+            this.words = Optional.ofNullable(words);
             return this;
         }
 

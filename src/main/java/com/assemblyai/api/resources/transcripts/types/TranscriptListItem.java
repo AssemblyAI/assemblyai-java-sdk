@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptListItem.Builder.class)
 public final class TranscriptListItem {
     private final String id;
@@ -252,7 +252,7 @@ public final class TranscriptListItem {
          */
         @java.lang.Override
         public _FinalStage error(String error) {
-            this.error = Optional.of(error);
+            this.error = Optional.ofNullable(error);
             return this;
         }
 

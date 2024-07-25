@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TopicDetectionResult.Builder.class)
 public final class TopicDetectionResult {
     private final String text;
@@ -139,7 +139,7 @@ public final class TopicDetectionResult {
 
         @java.lang.Override
         public _FinalStage timestamp(Timestamp timestamp) {
-            this.timestamp = Optional.of(timestamp);
+            this.timestamp = Optional.ofNullable(timestamp);
             return this;
         }
 
@@ -152,7 +152,7 @@ public final class TopicDetectionResult {
 
         @java.lang.Override
         public _FinalStage labels(List<TopicDetectionResultLabelsItem> labels) {
-            this.labels = Optional.of(labels);
+            this.labels = Optional.ofNullable(labels);
             return this;
         }
 

@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListTranscriptParams.Builder.class)
 public final class ListTranscriptParams {
     private final Optional<Integer> limit;
@@ -170,7 +170,7 @@ public final class ListTranscriptParams {
         }
 
         public Builder limit(Integer limit) {
-            this.limit = Optional.of(limit);
+            this.limit = Optional.ofNullable(limit);
             return this;
         }
 
@@ -181,7 +181,7 @@ public final class ListTranscriptParams {
         }
 
         public Builder status(TranscriptStatus status) {
-            this.status = Optional.of(status);
+            this.status = Optional.ofNullable(status);
             return this;
         }
 
@@ -192,7 +192,7 @@ public final class ListTranscriptParams {
         }
 
         public Builder createdOn(String createdOn) {
-            this.createdOn = Optional.of(createdOn);
+            this.createdOn = Optional.ofNullable(createdOn);
             return this;
         }
 
@@ -203,7 +203,7 @@ public final class ListTranscriptParams {
         }
 
         public Builder beforeId(String beforeId) {
-            this.beforeId = Optional.of(beforeId);
+            this.beforeId = Optional.ofNullable(beforeId);
             return this;
         }
 
@@ -214,7 +214,7 @@ public final class ListTranscriptParams {
         }
 
         public Builder afterId(String afterId) {
-            this.afterId = Optional.of(afterId);
+            this.afterId = Optional.ofNullable(afterId);
             return this;
         }
 
@@ -225,7 +225,7 @@ public final class ListTranscriptParams {
         }
 
         public Builder throttledOnly(Boolean throttledOnly) {
-            this.throttledOnly = Optional.of(throttledOnly);
+            this.throttledOnly = Optional.ofNullable(throttledOnly);
             return this;
         }
 
