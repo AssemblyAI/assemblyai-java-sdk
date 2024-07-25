@@ -4,6 +4,8 @@ src/main/java/com/assemblyai/api/PollingTranscriptsClient.java
 src/main/java/com/assemblyai/api/Transcriber.java
 src/main/java/com/assemblyai/api/RealtimeTranscriber.java
 src/main/java/com/assemblyai/api/core/Constants.java
+src/main/java/com/assemblyai/api/core/ApiError.java
+src/main/java/com/assemblyai/api/core/AssemblyAIApiException.java
 
 # Temporarily update deserialization logic
 src/main/java/com/assemblyai/api/core/ObjectMappers.java
