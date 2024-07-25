@@ -2,7 +2,9 @@ package com.assemblyai.api.core;
 
 /**
  * This exception type will be thrown for any non-2XX API responses.
+ * @deprecated Use {@link AssemblyAIApiException}. ApiError will be removed in a future release.
  */
+@Deprecated
 public class ApiError extends AssemblyAIException {
     /**
      * The error code of the response that triggered the exception.
