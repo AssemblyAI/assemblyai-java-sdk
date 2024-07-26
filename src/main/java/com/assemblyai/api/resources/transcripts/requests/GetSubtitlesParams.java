@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetSubtitlesParams.Builder.class)
 public final class GetSubtitlesParams {
     private final Optional<Integer> charsPerCaption;
@@ -87,7 +87,7 @@ public final class GetSubtitlesParams {
         }
 
         public Builder charsPerCaption(Integer charsPerCaption) {
-            this.charsPerCaption = Optional.of(charsPerCaption);
+            this.charsPerCaption = Optional.ofNullable(charsPerCaption);
             return this;
         }
 

@@ -2,6 +2,9 @@ package sample;
 
 import com.assemblyai.api.AssemblyAI;
 import com.assemblyai.api.RealtimeTranscriber;
+import com.assemblyai.api.core.ApiError;
+import com.assemblyai.api.core.AssemblyAIApiException;
+import com.assemblyai.api.core.AssemblyAIException;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParams;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
@@ -93,6 +96,33 @@ public final class App {
 
         LemurQuestionAnswer qa2 = lemurQuestionAnswerResponse2.getResponse().get(0);
         System.out.println("Q&A: " + qa2.getQuestion() + ": " + qa2.getAnswer());
+
+        try {
+            client.lemur().task(LemurTaskParams.builder().prompt("test").build());
+        } catch (AssemblyAIException e) {
+            System.out.println("Caught expected AssemblyAIException");
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("This error should've been AssemblyAIException, but is not.");
+        }
+
+        try {
+            client.lemur().task(LemurTaskParams.builder().prompt("test").build());
+        } catch (AssemblyAIApiException e) {
+            System.out.println("Caught expected AssemblyAIApiException");
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("This error should've been AssemblyAIApiException, but is not.");
+        }
+
+        try {
+            client.lemur().task(LemurTaskParams.builder().prompt("test").build());
+        } catch (ApiError e) {
+            System.out.println("Caught expected ApiError");
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("This error should've been ApiError, but is not.");
+        }
 
         transcript = client.transcripts().delete(transcript.getId());
         System.out.println("Delete transcript. " + transcript);

@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptOptionalParams.Builder.class)
 public final class TranscriptOptionalParams implements ITranscriptOptionalParams {
     private final Optional<TranscriptLanguageCode> languageCode;
@@ -714,7 +714,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder languageCode(TranscriptLanguageCode languageCode) {
-            this.languageCode = Optional.of(languageCode);
+            this.languageCode = Optional.ofNullable(languageCode);
             return this;
         }
 
@@ -725,7 +725,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder punctuate(Boolean punctuate) {
-            this.punctuate = Optional.of(punctuate);
+            this.punctuate = Optional.ofNullable(punctuate);
             return this;
         }
 
@@ -736,7 +736,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder formatText(Boolean formatText) {
-            this.formatText = Optional.of(formatText);
+            this.formatText = Optional.ofNullable(formatText);
             return this;
         }
 
@@ -747,7 +747,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder dualChannel(Boolean dualChannel) {
-            this.dualChannel = Optional.of(dualChannel);
+            this.dualChannel = Optional.ofNullable(dualChannel);
             return this;
         }
 
@@ -758,7 +758,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder speechModel(SpeechModel speechModel) {
-            this.speechModel = Optional.of(speechModel);
+            this.speechModel = Optional.ofNullable(speechModel);
             return this;
         }
 
@@ -769,7 +769,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder webhookUrl(String webhookUrl) {
-            this.webhookUrl = Optional.of(webhookUrl);
+            this.webhookUrl = Optional.ofNullable(webhookUrl);
             return this;
         }
 
@@ -780,7 +780,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder webhookAuthHeaderName(String webhookAuthHeaderName) {
-            this.webhookAuthHeaderName = Optional.of(webhookAuthHeaderName);
+            this.webhookAuthHeaderName = Optional.ofNullable(webhookAuthHeaderName);
             return this;
         }
 
@@ -791,7 +791,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder webhookAuthHeaderValue(String webhookAuthHeaderValue) {
-            this.webhookAuthHeaderValue = Optional.of(webhookAuthHeaderValue);
+            this.webhookAuthHeaderValue = Optional.ofNullable(webhookAuthHeaderValue);
             return this;
         }
 
@@ -802,7 +802,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder autoHighlights(Boolean autoHighlights) {
-            this.autoHighlights = Optional.of(autoHighlights);
+            this.autoHighlights = Optional.ofNullable(autoHighlights);
             return this;
         }
 
@@ -813,7 +813,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder audioStartFrom(Integer audioStartFrom) {
-            this.audioStartFrom = Optional.of(audioStartFrom);
+            this.audioStartFrom = Optional.ofNullable(audioStartFrom);
             return this;
         }
 
@@ -824,7 +824,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder audioEndAt(Integer audioEndAt) {
-            this.audioEndAt = Optional.of(audioEndAt);
+            this.audioEndAt = Optional.ofNullable(audioEndAt);
             return this;
         }
 
@@ -835,7 +835,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder wordBoost(List<String> wordBoost) {
-            this.wordBoost = Optional.of(wordBoost);
+            this.wordBoost = Optional.ofNullable(wordBoost);
             return this;
         }
 
@@ -846,7 +846,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder boostParam(TranscriptBoostParam boostParam) {
-            this.boostParam = Optional.of(boostParam);
+            this.boostParam = Optional.ofNullable(boostParam);
             return this;
         }
 
@@ -857,7 +857,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder filterProfanity(Boolean filterProfanity) {
-            this.filterProfanity = Optional.of(filterProfanity);
+            this.filterProfanity = Optional.ofNullable(filterProfanity);
             return this;
         }
 
@@ -868,7 +868,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder redactPii(Boolean redactPii) {
-            this.redactPii = Optional.of(redactPii);
+            this.redactPii = Optional.ofNullable(redactPii);
             return this;
         }
 
@@ -879,7 +879,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder redactPiiAudio(Boolean redactPiiAudio) {
-            this.redactPiiAudio = Optional.of(redactPiiAudio);
+            this.redactPiiAudio = Optional.ofNullable(redactPiiAudio);
             return this;
         }
 
@@ -890,7 +890,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
-            this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
+            this.redactPiiAudioQuality = Optional.ofNullable(redactPiiAudioQuality);
             return this;
         }
 
@@ -901,7 +901,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
-            this.redactPiiPolicies = Optional.of(redactPiiPolicies);
+            this.redactPiiPolicies = Optional.ofNullable(redactPiiPolicies);
             return this;
         }
 
@@ -912,7 +912,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder redactPiiSub(SubstitutionPolicy redactPiiSub) {
-            this.redactPiiSub = Optional.of(redactPiiSub);
+            this.redactPiiSub = Optional.ofNullable(redactPiiSub);
             return this;
         }
 
@@ -923,7 +923,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder speakerLabels(Boolean speakerLabels) {
-            this.speakerLabels = Optional.of(speakerLabels);
+            this.speakerLabels = Optional.ofNullable(speakerLabels);
             return this;
         }
 
@@ -934,7 +934,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder speakersExpected(Integer speakersExpected) {
-            this.speakersExpected = Optional.of(speakersExpected);
+            this.speakersExpected = Optional.ofNullable(speakersExpected);
             return this;
         }
 
@@ -945,7 +945,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder contentSafety(Boolean contentSafety) {
-            this.contentSafety = Optional.of(contentSafety);
+            this.contentSafety = Optional.ofNullable(contentSafety);
             return this;
         }
 
@@ -956,7 +956,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder contentSafetyConfidence(Integer contentSafetyConfidence) {
-            this.contentSafetyConfidence = Optional.of(contentSafetyConfidence);
+            this.contentSafetyConfidence = Optional.ofNullable(contentSafetyConfidence);
             return this;
         }
 
@@ -967,7 +967,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder iabCategories(Boolean iabCategories) {
-            this.iabCategories = Optional.of(iabCategories);
+            this.iabCategories = Optional.ofNullable(iabCategories);
             return this;
         }
 
@@ -978,7 +978,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder languageDetection(Boolean languageDetection) {
-            this.languageDetection = Optional.of(languageDetection);
+            this.languageDetection = Optional.ofNullable(languageDetection);
             return this;
         }
 
@@ -989,7 +989,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder customSpelling(List<TranscriptCustomSpelling> customSpelling) {
-            this.customSpelling = Optional.of(customSpelling);
+            this.customSpelling = Optional.ofNullable(customSpelling);
             return this;
         }
 
@@ -1000,7 +1000,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder disfluencies(Boolean disfluencies) {
-            this.disfluencies = Optional.of(disfluencies);
+            this.disfluencies = Optional.ofNullable(disfluencies);
             return this;
         }
 
@@ -1011,7 +1011,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder sentimentAnalysis(Boolean sentimentAnalysis) {
-            this.sentimentAnalysis = Optional.of(sentimentAnalysis);
+            this.sentimentAnalysis = Optional.ofNullable(sentimentAnalysis);
             return this;
         }
 
@@ -1022,7 +1022,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder autoChapters(Boolean autoChapters) {
-            this.autoChapters = Optional.of(autoChapters);
+            this.autoChapters = Optional.ofNullable(autoChapters);
             return this;
         }
 
@@ -1033,7 +1033,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder entityDetection(Boolean entityDetection) {
-            this.entityDetection = Optional.of(entityDetection);
+            this.entityDetection = Optional.ofNullable(entityDetection);
             return this;
         }
 
@@ -1044,7 +1044,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder speechThreshold(Double speechThreshold) {
-            this.speechThreshold = Optional.of(speechThreshold);
+            this.speechThreshold = Optional.ofNullable(speechThreshold);
             return this;
         }
 
@@ -1055,7 +1055,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder summarization(Boolean summarization) {
-            this.summarization = Optional.of(summarization);
+            this.summarization = Optional.ofNullable(summarization);
             return this;
         }
 
@@ -1066,7 +1066,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder summaryModel(SummaryModel summaryModel) {
-            this.summaryModel = Optional.of(summaryModel);
+            this.summaryModel = Optional.ofNullable(summaryModel);
             return this;
         }
 
@@ -1077,7 +1077,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder summaryType(SummaryType summaryType) {
-            this.summaryType = Optional.of(summaryType);
+            this.summaryType = Optional.ofNullable(summaryType);
             return this;
         }
 
@@ -1088,7 +1088,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder customTopics(Boolean customTopics) {
-            this.customTopics = Optional.of(customTopics);
+            this.customTopics = Optional.ofNullable(customTopics);
             return this;
         }
 
@@ -1099,7 +1099,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         }
 
         public Builder topics(List<String> topics) {
-            this.topics = Optional.of(topics);
+            this.topics = Optional.ofNullable(topics);
             return this;
         }
 

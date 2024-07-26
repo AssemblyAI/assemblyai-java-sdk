@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SentimentAnalysisResult.Builder.class)
 public final class SentimentAnalysisResult {
     private final String text;
@@ -255,7 +255,7 @@ public final class SentimentAnalysisResult {
          */
         @java.lang.Override
         public _FinalStage speaker(String speaker) {
-            this.speaker = Optional.of(speaker);
+            this.speaker = Optional.ofNullable(speaker);
             return this;
         }
 

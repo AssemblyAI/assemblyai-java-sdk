@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptWord.Builder.class)
 public final class TranscriptWord {
     private final double confidence;
@@ -195,7 +195,7 @@ public final class TranscriptWord {
          */
         @java.lang.Override
         public _FinalStage speaker(String speaker) {
-            this.speaker = Optional.of(speaker);
+            this.speaker = Optional.ofNullable(speaker);
             return this;
         }
 

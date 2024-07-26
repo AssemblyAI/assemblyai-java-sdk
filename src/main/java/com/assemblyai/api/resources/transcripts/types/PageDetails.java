@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PageDetails.Builder.class)
 public final class PageDetails {
     private final int limit;
@@ -212,7 +212,7 @@ public final class PageDetails {
          */
         @java.lang.Override
         public _FinalStage nextUrl(String nextUrl) {
-            this.nextUrl = Optional.of(nextUrl);
+            this.nextUrl = Optional.ofNullable(nextUrl);
             return this;
         }
 
@@ -229,7 +229,7 @@ public final class PageDetails {
          */
         @java.lang.Override
         public _FinalStage prevUrl(String prevUrl) {
-            this.prevUrl = Optional.of(prevUrl);
+            this.prevUrl = Optional.ofNullable(prevUrl);
             return this;
         }
 

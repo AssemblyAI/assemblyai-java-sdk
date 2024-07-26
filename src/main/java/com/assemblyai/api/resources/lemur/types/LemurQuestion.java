@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurQuestion.Builder.class)
 public final class LemurQuestion {
     private final String question;
@@ -171,7 +171,7 @@ public final class LemurQuestion {
          */
         @java.lang.Override
         public _FinalStage answerOptions(List<String> answerOptions) {
-            this.answerOptions = Optional.of(answerOptions);
+            this.answerOptions = Optional.ofNullable(answerOptions);
             return this;
         }
 
@@ -188,7 +188,7 @@ public final class LemurQuestion {
          */
         @java.lang.Override
         public _FinalStage answerFormat(String answerFormat) {
-            this.answerFormat = Optional.of(answerFormat);
+            this.answerFormat = Optional.ofNullable(answerFormat);
             return this;
         }
 
@@ -205,7 +205,7 @@ public final class LemurQuestion {
          */
         @java.lang.Override
         public _FinalStage context(LemurQuestionContext context) {
-            this.context = Optional.of(context);
+            this.context = Optional.ofNullable(context);
             return this;
         }
 

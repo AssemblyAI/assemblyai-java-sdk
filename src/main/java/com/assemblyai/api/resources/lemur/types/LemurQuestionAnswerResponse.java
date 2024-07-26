@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurQuestionAnswerResponse.Builder.class)
 public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     private final String requestId;

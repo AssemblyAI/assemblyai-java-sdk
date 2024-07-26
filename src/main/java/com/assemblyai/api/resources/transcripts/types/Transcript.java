@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Transcript.Builder.class)
 public final class Transcript {
     private final String id;
@@ -1362,7 +1362,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage error(String error) {
-            this.error = Optional.of(error);
+            this.error = Optional.ofNullable(error);
             return this;
         }
 
@@ -1379,7 +1379,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage throttled(Boolean throttled) {
-            this.throttled = Optional.of(throttled);
+            this.throttled = Optional.ofNullable(throttled);
             return this;
         }
 
@@ -1397,7 +1397,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage speechThreshold(Double speechThreshold) {
-            this.speechThreshold = Optional.of(speechThreshold);
+            this.speechThreshold = Optional.ofNullable(speechThreshold);
             return this;
         }
 
@@ -1415,7 +1415,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage entities(List<Entity> entities) {
-            this.entities = Optional.of(entities);
+            this.entities = Optional.ofNullable(entities);
             return this;
         }
 
@@ -1432,7 +1432,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage entityDetection(Boolean entityDetection) {
-            this.entityDetection = Optional.of(entityDetection);
+            this.entityDetection = Optional.ofNullable(entityDetection);
             return this;
         }
 
@@ -1450,7 +1450,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage sentimentAnalysisResults(List<SentimentAnalysisResult> sentimentAnalysisResults) {
-            this.sentimentAnalysisResults = Optional.of(sentimentAnalysisResults);
+            this.sentimentAnalysisResults = Optional.ofNullable(sentimentAnalysisResults);
             return this;
         }
 
@@ -1467,7 +1467,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage sentimentAnalysis(Boolean sentimentAnalysis) {
-            this.sentimentAnalysis = Optional.of(sentimentAnalysis);
+            this.sentimentAnalysis = Optional.ofNullable(sentimentAnalysis);
             return this;
         }
 
@@ -1484,7 +1484,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage disfluencies(Boolean disfluencies) {
-            this.disfluencies = Optional.of(disfluencies);
+            this.disfluencies = Optional.ofNullable(disfluencies);
             return this;
         }
 
@@ -1501,7 +1501,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage topics(List<String> topics) {
-            this.topics = Optional.of(topics);
+            this.topics = Optional.ofNullable(topics);
             return this;
         }
 
@@ -1518,7 +1518,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage customTopics(Boolean customTopics) {
-            this.customTopics = Optional.of(customTopics);
+            this.customTopics = Optional.ofNullable(customTopics);
             return this;
         }
 
@@ -1535,7 +1535,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage summary(String summary) {
-            this.summary = Optional.of(summary);
+            this.summary = Optional.ofNullable(summary);
             return this;
         }
 
@@ -1553,7 +1553,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage summaryModel(String summaryModel) {
-            this.summaryModel = Optional.of(summaryModel);
+            this.summaryModel = Optional.ofNullable(summaryModel);
             return this;
         }
 
@@ -1570,7 +1570,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage summaryType(String summaryType) {
-            this.summaryType = Optional.of(summaryType);
+            this.summaryType = Optional.ofNullable(summaryType);
             return this;
         }
 
@@ -1587,7 +1587,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage chapters(List<Chapter> chapters) {
-            this.chapters = Optional.of(chapters);
+            this.chapters = Optional.ofNullable(chapters);
             return this;
         }
 
@@ -1604,7 +1604,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage autoChapters(Boolean autoChapters) {
-            this.autoChapters = Optional.of(autoChapters);
+            this.autoChapters = Optional.ofNullable(autoChapters);
             return this;
         }
 
@@ -1621,7 +1621,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage customSpelling(List<TranscriptCustomSpelling> customSpelling) {
-            this.customSpelling = Optional.of(customSpelling);
+            this.customSpelling = Optional.ofNullable(customSpelling);
             return this;
         }
 
@@ -1638,7 +1638,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage languageDetection(Boolean languageDetection) {
-            this.languageDetection = Optional.of(languageDetection);
+            this.languageDetection = Optional.ofNullable(languageDetection);
             return this;
         }
 
@@ -1651,7 +1651,7 @@ public final class Transcript {
 
         @java.lang.Override
         public _FinalStage iabCategoriesResult(TopicDetectionModelResult iabCategoriesResult) {
-            this.iabCategoriesResult = Optional.of(iabCategoriesResult);
+            this.iabCategoriesResult = Optional.ofNullable(iabCategoriesResult);
             return this;
         }
 
@@ -1668,7 +1668,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage iabCategories(Boolean iabCategories) {
-            this.iabCategories = Optional.of(iabCategories);
+            this.iabCategories = Optional.ofNullable(iabCategories);
             return this;
         }
 
@@ -1681,7 +1681,7 @@ public final class Transcript {
 
         @java.lang.Override
         public _FinalStage contentSafetyLabels(ContentSafetyLabelsResult contentSafetyLabels) {
-            this.contentSafetyLabels = Optional.of(contentSafetyLabels);
+            this.contentSafetyLabels = Optional.ofNullable(contentSafetyLabels);
             return this;
         }
 
@@ -1698,7 +1698,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage contentSafety(Boolean contentSafety) {
-            this.contentSafety = Optional.of(contentSafety);
+            this.contentSafety = Optional.ofNullable(contentSafety);
             return this;
         }
 
@@ -1715,7 +1715,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage speakersExpected(Integer speakersExpected) {
-            this.speakersExpected = Optional.of(speakersExpected);
+            this.speakersExpected = Optional.ofNullable(speakersExpected);
             return this;
         }
 
@@ -1732,7 +1732,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage speakerLabels(Boolean speakerLabels) {
-            this.speakerLabels = Optional.of(speakerLabels);
+            this.speakerLabels = Optional.ofNullable(speakerLabels);
             return this;
         }
 
@@ -1749,7 +1749,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage redactPiiSub(SubstitutionPolicy redactPiiSub) {
-            this.redactPiiSub = Optional.of(redactPiiSub);
+            this.redactPiiSub = Optional.ofNullable(redactPiiSub);
             return this;
         }
 
@@ -1767,7 +1767,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage redactPiiPolicies(List<PiiPolicy> redactPiiPolicies) {
-            this.redactPiiPolicies = Optional.of(redactPiiPolicies);
+            this.redactPiiPolicies = Optional.ofNullable(redactPiiPolicies);
             return this;
         }
 
@@ -1780,7 +1780,7 @@ public final class Transcript {
 
         @java.lang.Override
         public _FinalStage redactPiiAudioQuality(RedactPiiAudioQuality redactPiiAudioQuality) {
-            this.redactPiiAudioQuality = Optional.of(redactPiiAudioQuality);
+            this.redactPiiAudioQuality = Optional.ofNullable(redactPiiAudioQuality);
             return this;
         }
 
@@ -1798,7 +1798,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage redactPiiAudio(Boolean redactPiiAudio) {
-            this.redactPiiAudio = Optional.of(redactPiiAudio);
+            this.redactPiiAudio = Optional.ofNullable(redactPiiAudio);
             return this;
         }
 
@@ -1815,7 +1815,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage filterProfanity(Boolean filterProfanity) {
-            this.filterProfanity = Optional.of(filterProfanity);
+            this.filterProfanity = Optional.ofNullable(filterProfanity);
             return this;
         }
 
@@ -1832,7 +1832,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage boostParam(String boostParam) {
-            this.boostParam = Optional.of(boostParam);
+            this.boostParam = Optional.ofNullable(boostParam);
             return this;
         }
 
@@ -1849,7 +1849,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage wordBoost(List<String> wordBoost) {
-            this.wordBoost = Optional.of(wordBoost);
+            this.wordBoost = Optional.ofNullable(wordBoost);
             return this;
         }
 
@@ -1866,7 +1866,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage audioEndAt(Integer audioEndAt) {
-            this.audioEndAt = Optional.of(audioEndAt);
+            this.audioEndAt = Optional.ofNullable(audioEndAt);
             return this;
         }
 
@@ -1883,7 +1883,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage audioStartFrom(Integer audioStartFrom) {
-            this.audioStartFrom = Optional.of(audioStartFrom);
+            this.audioStartFrom = Optional.ofNullable(audioStartFrom);
             return this;
         }
 
@@ -1896,7 +1896,7 @@ public final class Transcript {
 
         @java.lang.Override
         public _FinalStage autoHighlightsResult(AutoHighlightsResult autoHighlightsResult) {
-            this.autoHighlightsResult = Optional.of(autoHighlightsResult);
+            this.autoHighlightsResult = Optional.ofNullable(autoHighlightsResult);
             return this;
         }
 
@@ -1913,7 +1913,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage speedBoost(Boolean speedBoost) {
-            this.speedBoost = Optional.of(speedBoost);
+            this.speedBoost = Optional.ofNullable(speedBoost);
             return this;
         }
 
@@ -1930,7 +1930,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage webhookAuthHeaderName(String webhookAuthHeaderName) {
-            this.webhookAuthHeaderName = Optional.of(webhookAuthHeaderName);
+            this.webhookAuthHeaderName = Optional.ofNullable(webhookAuthHeaderName);
             return this;
         }
 
@@ -1947,7 +1947,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage webhookStatusCode(Integer webhookStatusCode) {
-            this.webhookStatusCode = Optional.of(webhookStatusCode);
+            this.webhookStatusCode = Optional.ofNullable(webhookStatusCode);
             return this;
         }
 
@@ -1966,7 +1966,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage webhookUrl(String webhookUrl) {
-            this.webhookUrl = Optional.of(webhookUrl);
+            this.webhookUrl = Optional.ofNullable(webhookUrl);
             return this;
         }
 
@@ -1979,7 +1979,7 @@ public final class Transcript {
 
         @java.lang.Override
         public _FinalStage speechModel(SpeechModel speechModel) {
-            this.speechModel = Optional.of(speechModel);
+            this.speechModel = Optional.ofNullable(speechModel);
             return this;
         }
 
@@ -1996,7 +1996,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage dualChannel(Boolean dualChannel) {
-            this.dualChannel = Optional.of(dualChannel);
+            this.dualChannel = Optional.ofNullable(dualChannel);
             return this;
         }
 
@@ -2013,7 +2013,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage formatText(Boolean formatText) {
-            this.formatText = Optional.of(formatText);
+            this.formatText = Optional.ofNullable(formatText);
             return this;
         }
 
@@ -2030,7 +2030,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage punctuate(Boolean punctuate) {
-            this.punctuate = Optional.of(punctuate);
+            this.punctuate = Optional.ofNullable(punctuate);
             return this;
         }
 
@@ -2047,7 +2047,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage audioDuration(Integer audioDuration) {
-            this.audioDuration = Optional.of(audioDuration);
+            this.audioDuration = Optional.ofNullable(audioDuration);
             return this;
         }
 
@@ -2064,7 +2064,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage confidence(Double confidence) {
-            this.confidence = Optional.of(confidence);
+            this.confidence = Optional.ofNullable(confidence);
             return this;
         }
 
@@ -2082,7 +2082,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage utterances(List<TranscriptUtterance> utterances) {
-            this.utterances = Optional.of(utterances);
+            this.utterances = Optional.ofNullable(utterances);
             return this;
         }
 
@@ -2100,7 +2100,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage words(List<TranscriptWord> words) {
-            this.words = Optional.of(words);
+            this.words = Optional.ofNullable(words);
             return this;
         }
 
@@ -2117,7 +2117,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage text(String text) {
-            this.text = Optional.of(text);
+            this.text = Optional.ofNullable(text);
             return this;
         }
 
@@ -2136,7 +2136,7 @@ public final class Transcript {
          */
         @java.lang.Override
         public _FinalStage languageCode(TranscriptLanguageCode languageCode) {
-            this.languageCode = Optional.of(languageCode);
+            this.languageCode = Optional.ofNullable(languageCode);
             return this;
         }
 

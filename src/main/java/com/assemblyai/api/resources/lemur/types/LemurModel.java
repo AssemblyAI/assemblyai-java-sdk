@@ -11,14 +11,14 @@ public final class LemurModel {
 
     public static final LemurModel ANTHROPIC_CLAUDE2 = new LemurModel(Value.ANTHROPIC_CLAUDE2, "anthropic/claude-2");
 
+    public static final LemurModel ANTHROPIC_CLAUDE3_5_SONNET =
+            new LemurModel(Value.ANTHROPIC_CLAUDE3_5_SONNET, "anthropic/claude-3-5-sonnet");
+
     public static final LemurModel ANTHROPIC_CLAUDE3_SONNET =
             new LemurModel(Value.ANTHROPIC_CLAUDE3_SONNET, "anthropic/claude-3-sonnet");
 
     public static final LemurModel ASSEMBLYAI_MISTRAL7B =
             new LemurModel(Value.ASSEMBLYAI_MISTRAL7B, "assemblyai/mistral-7b");
-
-    public static final LemurModel ANTHROPIC_CLAUDE3_5_SONNET =
-            new LemurModel(Value.ANTHROPIC_CLAUDE3_5_SONNET, "anthropic/claude-3-5-sonnet");
 
     public static final LemurModel ANTHROPIC_CLAUDE3_HAIKU =
             new LemurModel(Value.ANTHROPIC_CLAUDE3_HAIKU, "anthropic/claude-3-haiku");
@@ -69,12 +69,12 @@ public final class LemurModel {
                 return visitor.visitDefault();
             case ANTHROPIC_CLAUDE2:
                 return visitor.visitAnthropicClaude2();
+            case ANTHROPIC_CLAUDE3_5_SONNET:
+                return visitor.visitAnthropicClaude3_5_Sonnet();
             case ANTHROPIC_CLAUDE3_SONNET:
                 return visitor.visitAnthropicClaude3_Sonnet();
             case ASSEMBLYAI_MISTRAL7B:
                 return visitor.visitAssemblyaiMistral7b();
-            case ANTHROPIC_CLAUDE3_5_SONNET:
-                return visitor.visitAnthropicClaude3_5_Sonnet();
             case ANTHROPIC_CLAUDE3_HAIKU:
                 return visitor.visitAnthropicClaude3_Haiku();
             case BASIC:
@@ -98,12 +98,12 @@ public final class LemurModel {
                 return DEFAULT;
             case "anthropic/claude-2":
                 return ANTHROPIC_CLAUDE2;
+            case "anthropic/claude-3-5-sonnet":
+                return ANTHROPIC_CLAUDE3_5_SONNET;
             case "anthropic/claude-3-sonnet":
                 return ANTHROPIC_CLAUDE3_SONNET;
             case "assemblyai/mistral-7b":
                 return ASSEMBLYAI_MISTRAL7B;
-            case "anthropic/claude-3-5-sonnet":
-                return ANTHROPIC_CLAUDE3_5_SONNET;
             case "anthropic/claude-3-haiku":
                 return ANTHROPIC_CLAUDE3_HAIKU;
             case "basic":

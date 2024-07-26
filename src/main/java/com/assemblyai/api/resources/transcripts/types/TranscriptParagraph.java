@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptParagraph.Builder.class)
 public final class TranscriptParagraph {
     private final String text;
@@ -216,7 +216,7 @@ public final class TranscriptParagraph {
          */
         @java.lang.Override
         public _FinalStage speaker(String speaker) {
-            this.speaker = Optional.of(speaker);
+            this.speaker = Optional.ofNullable(speaker);
             return this;
         }
 

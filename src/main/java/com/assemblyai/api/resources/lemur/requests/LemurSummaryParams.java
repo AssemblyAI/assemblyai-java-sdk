@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurSummaryParams.Builder.class)
 public final class LemurSummaryParams implements ILemurBaseParams {
     private final Optional<List<String>> transcriptIds;
@@ -206,7 +206,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder transcriptIds(List<String> transcriptIds) {
-            this.transcriptIds = Optional.of(transcriptIds);
+            this.transcriptIds = Optional.ofNullable(transcriptIds);
             return this;
         }
 
@@ -217,7 +217,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder inputText(String inputText) {
-            this.inputText = Optional.of(inputText);
+            this.inputText = Optional.ofNullable(inputText);
             return this;
         }
 
@@ -228,7 +228,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder context(LemurBaseParamsContext context) {
-            this.context = Optional.of(context);
+            this.context = Optional.ofNullable(context);
             return this;
         }
 
@@ -239,7 +239,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder finalModel(LemurModel finalModel) {
-            this.finalModel = Optional.of(finalModel);
+            this.finalModel = Optional.ofNullable(finalModel);
             return this;
         }
 
@@ -250,7 +250,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder maxOutputSize(Integer maxOutputSize) {
-            this.maxOutputSize = Optional.of(maxOutputSize);
+            this.maxOutputSize = Optional.ofNullable(maxOutputSize);
             return this;
         }
 
@@ -261,7 +261,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder temperature(Double temperature) {
-            this.temperature = Optional.of(temperature);
+            this.temperature = Optional.ofNullable(temperature);
             return this;
         }
 
@@ -272,7 +272,7 @@ public final class LemurSummaryParams implements ILemurBaseParams {
         }
 
         public Builder answerFormat(String answerFormat) {
-            this.answerFormat = Optional.of(answerFormat);
+            this.answerFormat = Optional.ofNullable(answerFormat);
             return this;
         }
 
