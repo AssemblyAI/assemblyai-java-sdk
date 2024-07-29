@@ -179,7 +179,7 @@ public final class RealtimeTranscriber implements AutoCloseable {
     }
 
     private void closeSocket() {
-        if(webSocket == null) return;
+        if (webSocket == null) return;
         this.webSocket.close(1000, "Shutting down");
         this.webSocket.cancel();
         this.webSocket = null;
@@ -521,7 +521,8 @@ public final class RealtimeTranscriber implements AutoCloseable {
     private final HashMap<Integer, String> closeCodeErrorMessages = new HashMap<Integer, String>() {{
         put(4000, "Sample rate must be a positive integer");
         put(4001, "Not Authorized");
-        put(4002, "Insufficient funds or you are using a free account. This feature is paid-only and requires you to add a credit card. Please visit https://assemblyai.com/dashboard/ to add a credit card to your account.");
+        put(4002, "Insufficient Funds");
+        put(4003, "This feature is paid-only and requires you to add a credit card. Please visit https://app.assemblyai.com/ to add a credit card to your account.");
         put(4004, "Session ID does not exist");
         put(4008, "Session has expired");
         put(4010, "Session is closed");
@@ -530,10 +531,10 @@ public final class RealtimeTranscriber implements AutoCloseable {
         put(4031, "Session Timeout");
         put(4032, "Audio too short");
         put(4033, "Audio too long");
-        put(4100, "Bad JSON");
+        put(4034, "Audio too small to transcode");
         put(4101, "Bad schema");
         put(4102, "Too many streams");
         put(4103, "Reconnected");
-        put(1013, "Reconnect attempts exhausted");
+        put(4104, "Could not parse word boost parameter");
     }};
 }
