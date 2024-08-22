@@ -24,7 +24,7 @@ Add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'com.assemblyai:assemblyai-java:1.x.x'
+    implementation 'com.assemblyai:assemblyai-java:x.x.x'
 }
 ```
 
@@ -36,7 +36,7 @@ Add the dependency in your `pom.xml`:
 <dependency>
     <groupId>com.assemblyai</groupId>
     <artifactId>assemblyai-java</artifactId>
-    <version>1.x.x</version>
+    <version>x.x.x</version>
 </dependency>
 ```
 
