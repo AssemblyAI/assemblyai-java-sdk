@@ -150,6 +150,16 @@ public class PollingTranscriptsClient extends TranscriptsClient {
     }
 
     /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @return A transcript with status "completed" or "error"
+     */
+    public Transcript transcribe(TranscriptParams transcriptParams) {
+        Transcript transcriptResponse = submit(transcriptParams);
+        return waitUntilReady(transcriptResponse.getId());
+    }
+
+    /**
      * Wait until an existing transcript has the status "completed" or "error".
      * @param transcriptId The ID of the transcript
      * @return The transcript with status "completed" or "error"
