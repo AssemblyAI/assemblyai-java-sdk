@@ -5,6 +5,7 @@ package com.assemblyai.api;
 
 import com.assemblyai.api.core.ClientOptions;
 import com.assemblyai.api.core.Suppliers;
+import com.assemblyai.api.resources.files.ExtendedFilesClient;
 import com.assemblyai.api.resources.files.FilesClient;
 import com.assemblyai.api.resources.lemur.LemurClient;
 import com.assemblyai.api.resources.realtime.RealtimeClient;
@@ -14,7 +15,7 @@ import java.util.function.Supplier;
 public class AssemblyAI {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<FilesClient> filesClient;
+    protected final Supplier<ExtendedFilesClient> filesClient;
 
     protected final Supplier<PollingTranscriptsClient> transcriptClient;
 
@@ -24,7 +25,7 @@ public class AssemblyAI {
 
     public AssemblyAI(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
+        this.filesClient = Suppliers.memoize(() -> new ExtendedFilesClient(clientOptions));
         this.transcriptClient = Suppliers.memoize(() -> new PollingTranscriptsClient(clientOptions, this));
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
         this.lemurClient = Suppliers.memoize(() -> new LemurClient(clientOptions));
@@ -32,13 +33,13 @@ public class AssemblyAI {
 
     public AssemblyAI(ClientOptions clientOptions, ClientOptions lemurClientOptions) {
         this.clientOptions = clientOptions;
-        this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
+        this.filesClient = Suppliers.memoize(() -> new ExtendedFilesClient(clientOptions));
         this.transcriptClient = Suppliers.memoize(() -> new PollingTranscriptsClient(clientOptions, this));
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
         this.lemurClient = Suppliers.memoize(() -> new LemurClient(lemurClientOptions));
     }
 
-    public FilesClient files() {
+    public ExtendedFilesClient files() {
         return this.filesClient.get();
     }
 

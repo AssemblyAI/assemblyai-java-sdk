@@ -14,6 +14,7 @@ import com.assemblyai.api.resources.transcripts.types.WordSearchResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class PollingTranscriptsClient extends TranscriptsClient {
@@ -35,7 +36,7 @@ public class PollingTranscriptsClient extends TranscriptsClient {
      * @throws IOException The file will be read and an IOException may be thrown.
      */
     public Transcript submit(File file) throws IOException {
-        return submit(file, EMPTY_PARAMS);
+        return submit(file.toPath(), EMPTY_PARAMS);
     }
 
     /**
@@ -46,8 +47,46 @@ public class PollingTranscriptsClient extends TranscriptsClient {
      * @throws IOException The file will be read and an IOException may be thrown.
      */
     public Transcript submit(File file, TranscriptOptionalParams transcriptParams) throws IOException {
-        UploadedFile uploadedFile = client.files().upload(Files.readAllBytes(file.toPath()));
+        return submit(file.toPath(), transcriptParams);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     * @param filePath Path to audio file to transcribe
+     * @return Queued transcript
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript submit(Path filePath) throws IOException {
+        return submit(filePath, EMPTY_PARAMS);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     * @param filePath Path to audio file to transcribe
+     * @return Queued transcript
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript submit(Path filePath, TranscriptOptionalParams transcriptParams) throws IOException {
+        UploadedFile uploadedFile = client.files().upload(filePath);
         return submit(uploadedFile.getUploadUrl(), transcriptParams);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     * @param file The file uploaded to AssemblyAI
+     * @return Queued transcript
+     */
+    public Transcript submit(UploadedFile file) {
+        return submit(file.getUploadUrl(), EMPTY_PARAMS);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     * @param file The file uploaded to AssemblyAI
+     * @return Queued transcript
+     */
+    public Transcript submit(UploadedFile file, TranscriptOptionalParams transcriptParams) {
+        return submit(file.getUploadUrl(), transcriptParams);
     }
 
     /**
@@ -109,6 +148,28 @@ public class PollingTranscriptsClient extends TranscriptsClient {
 
     /**
      * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     * @param filePath Audio file to transcribe
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(Path filePath) throws IOException {
+        return transcribe(filePath, EMPTY_PARAMS);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     * @param filePath Audio file to transcribe
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(Path filePath, TranscriptOptionalParams transcriptParams) throws IOException {
+        UploadedFile uploadedFile = client.files().upload(filePath);
+        return transcribe(uploadedFile.getUploadUrl(), transcriptParams);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
      * @param file Audio file to transcribe
      * @return A transcript with status "completed" or "error"
      * @throws IOException The file will be read and an IOException may be thrown.
@@ -127,6 +188,26 @@ public class PollingTranscriptsClient extends TranscriptsClient {
     public Transcript transcribe(File file, TranscriptOptionalParams transcriptParams) throws IOException {
         UploadedFile uploadedFile = client.files().upload(Files.readAllBytes(file.toPath()));
         return transcribe(uploadedFile.getUploadUrl(), transcriptParams);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     * @param file The file uploaded to AssemblyAI
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(UploadedFile file) throws IOException {
+        return transcribe(file, EMPTY_PARAMS);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     * @param file The file uploaded to AssemblyAI
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @return A transcript with status "completed" or "error"
+     */
+    public Transcript transcribe(UploadedFile file, TranscriptOptionalParams transcriptParams) {
+        return transcribe(file.getUploadUrl(), transcriptParams);
     }
 
     /**
