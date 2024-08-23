@@ -23,13 +23,19 @@ import java.util.Optional;
 public final class TranscriptOptionalParams implements ITranscriptOptionalParams {
     private final Optional<TranscriptLanguageCode> languageCode;
 
+    private final Optional<Boolean> languageDetection;
+
+    private final Optional<Double> languageConfidenceThreshold;
+
+    private final Optional<SpeechModel> speechModel;
+
     private final Optional<Boolean> punctuate;
 
     private final Optional<Boolean> formatText;
 
-    private final Optional<Boolean> dualChannel;
+    private final Optional<Boolean> disfluencies;
 
-    private final Optional<SpeechModel> speechModel;
+    private final Optional<Boolean> dualChannel;
 
     private final Optional<String> webhookUrl;
 
@@ -69,11 +75,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     private final Optional<Boolean> iabCategories;
 
-    private final Optional<Boolean> languageDetection;
-
     private final Optional<List<TranscriptCustomSpelling>> customSpelling;
-
-    private final Optional<Boolean> disfluencies;
 
     private final Optional<Boolean> sentimentAnalysis;
 
@@ -97,10 +99,13 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     private TranscriptOptionalParams(
             Optional<TranscriptLanguageCode> languageCode,
+            Optional<Boolean> languageDetection,
+            Optional<Double> languageConfidenceThreshold,
+            Optional<SpeechModel> speechModel,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
+            Optional<Boolean> disfluencies,
             Optional<Boolean> dualChannel,
-            Optional<SpeechModel> speechModel,
             Optional<String> webhookUrl,
             Optional<String> webhookAuthHeaderName,
             Optional<String> webhookAuthHeaderValue,
@@ -120,9 +125,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             Optional<Boolean> contentSafety,
             Optional<Integer> contentSafetyConfidence,
             Optional<Boolean> iabCategories,
-            Optional<Boolean> languageDetection,
             Optional<List<TranscriptCustomSpelling>> customSpelling,
-            Optional<Boolean> disfluencies,
             Optional<Boolean> sentimentAnalysis,
             Optional<Boolean> autoChapters,
             Optional<Boolean> entityDetection,
@@ -134,10 +137,13 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             Optional<List<String>> topics,
             Map<String, Object> additionalProperties) {
         this.languageCode = languageCode;
+        this.languageDetection = languageDetection;
+        this.languageConfidenceThreshold = languageConfidenceThreshold;
+        this.speechModel = speechModel;
         this.punctuate = punctuate;
         this.formatText = formatText;
+        this.disfluencies = disfluencies;
         this.dualChannel = dualChannel;
-        this.speechModel = speechModel;
         this.webhookUrl = webhookUrl;
         this.webhookAuthHeaderName = webhookAuthHeaderName;
         this.webhookAuthHeaderValue = webhookAuthHeaderValue;
@@ -157,9 +163,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         this.contentSafety = contentSafety;
         this.contentSafetyConfidence = contentSafetyConfidence;
         this.iabCategories = iabCategories;
-        this.languageDetection = languageDetection;
         this.customSpelling = customSpelling;
-        this.disfluencies = disfluencies;
         this.sentimentAnalysis = sentimentAnalysis;
         this.autoChapters = autoChapters;
         this.entityDetection = entityDetection;
@@ -176,6 +180,32 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     @java.lang.Override
     public Optional<TranscriptLanguageCode> getLanguageCode() {
         return languageCode;
+    }
+
+    /**
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a>, either true or false.
+     */
+    @JsonProperty("language_detection")
+    @java.lang.Override
+    public Optional<Boolean> getLanguageDetection() {
+        return languageDetection;
+    }
+
+    /**
+     * @return The confidence threshold for the automatically detected language.
+     * An error will be returned if the language confidence is below this threshold.
+     * Defaults to 0.
+     */
+    @JsonProperty("language_confidence_threshold")
+    @java.lang.Override
+    public Optional<Double> getLanguageConfidenceThreshold() {
+        return languageConfidenceThreshold;
+    }
+
+    @JsonProperty("speech_model")
+    @java.lang.Override
+    public Optional<SpeechModel> getSpeechModel() {
+        return speechModel;
     }
 
     /**
@@ -197,18 +227,21 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
+     * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false
+     */
+    @JsonProperty("disfluencies")
+    @java.lang.Override
+    public Optional<Boolean> getDisfluencies() {
+        return disfluencies;
+    }
+
+    /**
      * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual Channel</a> transcription, can be true or false.
      */
     @JsonProperty("dual_channel")
     @java.lang.Override
     public Optional<Boolean> getDualChannel() {
         return dualChannel;
-    }
-
-    @JsonProperty("speech_model")
-    @java.lang.Override
-    public Optional<SpeechModel> getSpeechModel() {
-        return speechModel;
     }
 
     /**
@@ -275,7 +308,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return The word boost parameter value
+     * @return How much to boost specified words
      */
     @JsonProperty("boost_param")
     @java.lang.Override
@@ -380,30 +413,12 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a>, either true or false.
-     */
-    @JsonProperty("language_detection")
-    @java.lang.Override
-    public Optional<Boolean> getLanguageDetection() {
-        return languageDetection;
-    }
-
-    /**
      * @return Customize how words are spelled and formatted using to and from values
      */
     @JsonProperty("custom_spelling")
     @java.lang.Override
     public Optional<List<TranscriptCustomSpelling>> getCustomSpelling() {
         return customSpelling;
-    }
-
-    /**
-     * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false
-     */
-    @JsonProperty("disfluencies")
-    @java.lang.Override
-    public Optional<Boolean> getDisfluencies() {
-        return disfluencies;
     }
 
     /**
@@ -501,10 +516,13 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     private boolean equalTo(TranscriptOptionalParams other) {
         return languageCode.equals(other.languageCode)
+                && languageDetection.equals(other.languageDetection)
+                && languageConfidenceThreshold.equals(other.languageConfidenceThreshold)
+                && speechModel.equals(other.speechModel)
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
+                && disfluencies.equals(other.disfluencies)
                 && dualChannel.equals(other.dualChannel)
-                && speechModel.equals(other.speechModel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookAuthHeaderName.equals(other.webhookAuthHeaderName)
                 && webhookAuthHeaderValue.equals(other.webhookAuthHeaderValue)
@@ -524,9 +542,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                 && contentSafety.equals(other.contentSafety)
                 && contentSafetyConfidence.equals(other.contentSafetyConfidence)
                 && iabCategories.equals(other.iabCategories)
-                && languageDetection.equals(other.languageDetection)
                 && customSpelling.equals(other.customSpelling)
-                && disfluencies.equals(other.disfluencies)
                 && sentimentAnalysis.equals(other.sentimentAnalysis)
                 && autoChapters.equals(other.autoChapters)
                 && entityDetection.equals(other.entityDetection)
@@ -542,10 +558,13 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     public int hashCode() {
         return Objects.hash(
                 this.languageCode,
+                this.languageDetection,
+                this.languageConfidenceThreshold,
+                this.speechModel,
                 this.punctuate,
                 this.formatText,
+                this.disfluencies,
                 this.dualChannel,
-                this.speechModel,
                 this.webhookUrl,
                 this.webhookAuthHeaderName,
                 this.webhookAuthHeaderValue,
@@ -565,9 +584,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                 this.contentSafety,
                 this.contentSafetyConfidence,
                 this.iabCategories,
-                this.languageDetection,
                 this.customSpelling,
-                this.disfluencies,
                 this.sentimentAnalysis,
                 this.autoChapters,
                 this.entityDetection,
@@ -592,13 +609,19 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     public static final class Builder {
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
+        private Optional<Boolean> languageDetection = Optional.empty();
+
+        private Optional<Double> languageConfidenceThreshold = Optional.empty();
+
+        private Optional<SpeechModel> speechModel = Optional.empty();
+
         private Optional<Boolean> punctuate = Optional.empty();
 
         private Optional<Boolean> formatText = Optional.empty();
 
-        private Optional<Boolean> dualChannel = Optional.empty();
+        private Optional<Boolean> disfluencies = Optional.empty();
 
-        private Optional<SpeechModel> speechModel = Optional.empty();
+        private Optional<Boolean> dualChannel = Optional.empty();
 
         private Optional<String> webhookUrl = Optional.empty();
 
@@ -638,11 +661,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         private Optional<Boolean> iabCategories = Optional.empty();
 
-        private Optional<Boolean> languageDetection = Optional.empty();
-
         private Optional<List<TranscriptCustomSpelling>> customSpelling = Optional.empty();
-
-        private Optional<Boolean> disfluencies = Optional.empty();
 
         private Optional<Boolean> sentimentAnalysis = Optional.empty();
 
@@ -669,10 +688,13 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public Builder from(TranscriptOptionalParams other) {
             languageCode(other.getLanguageCode());
+            languageDetection(other.getLanguageDetection());
+            languageConfidenceThreshold(other.getLanguageConfidenceThreshold());
+            speechModel(other.getSpeechModel());
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
+            disfluencies(other.getDisfluencies());
             dualChannel(other.getDualChannel());
-            speechModel(other.getSpeechModel());
             webhookUrl(other.getWebhookUrl());
             webhookAuthHeaderName(other.getWebhookAuthHeaderName());
             webhookAuthHeaderValue(other.getWebhookAuthHeaderValue());
@@ -692,9 +714,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             contentSafety(other.getContentSafety());
             contentSafetyConfidence(other.getContentSafetyConfidence());
             iabCategories(other.getIabCategories());
-            languageDetection(other.getLanguageDetection());
             customSpelling(other.getCustomSpelling());
-            disfluencies(other.getDisfluencies());
             sentimentAnalysis(other.getSentimentAnalysis());
             autoChapters(other.getAutoChapters());
             entityDetection(other.getEntityDetection());
@@ -715,6 +735,39 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public Builder languageCode(TranscriptLanguageCode languageCode) {
             this.languageCode = Optional.ofNullable(languageCode);
+            return this;
+        }
+
+        @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
+        public Builder languageDetection(Optional<Boolean> languageDetection) {
+            this.languageDetection = languageDetection;
+            return this;
+        }
+
+        public Builder languageDetection(Boolean languageDetection) {
+            this.languageDetection = Optional.ofNullable(languageDetection);
+            return this;
+        }
+
+        @JsonSetter(value = "language_confidence_threshold", nulls = Nulls.SKIP)
+        public Builder languageConfidenceThreshold(Optional<Double> languageConfidenceThreshold) {
+            this.languageConfidenceThreshold = languageConfidenceThreshold;
+            return this;
+        }
+
+        public Builder languageConfidenceThreshold(Double languageConfidenceThreshold) {
+            this.languageConfidenceThreshold = Optional.ofNullable(languageConfidenceThreshold);
+            return this;
+        }
+
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public Builder speechModel(Optional<SpeechModel> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
+        public Builder speechModel(SpeechModel speechModel) {
+            this.speechModel = Optional.ofNullable(speechModel);
             return this;
         }
 
@@ -740,6 +793,17 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             return this;
         }
 
+        @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
+        public Builder disfluencies(Optional<Boolean> disfluencies) {
+            this.disfluencies = disfluencies;
+            return this;
+        }
+
+        public Builder disfluencies(Boolean disfluencies) {
+            this.disfluencies = Optional.ofNullable(disfluencies);
+            return this;
+        }
+
         @JsonSetter(value = "dual_channel", nulls = Nulls.SKIP)
         public Builder dualChannel(Optional<Boolean> dualChannel) {
             this.dualChannel = dualChannel;
@@ -748,17 +812,6 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public Builder dualChannel(Boolean dualChannel) {
             this.dualChannel = Optional.ofNullable(dualChannel);
-            return this;
-        }
-
-        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
-        public Builder speechModel(Optional<SpeechModel> speechModel) {
-            this.speechModel = speechModel;
-            return this;
-        }
-
-        public Builder speechModel(SpeechModel speechModel) {
-            this.speechModel = Optional.ofNullable(speechModel);
             return this;
         }
 
@@ -971,17 +1024,6 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             return this;
         }
 
-        @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
-        public Builder languageDetection(Optional<Boolean> languageDetection) {
-            this.languageDetection = languageDetection;
-            return this;
-        }
-
-        public Builder languageDetection(Boolean languageDetection) {
-            this.languageDetection = Optional.ofNullable(languageDetection);
-            return this;
-        }
-
         @JsonSetter(value = "custom_spelling", nulls = Nulls.SKIP)
         public Builder customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling) {
             this.customSpelling = customSpelling;
@@ -990,17 +1032,6 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public Builder customSpelling(List<TranscriptCustomSpelling> customSpelling) {
             this.customSpelling = Optional.ofNullable(customSpelling);
-            return this;
-        }
-
-        @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
-        public Builder disfluencies(Optional<Boolean> disfluencies) {
-            this.disfluencies = disfluencies;
-            return this;
-        }
-
-        public Builder disfluencies(Boolean disfluencies) {
-            this.disfluencies = Optional.ofNullable(disfluencies);
             return this;
         }
 
@@ -1106,10 +1137,13 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         public TranscriptOptionalParams build() {
             return new TranscriptOptionalParams(
                     languageCode,
+                    languageDetection,
+                    languageConfidenceThreshold,
+                    speechModel,
                     punctuate,
                     formatText,
+                    disfluencies,
                     dualChannel,
-                    speechModel,
                     webhookUrl,
                     webhookAuthHeaderName,
                     webhookAuthHeaderValue,
@@ -1129,9 +1163,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                     contentSafety,
                     contentSafetyConfidence,
                     iabCategories,
-                    languageDetection,
                     customSpelling,
-                    disfluencies,
                     sentimentAnalysis,
                     autoChapters,
                     entityDetection,

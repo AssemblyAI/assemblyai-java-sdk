@@ -277,16 +277,14 @@ public class TranscriptsClient {
     }
 
     /**
-     * Delete the transcript.
-     * Deleting does not delete the resource itself, but removes the data from the resource and marks it as deleted.
+     * Remove the data from the transcript and mark it as deleted.
      */
     public Transcript delete(String transcriptId) {
         return delete(transcriptId, null);
     }
 
     /**
-     * Delete the transcript.
-     * Deleting does not delete the resource itself, but removes the data from the resource and marks it as deleted.
+     * Remove the data from the transcript and mark it as deleted.
      */
     public Transcript delete(String transcriptId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

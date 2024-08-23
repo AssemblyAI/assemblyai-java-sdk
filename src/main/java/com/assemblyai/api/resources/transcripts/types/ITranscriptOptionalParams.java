@@ -9,13 +9,19 @@ import java.util.Optional;
 public interface ITranscriptOptionalParams {
     Optional<TranscriptLanguageCode> getLanguageCode();
 
+    Optional<Boolean> getLanguageDetection();
+
+    Optional<Double> getLanguageConfidenceThreshold();
+
+    Optional<SpeechModel> getSpeechModel();
+
     Optional<Boolean> getPunctuate();
 
     Optional<Boolean> getFormatText();
 
-    Optional<Boolean> getDualChannel();
+    Optional<Boolean> getDisfluencies();
 
-    Optional<SpeechModel> getSpeechModel();
+    Optional<Boolean> getDualChannel();
 
     Optional<String> getWebhookUrl();
 
@@ -55,11 +61,7 @@ public interface ITranscriptOptionalParams {
 
     Optional<Boolean> getIabCategories();
 
-    Optional<Boolean> getLanguageDetection();
-
     Optional<List<TranscriptCustomSpelling>> getCustomSpelling();
-
-    Optional<Boolean> getDisfluencies();
 
     Optional<Boolean> getSentimentAnalysis();
 

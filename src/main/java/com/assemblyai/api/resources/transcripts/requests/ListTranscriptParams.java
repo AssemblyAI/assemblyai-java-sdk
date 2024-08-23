@@ -21,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListTranscriptParams.Builder.class)
 public final class ListTranscriptParams {
-    private final Optional<Integer> limit;
+    private final Optional<Long> limit;
 
     private final Optional<TranscriptStatus> status;
 
@@ -36,7 +36,7 @@ public final class ListTranscriptParams {
     private final Map<String, Object> additionalProperties;
 
     private ListTranscriptParams(
-            Optional<Integer> limit,
+            Optional<Long> limit,
             Optional<TranscriptStatus> status,
             Optional<String> createdOn,
             Optional<String> beforeId,
@@ -56,7 +56,7 @@ public final class ListTranscriptParams {
      * @return Maximum amount of transcripts to retrieve
      */
     @JsonProperty("limit")
-    public Optional<Integer> getLimit() {
+    public Optional<Long> getLimit() {
         return limit;
     }
 
@@ -136,7 +136,7 @@ public final class ListTranscriptParams {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<Integer> limit = Optional.empty();
+        private Optional<Long> limit = Optional.empty();
 
         private Optional<TranscriptStatus> status = Optional.empty();
 
@@ -164,12 +164,12 @@ public final class ListTranscriptParams {
         }
 
         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
-        public Builder limit(Optional<Integer> limit) {
+        public Builder limit(Optional<Long> limit) {
             this.limit = limit;
             return this;
         }
 
-        public Builder limit(Integer limit) {
+        public Builder limit(Long limit) {
             this.limit = Optional.ofNullable(limit);
             return this;
         }
