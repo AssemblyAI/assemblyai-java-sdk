@@ -29,7 +29,7 @@ public final class TranscriptListItem {
 
     private final OffsetDateTime created;
 
-    private final OffsetDateTime completed;
+    private final Optional<OffsetDateTime> completed;
 
     private final String audioUrl;
 
@@ -42,7 +42,7 @@ public final class TranscriptListItem {
             String resourceUrl,
             TranscriptStatus status,
             OffsetDateTime created,
-            OffsetDateTime completed,
+            Optional<OffsetDateTime> completed,
             String audioUrl,
             Optional<String> error,
             Map<String, Object> additionalProperties) {
@@ -77,7 +77,7 @@ public final class TranscriptListItem {
     }
 
     @JsonProperty("completed")
-    public OffsetDateTime getCompleted() {
+    public Optional<OffsetDateTime> getCompleted() {
         return completed;
     }
 
@@ -145,11 +145,7 @@ public final class TranscriptListItem {
     }
 
     public interface CreatedStage {
-        CompletedStage created(OffsetDateTime created);
-    }
-
-    public interface CompletedStage {
-        AudioUrlStage completed(OffsetDateTime completed);
+        AudioUrlStage created(OffsetDateTime created);
     }
 
     public interface AudioUrlStage {
@@ -159,6 +155,10 @@ public final class TranscriptListItem {
     public interface _FinalStage {
         TranscriptListItem build();
 
+        _FinalStage completed(Optional<OffsetDateTime> completed);
+
+        _FinalStage completed(OffsetDateTime completed);
+
         _FinalStage error(Optional<String> error);
 
         _FinalStage error(String error);
@@ -166,13 +166,7 @@ public final class TranscriptListItem {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage,
-                    ResourceUrlStage,
-                    StatusStage,
-                    CreatedStage,
-                    CompletedStage,
-                    AudioUrlStage,
-                    _FinalStage {
+            implements IdStage, ResourceUrlStage, StatusStage, CreatedStage, AudioUrlStage, _FinalStage {
         private String id;
 
         private String resourceUrl;
@@ -181,11 +175,11 @@ public final class TranscriptListItem {
 
         private OffsetDateTime created;
 
-        private OffsetDateTime completed;
-
         private String audioUrl;
 
         private Optional<String> error = Optional.empty();
+
+        private Optional<OffsetDateTime> completed = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -227,15 +221,8 @@ public final class TranscriptListItem {
 
         @java.lang.Override
         @JsonSetter("created")
-        public CompletedStage created(OffsetDateTime created) {
+        public AudioUrlStage created(OffsetDateTime created) {
             this.created = created;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("completed")
-        public AudioUrlStage completed(OffsetDateTime completed) {
-            this.completed = completed;
             return this;
         }
 
@@ -260,6 +247,19 @@ public final class TranscriptListItem {
         @JsonSetter(value = "error", nulls = Nulls.SKIP)
         public _FinalStage error(Optional<String> error) {
             this.error = error;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage completed(OffsetDateTime completed) {
+            this.completed = Optional.ofNullable(completed);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "completed", nulls = Nulls.SKIP)
+        public _FinalStage completed(Optional<OffsetDateTime> completed) {
+            this.completed = completed;
             return this;
         }
 

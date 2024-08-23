@@ -23,15 +23,19 @@ import java.util.Optional;
 public final class Transcript {
     private final String id;
 
-    private final String languageModel;
-
-    private final String acousticModel;
+    private final String audioUrl;
 
     private final TranscriptStatus status;
 
     private final Optional<TranscriptLanguageCode> languageCode;
 
-    private final String audioUrl;
+    private final Optional<Boolean> languageDetection;
+
+    private final Optional<Double> languageConfidenceThreshold;
+
+    private final Optional<Double> languageConfidence;
+
+    private final Optional<SpeechModel> speechModel;
 
     private final Optional<String> text;
 
@@ -47,9 +51,9 @@ public final class Transcript {
 
     private final Optional<Boolean> formatText;
 
-    private final Optional<Boolean> dualChannel;
+    private final Optional<Boolean> disfluencies;
 
-    private final Optional<SpeechModel> speechModel;
+    private final Optional<Boolean> dualChannel;
 
     private final Optional<String> webhookUrl;
 
@@ -97,8 +101,6 @@ public final class Transcript {
 
     private final Optional<TopicDetectionModelResult> iabCategoriesResult;
 
-    private final Optional<Boolean> languageDetection;
-
     private final Optional<List<TranscriptCustomSpelling>> customSpelling;
 
     private final Optional<Boolean> autoChapters;
@@ -117,8 +119,6 @@ public final class Transcript {
 
     private final Optional<List<String>> topics;
 
-    private final Optional<Boolean> disfluencies;
-
     private final Optional<Boolean> sentimentAnalysis;
 
     private final Optional<List<SentimentAnalysisResult>> sentimentAnalysisResults;
@@ -133,15 +133,21 @@ public final class Transcript {
 
     private final Optional<String> error;
 
+    private final String languageModel;
+
+    private final String acousticModel;
+
     private final Map<String, Object> additionalProperties;
 
     private Transcript(
             String id,
-            String languageModel,
-            String acousticModel,
+            String audioUrl,
             TranscriptStatus status,
             Optional<TranscriptLanguageCode> languageCode,
-            String audioUrl,
+            Optional<Boolean> languageDetection,
+            Optional<Double> languageConfidenceThreshold,
+            Optional<Double> languageConfidence,
+            Optional<SpeechModel> speechModel,
             Optional<String> text,
             Optional<List<TranscriptWord>> words,
             Optional<List<TranscriptUtterance>> utterances,
@@ -149,8 +155,8 @@ public final class Transcript {
             Optional<Integer> audioDuration,
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
+            Optional<Boolean> disfluencies,
             Optional<Boolean> dualChannel,
-            Optional<SpeechModel> speechModel,
             Optional<String> webhookUrl,
             Optional<Integer> webhookStatusCode,
             boolean webhookAuth,
@@ -174,7 +180,6 @@ public final class Transcript {
             Optional<ContentSafetyLabelsResult> contentSafetyLabels,
             Optional<Boolean> iabCategories,
             Optional<TopicDetectionModelResult> iabCategoriesResult,
-            Optional<Boolean> languageDetection,
             Optional<List<TranscriptCustomSpelling>> customSpelling,
             Optional<Boolean> autoChapters,
             Optional<List<Chapter>> chapters,
@@ -184,7 +189,6 @@ public final class Transcript {
             Optional<String> summary,
             Optional<Boolean> customTopics,
             Optional<List<String>> topics,
-            Optional<Boolean> disfluencies,
             Optional<Boolean> sentimentAnalysis,
             Optional<List<SentimentAnalysisResult>> sentimentAnalysisResults,
             Optional<Boolean> entityDetection,
@@ -192,13 +196,17 @@ public final class Transcript {
             Optional<Double> speechThreshold,
             Optional<Boolean> throttled,
             Optional<String> error,
+            String languageModel,
+            String acousticModel,
             Map<String, Object> additionalProperties) {
         this.id = id;
-        this.languageModel = languageModel;
-        this.acousticModel = acousticModel;
+        this.audioUrl = audioUrl;
         this.status = status;
         this.languageCode = languageCode;
-        this.audioUrl = audioUrl;
+        this.languageDetection = languageDetection;
+        this.languageConfidenceThreshold = languageConfidenceThreshold;
+        this.languageConfidence = languageConfidence;
+        this.speechModel = speechModel;
         this.text = text;
         this.words = words;
         this.utterances = utterances;
@@ -206,8 +214,8 @@ public final class Transcript {
         this.audioDuration = audioDuration;
         this.punctuate = punctuate;
         this.formatText = formatText;
+        this.disfluencies = disfluencies;
         this.dualChannel = dualChannel;
-        this.speechModel = speechModel;
         this.webhookUrl = webhookUrl;
         this.webhookStatusCode = webhookStatusCode;
         this.webhookAuth = webhookAuth;
@@ -231,7 +239,6 @@ public final class Transcript {
         this.contentSafetyLabels = contentSafetyLabels;
         this.iabCategories = iabCategories;
         this.iabCategoriesResult = iabCategoriesResult;
-        this.languageDetection = languageDetection;
         this.customSpelling = customSpelling;
         this.autoChapters = autoChapters;
         this.chapters = chapters;
@@ -241,7 +248,6 @@ public final class Transcript {
         this.summary = summary;
         this.customTopics = customTopics;
         this.topics = topics;
-        this.disfluencies = disfluencies;
         this.sentimentAnalysis = sentimentAnalysis;
         this.sentimentAnalysisResults = sentimentAnalysisResults;
         this.entityDetection = entityDetection;
@@ -249,6 +255,8 @@ public final class Transcript {
         this.speechThreshold = speechThreshold;
         this.throttled = throttled;
         this.error = error;
+        this.languageModel = languageModel;
+        this.acousticModel = acousticModel;
         this.additionalProperties = additionalProperties;
     }
 
@@ -261,19 +269,11 @@ public final class Transcript {
     }
 
     /**
-     * @return The language model that was used for the transcript
+     * @return The URL of the media that was transcribed
      */
-    @JsonProperty("language_model")
-    public String getLanguageModel() {
-        return languageModel;
-    }
-
-    /**
-     * @return The acoustic model that was used for the transcript
-     */
-    @JsonProperty("acoustic_model")
-    public String getAcousticModel() {
-        return acousticModel;
+    @JsonProperty("audio_url")
+    public String getAudioUrl() {
+        return audioUrl;
     }
 
     /**
@@ -295,11 +295,34 @@ public final class Transcript {
     }
 
     /**
-     * @return The URL of the media that was transcribed
+     * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false
      */
-    @JsonProperty("audio_url")
-    public String getAudioUrl() {
-        return audioUrl;
+    @JsonProperty("language_detection")
+    public Optional<Boolean> getLanguageDetection() {
+        return languageDetection;
+    }
+
+    /**
+     * @return The confidence threshold for the automatically detected language.
+     * An error will be returned if the language confidence is below this threshold.
+     * Defaults to 0.
+     */
+    @JsonProperty("language_confidence_threshold")
+    public Optional<Double> getLanguageConfidenceThreshold() {
+        return languageConfidenceThreshold;
+    }
+
+    /**
+     * @return The confidence score for the detected language, between 0.0 (low confidence) and 1.0 (high confidence)
+     */
+    @JsonProperty("language_confidence")
+    public Optional<Double> getLanguageConfidence() {
+        return languageConfidence;
+    }
+
+    @JsonProperty("speech_model")
+    public Optional<SpeechModel> getSpeechModel() {
+        return speechModel;
     }
 
     /**
@@ -361,16 +384,19 @@ public final class Transcript {
     }
 
     /**
+     * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false
+     */
+    @JsonProperty("disfluencies")
+    public Optional<Boolean> getDisfluencies() {
+        return disfluencies;
+    }
+
+    /**
      * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual channel transcription</a> was enabled in the transcription request, either true or false
      */
     @JsonProperty("dual_channel")
     public Optional<Boolean> getDualChannel() {
         return dualChannel;
-    }
-
-    @JsonProperty("speech_model")
-    public Optional<SpeechModel> getSpeechModel() {
-        return speechModel;
     }
 
     /**
@@ -550,14 +576,6 @@ public final class Transcript {
     }
 
     /**
-     * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false
-     */
-    @JsonProperty("language_detection")
-    public Optional<Boolean> getLanguageDetection() {
-        return languageDetection;
-    }
-
-    /**
      * @return Customize how words are spelled and formatted using to and from values
      */
     @JsonProperty("custom_spelling")
@@ -631,14 +649,6 @@ public final class Transcript {
     }
 
     /**
-     * @return Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false
-     */
-    @JsonProperty("disfluencies")
-    public Optional<Boolean> getDisfluencies() {
-        return disfluencies;
-    }
-
-    /**
      * @return Whether <a href="https://www.assemblyai.com/docs/models/sentiment-analysis">Sentiment Analysis</a> is enabled, can be true or false
      */
     @JsonProperty("sentiment_analysis")
@@ -697,6 +707,22 @@ public final class Transcript {
         return error;
     }
 
+    /**
+     * @return The language model that was used for the transcript
+     */
+    @JsonProperty("language_model")
+    public String getLanguageModel() {
+        return languageModel;
+    }
+
+    /**
+     * @return The acoustic model that was used for the transcript
+     */
+    @JsonProperty("acoustic_model")
+    public String getAcousticModel() {
+        return acousticModel;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -710,11 +736,13 @@ public final class Transcript {
 
     private boolean equalTo(Transcript other) {
         return id.equals(other.id)
-                && languageModel.equals(other.languageModel)
-                && acousticModel.equals(other.acousticModel)
+                && audioUrl.equals(other.audioUrl)
                 && status.equals(other.status)
                 && languageCode.equals(other.languageCode)
-                && audioUrl.equals(other.audioUrl)
+                && languageDetection.equals(other.languageDetection)
+                && languageConfidenceThreshold.equals(other.languageConfidenceThreshold)
+                && languageConfidence.equals(other.languageConfidence)
+                && speechModel.equals(other.speechModel)
                 && text.equals(other.text)
                 && words.equals(other.words)
                 && utterances.equals(other.utterances)
@@ -722,8 +750,8 @@ public final class Transcript {
                 && audioDuration.equals(other.audioDuration)
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
+                && disfluencies.equals(other.disfluencies)
                 && dualChannel.equals(other.dualChannel)
-                && speechModel.equals(other.speechModel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookStatusCode.equals(other.webhookStatusCode)
                 && webhookAuth == other.webhookAuth
@@ -747,7 +775,6 @@ public final class Transcript {
                 && contentSafetyLabels.equals(other.contentSafetyLabels)
                 && iabCategories.equals(other.iabCategories)
                 && iabCategoriesResult.equals(other.iabCategoriesResult)
-                && languageDetection.equals(other.languageDetection)
                 && customSpelling.equals(other.customSpelling)
                 && autoChapters.equals(other.autoChapters)
                 && chapters.equals(other.chapters)
@@ -757,25 +784,28 @@ public final class Transcript {
                 && summary.equals(other.summary)
                 && customTopics.equals(other.customTopics)
                 && topics.equals(other.topics)
-                && disfluencies.equals(other.disfluencies)
                 && sentimentAnalysis.equals(other.sentimentAnalysis)
                 && sentimentAnalysisResults.equals(other.sentimentAnalysisResults)
                 && entityDetection.equals(other.entityDetection)
                 && entities.equals(other.entities)
                 && speechThreshold.equals(other.speechThreshold)
                 && throttled.equals(other.throttled)
-                && error.equals(other.error);
+                && error.equals(other.error)
+                && languageModel.equals(other.languageModel)
+                && acousticModel.equals(other.acousticModel);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
-                this.languageModel,
-                this.acousticModel,
+                this.audioUrl,
                 this.status,
                 this.languageCode,
-                this.audioUrl,
+                this.languageDetection,
+                this.languageConfidenceThreshold,
+                this.languageConfidence,
+                this.speechModel,
                 this.text,
                 this.words,
                 this.utterances,
@@ -783,8 +813,8 @@ public final class Transcript {
                 this.audioDuration,
                 this.punctuate,
                 this.formatText,
+                this.disfluencies,
                 this.dualChannel,
-                this.speechModel,
                 this.webhookUrl,
                 this.webhookStatusCode,
                 this.webhookAuth,
@@ -808,7 +838,6 @@ public final class Transcript {
                 this.contentSafetyLabels,
                 this.iabCategories,
                 this.iabCategoriesResult,
-                this.languageDetection,
                 this.customSpelling,
                 this.autoChapters,
                 this.chapters,
@@ -818,14 +847,15 @@ public final class Transcript {
                 this.summary,
                 this.customTopics,
                 this.topics,
-                this.disfluencies,
                 this.sentimentAnalysis,
                 this.sentimentAnalysisResults,
                 this.entityDetection,
                 this.entities,
                 this.speechThreshold,
                 this.throttled,
-                this.error);
+                this.error,
+                this.languageModel,
+                this.acousticModel);
     }
 
     @java.lang.Override
@@ -838,25 +868,17 @@ public final class Transcript {
     }
 
     public interface IdStage {
-        LanguageModelStage id(String id);
+        AudioUrlStage id(String id);
 
         Builder from(Transcript other);
     }
 
-    public interface LanguageModelStage {
-        AcousticModelStage languageModel(String languageModel);
-    }
-
-    public interface AcousticModelStage {
-        StatusStage acousticModel(String acousticModel);
+    public interface AudioUrlStage {
+        StatusStage audioUrl(String audioUrl);
     }
 
     public interface StatusStage {
-        AudioUrlStage status(TranscriptStatus status);
-    }
-
-    public interface AudioUrlStage {
-        WebhookAuthStage audioUrl(String audioUrl);
+        WebhookAuthStage status(TranscriptStatus status);
     }
 
     public interface WebhookAuthStage {
@@ -872,7 +894,15 @@ public final class Transcript {
     }
 
     public interface SummarizationStage {
-        _FinalStage summarization(boolean summarization);
+        LanguageModelStage summarization(boolean summarization);
+    }
+
+    public interface LanguageModelStage {
+        AcousticModelStage languageModel(String languageModel);
+    }
+
+    public interface AcousticModelStage {
+        _FinalStage acousticModel(String acousticModel);
     }
 
     public interface _FinalStage {
@@ -881,6 +911,22 @@ public final class Transcript {
         _FinalStage languageCode(Optional<TranscriptLanguageCode> languageCode);
 
         _FinalStage languageCode(TranscriptLanguageCode languageCode);
+
+        _FinalStage languageDetection(Optional<Boolean> languageDetection);
+
+        _FinalStage languageDetection(Boolean languageDetection);
+
+        _FinalStage languageConfidenceThreshold(Optional<Double> languageConfidenceThreshold);
+
+        _FinalStage languageConfidenceThreshold(Double languageConfidenceThreshold);
+
+        _FinalStage languageConfidence(Optional<Double> languageConfidence);
+
+        _FinalStage languageConfidence(Double languageConfidence);
+
+        _FinalStage speechModel(Optional<SpeechModel> speechModel);
+
+        _FinalStage speechModel(SpeechModel speechModel);
 
         _FinalStage text(Optional<String> text);
 
@@ -910,13 +956,13 @@ public final class Transcript {
 
         _FinalStage formatText(Boolean formatText);
 
+        _FinalStage disfluencies(Optional<Boolean> disfluencies);
+
+        _FinalStage disfluencies(Boolean disfluencies);
+
         _FinalStage dualChannel(Optional<Boolean> dualChannel);
 
         _FinalStage dualChannel(Boolean dualChannel);
-
-        _FinalStage speechModel(Optional<SpeechModel> speechModel);
-
-        _FinalStage speechModel(SpeechModel speechModel);
 
         _FinalStage webhookUrl(Optional<String> webhookUrl);
 
@@ -998,10 +1044,6 @@ public final class Transcript {
 
         _FinalStage iabCategoriesResult(TopicDetectionModelResult iabCategoriesResult);
 
-        _FinalStage languageDetection(Optional<Boolean> languageDetection);
-
-        _FinalStage languageDetection(Boolean languageDetection);
-
         _FinalStage customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling);
 
         _FinalStage customSpelling(List<TranscriptCustomSpelling> customSpelling);
@@ -1033,10 +1075,6 @@ public final class Transcript {
         _FinalStage topics(Optional<List<String>> topics);
 
         _FinalStage topics(List<String> topics);
-
-        _FinalStage disfluencies(Optional<Boolean> disfluencies);
-
-        _FinalStage disfluencies(Boolean disfluencies);
 
         _FinalStage sentimentAnalysis(Optional<Boolean> sentimentAnalysis);
 
@@ -1070,24 +1108,20 @@ public final class Transcript {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements IdStage,
-                    LanguageModelStage,
-                    AcousticModelStage,
-                    StatusStage,
                     AudioUrlStage,
+                    StatusStage,
                     WebhookAuthStage,
                     AutoHighlightsStage,
                     RedactPiiStage,
                     SummarizationStage,
+                    LanguageModelStage,
+                    AcousticModelStage,
                     _FinalStage {
         private String id;
 
-        private String languageModel;
-
-        private String acousticModel;
+        private String audioUrl;
 
         private TranscriptStatus status;
-
-        private String audioUrl;
 
         private boolean webhookAuth;
 
@@ -1096,6 +1130,10 @@ public final class Transcript {
         private boolean redactPii;
 
         private boolean summarization;
+
+        private String languageModel;
+
+        private String acousticModel;
 
         private Optional<String> error = Optional.empty();
 
@@ -1110,8 +1148,6 @@ public final class Transcript {
         private Optional<List<SentimentAnalysisResult>> sentimentAnalysisResults = Optional.empty();
 
         private Optional<Boolean> sentimentAnalysis = Optional.empty();
-
-        private Optional<Boolean> disfluencies = Optional.empty();
 
         private Optional<List<String>> topics = Optional.empty();
 
@@ -1128,8 +1164,6 @@ public final class Transcript {
         private Optional<Boolean> autoChapters = Optional.empty();
 
         private Optional<List<TranscriptCustomSpelling>> customSpelling = Optional.empty();
-
-        private Optional<Boolean> languageDetection = Optional.empty();
 
         private Optional<TopicDetectionModelResult> iabCategoriesResult = Optional.empty();
 
@@ -1171,9 +1205,9 @@ public final class Transcript {
 
         private Optional<String> webhookUrl = Optional.empty();
 
-        private Optional<SpeechModel> speechModel = Optional.empty();
-
         private Optional<Boolean> dualChannel = Optional.empty();
+
+        private Optional<Boolean> disfluencies = Optional.empty();
 
         private Optional<Boolean> formatText = Optional.empty();
 
@@ -1189,6 +1223,14 @@ public final class Transcript {
 
         private Optional<String> text = Optional.empty();
 
+        private Optional<SpeechModel> speechModel = Optional.empty();
+
+        private Optional<Double> languageConfidence = Optional.empty();
+
+        private Optional<Double> languageConfidenceThreshold = Optional.empty();
+
+        private Optional<Boolean> languageDetection = Optional.empty();
+
         private Optional<TranscriptLanguageCode> languageCode = Optional.empty();
 
         @JsonAnySetter
@@ -1199,11 +1241,13 @@ public final class Transcript {
         @java.lang.Override
         public Builder from(Transcript other) {
             id(other.getId());
-            languageModel(other.getLanguageModel());
-            acousticModel(other.getAcousticModel());
+            audioUrl(other.getAudioUrl());
             status(other.getStatus());
             languageCode(other.getLanguageCode());
-            audioUrl(other.getAudioUrl());
+            languageDetection(other.getLanguageDetection());
+            languageConfidenceThreshold(other.getLanguageConfidenceThreshold());
+            languageConfidence(other.getLanguageConfidence());
+            speechModel(other.getSpeechModel());
             text(other.getText());
             words(other.getWords());
             utterances(other.getUtterances());
@@ -1211,8 +1255,8 @@ public final class Transcript {
             audioDuration(other.getAudioDuration());
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
+            disfluencies(other.getDisfluencies());
             dualChannel(other.getDualChannel());
-            speechModel(other.getSpeechModel());
             webhookUrl(other.getWebhookUrl());
             webhookStatusCode(other.getWebhookStatusCode());
             webhookAuth(other.getWebhookAuth());
@@ -1236,7 +1280,6 @@ public final class Transcript {
             contentSafetyLabels(other.getContentSafetyLabels());
             iabCategories(other.getIabCategories());
             iabCategoriesResult(other.getIabCategoriesResult());
-            languageDetection(other.getLanguageDetection());
             customSpelling(other.getCustomSpelling());
             autoChapters(other.getAutoChapters());
             chapters(other.getChapters());
@@ -1246,7 +1289,6 @@ public final class Transcript {
             summary(other.getSummary());
             customTopics(other.getCustomTopics());
             topics(other.getTopics());
-            disfluencies(other.getDisfluencies());
             sentimentAnalysis(other.getSentimentAnalysis());
             sentimentAnalysisResults(other.getSentimentAnalysisResults());
             entityDetection(other.getEntityDetection());
@@ -1254,6 +1296,8 @@ public final class Transcript {
             speechThreshold(other.getSpeechThreshold());
             throttled(other.getThrottled());
             error(other.getError());
+            languageModel(other.getLanguageModel());
+            acousticModel(other.getAcousticModel());
             return this;
         }
 
@@ -1263,41 +1307,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public LanguageModelStage id(String id) {
+        public AudioUrlStage id(String id) {
             this.id = id;
-            return this;
-        }
-
-        /**
-         * <p>The language model that was used for the transcript</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("language_model")
-        public AcousticModelStage languageModel(String languageModel) {
-            this.languageModel = languageModel;
-            return this;
-        }
-
-        /**
-         * <p>The acoustic model that was used for the transcript</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("acoustic_model")
-        public StatusStage acousticModel(String acousticModel) {
-            this.acousticModel = acousticModel;
-            return this;
-        }
-
-        /**
-         * <p>The status of your transcript. Possible values are queued, processing, completed, or error.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("status")
-        public AudioUrlStage status(TranscriptStatus status) {
-            this.status = status;
             return this;
         }
 
@@ -1307,8 +1318,19 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("audio_url")
-        public WebhookAuthStage audioUrl(String audioUrl) {
+        public StatusStage audioUrl(String audioUrl) {
             this.audioUrl = audioUrl;
+            return this;
+        }
+
+        /**
+         * <p>The status of your transcript. Possible values are queued, processing, completed, or error.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("status")
+        public WebhookAuthStage status(TranscriptStatus status) {
+            this.status = status;
             return this;
         }
 
@@ -1351,8 +1373,30 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("summarization")
-        public _FinalStage summarization(boolean summarization) {
+        public LanguageModelStage summarization(boolean summarization) {
             this.summarization = summarization;
+            return this;
+        }
+
+        /**
+         * <p>The language model that was used for the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("language_model")
+        public AcousticModelStage languageModel(String languageModel) {
+            this.languageModel = languageModel;
+            return this;
+        }
+
+        /**
+         * <p>The acoustic model that was used for the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("acoustic_model")
+        public _FinalStage acousticModel(String acousticModel) {
+            this.acousticModel = acousticModel;
             return this;
         }
 
@@ -1475,23 +1519,6 @@ public final class Transcript {
         @JsonSetter(value = "sentiment_analysis", nulls = Nulls.SKIP)
         public _FinalStage sentimentAnalysis(Optional<Boolean> sentimentAnalysis) {
             this.sentimentAnalysis = sentimentAnalysis;
-            return this;
-        }
-
-        /**
-         * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage disfluencies(Boolean disfluencies) {
-            this.disfluencies = Optional.ofNullable(disfluencies);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
-        public _FinalStage disfluencies(Optional<Boolean> disfluencies) {
-            this.disfluencies = disfluencies;
             return this;
         }
 
@@ -1629,23 +1656,6 @@ public final class Transcript {
         @JsonSetter(value = "custom_spelling", nulls = Nulls.SKIP)
         public _FinalStage customSpelling(Optional<List<TranscriptCustomSpelling>> customSpelling) {
             this.customSpelling = customSpelling;
-            return this;
-        }
-
-        /**
-         * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage languageDetection(Boolean languageDetection) {
-            this.languageDetection = Optional.ofNullable(languageDetection);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
-        public _FinalStage languageDetection(Optional<Boolean> languageDetection) {
-            this.languageDetection = languageDetection;
             return this;
         }
 
@@ -1977,19 +1987,6 @@ public final class Transcript {
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage speechModel(SpeechModel speechModel) {
-            this.speechModel = Optional.ofNullable(speechModel);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
-        public _FinalStage speechModel(Optional<SpeechModel> speechModel) {
-            this.speechModel = speechModel;
-            return this;
-        }
-
         /**
          * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#dual-channel-transcription">Dual channel transcription</a> was enabled in the transcription request, either true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -2004,6 +2001,23 @@ public final class Transcript {
         @JsonSetter(value = "dual_channel", nulls = Nulls.SKIP)
         public _FinalStage dualChannel(Optional<Boolean> dualChannel) {
             this.dualChannel = dualChannel;
+            return this;
+        }
+
+        /**
+         * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage disfluencies(Boolean disfluencies) {
+            this.disfluencies = Optional.ofNullable(disfluencies);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "disfluencies", nulls = Nulls.SKIP)
+        public _FinalStage disfluencies(Optional<Boolean> disfluencies) {
+            this.disfluencies = disfluencies;
             return this;
         }
 
@@ -2128,6 +2142,72 @@ public final class Transcript {
             return this;
         }
 
+        @java.lang.Override
+        public _FinalStage speechModel(SpeechModel speechModel) {
+            this.speechModel = Optional.ofNullable(speechModel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "speech_model", nulls = Nulls.SKIP)
+        public _FinalStage speechModel(Optional<SpeechModel> speechModel) {
+            this.speechModel = speechModel;
+            return this;
+        }
+
+        /**
+         * <p>The confidence score for the detected language, between 0.0 (low confidence) and 1.0 (high confidence)</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage languageConfidence(Double languageConfidence) {
+            this.languageConfidence = Optional.ofNullable(languageConfidence);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "language_confidence", nulls = Nulls.SKIP)
+        public _FinalStage languageConfidence(Optional<Double> languageConfidence) {
+            this.languageConfidence = languageConfidence;
+            return this;
+        }
+
+        /**
+         * <p>The confidence threshold for the automatically detected language.
+         * An error will be returned if the language confidence is below this threshold.
+         * Defaults to 0.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage languageConfidenceThreshold(Double languageConfidenceThreshold) {
+            this.languageConfidenceThreshold = Optional.ofNullable(languageConfidenceThreshold);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "language_confidence_threshold", nulls = Nulls.SKIP)
+        public _FinalStage languageConfidenceThreshold(Optional<Double> languageConfidenceThreshold) {
+            this.languageConfidenceThreshold = languageConfidenceThreshold;
+            return this;
+        }
+
+        /**
+         * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#automatic-language-detection">Automatic language detection</a> is enabled, either true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage languageDetection(Boolean languageDetection) {
+            this.languageDetection = Optional.ofNullable(languageDetection);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "language_detection", nulls = Nulls.SKIP)
+        public _FinalStage languageDetection(Optional<Boolean> languageDetection) {
+            this.languageDetection = languageDetection;
+            return this;
+        }
+
         /**
          * <p>The language of your audio file.
          * Possible values are found in <a href="https://www.assemblyai.com/docs/concepts/supported-languages">Supported Languages</a>.
@@ -2151,11 +2231,13 @@ public final class Transcript {
         public Transcript build() {
             return new Transcript(
                     id,
-                    languageModel,
-                    acousticModel,
+                    audioUrl,
                     status,
                     languageCode,
-                    audioUrl,
+                    languageDetection,
+                    languageConfidenceThreshold,
+                    languageConfidence,
+                    speechModel,
                     text,
                     words,
                     utterances,
@@ -2163,8 +2245,8 @@ public final class Transcript {
                     audioDuration,
                     punctuate,
                     formatText,
+                    disfluencies,
                     dualChannel,
-                    speechModel,
                     webhookUrl,
                     webhookStatusCode,
                     webhookAuth,
@@ -2188,7 +2270,6 @@ public final class Transcript {
                     contentSafetyLabels,
                     iabCategories,
                     iabCategoriesResult,
-                    languageDetection,
                     customSpelling,
                     autoChapters,
                     chapters,
@@ -2198,7 +2279,6 @@ public final class Transcript {
                     summary,
                     customTopics,
                     topics,
-                    disfluencies,
                     sentimentAnalysis,
                     sentimentAnalysisResults,
                     entityDetection,
@@ -2206,6 +2286,8 @@ public final class Transcript {
                     speechThreshold,
                     throttled,
                     error,
+                    languageModel,
+                    acousticModel,
                     additionalProperties);
         }
     }
