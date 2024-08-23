@@ -21,7 +21,6 @@ generated_testSrc/
 generated/
 
 bin
-build
 
 .env
 *.env
