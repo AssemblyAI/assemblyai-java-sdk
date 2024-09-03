@@ -31,23 +31,12 @@ public final class App {
     public static void main(String... args) throws IOException, InterruptedException, ExecutionException {
         AssemblyAI client = AssemblyAI.builder()
                 .apiKey(System.getenv("ASSEMBLYAI_API_KEY"))
-                .environment(Environment.custom("http://localhost:10000"))
                 .build();
 
         Transcript transcript = client.transcripts().transcribe(
                 "https://storage.googleapis.com/aai-docs-samples/nbc.mp3",
                 TranscriptOptionalParams.builder()
                         .sentimentAnalysis(true)
-                        .languageDetection(true)
-                        .audioEndAt(1000)
-                        .audioStartFrom(10)
-                        .autoChapters(true)
-                        .autoHighlights(Optional.of(true))
-                        .boostParam(TranscriptBoostParam.HIGH)
-                        .customSpelling(List.of(TranscriptCustomSpelling.builder()
-                                .to("NBC")
-                                .addFrom("nbc")
-                                .build()))
                         .build()
         );
 
