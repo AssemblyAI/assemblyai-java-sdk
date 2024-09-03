@@ -1,15 +1,15 @@
 package com.assemblyai.api;
 
 import com.assemblyai.api.core.ClientOptions;
+import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.transcripts.TranscriptsClient;
 import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
 import com.assemblyai.api.resources.transcripts.requests.WordSearchParams;
-import com.assemblyai.api.resources.transcripts.types.Transcript;
-import com.assemblyai.api.resources.transcripts.types.TranscriptOptionalParams;
-import com.assemblyai.api.resources.transcripts.types.TranscriptStatus;
-import com.assemblyai.api.resources.transcripts.types.WordSearchResponse;
+import com.assemblyai.api.resources.transcripts.types.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,45 +105,16 @@ public class PollingTranscriptsClient extends TranscriptsClient {
      * @return Queued transcript
      */
     public Transcript submit(String url, TranscriptOptionalParams transcriptParams) {
-        TranscriptParams createTranscriptParams = TranscriptParams.builder()
-                .audioUrl(url)
-                .languageCode(transcriptParams.getLanguageCode())
-                .punctuate(transcriptParams.getPunctuate())
-                .formatText(transcriptParams.getFormatText())
-                .dualChannel(transcriptParams.getDualChannel())
-                .webhookUrl(transcriptParams.getWebhookUrl())
-                .webhookAuthHeaderName(transcriptParams.getWebhookAuthHeaderName())
-                .webhookAuthHeaderValue(transcriptParams.getWebhookAuthHeaderValue())
-                .autoHighlights(transcriptParams.getAutoHighlights())
-                .audioStartFrom(transcriptParams.getAudioStartFrom())
-                .audioEndAt(transcriptParams.getAudioEndAt())
-                .wordBoost(transcriptParams.getWordBoost())
-                .boostParam(transcriptParams.getBoostParam())
-                .filterProfanity(transcriptParams.getFilterProfanity())
-                .redactPii(transcriptParams.getRedactPii())
-                .redactPiiAudio(transcriptParams.getRedactPiiAudio())
-                .redactPiiAudioQuality(transcriptParams.getRedactPiiAudioQuality())
-                .redactPiiPolicies(transcriptParams.getRedactPiiPolicies())
-                .redactPiiSub(transcriptParams.getRedactPiiSub())
-                .speakerLabels(transcriptParams.getSpeakerLabels())
-                .speakersExpected(transcriptParams.getSpeakersExpected())
-                .contentSafety(transcriptParams.getContentSafety())
-                .iabCategories(transcriptParams.getIabCategories())
-                .languageDetection(transcriptParams.getLanguageDetection())
-                .customSpelling(transcriptParams.getCustomSpelling())
-                .disfluencies(transcriptParams.getDisfluencies())
-                .sentimentAnalysis(transcriptParams.getSentimentAnalysis())
-                .autoChapters(transcriptParams.getAutoChapters())
-                .entityDetection(transcriptParams.getEntityDetection())
-                .speechModel(transcriptParams.getSpeechModel())
-                .speechThreshold(transcriptParams.getSpeechThreshold())
-                .summarization(transcriptParams.getSummarization())
-                .summaryModel(transcriptParams.getSummaryModel())
-                .summaryType(transcriptParams.getSummaryType())
-                .customTopics(transcriptParams.getCustomTopics())
-                .topics(transcriptParams.getTopics())
-                .build();
-        return super.submit(createTranscriptParams);
+        ObjectNode transcriptParamsJson = ObjectMappers.JSON_MAPPER.valueToTree(transcriptParams);
+        transcriptParamsJson.put("audio_url", url);
+        TranscriptParams fullTranscriptParams;
+        try {
+            fullTranscriptParams = ObjectMappers.JSON_MAPPER.treeToValue(transcriptParamsJson, TranscriptParams.class);
+        } catch (JsonProcessingException e) {
+            // this should never happen
+            throw new RuntimeException(e);
+        }
+        return super.submit(fullTranscriptParams);
     }
 
     /**
