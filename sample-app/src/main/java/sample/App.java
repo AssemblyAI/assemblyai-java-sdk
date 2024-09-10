@@ -5,7 +5,6 @@ import com.assemblyai.api.RealtimeTranscriber;
 import com.assemblyai.api.core.ApiError;
 import com.assemblyai.api.core.AssemblyAIApiException;
 import com.assemblyai.api.core.AssemblyAIException;
-import com.assemblyai.api.core.Environment;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.resources.lemur.requests.LemurQuestionAnswerParams;
 import com.assemblyai.api.resources.lemur.requests.LemurTaskParams;
@@ -22,7 +21,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
