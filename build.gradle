@@ -47,7 +47,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.assemblyai'
             artifactId = 'assemblyai-java'
-            version = '2.3.0'
+            version = '2.3.1'
             from components.java
             pom {
                 scm {
