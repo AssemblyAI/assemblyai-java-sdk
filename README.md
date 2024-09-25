@@ -145,10 +145,10 @@ TranscriptParams params = TranscriptParams.builder()
 ## Timeouts
 
 The SDK uses the default timeouts of OkHttpClient:
-- 10 seconds for connection timeout
-- 10 seconds for read timeout
-- 10 seconds for write timeout
-- No timeout for call timeout
+* 10 seconds for connection timeout
+* 10 seconds for read timeout
+* 10 seconds for write timeout
+* No timeout for call timeout
 
 However, there are **no timeouts for any LeMUR** HTTP request.
 
