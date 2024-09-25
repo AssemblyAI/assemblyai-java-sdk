@@ -138,9 +138,40 @@ audioUrl variable.
 import com.assemblyai.api.TranscriptParams;
 
 TranscriptParams params = TranscriptParams.builder()
-  .audioUrl("https://...")
-  .build();
+        .audioUrl("https://...")
+        .build();
 ```
+
+## Timeouts
+
+The SDK uses the default timeouts of OkHttpClient:
+- 10 seconds for connection timeout
+- 10 seconds for read timeout
+- 10 seconds for write timeout
+- No timeout for call timeout
+
+However, there are **no timeouts for any LeMUR** HTTP request.
+
+To specify your own timeout, you can pass `RequestOptions` to each request method:
+
+```java
+import com.assemblyai.api.core.RequestOptions;
+
+// initialize client
+
+client.transcripts()
+        .get(
+                "50c54d73-7a3f-44dc-af6b-f4579841b1ce",
+                RequestOptions.builder()
+                        .timeout(30, TimeUnit.SECONDS)
+                        .build()
+        );
+```
+
+For this operation, the call timeout will be 30 seconds, and the other timeouts will be turned off.
+
+The default timeout should be sufficient for most use cases. 
+However, depending on your network speed and distance, you may occasionally experience timeouts, in which case you can increase the timeout.
 
 ## Contributing
 While we value open-source contributions to this SDK, this library
