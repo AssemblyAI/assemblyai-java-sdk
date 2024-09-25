@@ -79,7 +79,7 @@ When you create a transcript, you can either pass in a URL to an audio file
 or upload a file directly.
 
 ```java
-import com.assemblyai.api.types.Transcript;
+import com.assemblyai.api.resources.transcripts.types.Transcript;
 
 // Transcribe file at remote URL
 Transcript transcript = aai.transcripts().transcribe(
@@ -94,7 +94,7 @@ transcript = aai.transcripts().transcribe(
 If you don't want to wait until the transcript is ready, you can use submit:
 
 ```java
-import com.assemblyai.api.types.Transcript;
+import com.assemblyai.api.resources.transcripts.types.Transcript;
 
 // Transcribe file at remote URL
 Transcript transcript = aai.transcripts().submit(
@@ -111,7 +111,7 @@ audio streams and sends data over websockets. The Realtime Transcriber
 will take event handlers
 
 ```java
-import com.assemblyai.api.Transcriber;
+import com.assemblyai.api.RealtimeTranscriber;
 
 RealtimeTranscriber realtime = RealtimeTranscriber.builder()
   .apiKey("YOUR_API_KEY")
@@ -135,7 +135,7 @@ method on `CreateTranscriptParameters` until you have specified the mandatory
 audioUrl variable.
 
 ```java
-import com.assemblyai.api.TranscriptParams;
+import com.assemblyai.api.resources.transcripts.requests.TranscriptParams;
 
 TranscriptParams params = TranscriptParams.builder()
         .audioUrl("https://...")
