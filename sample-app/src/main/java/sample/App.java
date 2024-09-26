@@ -32,7 +32,7 @@ public final class App {
                 .build();
 
         Transcript transcript = client.transcripts().transcribe(
-                "https://storage.googleapis.com/aai-docs-samples/nbc.mp3",
+                "https://assembly.ai/nbc.mp3",
                 TranscriptOptionalParams.builder()
                         .sentimentAnalysis(true)
                         .build()
@@ -132,7 +132,7 @@ public final class App {
         System.out.println("Uploaded file" + uploadedFile);
 
         transcript = client.transcripts().submit(TranscriptParams.builder()
-                .audioUrl("https://storage.googleapis.com/client-docs-samples/nbc.mp3")
+                .audioUrl("https://assembly.ai/nbc.mp3")
                 .build());
         System.out.println("Created transcript " + transcript);
 
