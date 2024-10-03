@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SentimentAnalysisResult.Builder.class)
@@ -134,7 +135,7 @@ public final class SentimentAnalysisResult {
     }
 
     public interface TextStage {
-        StartStage text(String text);
+        StartStage text(@NotNull String text);
 
         Builder from(SentimentAnalysisResult other);
     }
@@ -148,7 +149,7 @@ public final class SentimentAnalysisResult {
     }
 
     public interface SentimentStage {
-        ConfidenceStage sentiment(Sentiment sentiment);
+        ConfidenceStage sentiment(@NotNull Sentiment sentiment);
     }
 
     public interface ConfidenceStage {
@@ -200,8 +201,8 @@ public final class SentimentAnalysisResult {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public StartStage text(String text) {
-            this.text = text;
+        public StartStage text(@NotNull String text) {
+            this.text = Objects.requireNonNull(text, "text must not be null");
             return this;
         }
 
@@ -233,8 +234,8 @@ public final class SentimentAnalysisResult {
          */
         @java.lang.Override
         @JsonSetter("sentiment")
-        public ConfidenceStage sentiment(Sentiment sentiment) {
-            this.sentiment = sentiment;
+        public ConfidenceStage sentiment(@NotNull Sentiment sentiment) {
+            this.sentiment = Objects.requireNonNull(sentiment, "sentiment must not be null");
             return this;
         }
 

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AutoHighlightsResult.Builder.class)
@@ -82,7 +83,7 @@ public final class AutoHighlightsResult {
     }
 
     public interface StatusStage {
-        _FinalStage status(AudioIntelligenceModelStatus status);
+        _FinalStage status(@NotNull AudioIntelligenceModelStatus status);
 
         Builder from(AutoHighlightsResult other);
     }
@@ -121,8 +122,8 @@ public final class AutoHighlightsResult {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(AudioIntelligenceModelStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull AudioIntelligenceModelStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

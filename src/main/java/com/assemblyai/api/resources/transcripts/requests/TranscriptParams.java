@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptParams.Builder.class)
@@ -259,7 +260,9 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     /**
-     * @return The URL to which we send webhook requests. We sends two different types of webhook requests. One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.
+     * @return The URL to which we send webhook requests.
+     * We sends two different types of webhook requests.
+     * One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.
      */
     @JsonProperty("webhook_url")
     @java.lang.Override
@@ -630,7 +633,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     public interface AudioUrlStage {
-        _FinalStage audioUrl(String audioUrl);
+        _FinalStage audioUrl(@NotNull String audioUrl);
 
         Builder from(TranscriptParams other);
     }
@@ -919,8 +922,8 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          */
         @java.lang.Override
         @JsonSetter("audio_url")
-        public _FinalStage audioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
+        public _FinalStage audioUrl(@NotNull String audioUrl) {
+            this.audioUrl = Objects.requireNonNull(audioUrl, "audioUrl must not be null");
             return this;
         }
 
@@ -1398,7 +1401,9 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         }
 
         /**
-         * <p>The URL to which we send webhook requests. We sends two different types of webhook requests. One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.</p>
+         * <p>The URL to which we send webhook requests.
+         * We sends two different types of webhook requests.
+         * One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

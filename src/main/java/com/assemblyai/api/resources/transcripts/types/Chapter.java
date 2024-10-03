@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Chapter.Builder.class)
@@ -119,17 +120,17 @@ public final class Chapter {
     }
 
     public interface GistStage {
-        HeadlineStage gist(String gist);
+        HeadlineStage gist(@NotNull String gist);
 
         Builder from(Chapter other);
     }
 
     public interface HeadlineStage {
-        SummaryStage headline(String headline);
+        SummaryStage headline(@NotNull String headline);
     }
 
     public interface SummaryStage {
-        StartStage summary(String summary);
+        StartStage summary(@NotNull String summary);
     }
 
     public interface StartStage {
@@ -178,8 +179,8 @@ public final class Chapter {
          */
         @java.lang.Override
         @JsonSetter("gist")
-        public HeadlineStage gist(String gist) {
-            this.gist = gist;
+        public HeadlineStage gist(@NotNull String gist) {
+            this.gist = Objects.requireNonNull(gist, "gist must not be null");
             return this;
         }
 
@@ -189,8 +190,8 @@ public final class Chapter {
          */
         @java.lang.Override
         @JsonSetter("headline")
-        public SummaryStage headline(String headline) {
-            this.headline = headline;
+        public SummaryStage headline(@NotNull String headline) {
+            this.headline = Objects.requireNonNull(headline, "headline must not be null");
             return this;
         }
 
@@ -200,8 +201,8 @@ public final class Chapter {
          */
         @java.lang.Override
         @JsonSetter("summary")
-        public StartStage summary(String summary) {
-            this.summary = summary;
+        public StartStage summary(@NotNull String summary) {
+            this.summary = Objects.requireNonNull(summary, "summary must not be null");
             return this;
         }
 

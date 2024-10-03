@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Entity.Builder.class)
@@ -101,13 +102,13 @@ public final class Entity {
     }
 
     public interface EntityTypeStage {
-        TextStage entityType(EntityType entityType);
+        TextStage entityType(@NotNull EntityType entityType);
 
         Builder from(Entity other);
     }
 
     public interface TextStage {
-        StartStage text(String text);
+        StartStage text(@NotNull String text);
     }
 
     public interface StartStage {
@@ -152,8 +153,8 @@ public final class Entity {
          */
         @java.lang.Override
         @JsonSetter("entity_type")
-        public TextStage entityType(EntityType entityType) {
-            this.entityType = entityType;
+        public TextStage entityType(@NotNull EntityType entityType) {
+            this.entityType = Objects.requireNonNull(entityType, "entityType must not be null");
             return this;
         }
 
@@ -163,8 +164,8 @@ public final class Entity {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public StartStage text(String text) {
-            this.text = text;
+        public StartStage text(@NotNull String text) {
+            this.text = Objects.requireNonNull(text, "text must not be null");
             return this;
         }
 

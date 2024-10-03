@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurStringResponse.Builder.class)
@@ -91,17 +92,17 @@ public final class LemurStringResponse implements ILemurStringResponse, ILemurBa
     }
 
     public interface ResponseStage {
-        RequestIdStage response(String response);
+        RequestIdStage response(@NotNull String response);
 
         Builder from(LemurStringResponse other);
     }
 
     public interface RequestIdStage {
-        UsageStage requestId(String requestId);
+        UsageStage requestId(@NotNull String requestId);
     }
 
     public interface UsageStage {
-        _FinalStage usage(LemurUsage usage);
+        _FinalStage usage(@NotNull LemurUsage usage);
     }
 
     public interface _FinalStage {
@@ -135,8 +136,8 @@ public final class LemurStringResponse implements ILemurStringResponse, ILemurBa
          */
         @java.lang.Override
         @JsonSetter("response")
-        public RequestIdStage response(String response) {
-            this.response = response;
+        public RequestIdStage response(@NotNull String response) {
+            this.response = Objects.requireNonNull(response, "response must not be null");
             return this;
         }
 
@@ -146,8 +147,8 @@ public final class LemurStringResponse implements ILemurStringResponse, ILemurBa
          */
         @java.lang.Override
         @JsonSetter("request_id")
-        public UsageStage requestId(String requestId) {
-            this.requestId = requestId;
+        public UsageStage requestId(@NotNull String requestId) {
+            this.requestId = Objects.requireNonNull(requestId, "requestId must not be null");
             return this;
         }
 
@@ -157,8 +158,8 @@ public final class LemurStringResponse implements ILemurStringResponse, ILemurBa
          */
         @java.lang.Override
         @JsonSetter("usage")
-        public _FinalStage usage(LemurUsage usage) {
-            this.usage = usage;
+        public _FinalStage usage(@NotNull LemurUsage usage) {
+            this.usage = Objects.requireNonNull(usage, "usage must not be null");
             return this;
         }
 

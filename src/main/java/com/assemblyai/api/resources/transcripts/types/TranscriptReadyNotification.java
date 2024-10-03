@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptReadyNotification.Builder.class)
@@ -77,13 +78,13 @@ public final class TranscriptReadyNotification {
     }
 
     public interface TranscriptIdStage {
-        StatusStage transcriptId(String transcriptId);
+        StatusStage transcriptId(@NotNull String transcriptId);
 
         Builder from(TranscriptReadyNotification other);
     }
 
     public interface StatusStage {
-        _FinalStage status(TranscriptReadyStatus status);
+        _FinalStage status(@NotNull TranscriptReadyStatus status);
     }
 
     public interface _FinalStage {
@@ -114,8 +115,8 @@ public final class TranscriptReadyNotification {
          */
         @java.lang.Override
         @JsonSetter("transcript_id")
-        public StatusStage transcriptId(String transcriptId) {
-            this.transcriptId = transcriptId;
+        public StatusStage transcriptId(@NotNull String transcriptId) {
+            this.transcriptId = Objects.requireNonNull(transcriptId, "transcriptId must not be null");
             return this;
         }
 
@@ -125,8 +126,8 @@ public final class TranscriptReadyNotification {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(TranscriptReadyStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull TranscriptReadyStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

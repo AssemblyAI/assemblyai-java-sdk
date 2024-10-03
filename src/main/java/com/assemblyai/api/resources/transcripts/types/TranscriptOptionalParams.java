@@ -245,7 +245,9 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     }
 
     /**
-     * @return The URL to which we send webhook requests. We sends two different types of webhook requests. One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.
+     * @return The URL to which we send webhook requests.
+     * We sends two different types of webhook requests.
+     * One request when a transcript is completed or failed, and one request when the redacted audio is ready if redact_pii_audio is enabled.
      */
     @JsonProperty("webhook_url")
     @java.lang.Override

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptUtterance.Builder.class)
@@ -149,11 +150,11 @@ public final class TranscriptUtterance {
     }
 
     public interface TextStage {
-        SpeakerStage text(String text);
+        SpeakerStage text(@NotNull String text);
     }
 
     public interface SpeakerStage {
-        _FinalStage speaker(String speaker);
+        _FinalStage speaker(@NotNull String speaker);
     }
 
     public interface _FinalStage {
@@ -236,8 +237,8 @@ public final class TranscriptUtterance {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public SpeakerStage text(String text) {
-            this.text = text;
+        public SpeakerStage text(@NotNull String text) {
+            this.text = Objects.requireNonNull(text, "text must not be null");
             return this;
         }
 
@@ -247,8 +248,8 @@ public final class TranscriptUtterance {
          */
         @java.lang.Override
         @JsonSetter("speaker")
-        public _FinalStage speaker(String speaker) {
-            this.speaker = speaker;
+        public _FinalStage speaker(@NotNull String speaker) {
+            this.speaker = Objects.requireNonNull(speaker, "speaker must not be null");
             return this;
         }
 

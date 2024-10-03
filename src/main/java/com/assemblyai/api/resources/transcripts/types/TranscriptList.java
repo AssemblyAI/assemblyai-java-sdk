@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptList.Builder.class)
@@ -74,7 +75,7 @@ public final class TranscriptList {
     }
 
     public interface PageDetailsStage {
-        _FinalStage pageDetails(PageDetails pageDetails);
+        _FinalStage pageDetails(@NotNull PageDetails pageDetails);
 
         Builder from(TranscriptList other);
     }
@@ -109,8 +110,8 @@ public final class TranscriptList {
 
         @java.lang.Override
         @JsonSetter("page_details")
-        public _FinalStage pageDetails(PageDetails pageDetails) {
-            this.pageDetails = pageDetails;
+        public _FinalStage pageDetails(@NotNull PageDetails pageDetails) {
+            this.pageDetails = Objects.requireNonNull(pageDetails, "pageDetails must not be null");
             return this;
         }
 

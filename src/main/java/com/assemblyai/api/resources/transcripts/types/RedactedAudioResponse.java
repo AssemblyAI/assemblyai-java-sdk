@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RedactedAudioResponse.Builder.class)
@@ -76,13 +77,13 @@ public final class RedactedAudioResponse {
     }
 
     public interface StatusStage {
-        RedactedAudioUrlStage status(String status);
+        RedactedAudioUrlStage status(@NotNull String status);
 
         Builder from(RedactedAudioResponse other);
     }
 
     public interface RedactedAudioUrlStage {
-        _FinalStage redactedAudioUrl(String redactedAudioUrl);
+        _FinalStage redactedAudioUrl(@NotNull String redactedAudioUrl);
     }
 
     public interface _FinalStage {
@@ -113,8 +114,8 @@ public final class RedactedAudioResponse {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public RedactedAudioUrlStage status(String status) {
-            this.status = status;
+        public RedactedAudioUrlStage status(@NotNull String status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -124,8 +125,8 @@ public final class RedactedAudioResponse {
          */
         @java.lang.Override
         @JsonSetter("redacted_audio_url")
-        public _FinalStage redactedAudioUrl(String redactedAudioUrl) {
-            this.redactedAudioUrl = redactedAudioUrl;
+        public _FinalStage redactedAudioUrl(@NotNull String redactedAudioUrl) {
+            this.redactedAudioUrl = Objects.requireNonNull(redactedAudioUrl, "redactedAudioUrl must not be null");
             return this;
         }
 

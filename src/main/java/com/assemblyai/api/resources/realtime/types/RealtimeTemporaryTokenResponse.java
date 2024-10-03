@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RealtimeTemporaryTokenResponse.Builder.class)
@@ -65,7 +66,7 @@ public final class RealtimeTemporaryTokenResponse {
     }
 
     public interface TokenStage {
-        _FinalStage token(String token);
+        _FinalStage token(@NotNull String token);
 
         Builder from(RealtimeTemporaryTokenResponse other);
     }
@@ -95,8 +96,8 @@ public final class RealtimeTemporaryTokenResponse {
          */
         @java.lang.Override
         @JsonSetter("token")
-        public _FinalStage token(String token) {
-            this.token = token;
+        public _FinalStage token(@NotNull String token) {
+            this.token = Objects.requireNonNull(token, "token must not be null");
             return this;
         }
 
