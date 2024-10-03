@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 public class ExtendedFilesClient extends FilesClient {
     public ExtendedFilesClient(ClientOptions clientOptions) {
@@ -38,6 +39,6 @@ public class ExtendedFilesClient extends FilesClient {
      * Upload a media file to AssemblyAI's servers.
      */
     public UploadedFile upload(Path filePath, RequestOptions requestOptions) throws IOException {
-        return upload(Files.readAllBytes(filePath), requestOptions);
+        return upload(Files.newInputStream(filePath, StandardOpenOption.READ), requestOptions);
     }
 }

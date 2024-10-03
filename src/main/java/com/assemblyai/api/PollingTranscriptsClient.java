@@ -344,7 +344,7 @@ public class PollingTranscriptsClient extends TranscriptsClient {
             TranscriptOptionalParams transcriptParams,
             RequestOptions requestOptions
     ) throws IOException {
-        UploadedFile uploadedFile = client.files().upload(Files.readAllBytes(file.toPath()), requestOptions);
+        UploadedFile uploadedFile = client.files().upload(file, requestOptions);
         return transcribe(uploadedFile.getUploadUrl(), transcriptParams, requestOptions);
     }
 
