@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptSentence.Builder.class)
@@ -121,7 +122,7 @@ public final class TranscriptSentence {
     }
 
     public interface TextStage {
-        StartStage text(String text);
+        StartStage text(@NotNull String text);
 
         Builder from(TranscriptSentence other);
     }
@@ -184,8 +185,8 @@ public final class TranscriptSentence {
 
         @java.lang.Override
         @JsonSetter("text")
-        public StartStage text(String text) {
-            this.text = text;
+        public StartStage text(@NotNull String text) {
+            this.text = Objects.requireNonNull(text, "text must not be null");
             return this;
         }
 

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RealtimeError.Builder.class)
@@ -62,7 +63,7 @@ public final class RealtimeError {
     }
 
     public interface ErrorStage {
-        _FinalStage error(String error);
+        _FinalStage error(@NotNull String error);
 
         Builder from(RealtimeError other);
     }
@@ -88,8 +89,8 @@ public final class RealtimeError {
 
         @java.lang.Override
         @JsonSetter("error")
-        public _FinalStage error(String error) {
-            this.error = error;
+        public _FinalStage error(@NotNull String error) {
+            this.error = Objects.requireNonNull(error, "error must not be null");
             return this;
         }
 

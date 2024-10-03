@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TopicDetectionResultLabelsItem.Builder.class)
@@ -82,7 +83,7 @@ public final class TopicDetectionResultLabelsItem {
     }
 
     public interface LabelStage {
-        _FinalStage label(String label);
+        _FinalStage label(@NotNull String label);
     }
 
     public interface _FinalStage {
@@ -124,8 +125,8 @@ public final class TopicDetectionResultLabelsItem {
          */
         @java.lang.Override
         @JsonSetter("label")
-        public _FinalStage label(String label) {
-            this.label = label;
+        public _FinalStage label(@NotNull String label) {
+            this.label = Objects.requireNonNull(label, "label must not be null");
             return this;
         }
 

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptListItem.Builder.class)
@@ -131,25 +132,25 @@ public final class TranscriptListItem {
     }
 
     public interface IdStage {
-        ResourceUrlStage id(String id);
+        ResourceUrlStage id(@NotNull String id);
 
         Builder from(TranscriptListItem other);
     }
 
     public interface ResourceUrlStage {
-        StatusStage resourceUrl(String resourceUrl);
+        StatusStage resourceUrl(@NotNull String resourceUrl);
     }
 
     public interface StatusStage {
-        CreatedStage status(TranscriptStatus status);
+        CreatedStage status(@NotNull TranscriptStatus status);
     }
 
     public interface CreatedStage {
-        AudioUrlStage created(OffsetDateTime created);
+        AudioUrlStage created(@NotNull OffsetDateTime created);
     }
 
     public interface AudioUrlStage {
-        _FinalStage audioUrl(String audioUrl);
+        _FinalStage audioUrl(@NotNull String audioUrl);
     }
 
     public interface _FinalStage {
@@ -200,36 +201,36 @@ public final class TranscriptListItem {
 
         @java.lang.Override
         @JsonSetter("id")
-        public ResourceUrlStage id(String id) {
-            this.id = id;
+        public ResourceUrlStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("resource_url")
-        public StatusStage resourceUrl(String resourceUrl) {
-            this.resourceUrl = resourceUrl;
+        public StatusStage resourceUrl(@NotNull String resourceUrl) {
+            this.resourceUrl = Objects.requireNonNull(resourceUrl, "resourceUrl must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public CreatedStage status(TranscriptStatus status) {
-            this.status = status;
+        public CreatedStage status(@NotNull TranscriptStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created")
-        public AudioUrlStage created(OffsetDateTime created) {
-            this.created = created;
+        public AudioUrlStage created(@NotNull OffsetDateTime created) {
+            this.created = Objects.requireNonNull(created, "created must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("audio_url")
-        public _FinalStage audioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
+        public _FinalStage audioUrl(@NotNull String audioUrl) {
+            this.audioUrl = Objects.requireNonNull(audioUrl, "audioUrl must not be null");
             return this;
         }
 

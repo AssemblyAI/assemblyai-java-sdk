@@ -128,7 +128,7 @@ public final class App {
         System.out.println("Delete transcript. " + transcript);
 
         File file = new File("sample-app/src/main/resources/nZP7pb_t4oA.mp3");
-        UploadedFile uploadedFile = client.files().upload(Files.readAllBytes(file.toPath()));
+        UploadedFile uploadedFile = client.files().upload(file);
         System.out.println("Uploaded file" + uploadedFile);
 
         transcript = client.transcripts().submit(TranscriptParams.builder()

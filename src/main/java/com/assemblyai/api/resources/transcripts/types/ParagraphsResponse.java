@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ParagraphsResponse.Builder.class)
@@ -97,7 +98,7 @@ public final class ParagraphsResponse {
     }
 
     public interface IdStage {
-        ConfidenceStage id(String id);
+        ConfidenceStage id(@NotNull String id);
 
         Builder from(ParagraphsResponse other);
     }
@@ -146,8 +147,8 @@ public final class ParagraphsResponse {
 
         @java.lang.Override
         @JsonSetter("id")
-        public ConfidenceStage id(String id) {
-            this.id = id;
+        public ConfidenceStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 

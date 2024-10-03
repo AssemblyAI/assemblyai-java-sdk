@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PurgeLemurRequestDataResponse.Builder.class)
@@ -90,13 +91,13 @@ public final class PurgeLemurRequestDataResponse {
     }
 
     public interface RequestIdStage {
-        RequestIdToPurgeStage requestId(String requestId);
+        RequestIdToPurgeStage requestId(@NotNull String requestId);
 
         Builder from(PurgeLemurRequestDataResponse other);
     }
 
     public interface RequestIdToPurgeStage {
-        DeletedStage requestIdToPurge(String requestIdToPurge);
+        DeletedStage requestIdToPurge(@NotNull String requestIdToPurge);
     }
 
     public interface DeletedStage {
@@ -134,8 +135,8 @@ public final class PurgeLemurRequestDataResponse {
          */
         @java.lang.Override
         @JsonSetter("request_id")
-        public RequestIdToPurgeStage requestId(String requestId) {
-            this.requestId = requestId;
+        public RequestIdToPurgeStage requestId(@NotNull String requestId) {
+            this.requestId = Objects.requireNonNull(requestId, "requestId must not be null");
             return this;
         }
 
@@ -145,8 +146,8 @@ public final class PurgeLemurRequestDataResponse {
          */
         @java.lang.Override
         @JsonSetter("request_id_to_purge")
-        public DeletedStage requestIdToPurge(String requestIdToPurge) {
-            this.requestIdToPurge = requestIdToPurge;
+        public DeletedStage requestIdToPurge(@NotNull String requestIdToPurge) {
+            this.requestIdToPurge = Objects.requireNonNull(requestIdToPurge, "requestIdToPurge must not be null");
             return this;
         }
 

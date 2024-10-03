@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurQuestionAnswer.Builder.class)
@@ -76,13 +77,13 @@ public final class LemurQuestionAnswer {
     }
 
     public interface QuestionStage {
-        AnswerStage question(String question);
+        AnswerStage question(@NotNull String question);
 
         Builder from(LemurQuestionAnswer other);
     }
 
     public interface AnswerStage {
-        _FinalStage answer(String answer);
+        _FinalStage answer(@NotNull String answer);
     }
 
     public interface _FinalStage {
@@ -113,8 +114,8 @@ public final class LemurQuestionAnswer {
          */
         @java.lang.Override
         @JsonSetter("question")
-        public AnswerStage question(String question) {
-            this.question = question;
+        public AnswerStage question(@NotNull String question) {
+            this.question = Objects.requireNonNull(question, "question must not be null");
             return this;
         }
 
@@ -124,8 +125,8 @@ public final class LemurQuestionAnswer {
          */
         @java.lang.Override
         @JsonSetter("answer")
-        public _FinalStage answer(String answer) {
-            this.answer = answer;
+        public _FinalStage answer(@NotNull String answer) {
+            this.answer = Objects.requireNonNull(answer, "answer must not be null");
             return this;
         }
 

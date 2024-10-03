@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Transcript.Builder.class)
@@ -305,7 +306,6 @@ public final class Transcript {
     /**
      * @return The confidence threshold for the automatically detected language.
      * An error will be returned if the language confidence is below this threshold.
-     * Defaults to 0.
      */
     @JsonProperty("language_confidence_threshold")
     public Optional<Double> getLanguageConfidenceThreshold() {
@@ -868,17 +868,17 @@ public final class Transcript {
     }
 
     public interface IdStage {
-        AudioUrlStage id(String id);
+        AudioUrlStage id(@NotNull String id);
 
         Builder from(Transcript other);
     }
 
     public interface AudioUrlStage {
-        StatusStage audioUrl(String audioUrl);
+        StatusStage audioUrl(@NotNull String audioUrl);
     }
 
     public interface StatusStage {
-        WebhookAuthStage status(TranscriptStatus status);
+        WebhookAuthStage status(@NotNull TranscriptStatus status);
     }
 
     public interface WebhookAuthStage {
@@ -898,11 +898,11 @@ public final class Transcript {
     }
 
     public interface LanguageModelStage {
-        AcousticModelStage languageModel(String languageModel);
+        AcousticModelStage languageModel(@NotNull String languageModel);
     }
 
     public interface AcousticModelStage {
-        _FinalStage acousticModel(String acousticModel);
+        _FinalStage acousticModel(@NotNull String acousticModel);
     }
 
     public interface _FinalStage {
@@ -1307,8 +1307,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public AudioUrlStage id(String id) {
-            this.id = id;
+        public AudioUrlStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -1318,8 +1318,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("audio_url")
-        public StatusStage audioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
+        public StatusStage audioUrl(@NotNull String audioUrl) {
+            this.audioUrl = Objects.requireNonNull(audioUrl, "audioUrl must not be null");
             return this;
         }
 
@@ -1329,8 +1329,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public WebhookAuthStage status(TranscriptStatus status) {
-            this.status = status;
+        public WebhookAuthStage status(@NotNull TranscriptStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -1384,8 +1384,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("language_model")
-        public AcousticModelStage languageModel(String languageModel) {
-            this.languageModel = languageModel;
+        public AcousticModelStage languageModel(@NotNull String languageModel) {
+            this.languageModel = Objects.requireNonNull(languageModel, "languageModel must not be null");
             return this;
         }
 
@@ -1395,8 +1395,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("acoustic_model")
-        public _FinalStage acousticModel(String acousticModel) {
-            this.acousticModel = acousticModel;
+        public _FinalStage acousticModel(@NotNull String acousticModel) {
+            this.acousticModel = Objects.requireNonNull(acousticModel, "acousticModel must not be null");
             return this;
         }
 
@@ -2174,8 +2174,7 @@ public final class Transcript {
 
         /**
          * <p>The confidence threshold for the automatically detected language.
-         * An error will be returned if the language confidence is below this threshold.
-         * Defaults to 0.</p>
+         * An error will be returned if the language confidence is below this threshold.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
