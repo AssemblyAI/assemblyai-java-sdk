@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -27,6 +27,58 @@ public class PollingTranscriptsClient extends TranscriptsClient {
     public PollingTranscriptsClient(ClientOptions clientOptions, AssemblyAI client) {
         super(clientOptions);
         this.client = client;
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     *
+     * @param file Audio file to transcribe
+     * @return Queued transcript
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript submit(InputStream file) throws IOException {
+        return submit(file, EMPTY_PARAMS, null);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     *
+     * @param file           Audio file to transcribe
+     * @param requestOptions The HTTP request options
+     * @return Queued transcript
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript submit(InputStream file, RequestOptions requestOptions) throws IOException {
+        return submit(file, EMPTY_PARAMS, requestOptions);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     *
+     * @param file             Audio file to transcribe
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @return Queued transcript
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript submit(InputStream file, TranscriptOptionalParams transcriptParams) throws IOException {
+        return submit(file, transcriptParams, null);
+    }
+
+    /**
+     * Submits a transcription job for an audio file. This will not wait until the transcript status is "completed" or "error".
+     *
+     * @param file             Audio file to transcribe
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @param requestOptions   The HTTP request options
+     * @return Queued transcript
+     */
+    public Transcript submit(
+            InputStream file,
+            TranscriptOptionalParams transcriptParams,
+            RequestOptions requestOptions
+    ) {
+        UploadedFile uploadedFile = client.files().upload(file, requestOptions);
+        return submit(uploadedFile.getUploadUrl(), transcriptParams, requestOptions);
     }
 
     /**
@@ -243,6 +295,56 @@ public class PollingTranscriptsClient extends TranscriptsClient {
             throw new RuntimeException(e);
         }
         return super.submit(fullTranscriptParams, requestOptions);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     *
+     * @param file Audio file to transcribe
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(InputStream file) throws IOException {
+        return transcribe(file, EMPTY_PARAMS, null);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     *
+     * @param file           Audio file to transcribe
+     * @param requestOptions The HTTP request options
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(InputStream file, RequestOptions requestOptions) throws IOException {
+        return transcribe(file, EMPTY_PARAMS, requestOptions);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     *
+     * @param file             Audio file to transcribe
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(InputStream file, TranscriptOptionalParams transcriptParams) throws IOException {
+        UploadedFile uploadedFile = client.files().upload(file);
+        return transcribe(uploadedFile.getUploadUrl(), transcriptParams, null);
+    }
+
+    /**
+     * Transcribe an audio file. This will create a transcript and wait until the transcript status is "completed" or "error".
+     *
+     * @param file             Audio file to transcribe
+     * @param transcriptParams The parameters to transcribe an audio file.
+     * @param requestOptions   The HTTP request options
+     * @return A transcript with status "completed" or "error"
+     * @throws IOException The file will be read and an IOException may be thrown.
+     */
+    public Transcript transcribe(InputStream file, TranscriptOptionalParams transcriptParams, RequestOptions requestOptions) throws IOException {
+        UploadedFile uploadedFile = client.files().upload(file, requestOptions);
+        return transcribe(uploadedFile.getUploadUrl(), transcriptParams, requestOptions);
     }
 
     /**
