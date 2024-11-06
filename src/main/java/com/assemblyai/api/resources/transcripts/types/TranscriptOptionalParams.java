@@ -35,6 +35,8 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
     private final Optional<Boolean> disfluencies;
 
+    private final Optional<Boolean> multichannel;
+
     private final Optional<Boolean> dualChannel;
 
     private final Optional<String> webhookUrl;
@@ -105,6 +107,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> disfluencies,
+            Optional<Boolean> multichannel,
             Optional<Boolean> dualChannel,
             Optional<String> webhookUrl,
             Optional<String> webhookAuthHeaderName,
@@ -143,6 +146,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         this.punctuate = punctuate;
         this.formatText = formatText;
         this.disfluencies = disfluencies;
+        this.multichannel = multichannel;
         this.dualChannel = dualChannel;
         this.webhookUrl = webhookUrl;
         this.webhookAuthHeaderName = webhookAuthHeaderName;
@@ -233,6 +237,15 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
     @java.lang.Override
     public Optional<Boolean> getDisfluencies() {
         return disfluencies;
+    }
+
+    /**
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#multichannel-transcription">Multichannel</a> transcription, can be true or false.
+     */
+    @JsonProperty("multichannel")
+    @java.lang.Override
+    public Optional<Boolean> getMultichannel() {
+        return multichannel;
     }
 
     /**
@@ -524,6 +537,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && disfluencies.equals(other.disfluencies)
+                && multichannel.equals(other.multichannel)
                 && dualChannel.equals(other.dualChannel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookAuthHeaderName.equals(other.webhookAuthHeaderName)
@@ -566,6 +580,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                 this.punctuate,
                 this.formatText,
                 this.disfluencies,
+                this.multichannel,
                 this.dualChannel,
                 this.webhookUrl,
                 this.webhookAuthHeaderName,
@@ -622,6 +637,8 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
         private Optional<Boolean> formatText = Optional.empty();
 
         private Optional<Boolean> disfluencies = Optional.empty();
+
+        private Optional<Boolean> multichannel = Optional.empty();
 
         private Optional<Boolean> dualChannel = Optional.empty();
 
@@ -696,6 +713,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
             disfluencies(other.getDisfluencies());
+            multichannel(other.getMultichannel());
             dualChannel(other.getDualChannel());
             webhookUrl(other.getWebhookUrl());
             webhookAuthHeaderName(other.getWebhookAuthHeaderName());
@@ -803,6 +821,17 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
 
         public Builder disfluencies(Boolean disfluencies) {
             this.disfluencies = Optional.ofNullable(disfluencies);
+            return this;
+        }
+
+        @JsonSetter(value = "multichannel", nulls = Nulls.SKIP)
+        public Builder multichannel(Optional<Boolean> multichannel) {
+            this.multichannel = multichannel;
+            return this;
+        }
+
+        public Builder multichannel(Boolean multichannel) {
+            this.multichannel = Optional.ofNullable(multichannel);
             return this;
         }
 
@@ -1145,6 +1174,7 @@ public final class TranscriptOptionalParams implements ITranscriptOptionalParams
                     punctuate,
                     formatText,
                     disfluencies,
+                    multichannel,
                     dualChannel,
                     webhookUrl,
                     webhookAuthHeaderName,

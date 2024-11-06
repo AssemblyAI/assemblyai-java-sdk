@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RealtimeBaseMessage.Builder.class)
@@ -66,7 +65,7 @@ public final class RealtimeBaseMessage {
     }
 
     public interface MessageTypeStage {
-        _FinalStage messageType(@NotNull MessageType messageType);
+        _FinalStage messageType(MessageType messageType);
 
         Builder from(RealtimeBaseMessage other);
     }
@@ -96,8 +95,8 @@ public final class RealtimeBaseMessage {
          */
         @java.lang.Override
         @JsonSetter("message_type")
-        public _FinalStage messageType(@NotNull MessageType messageType) {
-            this.messageType = Objects.requireNonNull(messageType, "messageType must not be null");
+        public _FinalStage messageType(MessageType messageType) {
+            this.messageType = messageType;
             return this;
         }
 

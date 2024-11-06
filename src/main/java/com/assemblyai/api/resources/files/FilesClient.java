@@ -6,7 +6,6 @@ package com.assemblyai.api.resources.files;
 import com.assemblyai.api.core.AssemblyAIApiException;
 import com.assemblyai.api.core.AssemblyAIException;
 import com.assemblyai.api.core.ClientOptions;
-import com.assemblyai.api.core.InputStreamRequestBody;
 import com.assemblyai.api.core.ObjectMappers;
 import com.assemblyai.api.core.RequestOptions;
 import com.assemblyai.api.errors.BadRequestError;
@@ -19,12 +18,9 @@ import com.assemblyai.api.errors.UnauthorizedError;
 import com.assemblyai.api.resources.files.types.UploadedFile;
 import com.assemblyai.api.types.Error;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -41,23 +37,24 @@ public class FilesClient {
     /**
      * Upload a media file to AssemblyAI's servers.
      */
-    public UploadedFile upload(InputStream request) {
+    public UploadedFile upload(byte[] request) {
         return upload(request, null);
     }
 
     /**
      * Upload a media file to AssemblyAI's servers.
      */
-    public UploadedFile upload(InputStream request, RequestOptions requestOptions) {
+    public UploadedFile upload(byte[] request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/upload")
                 .build();
-        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
+        RequestBody body = RequestBody.create(request);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/octet-stream")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -101,19 +98,5 @@ public class FilesClient {
         } catch (IOException e) {
             throw new AssemblyAIException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * Upload a media file to AssemblyAI's servers.
-     */
-    public UploadedFile upload(byte[] request) {
-        return upload(new ByteArrayInputStream(request));
-    }
-
-    /**
-     * Upload a media file to AssemblyAI's servers.
-     */
-    public UploadedFile upload(byte[] request, RequestOptions requestOptions) {
-        return upload(new ByteArrayInputStream(request), requestOptions);
     }
 }

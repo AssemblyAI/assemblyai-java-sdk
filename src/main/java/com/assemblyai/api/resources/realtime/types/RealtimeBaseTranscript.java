@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RealtimeBaseTranscript.Builder.class)
@@ -158,11 +157,11 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
     }
 
     public interface TextStage {
-        CreatedStage text(@NotNull String text);
+        CreatedStage text(String text);
     }
 
     public interface CreatedStage {
-        _FinalStage created(@NotNull OffsetDateTime created);
+        _FinalStage created(OffsetDateTime created);
     }
 
     public interface _FinalStage {
@@ -245,8 +244,8 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public CreatedStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
+        public CreatedStage text(String text) {
+            this.text = text;
             return this;
         }
 
@@ -256,8 +255,8 @@ public final class RealtimeBaseTranscript implements IRealtimeBaseTranscript {
          */
         @java.lang.Override
         @JsonSetter("created")
-        public _FinalStage created(@NotNull OffsetDateTime created) {
-            this.created = Objects.requireNonNull(created, "created must not be null");
+        public _FinalStage created(OffsetDateTime created) {
+            this.created = created;
             return this;
         }
 

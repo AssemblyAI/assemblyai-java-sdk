@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContentSafetyLabel.Builder.class)
@@ -89,7 +88,7 @@ public final class ContentSafetyLabel {
     }
 
     public interface LabelStage {
-        ConfidenceStage label(@NotNull String label);
+        ConfidenceStage label(String label);
 
         Builder from(ContentSafetyLabel other);
     }
@@ -133,8 +132,8 @@ public final class ContentSafetyLabel {
          */
         @java.lang.Override
         @JsonSetter("label")
-        public ConfidenceStage label(@NotNull String label) {
-            this.label = Objects.requireNonNull(label, "label must not be null");
+        public ConfidenceStage label(String label) {
+            this.label = label;
             return this;
         }
 

@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Transcript.Builder.class)
@@ -53,6 +52,10 @@ public final class Transcript {
     private final Optional<Boolean> formatText;
 
     private final Optional<Boolean> disfluencies;
+
+    private final Optional<Boolean> multichannel;
+
+    private final Optional<Integer> audioChannels;
 
     private final Optional<Boolean> dualChannel;
 
@@ -157,6 +160,8 @@ public final class Transcript {
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> disfluencies,
+            Optional<Boolean> multichannel,
+            Optional<Integer> audioChannels,
             Optional<Boolean> dualChannel,
             Optional<String> webhookUrl,
             Optional<Integer> webhookStatusCode,
@@ -216,6 +221,8 @@ public final class Transcript {
         this.punctuate = punctuate;
         this.formatText = formatText;
         this.disfluencies = disfluencies;
+        this.multichannel = multichannel;
+        this.audioChannels = audioChannels;
         this.dualChannel = dualChannel;
         this.webhookUrl = webhookUrl;
         this.webhookStatusCode = webhookStatusCode;
@@ -389,6 +396,22 @@ public final class Transcript {
     @JsonProperty("disfluencies")
     public Optional<Boolean> getDisfluencies() {
         return disfluencies;
+    }
+
+    /**
+     * @return Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#multichannel-transcription">Multichannel transcription</a> was enabled in the transcription request, either true or false
+     */
+    @JsonProperty("multichannel")
+    public Optional<Boolean> getMultichannel() {
+        return multichannel;
+    }
+
+    /**
+     * @return The number of audio channels in the audio file. This is only present when multichannel is enabled.
+     */
+    @JsonProperty("audio_channels")
+    public Optional<Integer> getAudioChannels() {
+        return audioChannels;
     }
 
     /**
@@ -751,6 +774,8 @@ public final class Transcript {
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && disfluencies.equals(other.disfluencies)
+                && multichannel.equals(other.multichannel)
+                && audioChannels.equals(other.audioChannels)
                 && dualChannel.equals(other.dualChannel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookStatusCode.equals(other.webhookStatusCode)
@@ -814,6 +839,8 @@ public final class Transcript {
                 this.punctuate,
                 this.formatText,
                 this.disfluencies,
+                this.multichannel,
+                this.audioChannels,
                 this.dualChannel,
                 this.webhookUrl,
                 this.webhookStatusCode,
@@ -868,17 +895,17 @@ public final class Transcript {
     }
 
     public interface IdStage {
-        AudioUrlStage id(@NotNull String id);
+        AudioUrlStage id(String id);
 
         Builder from(Transcript other);
     }
 
     public interface AudioUrlStage {
-        StatusStage audioUrl(@NotNull String audioUrl);
+        StatusStage audioUrl(String audioUrl);
     }
 
     public interface StatusStage {
-        WebhookAuthStage status(@NotNull TranscriptStatus status);
+        WebhookAuthStage status(TranscriptStatus status);
     }
 
     public interface WebhookAuthStage {
@@ -898,11 +925,11 @@ public final class Transcript {
     }
 
     public interface LanguageModelStage {
-        AcousticModelStage languageModel(@NotNull String languageModel);
+        AcousticModelStage languageModel(String languageModel);
     }
 
     public interface AcousticModelStage {
-        _FinalStage acousticModel(@NotNull String acousticModel);
+        _FinalStage acousticModel(String acousticModel);
     }
 
     public interface _FinalStage {
@@ -959,6 +986,14 @@ public final class Transcript {
         _FinalStage disfluencies(Optional<Boolean> disfluencies);
 
         _FinalStage disfluencies(Boolean disfluencies);
+
+        _FinalStage multichannel(Optional<Boolean> multichannel);
+
+        _FinalStage multichannel(Boolean multichannel);
+
+        _FinalStage audioChannels(Optional<Integer> audioChannels);
+
+        _FinalStage audioChannels(Integer audioChannels);
 
         _FinalStage dualChannel(Optional<Boolean> dualChannel);
 
@@ -1207,6 +1242,10 @@ public final class Transcript {
 
         private Optional<Boolean> dualChannel = Optional.empty();
 
+        private Optional<Integer> audioChannels = Optional.empty();
+
+        private Optional<Boolean> multichannel = Optional.empty();
+
         private Optional<Boolean> disfluencies = Optional.empty();
 
         private Optional<Boolean> formatText = Optional.empty();
@@ -1256,6 +1295,8 @@ public final class Transcript {
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
             disfluencies(other.getDisfluencies());
+            multichannel(other.getMultichannel());
+            audioChannels(other.getAudioChannels());
             dualChannel(other.getDualChannel());
             webhookUrl(other.getWebhookUrl());
             webhookStatusCode(other.getWebhookStatusCode());
@@ -1307,8 +1348,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public AudioUrlStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+        public AudioUrlStage id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -1318,8 +1359,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("audio_url")
-        public StatusStage audioUrl(@NotNull String audioUrl) {
-            this.audioUrl = Objects.requireNonNull(audioUrl, "audioUrl must not be null");
+        public StatusStage audioUrl(String audioUrl) {
+            this.audioUrl = audioUrl;
             return this;
         }
 
@@ -1329,8 +1370,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public WebhookAuthStage status(@NotNull TranscriptStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+        public WebhookAuthStage status(TranscriptStatus status) {
+            this.status = status;
             return this;
         }
 
@@ -1384,8 +1425,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("language_model")
-        public AcousticModelStage languageModel(@NotNull String languageModel) {
-            this.languageModel = Objects.requireNonNull(languageModel, "languageModel must not be null");
+        public AcousticModelStage languageModel(String languageModel) {
+            this.languageModel = languageModel;
             return this;
         }
 
@@ -1395,8 +1436,8 @@ public final class Transcript {
          */
         @java.lang.Override
         @JsonSetter("acoustic_model")
-        public _FinalStage acousticModel(@NotNull String acousticModel) {
-            this.acousticModel = Objects.requireNonNull(acousticModel, "acousticModel must not be null");
+        public _FinalStage acousticModel(String acousticModel) {
+            this.acousticModel = acousticModel;
             return this;
         }
 
@@ -2005,6 +2046,40 @@ public final class Transcript {
         }
 
         /**
+         * <p>The number of audio channels in the audio file. This is only present when multichannel is enabled.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage audioChannels(Integer audioChannels) {
+            this.audioChannels = Optional.ofNullable(audioChannels);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "audio_channels", nulls = Nulls.SKIP)
+        public _FinalStage audioChannels(Optional<Integer> audioChannels) {
+            this.audioChannels = audioChannels;
+            return this;
+        }
+
+        /**
+         * <p>Whether <a href="https://www.assemblyai.com/docs/models/speech-recognition#multichannel-transcription">Multichannel transcription</a> was enabled in the transcription request, either true or false</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage multichannel(Boolean multichannel) {
+            this.multichannel = Optional.ofNullable(multichannel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "multichannel", nulls = Nulls.SKIP)
+        public _FinalStage multichannel(Optional<Boolean> multichannel) {
+            this.multichannel = multichannel;
+            return this;
+        }
+
+        /**
          * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -2245,6 +2320,8 @@ public final class Transcript {
                     punctuate,
                     formatText,
                     disfluencies,
+                    multichannel,
+                    audioChannels,
                     dualChannel,
                     webhookUrl,
                     webhookStatusCode,

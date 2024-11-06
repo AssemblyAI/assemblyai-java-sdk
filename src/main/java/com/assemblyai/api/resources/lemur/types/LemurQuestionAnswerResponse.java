@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurQuestionAnswerResponse.Builder.class)
@@ -97,13 +96,13 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
     }
 
     public interface RequestIdStage {
-        UsageStage requestId(@NotNull String requestId);
+        UsageStage requestId(String requestId);
 
         Builder from(LemurQuestionAnswerResponse other);
     }
 
     public interface UsageStage {
-        _FinalStage usage(@NotNull LemurUsage usage);
+        _FinalStage usage(LemurUsage usage);
     }
 
     public interface _FinalStage {
@@ -143,8 +142,8 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
          */
         @java.lang.Override
         @JsonSetter("request_id")
-        public UsageStage requestId(@NotNull String requestId) {
-            this.requestId = Objects.requireNonNull(requestId, "requestId must not be null");
+        public UsageStage requestId(String requestId) {
+            this.requestId = requestId;
             return this;
         }
 
@@ -154,8 +153,8 @@ public final class LemurQuestionAnswerResponse implements ILemurBaseResponse {
          */
         @java.lang.Override
         @JsonSetter("usage")
-        public _FinalStage usage(@NotNull LemurUsage usage) {
-            this.usage = Objects.requireNonNull(usage, "usage must not be null");
+        public _FinalStage usage(LemurUsage usage) {
+            this.usage = usage;
             return this;
         }
 

@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PageDetails.Builder.class)
@@ -132,7 +131,7 @@ public final class PageDetails {
     }
 
     public interface CurrentUrlStage {
-        _FinalStage currentUrl(@NotNull String currentUrl);
+        _FinalStage currentUrl(String currentUrl);
     }
 
     public interface _FinalStage {
@@ -202,8 +201,8 @@ public final class PageDetails {
          */
         @java.lang.Override
         @JsonSetter("current_url")
-        public _FinalStage currentUrl(@NotNull String currentUrl) {
-            this.currentUrl = Objects.requireNonNull(currentUrl, "currentUrl must not be null");
+        public _FinalStage currentUrl(String currentUrl) {
+            this.currentUrl = currentUrl;
             return this;
         }
 

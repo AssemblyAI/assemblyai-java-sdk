@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UploadedFile.Builder.class)
@@ -66,7 +65,7 @@ public final class UploadedFile {
     }
 
     public interface UploadUrlStage {
-        _FinalStage uploadUrl(@NotNull String uploadUrl);
+        _FinalStage uploadUrl(String uploadUrl);
 
         Builder from(UploadedFile other);
     }
@@ -96,8 +95,8 @@ public final class UploadedFile {
          */
         @java.lang.Override
         @JsonSetter("upload_url")
-        public _FinalStage uploadUrl(@NotNull String uploadUrl) {
-            this.uploadUrl = Objects.requireNonNull(uploadUrl, "uploadUrl must not be null");
+        public _FinalStage uploadUrl(String uploadUrl) {
+            this.uploadUrl = uploadUrl;
             return this;
         }
 

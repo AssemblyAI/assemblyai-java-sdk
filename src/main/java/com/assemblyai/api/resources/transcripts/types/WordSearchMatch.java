@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WordSearchMatch.Builder.class)
@@ -110,7 +109,7 @@ public final class WordSearchMatch {
     }
 
     public interface TextStage {
-        CountStage text(@NotNull String text);
+        CountStage text(String text);
 
         Builder from(WordSearchMatch other);
     }
@@ -165,8 +164,8 @@ public final class WordSearchMatch {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public CountStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
+        public CountStage text(String text) {
+            this.text = text;
             return this;
         }
 

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptUtterance.Builder.class)
@@ -32,6 +32,8 @@ public final class TranscriptUtterance {
 
     private final List<TranscriptWord> words;
 
+    private final Optional<String> channel;
+
     private final String speaker;
 
     private final Map<String, Object> additionalProperties;
@@ -42,6 +44,7 @@ public final class TranscriptUtterance {
             int end,
             String text,
             List<TranscriptWord> words,
+            Optional<String> channel,
             String speaker,
             Map<String, Object> additionalProperties) {
         this.confidence = confidence;
@@ -49,6 +52,7 @@ public final class TranscriptUtterance {
         this.end = end;
         this.text = text;
         this.words = words;
+        this.channel = channel;
         this.speaker = speaker;
         this.additionalProperties = additionalProperties;
     }
@@ -94,6 +98,14 @@ public final class TranscriptUtterance {
     }
 
     /**
+     * @return The channel of this utterance. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.
+     */
+    @JsonProperty("channel")
+    public Optional<String> getChannel() {
+        return channel;
+    }
+
+    /**
      * @return The speaker of this utterance, where each speaker is assigned a sequential capital letter - e.g. &quot;A&quot; for Speaker A, &quot;B&quot; for Speaker B, etc.
      */
     @JsonProperty("speaker")
@@ -118,12 +130,13 @@ public final class TranscriptUtterance {
                 && end == other.end
                 && text.equals(other.text)
                 && words.equals(other.words)
+                && channel.equals(other.channel)
                 && speaker.equals(other.speaker);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.confidence, this.start, this.end, this.text, this.words, this.speaker);
+        return Objects.hash(this.confidence, this.start, this.end, this.text, this.words, this.channel, this.speaker);
     }
 
     @java.lang.Override
@@ -150,11 +163,11 @@ public final class TranscriptUtterance {
     }
 
     public interface TextStage {
-        SpeakerStage text(@NotNull String text);
+        SpeakerStage text(String text);
     }
 
     public interface SpeakerStage {
-        _FinalStage speaker(@NotNull String speaker);
+        _FinalStage speaker(String speaker);
     }
 
     public interface _FinalStage {
@@ -165,6 +178,10 @@ public final class TranscriptUtterance {
         _FinalStage addWords(TranscriptWord words);
 
         _FinalStage addAllWords(List<TranscriptWord> words);
+
+        _FinalStage channel(Optional<String> channel);
+
+        _FinalStage channel(String channel);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -180,6 +197,8 @@ public final class TranscriptUtterance {
 
         private String speaker;
 
+        private Optional<String> channel = Optional.empty();
+
         private List<TranscriptWord> words = new ArrayList<>();
 
         @JsonAnySetter
@@ -194,6 +213,7 @@ public final class TranscriptUtterance {
             end(other.getEnd());
             text(other.getText());
             words(other.getWords());
+            channel(other.getChannel());
             speaker(other.getSpeaker());
             return this;
         }
@@ -237,8 +257,8 @@ public final class TranscriptUtterance {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public SpeakerStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
+        public SpeakerStage text(String text) {
+            this.text = text;
             return this;
         }
 
@@ -248,8 +268,25 @@ public final class TranscriptUtterance {
          */
         @java.lang.Override
         @JsonSetter("speaker")
-        public _FinalStage speaker(@NotNull String speaker) {
-            this.speaker = Objects.requireNonNull(speaker, "speaker must not be null");
+        public _FinalStage speaker(String speaker) {
+            this.speaker = speaker;
+            return this;
+        }
+
+        /**
+         * <p>The channel of this utterance. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage channel(String channel) {
+            this.channel = Optional.ofNullable(channel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "channel", nulls = Nulls.SKIP)
+        public _FinalStage channel(Optional<String> channel) {
+            this.channel = channel;
             return this;
         }
 
@@ -283,7 +320,7 @@ public final class TranscriptUtterance {
 
         @java.lang.Override
         public TranscriptUtterance build() {
-            return new TranscriptUtterance(confidence, start, end, text, words, speaker, additionalProperties);
+            return new TranscriptUtterance(confidence, start, end, text, words, channel, speaker, additionalProperties);
         }
     }
 }

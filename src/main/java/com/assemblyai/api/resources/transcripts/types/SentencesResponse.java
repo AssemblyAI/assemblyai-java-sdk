@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SentencesResponse.Builder.class)
@@ -45,21 +44,33 @@ public final class SentencesResponse {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The unique identifier for the transcript
+     */
     @JsonProperty("id")
     public String getId() {
         return id;
     }
 
+    /**
+     * @return The confidence score for the transcript
+     */
     @JsonProperty("confidence")
     public double getConfidence() {
         return confidence;
     }
 
+    /**
+     * @return The duration of the audio file in seconds
+     */
     @JsonProperty("audio_duration")
     public double getAudioDuration() {
         return audioDuration;
     }
 
+    /**
+     * @return An array of sentences in the transcript
+     */
     @JsonProperty("sentences")
     public List<TranscriptSentence> getSentences() {
         return sentences;
@@ -98,7 +109,7 @@ public final class SentencesResponse {
     }
 
     public interface IdStage {
-        ConfidenceStage id(@NotNull String id);
+        ConfidenceStage id(String id);
 
         Builder from(SentencesResponse other);
     }
@@ -145,13 +156,21 @@ public final class SentencesResponse {
             return this;
         }
 
+        /**
+         * <p>The unique identifier for the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("id")
-        public ConfidenceStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+        public ConfidenceStage id(String id) {
+            this.id = id;
             return this;
         }
 
+        /**
+         * <p>The confidence score for the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("confidence")
         public AudioDurationStage confidence(double confidence) {
@@ -159,6 +178,10 @@ public final class SentencesResponse {
             return this;
         }
 
+        /**
+         * <p>The duration of the audio file in seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("audio_duration")
         public _FinalStage audioDuration(double audioDuration) {
@@ -166,12 +189,20 @@ public final class SentencesResponse {
             return this;
         }
 
+        /**
+         * <p>An array of sentences in the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addAllSentences(List<TranscriptSentence> sentences) {
             this.sentences.addAll(sentences);
             return this;
         }
 
+        /**
+         * <p>An array of sentences in the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addSentences(TranscriptSentence sentences) {
             this.sentences.add(sentences);

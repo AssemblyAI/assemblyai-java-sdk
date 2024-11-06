@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContentSafetyLabelResult.Builder.class)
@@ -123,7 +122,7 @@ public final class ContentSafetyLabelResult {
     }
 
     public interface TextStage {
-        SentencesIdxStartStage text(@NotNull String text);
+        SentencesIdxStartStage text(String text);
 
         Builder from(ContentSafetyLabelResult other);
     }
@@ -137,7 +136,7 @@ public final class ContentSafetyLabelResult {
     }
 
     public interface TimestampStage {
-        _FinalStage timestamp(@NotNull Timestamp timestamp);
+        _FinalStage timestamp(Timestamp timestamp);
     }
 
     public interface _FinalStage {
@@ -184,8 +183,8 @@ public final class ContentSafetyLabelResult {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public SentencesIdxStartStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
+        public SentencesIdxStartStage text(String text) {
+            this.text = text;
             return this;
         }
 
@@ -217,8 +216,8 @@ public final class ContentSafetyLabelResult {
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public _FinalStage timestamp(@NotNull Timestamp timestamp) {
-            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
+        public _FinalStage timestamp(Timestamp timestamp) {
+            this.timestamp = timestamp;
             return this;
         }
 
