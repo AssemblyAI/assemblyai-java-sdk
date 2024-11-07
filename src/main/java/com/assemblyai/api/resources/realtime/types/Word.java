@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Word.Builder.class)
@@ -113,7 +112,7 @@ public final class Word {
     }
 
     public interface TextStage {
-        _FinalStage text(@NotNull String text);
+        _FinalStage text(String text);
     }
 
     public interface _FinalStage {
@@ -183,8 +182,8 @@ public final class Word {
          */
         @java.lang.Override
         @JsonSetter("text")
-        public _FinalStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
+        public _FinalStage text(String text) {
+            this.text = text;
             return this;
         }
 

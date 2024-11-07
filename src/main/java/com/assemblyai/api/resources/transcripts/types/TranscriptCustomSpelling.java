@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptCustomSpelling.Builder.class)
@@ -80,7 +79,7 @@ public final class TranscriptCustomSpelling {
     }
 
     public interface ToStage {
-        _FinalStage to(@NotNull String to);
+        _FinalStage to(String to);
 
         Builder from(TranscriptCustomSpelling other);
     }
@@ -119,8 +118,8 @@ public final class TranscriptCustomSpelling {
          */
         @java.lang.Override
         @JsonSetter("to")
-        public _FinalStage to(@NotNull String to) {
-            this.to = Objects.requireNonNull(to, "to must not be null");
+        public _FinalStage to(String to) {
+            this.to = to;
             return this;
         }
 

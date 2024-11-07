@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurTaskParams.Builder.class)
@@ -169,7 +168,7 @@ public final class LemurTaskParams implements ILemurBaseParams {
     }
 
     public interface PromptStage {
-        _FinalStage prompt(@NotNull String prompt);
+        _FinalStage prompt(String prompt);
 
         Builder from(LemurTaskParams other);
     }
@@ -241,8 +240,8 @@ public final class LemurTaskParams implements ILemurBaseParams {
          */
         @java.lang.Override
         @JsonSetter("prompt")
-        public _FinalStage prompt(@NotNull String prompt) {
-            this.prompt = Objects.requireNonNull(prompt, "prompt must not be null");
+        public _FinalStage prompt(String prompt) {
+            this.prompt = prompt;
             return this;
         }
 

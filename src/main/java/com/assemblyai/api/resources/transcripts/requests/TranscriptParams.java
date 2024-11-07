@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptParams.Builder.class)
@@ -45,6 +44,8 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     private final Optional<Boolean> formatText;
 
     private final Optional<Boolean> disfluencies;
+
+    private final Optional<Boolean> multichannel;
 
     private final Optional<Boolean> dualChannel;
 
@@ -118,6 +119,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
             Optional<Boolean> punctuate,
             Optional<Boolean> formatText,
             Optional<Boolean> disfluencies,
+            Optional<Boolean> multichannel,
             Optional<Boolean> dualChannel,
             Optional<String> webhookUrl,
             Optional<String> webhookAuthHeaderName,
@@ -157,6 +159,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         this.punctuate = punctuate;
         this.formatText = formatText;
         this.disfluencies = disfluencies;
+        this.multichannel = multichannel;
         this.dualChannel = dualChannel;
         this.webhookUrl = webhookUrl;
         this.webhookAuthHeaderName = webhookAuthHeaderName;
@@ -248,6 +251,15 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     @java.lang.Override
     public Optional<Boolean> getDisfluencies() {
         return disfluencies;
+    }
+
+    /**
+     * @return Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#multichannel-transcription">Multichannel</a> transcription, can be true or false.
+     */
+    @JsonProperty("multichannel")
+    @java.lang.Override
+    public Optional<Boolean> getMultichannel() {
+        return multichannel;
     }
 
     /**
@@ -547,6 +559,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
                 && punctuate.equals(other.punctuate)
                 && formatText.equals(other.formatText)
                 && disfluencies.equals(other.disfluencies)
+                && multichannel.equals(other.multichannel)
                 && dualChannel.equals(other.dualChannel)
                 && webhookUrl.equals(other.webhookUrl)
                 && webhookAuthHeaderName.equals(other.webhookAuthHeaderName)
@@ -590,6 +603,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
                 this.punctuate,
                 this.formatText,
                 this.disfluencies,
+                this.multichannel,
                 this.dualChannel,
                 this.webhookUrl,
                 this.webhookAuthHeaderName,
@@ -633,7 +647,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
     }
 
     public interface AudioUrlStage {
-        _FinalStage audioUrl(@NotNull String audioUrl);
+        _FinalStage audioUrl(String audioUrl);
 
         Builder from(TranscriptParams other);
     }
@@ -668,6 +682,10 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         _FinalStage disfluencies(Optional<Boolean> disfluencies);
 
         _FinalStage disfluencies(Boolean disfluencies);
+
+        _FinalStage multichannel(Optional<Boolean> multichannel);
+
+        _FinalStage multichannel(Boolean multichannel);
 
         _FinalStage dualChannel(Optional<Boolean> dualChannel);
 
@@ -854,6 +872,8 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
 
         private Optional<Boolean> dualChannel = Optional.empty();
 
+        private Optional<Boolean> multichannel = Optional.empty();
+
         private Optional<Boolean> disfluencies = Optional.empty();
 
         private Optional<Boolean> formatText = Optional.empty();
@@ -882,6 +902,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
             punctuate(other.getPunctuate());
             formatText(other.getFormatText());
             disfluencies(other.getDisfluencies());
+            multichannel(other.getMultichannel());
             dualChannel(other.getDualChannel());
             webhookUrl(other.getWebhookUrl());
             webhookAuthHeaderName(other.getWebhookAuthHeaderName());
@@ -922,8 +943,8 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
          */
         @java.lang.Override
         @JsonSetter("audio_url")
-        public _FinalStage audioUrl(@NotNull String audioUrl) {
-            this.audioUrl = Objects.requireNonNull(audioUrl, "audioUrl must not be null");
+        public _FinalStage audioUrl(String audioUrl) {
+            this.audioUrl = audioUrl;
             return this;
         }
 
@@ -1437,6 +1458,23 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
         }
 
         /**
+         * <p>Enable <a href="https://www.assemblyai.com/docs/models/speech-recognition#multichannel-transcription">Multichannel</a> transcription, can be true or false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage multichannel(Boolean multichannel) {
+            this.multichannel = Optional.ofNullable(multichannel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "multichannel", nulls = Nulls.SKIP)
+        public _FinalStage multichannel(Optional<Boolean> multichannel) {
+            this.multichannel = multichannel;
+            return this;
+        }
+
+        /**
          * <p>Transcribe Filler Words, like &quot;umm&quot;, in your media file; can be true or false</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1559,6 +1597,7 @@ public final class TranscriptParams implements ITranscriptOptionalParams {
                     punctuate,
                     formatText,
                     disfluencies,
+                    multichannel,
                     dualChannel,
                     webhookUrl,
                     webhookAuthHeaderName,

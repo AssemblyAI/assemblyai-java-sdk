@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TranscriptSentence.Builder.class)
@@ -33,6 +32,8 @@ public final class TranscriptSentence {
 
     private final List<TranscriptWord> words;
 
+    private final Optional<String> channel;
+
     private final Optional<String> speaker;
 
     private final Map<String, Object> additionalProperties;
@@ -43,6 +44,7 @@ public final class TranscriptSentence {
             int end,
             double confidence,
             List<TranscriptWord> words,
+            Optional<String> channel,
             Optional<String> speaker,
             Map<String, Object> additionalProperties) {
         this.text = text;
@@ -50,33 +52,57 @@ public final class TranscriptSentence {
         this.end = end;
         this.confidence = confidence;
         this.words = words;
+        this.channel = channel;
         this.speaker = speaker;
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The transcript of the sentence
+     */
     @JsonProperty("text")
     public String getText() {
         return text;
     }
 
+    /**
+     * @return The starting time, in milliseconds, for the sentence
+     */
     @JsonProperty("start")
     public int getStart() {
         return start;
     }
 
+    /**
+     * @return The ending time, in milliseconds, for the sentence
+     */
     @JsonProperty("end")
     public int getEnd() {
         return end;
     }
 
+    /**
+     * @return The confidence score for the transcript of this sentence
+     */
     @JsonProperty("confidence")
     public double getConfidence() {
         return confidence;
     }
 
+    /**
+     * @return An array of words in the sentence
+     */
     @JsonProperty("words")
     public List<TranscriptWord> getWords() {
         return words;
+    }
+
+    /**
+     * @return The channel of the sentence. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.
+     */
+    @JsonProperty("channel")
+    public Optional<String> getChannel() {
+        return channel;
     }
 
     /**
@@ -104,12 +130,13 @@ public final class TranscriptSentence {
                 && end == other.end
                 && confidence == other.confidence
                 && words.equals(other.words)
+                && channel.equals(other.channel)
                 && speaker.equals(other.speaker);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.text, this.start, this.end, this.confidence, this.words, this.speaker);
+        return Objects.hash(this.text, this.start, this.end, this.confidence, this.words, this.channel, this.speaker);
     }
 
     @java.lang.Override
@@ -122,7 +149,7 @@ public final class TranscriptSentence {
     }
 
     public interface TextStage {
-        StartStage text(@NotNull String text);
+        StartStage text(String text);
 
         Builder from(TranscriptSentence other);
     }
@@ -148,6 +175,10 @@ public final class TranscriptSentence {
 
         _FinalStage addAllWords(List<TranscriptWord> words);
 
+        _FinalStage channel(Optional<String> channel);
+
+        _FinalStage channel(String channel);
+
         _FinalStage speaker(Optional<String> speaker);
 
         _FinalStage speaker(String speaker);
@@ -165,6 +196,8 @@ public final class TranscriptSentence {
 
         private Optional<String> speaker = Optional.empty();
 
+        private Optional<String> channel = Optional.empty();
+
         private List<TranscriptWord> words = new ArrayList<>();
 
         @JsonAnySetter
@@ -179,17 +212,26 @@ public final class TranscriptSentence {
             end(other.getEnd());
             confidence(other.getConfidence());
             words(other.getWords());
+            channel(other.getChannel());
             speaker(other.getSpeaker());
             return this;
         }
 
+        /**
+         * <p>The transcript of the sentence</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("text")
-        public StartStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
+        public StartStage text(String text) {
+            this.text = text;
             return this;
         }
 
+        /**
+         * <p>The starting time, in milliseconds, for the sentence</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
@@ -197,6 +239,10 @@ public final class TranscriptSentence {
             return this;
         }
 
+        /**
+         * <p>The ending time, in milliseconds, for the sentence</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("end")
         public ConfidenceStage end(int end) {
@@ -204,6 +250,10 @@ public final class TranscriptSentence {
             return this;
         }
 
+        /**
+         * <p>The confidence score for the transcript of this sentence</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("confidence")
         public _FinalStage confidence(double confidence) {
@@ -228,12 +278,37 @@ public final class TranscriptSentence {
             return this;
         }
 
+        /**
+         * <p>The channel of the sentence. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage channel(String channel) {
+            this.channel = Optional.ofNullable(channel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "channel", nulls = Nulls.SKIP)
+        public _FinalStage channel(Optional<String> channel) {
+            this.channel = channel;
+            return this;
+        }
+
+        /**
+         * <p>An array of words in the sentence</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addAllWords(List<TranscriptWord> words) {
             this.words.addAll(words);
             return this;
         }
 
+        /**
+         * <p>An array of words in the sentence</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addWords(TranscriptWord words) {
             this.words.add(words);
@@ -250,7 +325,7 @@ public final class TranscriptSentence {
 
         @java.lang.Override
         public TranscriptSentence build() {
-            return new TranscriptSentence(text, start, end, confidence, words, speaker, additionalProperties);
+            return new TranscriptSentence(text, start, end, confidence, words, channel, speaker, additionalProperties);
         }
     }
 }

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WordSearchResponse.Builder.class)
@@ -92,7 +91,7 @@ public final class WordSearchResponse {
     }
 
     public interface IdStage {
-        TotalCountStage id(@NotNull String id);
+        TotalCountStage id(String id);
 
         Builder from(WordSearchResponse other);
     }
@@ -138,8 +137,8 @@ public final class WordSearchResponse {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public TotalCountStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+        public TotalCountStage id(String id) {
+            this.id = id;
             return this;
         }
 

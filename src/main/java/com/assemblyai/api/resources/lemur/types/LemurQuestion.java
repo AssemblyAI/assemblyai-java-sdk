@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurQuestion.Builder.class)
@@ -110,7 +109,7 @@ public final class LemurQuestion {
     }
 
     public interface QuestionStage {
-        _FinalStage question(@NotNull String question);
+        _FinalStage question(String question);
 
         Builder from(LemurQuestion other);
     }
@@ -161,8 +160,8 @@ public final class LemurQuestion {
          */
         @java.lang.Override
         @JsonSetter("question")
-        public _FinalStage question(@NotNull String question) {
-            this.question = Objects.requireNonNull(question, "question must not be null");
+        public _FinalStage question(String question) {
+            this.question = question;
             return this;
         }
 

@@ -18,7 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContentSafetyLabelsResult.Builder.class)
@@ -54,6 +53,9 @@ public final class ContentSafetyLabelsResult {
         return status;
     }
 
+    /**
+     * @return An array of results for the Content Moderation model
+     */
     @JsonProperty("results")
     public List<ContentSafetyLabelResult> getResults() {
         return results;
@@ -108,7 +110,7 @@ public final class ContentSafetyLabelsResult {
     }
 
     public interface StatusStage {
-        _FinalStage status(@NotNull AudioIntelligenceModelStatus status);
+        _FinalStage status(AudioIntelligenceModelStatus status);
 
         Builder from(ContentSafetyLabelsResult other);
     }
@@ -165,8 +167,8 @@ public final class ContentSafetyLabelsResult {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(@NotNull AudioIntelligenceModelStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+        public _FinalStage status(AudioIntelligenceModelStatus status) {
+            this.status = status;
             return this;
         }
 
@@ -226,12 +228,20 @@ public final class ContentSafetyLabelsResult {
             return this;
         }
 
+        /**
+         * <p>An array of results for the Content Moderation model</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addAllResults(List<ContentSafetyLabelResult> results) {
             this.results.addAll(results);
             return this;
         }
 
+        /**
+         * <p>An array of results for the Content Moderation model</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addResults(ContentSafetyLabelResult results) {
             this.results.add(results);
