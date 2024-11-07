@@ -35,11 +35,17 @@ public final class TranscriptList {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Details of the transcript page
+     */
     @JsonProperty("page_details")
     public PageDetails getPageDetails() {
         return pageDetails;
     }
 
+    /**
+     * @return An array of transcripts
+     */
     @JsonProperty("transcripts")
     public List<TranscriptListItem> getTranscripts() {
         return transcripts;
@@ -108,6 +114,10 @@ public final class TranscriptList {
             return this;
         }
 
+        /**
+         * <p>Details of the transcript page</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("page_details")
         public _FinalStage pageDetails(@NotNull PageDetails pageDetails) {
@@ -115,12 +125,20 @@ public final class TranscriptList {
             return this;
         }
 
+        /**
+         * <p>An array of transcripts</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addAllTranscripts(List<TranscriptListItem> transcripts) {
             this.transcripts.addAll(transcripts);
             return this;
         }
 
+        /**
+         * <p>An array of transcripts</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addTranscripts(TranscriptListItem transcripts) {
             this.transcripts.add(transcripts);

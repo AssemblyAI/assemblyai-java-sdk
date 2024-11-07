@@ -21,6 +21,8 @@ public interface ITranscriptOptionalParams {
 
     Optional<Boolean> getDisfluencies();
 
+    Optional<Boolean> getMultichannel();
+
     Optional<Boolean> getDualChannel();
 
     Optional<String> getWebhookUrl();

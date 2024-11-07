@@ -29,6 +29,8 @@ public final class TranscriptWord {
 
     private final String text;
 
+    private final Optional<String> channel;
+
     private final Optional<String> speaker;
 
     private final Map<String, Object> additionalProperties;
@@ -38,38 +40,60 @@ public final class TranscriptWord {
             int start,
             int end,
             String text,
+            Optional<String> channel,
             Optional<String> speaker,
             Map<String, Object> additionalProperties) {
         this.confidence = confidence;
         this.start = start;
         this.end = end;
         this.text = text;
+        this.channel = channel;
         this.speaker = speaker;
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The confidence score for the transcript of this word
+     */
     @JsonProperty("confidence")
     public double getConfidence() {
         return confidence;
     }
 
+    /**
+     * @return The starting time, in milliseconds, for the word
+     */
     @JsonProperty("start")
     public int getStart() {
         return start;
     }
 
+    /**
+     * @return The ending time, in milliseconds, for the word
+     */
     @JsonProperty("end")
     public int getEnd() {
         return end;
     }
 
+    /**
+     * @return The text of the word
+     */
     @JsonProperty("text")
     public String getText() {
         return text;
     }
 
     /**
-     * @return The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null
+     * @return The channel of the word. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.
+     */
+    @JsonProperty("channel")
+    public Optional<String> getChannel() {
+        return channel;
+    }
+
+    /**
+     * @return The speaker of the word if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null
      */
     @JsonProperty("speaker")
     public Optional<String> getSpeaker() {
@@ -92,12 +116,13 @@ public final class TranscriptWord {
                 && start == other.start
                 && end == other.end
                 && text.equals(other.text)
+                && channel.equals(other.channel)
                 && speaker.equals(other.speaker);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.confidence, this.start, this.end, this.text, this.speaker);
+        return Objects.hash(this.confidence, this.start, this.end, this.text, this.channel, this.speaker);
     }
 
     @java.lang.Override
@@ -130,6 +155,10 @@ public final class TranscriptWord {
     public interface _FinalStage {
         TranscriptWord build();
 
+        _FinalStage channel(Optional<String> channel);
+
+        _FinalStage channel(String channel);
+
         _FinalStage speaker(Optional<String> speaker);
 
         _FinalStage speaker(String speaker);
@@ -147,6 +176,8 @@ public final class TranscriptWord {
 
         private Optional<String> speaker = Optional.empty();
 
+        private Optional<String> channel = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -158,10 +189,15 @@ public final class TranscriptWord {
             start(other.getStart());
             end(other.getEnd());
             text(other.getText());
+            channel(other.getChannel());
             speaker(other.getSpeaker());
             return this;
         }
 
+        /**
+         * <p>The confidence score for the transcript of this word</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("confidence")
         public StartStage confidence(double confidence) {
@@ -169,6 +205,10 @@ public final class TranscriptWord {
             return this;
         }
 
+        /**
+         * <p>The starting time, in milliseconds, for the word</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("start")
         public EndStage start(int start) {
@@ -176,6 +216,10 @@ public final class TranscriptWord {
             return this;
         }
 
+        /**
+         * <p>The ending time, in milliseconds, for the word</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("end")
         public TextStage end(int end) {
@@ -183,6 +227,10 @@ public final class TranscriptWord {
             return this;
         }
 
+        /**
+         * <p>The text of the word</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("text")
         public _FinalStage text(@NotNull String text) {
@@ -191,7 +239,7 @@ public final class TranscriptWord {
         }
 
         /**
-         * <p>The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
+         * <p>The speaker of the word if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -207,9 +255,26 @@ public final class TranscriptWord {
             return this;
         }
 
+        /**
+         * <p>The channel of the word. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage channel(String channel) {
+            this.channel = Optional.ofNullable(channel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "channel", nulls = Nulls.SKIP)
+        public _FinalStage channel(Optional<String> channel) {
+            this.channel = channel;
+            return this;
+        }
+
         @java.lang.Override
         public TranscriptWord build() {
-            return new TranscriptWord(confidence, start, end, text, speaker, additionalProperties);
+            return new TranscriptWord(confidence, start, end, text, channel, speaker, additionalProperties);
         }
     }
 }

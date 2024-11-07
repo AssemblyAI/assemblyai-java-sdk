@@ -57,31 +57,49 @@ public final class TranscriptListItem {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The unique identifier for the transcript
+     */
     @JsonProperty("id")
     public String getId() {
         return id;
     }
 
+    /**
+     * @return The URL to retrieve the transcript
+     */
     @JsonProperty("resource_url")
     public String getResourceUrl() {
         return resourceUrl;
     }
 
+    /**
+     * @return The status of the transcript
+     */
     @JsonProperty("status")
     public TranscriptStatus getStatus() {
         return status;
     }
 
+    /**
+     * @return The date and time the transcript was created
+     */
     @JsonProperty("created")
     public OffsetDateTime getCreated() {
         return created;
     }
 
+    /**
+     * @return The date and time the transcript was completed
+     */
     @JsonProperty("completed")
     public Optional<OffsetDateTime> getCompleted() {
         return completed;
     }
 
+    /**
+     * @return The URL to the audio file
+     */
     @JsonProperty("audio_url")
     public String getAudioUrl() {
         return audioUrl;
@@ -199,6 +217,10 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>The unique identifier for the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("id")
         public ResourceUrlStage id(@NotNull String id) {
@@ -206,6 +228,10 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>The URL to retrieve the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("resource_url")
         public StatusStage resourceUrl(@NotNull String resourceUrl) {
@@ -213,6 +239,10 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>The status of the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public CreatedStage status(@NotNull TranscriptStatus status) {
@@ -220,6 +250,10 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>The date and time the transcript was created</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("created")
         public AudioUrlStage created(@NotNull OffsetDateTime created) {
@@ -227,6 +261,10 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>The URL to the audio file</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("audio_url")
         public _FinalStage audioUrl(@NotNull String audioUrl) {
@@ -251,6 +289,10 @@ public final class TranscriptListItem {
             return this;
         }
 
+        /**
+         * <p>The date and time the transcript was completed</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage completed(OffsetDateTime completed) {
             this.completed = Optional.ofNullable(completed);
