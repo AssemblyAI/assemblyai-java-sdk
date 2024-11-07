@@ -49,6 +49,9 @@ public final class TopicDetectionResult {
         return text;
     }
 
+    /**
+     * @return An array of detected topics in the text
+     */
     @JsonProperty("labels")
     public Optional<List<TopicDetectionResultLabelsItem>> getLabels() {
         return labels;
@@ -151,6 +154,10 @@ public final class TopicDetectionResult {
             return this;
         }
 
+        /**
+         * <p>An array of detected topics in the text</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage labels(List<TopicDetectionResultLabelsItem> labels) {
             this.labels = Optional.ofNullable(labels);

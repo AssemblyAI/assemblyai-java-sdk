@@ -45,21 +45,33 @@ public final class ParagraphsResponse {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The unique identifier of your transcript
+     */
     @JsonProperty("id")
     public String getId() {
         return id;
     }
 
+    /**
+     * @return The confidence score for the transcript
+     */
     @JsonProperty("confidence")
     public double getConfidence() {
         return confidence;
     }
 
+    /**
+     * @return The duration of the audio file in seconds
+     */
     @JsonProperty("audio_duration")
     public double getAudioDuration() {
         return audioDuration;
     }
 
+    /**
+     * @return An array of paragraphs in the transcript
+     */
     @JsonProperty("paragraphs")
     public List<TranscriptParagraph> getParagraphs() {
         return paragraphs;
@@ -145,6 +157,10 @@ public final class ParagraphsResponse {
             return this;
         }
 
+        /**
+         * <p>The unique identifier of your transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("id")
         public ConfidenceStage id(@NotNull String id) {
@@ -152,6 +168,10 @@ public final class ParagraphsResponse {
             return this;
         }
 
+        /**
+         * <p>The confidence score for the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("confidence")
         public AudioDurationStage confidence(double confidence) {
@@ -159,6 +179,10 @@ public final class ParagraphsResponse {
             return this;
         }
 
+        /**
+         * <p>The duration of the audio file in seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("audio_duration")
         public _FinalStage audioDuration(double audioDuration) {
@@ -166,12 +190,20 @@ public final class ParagraphsResponse {
             return this;
         }
 
+        /**
+         * <p>An array of paragraphs in the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addAllParagraphs(List<TranscriptParagraph> paragraphs) {
             this.paragraphs.addAll(paragraphs);
             return this;
         }
 
+        /**
+         * <p>An array of paragraphs in the transcript</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addParagraphs(TranscriptParagraph paragraphs) {
             this.paragraphs.add(paragraphs);

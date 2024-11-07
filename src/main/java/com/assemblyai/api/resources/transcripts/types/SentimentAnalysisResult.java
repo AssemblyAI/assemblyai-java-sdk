@@ -31,6 +31,8 @@ public final class SentimentAnalysisResult {
 
     private final double confidence;
 
+    private final Optional<String> channel;
+
     private final Optional<String> speaker;
 
     private final Map<String, Object> additionalProperties;
@@ -41,6 +43,7 @@ public final class SentimentAnalysisResult {
             int end,
             Sentiment sentiment,
             double confidence,
+            Optional<String> channel,
             Optional<String> speaker,
             Map<String, Object> additionalProperties) {
         this.text = text;
@@ -48,6 +51,7 @@ public final class SentimentAnalysisResult {
         this.end = end;
         this.sentiment = sentiment;
         this.confidence = confidence;
+        this.channel = channel;
         this.speaker = speaker;
         this.additionalProperties = additionalProperties;
     }
@@ -93,6 +97,14 @@ public final class SentimentAnalysisResult {
     }
 
     /**
+     * @return The channel of this utterance. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.
+     */
+    @JsonProperty("channel")
+    public Optional<String> getChannel() {
+        return channel;
+    }
+
+    /**
      * @return The speaker of the sentence if <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker Diarization</a> is enabled, else null
      */
     @JsonProperty("speaker")
@@ -117,12 +129,14 @@ public final class SentimentAnalysisResult {
                 && end == other.end
                 && sentiment.equals(other.sentiment)
                 && confidence == other.confidence
+                && channel.equals(other.channel)
                 && speaker.equals(other.speaker);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.text, this.start, this.end, this.sentiment, this.confidence, this.speaker);
+        return Objects.hash(
+                this.text, this.start, this.end, this.sentiment, this.confidence, this.channel, this.speaker);
     }
 
     @java.lang.Override
@@ -159,6 +173,10 @@ public final class SentimentAnalysisResult {
     public interface _FinalStage {
         SentimentAnalysisResult build();
 
+        _FinalStage channel(Optional<String> channel);
+
+        _FinalStage channel(String channel);
+
         _FinalStage speaker(Optional<String> speaker);
 
         _FinalStage speaker(String speaker);
@@ -179,6 +197,8 @@ public final class SentimentAnalysisResult {
 
         private Optional<String> speaker = Optional.empty();
 
+        private Optional<String> channel = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -191,6 +211,7 @@ public final class SentimentAnalysisResult {
             end(other.getEnd());
             sentiment(other.getSentiment());
             confidence(other.getConfidence());
+            channel(other.getChannel());
             speaker(other.getSpeaker());
             return this;
         }
@@ -267,9 +288,27 @@ public final class SentimentAnalysisResult {
             return this;
         }
 
+        /**
+         * <p>The channel of this utterance. The left and right channels are channels 1 and 2. Additional channels increment the channel number sequentially.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage channel(String channel) {
+            this.channel = Optional.ofNullable(channel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "channel", nulls = Nulls.SKIP)
+        public _FinalStage channel(Optional<String> channel) {
+            this.channel = channel;
+            return this;
+        }
+
         @java.lang.Override
         public SentimentAnalysisResult build() {
-            return new SentimentAnalysisResult(text, start, end, sentiment, confidence, speaker, additionalProperties);
+            return new SentimentAnalysisResult(
+                    text, start, end, sentiment, confidence, channel, speaker, additionalProperties);
         }
     }
 }
