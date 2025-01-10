@@ -174,9 +174,8 @@ The default timeout should be sufficient for most use cases.
 However, depending on your network speed and distance, you may occasionally experience timeouts, in which case you can increase the timeout.
 
 ## Android
-### Proguard configuration
 
-Keep AssemblyAI SDK classes from being obfuscated. This is required for proper SDK functionality when using code shrinking (isMinifyEnabled = true)
+If you've enabled [Code shrinking](https://developer.android.com/build/shrink-code#shrink-code) using `minifyEnabled`, you need to add the following ProGuard configuration to keep R8 from incorrectly marking the SDK classes as unused.
 ```text
 -keep class com.assemblyai.api.** { *; }
 ```
