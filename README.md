@@ -173,6 +173,13 @@ For this operation, the call timeout will be 30 seconds, and the other timeouts 
 The default timeout should be sufficient for most use cases. 
 However, depending on your network speed and distance, you may occasionally experience timeouts, in which case you can increase the timeout.
 
+## Android
+
+If you've enabled [Code shrinking](https://developer.android.com/build/shrink-code#shrink-code) using `minifyEnabled`, you need to add the following ProGuard configuration to keep R8 from incorrectly marking the SDK classes as unused.
+```text
+-keep class com.assemblyai.api.** { *; }
+```
+
 ## Contributing
 While we value open-source contributions to this SDK, this library
 is generated programmatically. Additions made directly to this library
