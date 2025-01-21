@@ -345,14 +345,6 @@ public class TranscriptsClient {
     /**
      * Export your transcript in SRT or VTT format to use with a video player for subtitles and closed captions.
      */
-    public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat) {
-        return getSubtitles(
-                transcriptId, subtitleFormat, GetSubtitlesParams.builder().build());
-    }
-
-    /**
-     * Export your transcript in SRT or VTT format to use with a video player for subtitles and closed captions.
-     */
     public String getSubtitles(String transcriptId, SubtitleFormat subtitleFormat, GetSubtitlesParams request) {
         return getSubtitles(transcriptId, subtitleFormat, request, null);
     }
@@ -556,13 +548,6 @@ public class TranscriptsClient {
         } catch (IOException e) {
             throw new AssemblyAIException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * Search through the transcript for keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.
-     */
-    public WordSearchResponse wordSearch(String transcriptId) {
-        return wordSearch(transcriptId, WordSearchParams.builder().build());
     }
 
     /**
