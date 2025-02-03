@@ -351,8 +351,8 @@ public final class Transcript {
     }
 
     /**
-     * @return When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
-     * See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more information.
+     * @return When multichannel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
+     * See <a href="https://www.assemblyai.com/docs/speech-to-text/speaker-diarization">Speaker diarization</a> and <a href="https://www.assemblyai.com/docs/speech-to-text/speech-recognition#multichannel-transcription">Multichannel transcription</a> for more information.
      */
     @JsonProperty("utterances")
     public Optional<List<TranscriptUtterance>> getUtterances() {
@@ -2166,8 +2166,8 @@ public final class Transcript {
         }
 
         /**
-         * <p>When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
-         * See <a href="https://www.assemblyai.com/docs/models/speaker-diarization">Speaker diarization</a> for more information.</p>
+         * <p>When multichannel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
+         * See <a href="https://www.assemblyai.com/docs/speech-to-text/speaker-diarization">Speaker diarization</a> and <a href="https://www.assemblyai.com/docs/speech-to-text/speech-recognition#multichannel-transcription">Multichannel transcription</a> for more information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
