@@ -7,22 +7,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class LemurModel {
-    public static final LemurModel BASIC = new LemurModel(Value.BASIC, "basic");
+    public static final LemurModel DEFAULT = new LemurModel(Value.DEFAULT, "default");
+
+    public static final LemurModel ANTHROPIC_CLAUDE2_0 =
+            new LemurModel(Value.ANTHROPIC_CLAUDE2_0, "anthropic/claude-2");
 
     public static final LemurModel ANTHROPIC_CLAUDE3_5_SONNET =
             new LemurModel(Value.ANTHROPIC_CLAUDE3_5_SONNET, "anthropic/claude-3-5-sonnet");
 
-    public static final LemurModel ANTHROPIC_CLAUDE2_1 =
-            new LemurModel(Value.ANTHROPIC_CLAUDE2_1, "anthropic/claude-2-1");
-
-    public static final LemurModel ANTHROPIC_CLAUDE_INSTANT1_2 =
-            new LemurModel(Value.ANTHROPIC_CLAUDE_INSTANT1_2, "anthropic/claude-instant-1-2");
-
     public static final LemurModel ANTHROPIC_CLAUDE3_SONNET =
             new LemurModel(Value.ANTHROPIC_CLAUDE3_SONNET, "anthropic/claude-3-sonnet");
-
-    public static final LemurModel ANTHROPIC_CLAUDE2_0 =
-            new LemurModel(Value.ANTHROPIC_CLAUDE2_0, "anthropic/claude-2");
 
     public static final LemurModel ASSEMBLYAI_MISTRAL7B =
             new LemurModel(Value.ASSEMBLYAI_MISTRAL7B, "assemblyai/mistral-7b");
@@ -30,7 +24,8 @@ public final class LemurModel {
     public static final LemurModel ANTHROPIC_CLAUDE3_HAIKU =
             new LemurModel(Value.ANTHROPIC_CLAUDE3_HAIKU, "anthropic/claude-3-haiku");
 
-    public static final LemurModel DEFAULT = new LemurModel(Value.DEFAULT, "default");
+    public static final LemurModel ANTHROPIC_CLAUDE2_1 =
+            new LemurModel(Value.ANTHROPIC_CLAUDE2_1, "anthropic/claude-2-1");
 
     public static final LemurModel ANTHROPIC_CLAUDE3_OPUS =
             new LemurModel(Value.ANTHROPIC_CLAUDE3_OPUS, "anthropic/claude-3-opus");
@@ -66,24 +61,20 @@ public final class LemurModel {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case BASIC:
-                return visitor.visitBasic();
-            case ANTHROPIC_CLAUDE3_5_SONNET:
-                return visitor.visitAnthropicClaude3_5_Sonnet();
-            case ANTHROPIC_CLAUDE2_1:
-                return visitor.visitAnthropicClaude2_1();
-            case ANTHROPIC_CLAUDE_INSTANT1_2:
-                return visitor.visitAnthropicClaudeInstant1_2();
-            case ANTHROPIC_CLAUDE3_SONNET:
-                return visitor.visitAnthropicClaude3_Sonnet();
+            case DEFAULT:
+                return visitor.visitDefault();
             case ANTHROPIC_CLAUDE2_0:
                 return visitor.visitAnthropicClaude2_0();
+            case ANTHROPIC_CLAUDE3_5_SONNET:
+                return visitor.visitAnthropicClaude3_5_Sonnet();
+            case ANTHROPIC_CLAUDE3_SONNET:
+                return visitor.visitAnthropicClaude3_Sonnet();
             case ASSEMBLYAI_MISTRAL7B:
                 return visitor.visitAssemblyaiMistral7b();
             case ANTHROPIC_CLAUDE3_HAIKU:
                 return visitor.visitAnthropicClaude3_Haiku();
-            case DEFAULT:
-                return visitor.visitDefault();
+            case ANTHROPIC_CLAUDE2_1:
+                return visitor.visitAnthropicClaude2_1();
             case ANTHROPIC_CLAUDE3_OPUS:
                 return visitor.visitAnthropicClaude3_Opus();
             case UNKNOWN:
@@ -95,24 +86,20 @@ public final class LemurModel {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static LemurModel valueOf(String value) {
         switch (value) {
-            case "basic":
-                return BASIC;
-            case "anthropic/claude-3-5-sonnet":
-                return ANTHROPIC_CLAUDE3_5_SONNET;
-            case "anthropic/claude-2-1":
-                return ANTHROPIC_CLAUDE2_1;
-            case "anthropic/claude-instant-1-2":
-                return ANTHROPIC_CLAUDE_INSTANT1_2;
-            case "anthropic/claude-3-sonnet":
-                return ANTHROPIC_CLAUDE3_SONNET;
+            case "default":
+                return DEFAULT;
             case "anthropic/claude-2":
                 return ANTHROPIC_CLAUDE2_0;
+            case "anthropic/claude-3-5-sonnet":
+                return ANTHROPIC_CLAUDE3_5_SONNET;
+            case "anthropic/claude-3-sonnet":
+                return ANTHROPIC_CLAUDE3_SONNET;
             case "assemblyai/mistral-7b":
                 return ASSEMBLYAI_MISTRAL7B;
             case "anthropic/claude-3-haiku":
                 return ANTHROPIC_CLAUDE3_HAIKU;
-            case "default":
-                return DEFAULT;
+            case "anthropic/claude-2-1":
+                return ANTHROPIC_CLAUDE2_1;
             case "anthropic/claude-3-opus":
                 return ANTHROPIC_CLAUDE3_OPUS;
             default:
@@ -135,10 +122,6 @@ public final class LemurModel {
 
         DEFAULT,
 
-        ANTHROPIC_CLAUDE_INSTANT1_2,
-
-        BASIC,
-
         ASSEMBLYAI_MISTRAL7B,
 
         UNKNOWN
@@ -158,10 +141,6 @@ public final class LemurModel {
         T visitAnthropicClaude2_0();
 
         T visitDefault();
-
-        T visitAnthropicClaudeInstant1_2();
-
-        T visitBasic();
 
         T visitAssemblyaiMistral7b();
 
