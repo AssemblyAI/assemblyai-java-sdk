@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LemurActionItemsResponse.Builder.class)
-public final class LemurActionItemsResponse implements ILemurStringResponse {
+public final class LemurActionItemsResponse implements ILemurStringResponse, ILemurBaseResponse {
     private final String response;
 
     private final String requestId;
